@@ -1,0 +1,181 @@
+
+game.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+gamefon_1
+  rotate: false
+  xy: 0, 0
+  size: 480, 640
+  orig: 480, 640
+  offset: 0, 0
+  index: -1
+buttonwodden_1
+  rotate: false
+  xy: 481, 0
+  size: 210, 80
+  orig: 210, 80
+  offset: 0, 0
+  index: -1
+paper
+  rotate: false
+  xy: 692, 0
+  size: 90, 120
+  orig: 90, 120
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 783, 0
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: -1
+buttonExit
+    rotate: false
+    xy: 880, 0
+    size: 96, 96
+    orig: 96, 96
+    offset: 0, 0
+    index: -1
+buttonLeftMini
+     rotate: false
+     xy: 481, 81
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonPause
+     rotate: false
+     xy: 578, 81
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonRightMini
+     rotate: false
+     xy: 783, 97
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonSave
+     rotate: false
+     xy: 880, 97
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+elementOfWater
+      rotate: false
+      xy: 977, 0
+      size: 36, 48
+      orig: 36, 48
+      offset: 0, 0
+      index: 1
+elementOfWaterPush
+     rotate: false
+     xy: 977, 0
+     size: 36, 48
+     orig: 36, 48
+     offset: 0, 0
+     index: 1
+elementOfWaterPush
+      rotate: false
+      xy: 977, 49
+      size: 36, 48
+      orig: 36, 48
+      offset: 0, 0
+      index: 2
+elementOfWaterStand
+      rotate: false
+      xy: 977, 97
+      size: 36, 48
+      orig: 36, 48
+      offset: 0, 0
+      index: 1
+elementOfWaterStand
+      rotate: false
+      xy: 675, 121
+      size: 36, 48
+      orig: 36, 48
+      offset: 0, 0
+      index: 2
+elementOfWaterWalk
+     rotate: false
+     xy: 712, 121
+     size: 36, 48
+     orig: 36, 48
+     offset: 0, 0
+     index: 1
+elementOfWaterWalk
+     rotate: false
+     xy: 977, 146
+     size: 36, 48
+     orig: 36, 48
+     offset: 0, 0
+     index: 2
+elementOfWaterWalk
+     rotate: false
+     xy: 675, 170
+     size: 36, 48
+     orig: 36, 48
+     offset: 0, 0
+     index: 3
+blockBlue
+     rotate: false
+     xy: 749, 121
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockGreen
+     rotate: false
+     xy: 749, 154
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockPurr
+     rotate: false
+     xy: 749, 170
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockRed
+     rotate: false
+     xy: 481, 178
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockYellow
+     rotate: false
+     xy: 514, 178
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockWind_1
+     rotate: false
+     xy: 547, 178
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockWind_2
+     rotate: false
+     xy: 580, 178
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1
+blockWind_3
+     rotate: false
+     xy: 613, 178
+     size: 32, 32
+     orig: 32, 32
+     offset: 0, 0
+     index: -1

@@ -1,0 +1,195 @@
+
+gui.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+mainFon
+  rotate: false
+  xy: 0, 0
+  size: 480, 640
+  orig: 480, 640
+  offset: 0, 0
+  index: -1
+logo
+  rotate: false
+  xy: 481, 0
+  size: 380, 150
+  orig: 380, 150
+  offset: 0, 0
+  index: -1
+buttonOnline
+  rotate: false
+  xy: 481, 151
+  size: 210, 80
+  orig: 210, 80
+  offset: 0, 0
+  index: -1
+buttonSingelPlayer
+  rotate: false
+  xy: 692, 151
+  size: 210, 80
+  orig: 210, 80
+  offset: 0, 0
+  index: -1
+buttonStory
+    rotate: false
+    xy: 481, 232
+    size: 210, 80
+    orig: 210, 80
+    offset: 0, 0
+    index: -1
+buttonWodden_1
+     rotate: false
+     xy: 692, 232
+     size: 210, 80
+     orig: 210, 80
+     offset: 0, 0
+     index: -1
+paper
+     rotate: false
+     xy: 862, 0
+     size: 90, 120
+     orig: 90, 120
+     offset: 0, 0
+     index: -1
+buttonExit
+     rotate: false
+     xy: 903, 121
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonHelp
+     rotate: false
+     xy: 903, 218
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonHighScore
+     rotate: false
+     xy: 481, 313
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonLeft
+     rotate: false
+     xy: 578, 313
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonLeftMini
+     rotate: false
+     xy: 675, 313
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonMusicOff
+     rotate: false
+     xy: 772, 313
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonMusicOn
+     rotate: false
+     xy: 869, 315
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonPause
+     rotate: false
+     xy: 481, 410
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonRightMini
+      rotate: false
+      xy: 578, 410
+      size: 96, 96
+      orig: 96, 96
+      offset: 0, 0
+      index: -1
+buttonRight
+      rotate: false
+      xy: 675, 410
+      size: 96, 96
+      orig: 96, 96
+      offset: 0, 0
+      index: -1
+buttonSave
+     rotate: false
+     xy: 772, 410
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonSettings
+     rotate: false
+     xy: 869, 412
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonSoundOff
+     rotate: false
+     xy: 481, 507
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+buttonSoundOn
+     rotate: false
+     xy: 578, 507
+     size: 96, 96
+     orig: 96, 96
+     offset: 0, 0
+     index: -1
+fog_1
+     rotate: false
+     xy: 675, 507
+     size: 80, 90
+     orig: 80, 90
+     offset: 0, 0
+     index: -1
+fog_2
+     rotate: false
+     xy: 756, 507
+     size: 80, 90
+     orig: 80, 90
+     offset: 0, 0
+     index: -1
+fog_3
+     rotate: false
+     xy: 837, 509
+     size: 80, 90
+     orig: 80, 90
+     offset: 0, 0
+     index: -1
+fog_4
+     rotate: false
+     xy: 918, 509
+     size: 80, 90
+     orig: 80, 90
+     offset: 0, 0
+     index: -1
+elementOdWaterStand_1
+      rotate: false
+      xy: 953, 0
+      size: 36, 48
+      orig: 36, 48
+      offset: 0, 0
+      index: -1
+elementOdWaterStand_2
+      rotate: false
+      xy: 953, 49
+      size: 36, 48
+      orig: 36, 48
+      offset: 0, 0
+      index: -1
