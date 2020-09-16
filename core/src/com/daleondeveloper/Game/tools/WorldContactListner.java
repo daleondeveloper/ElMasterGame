@@ -2,7 +2,6 @@ package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.daleondeveloper.Sprites.Block;
-import com.daleondeveloper.Sprites.Hero.HeroSkill;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.Sprites.Platform;
 
@@ -14,7 +13,16 @@ public class WorldContactListner implements ContactListener {
     public static final short CATEGORY_BLOCK_BIT = 1;
     public static final short CATEGORY_WATER_ELEM_BIT = 2;
     public static final short CATEGORY_REGION_BIT = 4;
-    public static final short CATEGORY_SKIIL_BIT = 8;
+    public static final short CATEGORY_BLOCK_SENSOR_RIGHT_BIT = 8;
+    public static final short CATEGORY_BLOCK_SENSOR_LEFT_BIT = 16;
+    public static final short CATEGORY_BLOCK_SENSOR_DOWN_BIT = 32;
+    public static final short CATEGORY_BLOCK_SENSOR_UP_BIT = 64;
+    public static final short CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT = 128;
+    public static final short CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT = 256;
+    public static final short CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT = 512;
+    public static final short CATEGORY_WATER_ELEM_SENSOR_UP_BIT = 1024;
+
+
 
     public static final short MASK_ALL = -1;
     public static final short MASK_BLOCK = 0;
@@ -53,25 +61,28 @@ public class WorldContactListner implements ContactListener {
                 }
                 }
                 break;
-            case CATEGORY_BLOCK_BIT | CATEGORY_SKIIL_BIT: {
+            case CATEGORY_BLOCK_BIT | CATEGORY_REGION_BIT: {
                 Block block;
-                HeroSkill heroSkill;
-                if(fa.getFilterData().categoryBits == CATEGORY_SKIIL_BIT){
-                    heroSkill = (HeroSkill) fa.getUserData();
+                Platform platform;
+                if(fa.getFilterData().categoryBits == CATEGORY_REGION_BIT){
+                    platform = (Platform) fa.getUserData();
                     block = (Block)fb.getUserData();
                 }else{
-                    heroSkill = (HeroSkill) fb.getUserData();
+                    platform = (Platform) fb.getUserData();
                     block = (Block)fa.getUserData();
                 }
-                heroSkill.addBlockCollision(block);
+                block.stopFall();
+                System.out.println("contact = " + contact);
+                System.out.println("block = " + block );
+                //heroSkill.addBlockCollision(block);
             }
+            break;
             case CATEGORY_REGION_BIT | CATEGORY_WATER_ELEM_BIT: {
                 Platform platform;
                 WaterElement hero;
                 if (fa.getFilterData().categoryBits == CATEGORY_REGION_BIT) {
                     platform = (Platform) fa.getUserData();
                     hero = (WaterElement) fb.getUserData();
-
                 } else {
                     platform = (Platform) fb.getUserData();
                     hero = (WaterElement) fa.getUserData();
@@ -81,6 +92,14 @@ public class WorldContactListner implements ContactListener {
                     hero.endJump();
                 }
             }
+            break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_BLOCK_BIT: {
+                Block firstBlock = (Block) fa.getUserData();
+                Block secondBlock = (Block) fb.getUserData();
+                firstBlock.stopFall();
+                secondBlock.stopFall();
+
+            }break;
     }
     }
 

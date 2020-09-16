@@ -47,18 +47,20 @@ public class GameWorld {
     }
 
     private void createSprites(){
-        //Blocks
+        //Block(create block factory  to create block)
         blockController = new BlockController(playScreen,this);
 
 
-        //WaterHero
+        //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,gameCamera.getWorldHeight()/2);
 
-        //Regions
+        //Regions ( create regions around the playing zone for player and game element)
         regionDown = new Platform(this,0,8,gameCamera.getWorldWidth(),2);
         regionLeft = new Platform(this,0,0,2,gameCamera.getWorldHeight());
         regionRight = new Platform(this,gameCamera.getWorldWidth()-2,0,2,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
+
+        //create background fon
         background = new Background(this,0, 0,gameCamera.getWorldWidth(),gameCamera.getWorldHeight());
     }
     private void createBackground(){

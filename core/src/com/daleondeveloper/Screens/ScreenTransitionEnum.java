@@ -22,7 +22,7 @@ public enum ScreenTransitionEnum {
 
     ROTATING {
         public IScreenTransition getScreenTransition() {
-            return RotatingTransition.init(2.0f, Interpolation.pow2Out, 720.0f, RotatingTransition.TransitionScaling.IN);
+            return RotatingTransition.init(2.0f, Interpolation.pow2Out, 360.0f, RotatingTransition.TransitionScaling.IN);
         }
     },
 

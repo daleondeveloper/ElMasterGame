@@ -62,8 +62,8 @@ public class HeroSkill extends AbstractDynamicObject {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(heroHeight/4);
         circleShape.setPosition(new Vector2(heroVector2.x + 2.5f, heroVector2.y));
-        fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_SKIIL_BIT;
-        fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
+   //     fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_SKIIL_BIT;
+   //     fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
         fixtureDef.shape = circleShape;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData(this);

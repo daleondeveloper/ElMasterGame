@@ -62,6 +62,7 @@ public class Platform extends AbstractDynamicObject {
         fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_REGION_BIT; // Depicts what this fixture is
         fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL; // Depicts what this Fixture can collide with (see WorldContactListener)
         fixtureDef.shape = polygonShape;
+        fixtureDef.restitution = 0f;
         body.createFixture(fixtureDef).setUserData(this);
     }
 

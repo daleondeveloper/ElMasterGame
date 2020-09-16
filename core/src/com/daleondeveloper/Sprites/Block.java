@@ -70,31 +70,70 @@ public class Block extends AbstractDynamicObject {
         blockDef.type = BodyDef.BodyType.DynamicBody;
         body =gameWorld.createBody(blockDef);
         body.setFixedRotation(true);
-        
+        body.setGravityScale(0);
+        body.setLinearVelocity(0,-10);
+
+
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(getWidth()/2.05f,getHeight()/2.05f);
-        fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
-        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
+   //     fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+   //     fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
         fixture.density = 1f;
         fixture.friction = 1f;
         fixture.restitution = 0f;
 
+
         body.createFixture(fixture).setUserData(this);
 
-//        PolygonShape polygonShape1 = new PolygonShape();
-//        polygonShape1.setAsBox(0.1f,0.01f, new Vector2(0,-30.0f / GameCamera.PPM),0);
-//        FixtureDef sensor = new FixtureDef();
-//        sensor.shape = polygonShape1;
-//        sensor.isSensor = true;
-//        body.createFixture(sensor).setUserData(this);
+
+    }
+    private void defineSensors(){
+        //Sensor Left
+        PolygonShape polygonShape = new PolygonShape();
+        polygonShape.setAsBox(0.1f,0.01f, new Vector2(-0.5f,0),0);
+        FixtureDef sensorLeft = new FixtureDef();
+        sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
+        sensorLeft.shape = polygonShape;
+        sensorLeft.isSensor = true;
+        body.createFixture(sensorLeft).setUserData(this);
+
+        //Sensor Right
+        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0.5f,0),0);
+        FixtureDef sensorRight = new FixtureDef();
+        sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorRight.filter.maskBits = WorldContactListner.MASK_ALL;
+        sensorRight.shape = polygonShape;
+        sensorRight.isSensor = true;
+        body.createFixture(sensorRight).setUserData(this);
+
+        //Sensor Down
+        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,-0.5f),0);
+        FixtureDef sensorDown = new FixtureDef();
+        sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
+        sensorDown.shape = polygonShape;
+        sensorDown.isSensor = true;
+        body.createFixture(sensorDown).setUserData(this);
+
+        //Sensor Up
+        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,0.5f),0);
+        FixtureDef sensorUp = new FixtureDef();
+        sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
+        sensorUp.shape = polygonShape;
+        sensorUp.isSensor = true;
+        body.createFixture(sensorUp).setUserData(this);
     }
 
-
+    public void stopFall(){
+        currentState = State.IDLE;
+        body.setLinearVelocity(0,0);
+    }
     public void fall(){
         currentState = State.FALL;
-        body.setLinearVelocity(0,-FALL_VELOCITY);
 
     }
     public void push(WaterElement waterElement){
@@ -113,7 +152,7 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        body.setLinearVelocity(0,body.getLinearVelocity().y);
+       // body.setLinearVelocity(0,body.getLinearVelocity().y);
         switch (currentState){
             case IDLE:
                 stateIdle(deltaTime);
@@ -129,13 +168,11 @@ public class Block extends AbstractDynamicObject {
             case DISPOSE:
                 break;
         }
+
     }
 
     private void stateIdle(float deltaTime){
         stateTime += deltaTime;
-
-
-
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
@@ -143,21 +180,18 @@ public class Block extends AbstractDynamicObject {
     }
     private void statePush(float deltaTime){
         stateTime += deltaTime;
-
-
-
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
     }
     private void stateFall(float deltaTime){
         stateTime += deltaTime;
-
-
+        body.setLinearVelocity(0,-10);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
+        body.setLinearVelocity(0,-10);
     }
     private void stateDestroy(float deltaTime){
         gameWorld.destroyBody(body);

@@ -32,7 +32,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
     private static final float JUMPER_SCALE = 1.3f;
     private static final float ROCKET_BACKGROUND_SCALE = 0.2f;
-    private static final float TITLE_OFFSET_Y = 300.0f;
+    private static final float TITLE_OFFSET_Y = 600.0f;
     private static final float ROCKET_BG_OFFSET_X = 200.0f;
     private static final float ROCKET_BG_OFFSET_Y = 50.0f;
     private static final float CLOUD_OFFSET_X = 40.0f;
@@ -152,7 +152,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         exit.setPosition(x, y);
 
         // Buttons Animations
-        setButtonsAnimation();
+        //setButtonsAnimation();
     }
 
     private void setButtonsAnimation() {

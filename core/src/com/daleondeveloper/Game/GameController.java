@@ -99,7 +99,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Input.Keys.SPACE:
+            case Input.Keys.A:
                 if (true) {
                     shoot();
                 } else {

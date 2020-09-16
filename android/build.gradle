@@ -2,7 +2,7 @@ android {
     aaptOptions {
         ignoreAssetsPattern '!raw'
     }
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     compileSdkVersion 26
     sourceSets {
         main {
@@ -21,7 +21,7 @@ android {
     }
     defaultConfig {
         applicationId "com.daleondeveloper"
-        minSdkVersion 14
+        minSdkVersion 22
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
