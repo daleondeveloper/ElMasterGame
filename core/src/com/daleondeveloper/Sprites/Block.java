@@ -38,6 +38,11 @@ public class Block extends AbstractDynamicObject {
     private State currentState;
     private Body body;
     private float velocity;
+    //marks
+    private boolean sensorRight;
+    private boolean sensorLeft;
+    private boolean sensorUp;
+    private boolean sensorDown;
 
     public Block(GameWorld gameWorld, float x, float y, float width,float heght){
         this.gameWorld = gameWorld;
@@ -57,6 +62,11 @@ public class Block extends AbstractDynamicObject {
         setRegion(textureRegionBlock);
         stateTime = 0;
         velocity = 0;
+
+        sensorDown = false;
+        sensorLeft = false;
+        sensorRight = false;
+        sensorUp = false;
 
         defineBlock();
 

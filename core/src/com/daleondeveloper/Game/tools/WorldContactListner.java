@@ -41,8 +41,8 @@ public class WorldContactListner implements ContactListener {
         System.out.println(collisionDef);
 
         switch (collisionDef) {
-            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT:
-                {WaterElement waterElement;
+
+            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT: {WaterElement waterElement;
                 Block block;
                 if (fa.getFilterData().categoryBits == CATEGORY_WATER_ELEM_BIT) {
                   //      resolveContact(((WaterElement) fa.getUserData()), ((Block) fb.getUserData()));
@@ -59,8 +59,7 @@ public class WorldContactListner implements ContactListener {
                 if(waterElement.getY() + 0.1f  > block.getY() + block.getHeight()){
                     waterElement.endJump();
                 }
-                }
-                break;
+                }break;
             case CATEGORY_BLOCK_BIT | CATEGORY_REGION_BIT: {
                 Block block;
                 Platform platform;
@@ -75,8 +74,7 @@ public class WorldContactListner implements ContactListener {
                 System.out.println("contact = " + contact);
                 System.out.println("block = " + block );
                 //heroSkill.addBlockCollision(block);
-            }
-            break;
+            }break;
             case CATEGORY_REGION_BIT | CATEGORY_WATER_ELEM_BIT: {
                 Platform platform;
                 WaterElement hero;
@@ -91,8 +89,7 @@ public class WorldContactListner implements ContactListener {
                 if(hero.getBodyPosition().y > platform.getY() + platform.getHeight()){
                     hero.endJump();
                 }
-            }
-            break;
+            }break;
             case CATEGORY_BLOCK_BIT | CATEGORY_BLOCK_BIT: {
                 Block firstBlock = (Block) fa.getUserData();
                 Block secondBlock = (Block) fb.getUserData();
