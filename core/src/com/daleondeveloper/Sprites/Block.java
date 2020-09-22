@@ -97,6 +97,8 @@ public class Block extends AbstractDynamicObject {
 
         body.createFixture(fixture).setUserData(this);
 
+        defineSensors();
+
 
     }
     private void defineSensors(){
@@ -104,7 +106,7 @@ public class Block extends AbstractDynamicObject {
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(0.1f,0.01f, new Vector2(-0.5f,0),0);
         FixtureDef sensorLeft = new FixtureDef();
-        sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_LEFT_BIT;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
         sensorLeft.shape = polygonShape;
         sensorLeft.isSensor = true;
@@ -113,7 +115,7 @@ public class Block extends AbstractDynamicObject {
         //Sensor Right
         polygonShape.setAsBox(0.1f,0.01f, new Vector2(0.5f,0),0);
         FixtureDef sensorRight = new FixtureDef();
-        sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_RIGHT_BIT;
         sensorRight.filter.maskBits = WorldContactListner.MASK_ALL;
         sensorRight.shape = polygonShape;
         sensorRight.isSensor = true;
@@ -122,7 +124,7 @@ public class Block extends AbstractDynamicObject {
         //Sensor Down
         polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,-0.5f),0);
         FixtureDef sensorDown = new FixtureDef();
-        sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
         sensorDown.shape = polygonShape;
         sensorDown.isSensor = true;
@@ -131,7 +133,7 @@ public class Block extends AbstractDynamicObject {
         //Sensor Up
         polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,0.5f),0);
         FixtureDef sensorUp = new FixtureDef();
-        sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
         sensorUp.shape = polygonShape;
         sensorUp.isSensor = true;
@@ -144,7 +146,6 @@ public class Block extends AbstractDynamicObject {
     }
     public void fall(){
         currentState = State.FALL;
-
     }
     public void push(WaterElement waterElement){
         currentState = State.PUSH;
@@ -186,6 +187,8 @@ public class Block extends AbstractDynamicObject {
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
+        if(sensorDown){body.setLinearVelocity(0,0);}
+        if(!sensorDown){currentState = State.FALL;}
 
     }
     private void statePush(float deltaTime){
@@ -193,15 +196,16 @@ public class Block extends AbstractDynamicObject {
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
+        if(sensorDown){body.setLinearVelocity(body.getLinearVelocity().x,0);}
+        if(!sensorDown){currentState = State.FALL;}
     }
     private void stateFall(float deltaTime){
         stateTime += deltaTime;
-        body.setLinearVelocity(0,-10);
-
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
-        body.setLinearVelocity(0,-10);
+        if(!sensorDown) {body.setLinearVelocity(0,-10);}
+        if(sensorDown){currentState = State.IDLE;}
     }
     private void stateDestroy(float deltaTime){
         gameWorld.destroyBody(body);
@@ -221,5 +225,35 @@ public class Block extends AbstractDynamicObject {
         return false;
     }
 
+    public boolean isSensorRight() {
+        return sensorRight;
+    }
 
+    public void setSensorRight(boolean sensorRight) {
+        this.sensorRight = sensorRight;
+    }
+
+    public boolean isSensorLeft() {
+        return sensorLeft;
+    }
+
+    public void setSensorLeft(boolean sensorLeft) {
+        this.sensorLeft = sensorLeft;
+    }
+
+    public boolean isSensorUp() {
+        return sensorUp;
+    }
+
+    public void setSensorUp(boolean sensorUp) {
+        this.sensorUp = sensorUp;
+    }
+
+    public boolean isSensorDown() {
+        return sensorDown;
+    }
+
+    public void setSensorDown(boolean sensorDown) {
+        this.sensorDown = sensorDown;
+    }
 }

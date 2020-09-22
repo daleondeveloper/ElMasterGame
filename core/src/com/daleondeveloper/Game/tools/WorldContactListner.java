@@ -42,7 +42,8 @@ public class WorldContactListner implements ContactListener {
 
         switch (collisionDef) {
 
-            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT: {WaterElement waterElement;
+            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT: {
+                WaterElement waterElement;
                 Block block;
                 if (fa.getFilterData().categoryBits == CATEGORY_WATER_ELEM_BIT) {
                   //      resolveContact(((WaterElement) fa.getUserData()), ((Block) fb.getUserData()));
@@ -50,7 +51,6 @@ public class WorldContactListner implements ContactListener {
                          block = (Block) fb.getUserData();
 
                 } else {
-
                         //resolveContact(((Jumper) fixB.getUserData()), ((Platform) fixA.getUserData()));
                         waterElement = (WaterElement)fb.getUserData();
                         block = (Block) fa.getUserData();
@@ -90,14 +90,59 @@ public class WorldContactListner implements ContactListener {
                     hero.endJump();
                 }
             }break;
-            case CATEGORY_BLOCK_BIT | CATEGORY_BLOCK_BIT: {
-                Block firstBlock = (Block) fa.getUserData();
-                Block secondBlock = (Block) fb.getUserData();
-                firstBlock.stopFall();
-                secondBlock.stopFall();
+            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_WATER_ELEM_BIT : {
+                WaterElement waterElement;
+                Block block;
+                if (fa.getFilterData().categoryBits == CATEGORY_WATER_ELEM_BIT) {
+                    waterElement = (WaterElement)fa.getUserData();
+                    block = (Block) fb.getUserData();
+
+                } else {
+                    waterElement = (WaterElement)fb.getUserData();
+                    block = (Block) fa.getUserData();
+
+                }
+                waterElement.push(0);
+                block.push(waterElement);
+
+
+            }break;
+            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
+                WaterElement waterElement;
+                Block block;
+                if (fa.getFilterData().categoryBits == CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT) {
+                    waterElement = (WaterElement)fa.getUserData();
+                    block = (Block) fb.getUserData();
+
+                } else {
+                    waterElement = (WaterElement)fb.getUserData();
+                    block = (Block) fa.getUserData();
+
+                }
+                waterElement.push(1);
+                block.push(waterElement);
+
 
             }break;
     }
+        for(int i = 0; i < 2; i++){
+            if(i == 1){
+                Fixture fc = fa;
+                fa = fb;
+                fb = fc;
+            }
+            switch (fa.getFilterData().categoryBits){
+                case CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
+                    Block block = (Block) fa.getUserData();
+                    block.setSensorDown(true);
+                }break;
+                case CATEGORY_BLOCK_SENSOR_UP_BIT : {
+                    Block block = (Block) fb.getUserData();
+                    block.setSensorUp(true);
+                }
+            }
+        }
+
     }
 
     @Override
