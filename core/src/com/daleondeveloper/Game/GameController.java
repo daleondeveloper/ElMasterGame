@@ -30,13 +30,11 @@ public class GameController implements GestureDetector.GestureListener, InputPro
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
-        startJump();
         return true;
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        shoot();
         return false;
     }
 
@@ -73,7 +71,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
 
     @Override
     public void pinchStop() {
-        cheatMode();
+
     }
 
     @Override
@@ -81,7 +79,6 @@ public class GameController implements GestureDetector.GestureListener, InputPro
         switch (keycode) {
             case Input.Keys.SPACE:
                  waterElement.jump();
-                 gameWorld.getBlockController().addBlock(4,4);
                 break;
             case Input.Keys.RIGHT:
                 waterElement.turn(1);
@@ -90,6 +87,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 waterElement.turn(-1);
                 break;
             case Input.Keys.Z:
+                gameWorld.getBlockController().addBlock(4,4);
 
                 break;
         }
@@ -99,15 +97,11 @@ public class GameController implements GestureDetector.GestureListener, InputPro
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case Input.Keys.A:
-                if (true) {
-                    shoot();
-                } else {
-                    performJump();
-                }
+            case Input.Keys.LEFT :
+                waterElement.stopWalk();
                 break;
-            case Input.Keys.P:
-                cheatMode();
+            case Input.Keys.RIGHT :
+                waterElement.stopWalk();
                 break;
         }
         return true;
@@ -125,7 +119,6 @@ public class GameController implements GestureDetector.GestureListener, InputPro
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        performJump();
         return true;
     }
 
@@ -144,38 +137,6 @@ public class GameController implements GestureDetector.GestureListener, InputPro
         return false;
     }
 
-    private void startJump() {
-        if (playScreen.isPlayScreenStateRunning()) {
-            if (waterElement.isIdle()) {
-                hud.startSwing();
-            }
-        }
-    }
 
-    private void performJump() {
-        if (playScreen.isPlayScreenStateRunning()) {
-            if (waterElement.isIdle()) {
-               // hud.stopSwing();
-                //waterElement.jump(hud.getPowerBarValue());
-            }
-        }
-    }
-
-    private void cheatMode() {
-        if (playScreen.isPlayScreenStateRunning()) {
-            if (DebugConstants.POWER_JUMP_ENABLED && !waterElement.isDisposable()) {
-
-                //waterElement.powerJump();
-            }
-        }
-    }
-
-    private void shoot() {
-        if (playScreen.isPlayScreenStateRunning()) {
-            if (true) {
-                //jumper.shoot();
-            }
-        }
-    }
 }
 
