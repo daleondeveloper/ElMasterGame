@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetWaterElement;
 import com.daleondeveloper.Game.tools.WorldContactListner;
@@ -15,6 +16,9 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.Platform;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WaterElement extends AbstractDynamicObject {
     private static final String TAG = WaterElement.class.getName();
@@ -60,10 +64,10 @@ public class WaterElement extends AbstractDynamicObject {
     private CircleShape circleShapeSkillFixture;
 
     //marks
-    private int sensorRight;
-    private int sensorLeft;
-    private int sensorUp;
-    private int sensorDown;
+    private List<Fixture> sensorRight;
+    private List<Fixture> sensorLeft;
+    private List<Fixture> sensorUp;
+    private List<Fixture> sensorDown;
 
     private State debugState;
 
@@ -94,10 +98,10 @@ public class WaterElement extends AbstractDynamicObject {
         activateElem = true;
         currentPlatform = null;
 
-        sensorDown = 0;
-        sensorLeft = 0;
-        sensorRight = 0;
-        sensorUp = 0;
+        sensorDown = new ArrayList<Fixture>();
+        sensorLeft = new ArrayList<Fixture>();
+        sensorRight = new ArrayList<Fixture>();
+        sensorUp = new ArrayList<Fixture>();
 
         initVoice();
     }
@@ -324,7 +328,7 @@ public class WaterElement extends AbstractDynamicObject {
                 stopElem = false;
             }
 
-            if(sensorDown < 1){
+            if(sensorDown.size() < 1){
                 fall();
             }
             body.setLinearVelocity(0,0);
@@ -347,16 +351,16 @@ public class WaterElement extends AbstractDynamicObject {
 //                setFilters();
 //                activateElem = false;
 //            }
-            if(sensorDown > 0 && stateTime > 0.1f){
+            if(sensorDown.size() > 0 && stateTime > 0.1f){
                 idle();
             }
-            if(sensorUp > 0 || stateTime > 0.5){
+            if(sensorUp.size() > 0 || stateTime > 0.5){
                 fall();
             }
-            if(sensorLeft > 0 && body.getLinearVelocity().x < 0){
+            if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){
                 body.getLinearVelocity().x = 0;
             }
-            if(sensorRight > 0 && body.getLinearVelocity().x > 0){
+            if(sensorRight.size() > 0 && body.getLinearVelocity().x > 0){
                 body.getLinearVelocity().x = 0;
             }
 
@@ -367,13 +371,13 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
         private void stateFall(float deltaTime){
-            if(sensorDown > 0){
+            if(sensorDown.size() > 0){
                 idle();
             }
-            if(sensorLeft > 0 && body.getLinearVelocity().x < 0){
+            if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){
                 body.getLinearVelocity().x = 0;
             }
-            if(sensorRight > 0 && body.getLinearVelocity().x > 0){
+            if(sensorRight.size() > 0 && body.getLinearVelocity().x > 0){
                 body.getLinearVelocity().x = 0;
             }
             body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
@@ -388,7 +392,7 @@ public class WaterElement extends AbstractDynamicObject {
 //                setFilters();
 //                activateElem = false;
 //            }
-            if(sensorRight > 0 && sensorLeft > 0){
+            if(sensorRight.size() > 0 && sensorLeft.size() > 0){
                 currentState = State.IDLE;
                 stateTime = 0;
             }
@@ -427,35 +431,20 @@ public class WaterElement extends AbstractDynamicObject {
         return false;
     }
 
-    public int getSensorRight() {
+    public List<Fixture> getSensorRight() {
         return sensorRight;
     }
 
-    public void setSensorRight(int sensorRight) {
-        this.sensorRight = sensorRight;
-    }
-
-    public int getSensorLeft() {
+    public List<Fixture> getSensorLeft() {
         return sensorLeft;
     }
 
-    public void setSensorLeft(int sensorLeft) {
-        this.sensorLeft = sensorLeft;
-    }
-
-    public int getSensorUp() {
+    public List<Fixture> getSensorUp() {
         return sensorUp;
     }
 
-    public void setSensorUp(int sensorUp) {
-        this.sensorUp = sensorUp;
-    }
-
-    public int getSensorDown() {
+    public List<Fixture> getSensorDown() {
         return sensorDown;
     }
 
-    public void setSensorDown(int sensorDown) {
-        this.sensorDown = sensorDown;
-    }
 }
