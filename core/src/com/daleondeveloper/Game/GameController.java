@@ -82,9 +82,11 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 break;
             case Input.Keys.RIGHT:
                 waterElement.turn(1);
+                gameWorld.setRightButtonPressed(true);
                 break;
             case Input.Keys.LEFT:
                 waterElement.turn(-1);
+                gameWorld.setLeftButtonPressed(true);
                 break;
             case Input.Keys.Z:
                 gameWorld.getBlockController().addBlock(4,4);
@@ -99,9 +101,11 @@ public class GameController implements GestureDetector.GestureListener, InputPro
         switch (keycode) {
             case Input.Keys.LEFT :
                 waterElement.stopWalk();
+                gameWorld.setLeftButtonPressed(false);
                 break;
             case Input.Keys.RIGHT :
                 waterElement.stopWalk();
+                gameWorld.setRightButtonPressed(false);
                 break;
         }
         return true;

@@ -22,7 +22,7 @@ public class WaterElement extends AbstractDynamicObject {
     private static final float CIRCLE_SHAPE_RADIUS_METERS = 30.0f / GameCamera.PPM;
     private static final float SENSOR_HX = 0.1f;
     private static final float SENSOR_HY = 0.01f;
-    private static final float IMPULSE_Y = 7.5f;
+    private static final float IMPULSE_Y = 5f;
     private static final float SCALE_IMPULSE_X = 30.0f;
     private static final float POWER_JUMP_OFFSET_Y = 1.0f;
     private static final int SUCCESSFUL_JUMP_SCORE = 2;
@@ -59,10 +59,10 @@ public class WaterElement extends AbstractDynamicObject {
     private CircleShape circleShapeSkillFixture;
 
     //marks
-    private boolean sensorRight;
-    private boolean sensorLeft;
-    private boolean sensorUp;
-    private boolean sensorDown;
+    private int sensorRight;
+    private int sensorLeft;
+    private int sensorUp;
+    private int sensorDown;
 
     private State debugState;
 
@@ -78,7 +78,7 @@ public class WaterElement extends AbstractDynamicObject {
         elemDeathAnim = assetWaterElem.getElementOfWaterStand();
         elemTexReg = assetWaterElem.getElementOfWater();
 
-        setBounds(x,y, 0.8f,1.5f);
+        setBounds(x,y, 0.8f,1f);
         setRegion(elemTexReg);
         stateTime = 0;
 
@@ -93,10 +93,10 @@ public class WaterElement extends AbstractDynamicObject {
         activateElem = true;
         currentPlatform = null;
 
-        sensorDown = false;
-        sensorLeft = false;
-        sensorRight = false;
-        sensorUp = false;
+        sensorDown = 0;
+        sensorLeft = 0;
+        sensorRight = 0;
+        sensorUp = 0;
 
         initVoice();
     }
@@ -131,7 +131,7 @@ public class WaterElement extends AbstractDynamicObject {
     private void defineSensors(){
         //Sensor Left
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(-0.4f,0),0);
+        polygonShape.setAsBox(0.01f,1.4f, new Vector2(-0.4f,0),0);
         FixtureDef sensorLeft = new FixtureDef();
         sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -140,7 +140,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorLeft).setUserData(this);
 
         //Sensor Right
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0.4f,0),0);
+        polygonShape.setAsBox(0.01f,1.4f, new Vector2(0.4f,0),0);
         FixtureDef sensorRight = new FixtureDef();
         sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT;
         sensorRight.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -149,7 +149,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,-0.75f),0);
+        polygonShape.setAsBox(0.65f,0.01f, new Vector2(0,-0.5f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -158,7 +158,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,0.75f),0);
+        polygonShape.setAsBox(0.7f,0.1f, new Vector2(0,0.75f),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -199,7 +199,7 @@ public class WaterElement extends AbstractDynamicObject {
     }
 
     public void jump(){
-        if(currentState == State.WALK || currentState == State.IDLE) {
+        if(currentState == State.WALK || currentState == State.IDLE || currentState == State.PUSH) {
             stateTime = 0;
             currentState = State.JUMP;
             body.applyLinearImpulse(new Vector2(0, IMPULSE_Y), body.getWorldCenter(), true);
@@ -218,7 +218,7 @@ public class WaterElement extends AbstractDynamicObject {
             moveRight = false;
         }
         impulse*= 2;
-        if(currentState == State.IDLE) {
+        if(currentState == State.IDLE || currentState == State.PUSH) {
             currentState = State.WALK;
             stateTime = 0;
 
@@ -272,7 +272,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-
+     //   System.out.println(sensorDown);
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
@@ -289,6 +289,7 @@ public class WaterElement extends AbstractDynamicObject {
                 break;
             case PUSH:
                 statePush(deltaTime);
+                break;
             case WALK:
                 stateWalk(deltaTime);
                 body.setLinearVelocity(new Vector2(turnImpulse*2,getVelocity().y));
@@ -307,10 +308,8 @@ public class WaterElement extends AbstractDynamicObject {
             if(stopElem){
                 stopElem = false;
             }
-            stateTime += deltaTime;
-            speakTime += deltaTime;
 
-            if(!sensorDown){ currentState = State.FALL;
+            if(sensorDown < 1){ currentState = State.FALL;
             stateTime = 0;
             }
             body.setLinearVelocity(0,0);
@@ -319,28 +318,32 @@ public class WaterElement extends AbstractDynamicObject {
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
+            stateTime += deltaTime;
+            speakTime += deltaTime;
+
 
             if(speakTime > timeToSpeak){
                 initVoice();
             }
         }
         private void stateJump(float deltaTime){
+            System.out.println("deltaTime = " + stateTime);
             if(activateElem){
                 setFilters();
                 activateElem = false;
             }
-            if(sensorDown){
+            if(sensorDown > 0 && stateTime > 0.5f){
                 currentState = State.IDLE;
                 stateTime = 0;
             }
-            if(sensorUp){
+            if(sensorUp > 0){
                 currentState = State.FALL;
                 stateTime = 0;
             }
-            if(sensorLeft && body.getLinearVelocity().x < 0){
+            if(sensorLeft > 0 && body.getLinearVelocity().x < 0){
                 body.getLinearVelocity().x = 0;
             }
-            if(sensorRight && body.getLinearVelocity().x > 0){
+            if(sensorRight > 0 && body.getLinearVelocity().x > 0){
                 body.getLinearVelocity().x = 0;
             }
 
@@ -350,7 +353,7 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
         private void stateFall(float deltaTime){
-            if(sensorDown){
+            if(sensorDown > 0){
                 currentState = State.IDLE;
                 stateTime = 0;
             }
@@ -365,11 +368,11 @@ public class WaterElement extends AbstractDynamicObject {
                 setFilters();
                 activateElem = false;
             }
-            if(!sensorRight && !sensorLeft){
+            if(sensorRight > 0 && sensorLeft > 0){
                 currentState = State.IDLE;
                 stateTime = 0;
             }
-
+            System.out.println("deltaTime = " + stateTime);
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemPushAnim.getKeyFrame(stateTime, true));
@@ -401,38 +404,38 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public boolean isDisposable() {
-        return currentState == State.DISPOSE;
+        return false;
     }
 
-    public boolean isSensorRight() {
+    public int getSensorRight() {
         return sensorRight;
     }
 
-    public void setSensorRight(boolean sensorRight) {
+    public void setSensorRight(int sensorRight) {
         this.sensorRight = sensorRight;
     }
 
-    public boolean isSensorLeft() {
+    public int getSensorLeft() {
         return sensorLeft;
     }
 
-    public void setSensorLeft(boolean sensorLeft) {
+    public void setSensorLeft(int sensorLeft) {
         this.sensorLeft = sensorLeft;
     }
 
-    public boolean isSensorUp() {
+    public int getSensorUp() {
         return sensorUp;
     }
 
-    public void setSensorUp(boolean sensorUp) {
+    public void setSensorUp(int sensorUp) {
         this.sensorUp = sensorUp;
     }
 
-    public boolean isSensorDown() {
+    public int getSensorDown() {
         return sensorDown;
     }
 
-    public void setSensorDown(boolean sensorDown) {
+    public void setSensorDown(int sensorDown) {
         this.sensorDown = sensorDown;
     }
 }

@@ -30,6 +30,9 @@ public class GameWorld {
     private Platform regionRight;
     private Background background;
 
+    private boolean rightButtonPressed;
+    private boolean leftButtonPressed;
+
     private Array<AbstractGameObject> gameObjectToCreate;
 
     public GameWorld(PlayScreen playScreen, World box2DWorld, int level){
@@ -39,6 +42,9 @@ public class GameWorld {
         gameCamera = new GameCamera();
         moveCamera = false;
         pauseCamera = false;
+
+        rightButtonPressed = false;
+        leftButtonPressed = false;
 
         createSprites();
         createBackground();
@@ -119,10 +125,20 @@ public class GameWorld {
         updateBlock(deltaTime);
         centerCamera(deltaTime);
 
+     //   checkPressedButtons();
 
         gameCamera.update(deltaTime);
     }
 
+    private void checkPressedButtons(){
+        if(isLeftButtonPressed()){
+            waterElement.turn(-1);
+        }
+        if(isRightButtonPressed()){
+            waterElement.turn(1);
+
+        }
+    }
     private void updateBlock(float deltaTime){
         Array<Block> arrayBlock = blockController.getArrayBlock();
         for(Block block: arrayBlock){
@@ -213,4 +229,19 @@ public class GameWorld {
         pauseCamera = false;
     }
 
+    public boolean isRightButtonPressed() {
+        return rightButtonPressed;
+    }
+
+    public void setRightButtonPressed(boolean rightButtonPressed) {
+        this.rightButtonPressed = rightButtonPressed;
+    }
+
+    public boolean isLeftButtonPressed() {
+        return leftButtonPressed;
+    }
+
+    public void setLeftButtonPressed(boolean leftButtonPressed) {
+        this.leftButtonPressed = leftButtonPressed;
+    }
 }

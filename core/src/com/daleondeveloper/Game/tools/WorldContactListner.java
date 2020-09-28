@@ -105,10 +105,10 @@ public class WorldContactListner implements ContactListener {
 
 
             }break;
-            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
+            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_WATER_ELEM_BIT : {
                 WaterElement waterElement;
                 Block block;
-                if (fa.getFilterData().categoryBits == CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT) {
+                if (fa.getFilterData().categoryBits == CATEGORY_WATER_ELEM_BIT) {
                     waterElement = (WaterElement)fa.getUserData();
                     block = (Block) fb.getUserData();
 
@@ -148,19 +148,19 @@ public class WorldContactListner implements ContactListener {
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorLeft(true);
+                    hero.setSensorLeft(hero.getSensorLeft()+1);
                 }break;
                   case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorRight(true);
+                    hero.setSensorRight(hero.getSensorRight() + 1);
                 }break;
                   case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorUp(true);
+                    hero.setSensorUp(hero.getSensorUp() + 1);
                 }break;
                   case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorDown(true);
+                    hero.setSensorDown(hero.getSensorDown() + 1);
                 }break;
 
             }
@@ -199,19 +199,19 @@ public class WorldContactListner implements ContactListener {
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorLeft(false);
+                    hero.setSensorLeft(hero.getSensorLeft()-1);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorRight(false);
+                    hero.setSensorRight(hero.getSensorRight()-1);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorUp(false);
+                    hero.setSensorUp(hero.getSensorUp() - 1);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT : {
                     WaterElement hero = (WaterElement) fa.getUserData();
-                    hero.setSensorDown(false);
+                    hero.setSensorDown(hero.getSensorDown() - 1);
                 }break;
 
             }
