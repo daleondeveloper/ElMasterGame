@@ -125,17 +125,17 @@ public class GameWorld {
         updateBlock(deltaTime);
         centerCamera(deltaTime);
 
-     //   checkPressedButtons();
+        checkPressedButtons();
 
         gameCamera.update(deltaTime);
     }
 
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
-            waterElement.turn(-1);
+            waterElement.turn(-2);
         }
         if(isRightButtonPressed()){
-            waterElement.turn(1);
+            waterElement.turn(2);
 
         }
     }
@@ -235,6 +235,9 @@ public class GameWorld {
 
     public void setRightButtonPressed(boolean rightButtonPressed) {
         this.rightButtonPressed = rightButtonPressed;
+        if(rightButtonPressed){
+            leftButtonPressed = false;
+        }
     }
 
     public boolean isLeftButtonPressed() {
@@ -243,5 +246,8 @@ public class GameWorld {
 
     public void setLeftButtonPressed(boolean leftButtonPressed) {
         this.leftButtonPressed = leftButtonPressed;
+        if(leftButtonPressed){
+            rightButtonPressed = false;
+        }
     }
 }

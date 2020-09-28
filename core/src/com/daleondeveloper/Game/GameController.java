@@ -81,12 +81,15 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                  waterElement.jump();
                 break;
             case Input.Keys.RIGHT:
-                waterElement.turn(1);
+                waterElement.turn(2f);
                 gameWorld.setRightButtonPressed(true);
                 break;
             case Input.Keys.LEFT:
-                waterElement.turn(-1);
+                waterElement.turn(-2f);
                 gameWorld.setLeftButtonPressed(true);
+                break;
+            case Input.Keys.C:
+                waterElement.push(0.5f);
                 break;
             case Input.Keys.Z:
                 gameWorld.getBlockController().addBlock(4,4);
