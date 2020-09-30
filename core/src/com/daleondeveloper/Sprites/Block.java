@@ -84,11 +84,12 @@ public class Block extends AbstractDynamicObject {
         body.setLinearVelocity(0,-10);
 
 
+
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(getWidth()/2.05f,getHeight()/2.05f);
-   //     fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
-   //     fixture.filter.maskBits = WorldContactListner.MASK_ALL;
+        polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
+        fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
+        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
         fixture.density = 1f;
         fixture.friction = 1f;
@@ -104,7 +105,7 @@ public class Block extends AbstractDynamicObject {
     private void defineSensors(){
         //Sensor Left
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(-0.5f,0),0);
+        polygonShape.setAsBox(0.01f,0.45f, new Vector2(-0.49f,0),0);
         FixtureDef sensorLeft = new FixtureDef();
         sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_LEFT_BIT;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -113,7 +114,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorLeft).setUserData(this);
 
         //Sensor Right
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0.5f,0),0);
+        polygonShape.setAsBox(0.01f,0.45f, new Vector2(0.49f,0),0);
         FixtureDef sensorRight = new FixtureDef();
         sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_RIGHT_BIT;
         sensorRight.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -122,7 +123,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,-0.5f),0);
+        polygonShape.setAsBox(0.45f,0.01f, new Vector2(0,-0.49f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -131,7 +132,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox(0.1f,0.01f, new Vector2(0,0.5f),0);
+        polygonShape.setAsBox(0.45f,0.01f, new Vector2(0,0.49f),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -183,12 +184,15 @@ public class Block extends AbstractDynamicObject {
     }
 
     private void stateIdle(float deltaTime){
-        stateTime += deltaTime;
+        body.setAwake(false);
+        if(sensorDown){body.setLinearVelocity(0,0);}
+        if(!sensorDown){currentState = State.FALL;}
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
-        if(sensorDown){body.setLinearVelocity(0,0);}
-        if(!sensorDown){currentState = State.FALL;}
+
+        stateTime += deltaTime;
+
 
     }
     private void statePush(float deltaTime){
