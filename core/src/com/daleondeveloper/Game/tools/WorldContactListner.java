@@ -128,23 +128,23 @@ public class WorldContactListner implements ContactListener {
                     block.setSensorLeft(true);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
+                    System.out.println("sensor left active");
                     WaterElement hero = (WaterElement) fa.getUserData();
                     hero.getSensorLeft().add(fb);
                 }break;
                   case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT : {
+                      System.out.println("sensor right active");
                     WaterElement hero = (WaterElement) fa.getUserData();
                     hero.getSensorRight().add(fb);
                 }break;
                   case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
+                      System.out.println("sensor up active");
                     WaterElement hero = (WaterElement) fa.getUserData();
                     hero.getSensorUp().add(fb);
                 }break;
                   case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT : {
-
-                      System.out.println(fa);System.out.println(fb);
-                    WaterElement hero = (WaterElement) fa.getUserData();
-                    float bodyX = Math.abs(hero.getBodyPosition().x - fb.getBody().getPosition().x);
-
+                      System.out.println("sensor down active");
+                      WaterElement hero = (WaterElement) fa.getUserData();
                         hero.getSensorDown().add(fb);
 
                 }break;
@@ -184,14 +184,17 @@ public class WorldContactListner implements ContactListener {
                     block.setSensorLeft(false);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
+                    System.out.println("sensorleft deactive");
                     WaterElement hero = (WaterElement) fa.getUserData();
                     hero.getSensorLeft().remove(fb);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT : {
+                    System.out.println("sensor right deactive");
                     WaterElement hero = (WaterElement) fa.getUserData();
                     hero.getSensorRight().remove(fb);
                 }break;
                 case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
+                    System.out.println("sensor up deactive");
                     WaterElement hero = (WaterElement) fa.getUserData();
                     hero.getSensorUp().remove(fb);
                 }break;

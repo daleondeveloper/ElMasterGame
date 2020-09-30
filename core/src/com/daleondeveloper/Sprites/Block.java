@@ -85,6 +85,7 @@ public class Block extends AbstractDynamicObject {
 
 
 
+
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
@@ -184,7 +185,7 @@ public class Block extends AbstractDynamicObject {
     }
 
     private void stateIdle(float deltaTime){
-        body.setAwake(false);
+        body.setType(BodyDef.BodyType.StaticBody);
         if(sensorDown){body.setLinearVelocity(0,0);}
         if(!sensorDown){currentState = State.FALL;}
         // Update this Sprite to correspond with the position of the Box2D body.
