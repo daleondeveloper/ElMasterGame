@@ -58,7 +58,7 @@ public class GameWorld {
 
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth(),gameCamera.getWorldHeight()/2);
+        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,20);
 
         //Regions ( create regions around the playing zone for player and game element)
         regionDown = new Platform(this,0,8,gameCamera.getWorldWidth(),10);
@@ -132,10 +132,10 @@ public class GameWorld {
 
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
-            waterElement.turn(-2);
+            waterElement.turn(-20);
         }
         if(isRightButtonPressed()){
-            waterElement.turn(2);
+            waterElement.turn(20);
 
         }
     }

@@ -88,9 +88,9 @@ public class Block extends AbstractDynamicObject {
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
         fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
-        fixture.density = 0.1f;
-        fixture.friction = 0.1f;
-        fixture.restitution = 0.1f;
+        fixture.density = 0f;
+        fixture.friction = 0f;
+        fixture.restitution = 0f;
 
         body.createFixture(fixture).setUserData(this);
 
@@ -119,7 +119,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox(0.1f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.99f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -128,7 +128,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox(0.1f,0.1f, new Vector2(0,(getHeight()/2)-0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.99f,0.1f, new Vector2(0,(getHeight()/2)-0.05f),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -186,7 +186,7 @@ public class Block extends AbstractDynamicObject {
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
         if(!sensorDown){stopFall();}
-        body.setLinearVelocity(0,0);
+  //      body.setLinearVelocity(0,0);
         textureRegionBlock = assetBlocks.get(1);
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);

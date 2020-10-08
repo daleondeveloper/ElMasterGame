@@ -80,7 +80,8 @@ public class WorldContactListner implements ContactListener {
 
             }break;
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:
-            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT:{
+            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT:
+            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_WATER_ELEM_SENSOR_UP_BIT:{
                 Block contactBlock = null;
                 if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
                     contactBlock = (Block)fa.getUserData();
@@ -185,7 +186,9 @@ public class WorldContactListner implements ContactListener {
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
 
         switch (collisionDef) {
-            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT : {
+           case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT :
+      //      case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT :
+            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
                 Block contactBlock = null;
                 if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
                     contactBlock = (Block)fa.getUserData();
@@ -220,7 +223,7 @@ public class WorldContactListner implements ContactListener {
             if(fa.getUserData() instanceof WaterElement){
                 switch (faCatBit){
                     case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT : {
-                        System.out.println("sensorleft deactive");
+                        System.out.println("sensor left deactivate");
                         WaterElement hero = (WaterElement) fa.getUserData();
                         hero.getSensorLeft().remove(fb);
                     }break;
