@@ -185,8 +185,8 @@ public class Block extends AbstractDynamicObject {
 
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
-        if(!sensorDown){stopFall();}
-  //      body.setLinearVelocity(0,0);
+        if(!sensorDown){fall();}
+        body.setLinearVelocity(0,0);
         textureRegionBlock = assetBlocks.get(1);
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
