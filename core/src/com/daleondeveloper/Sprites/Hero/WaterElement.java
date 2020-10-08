@@ -83,7 +83,7 @@ public class WaterElement extends AbstractDynamicObject {
         elemDeathAnim = assetWaterElem.getElementOfWaterStand();
         elemTexReg = assetWaterElem.getElementOfWater();
 
-        setBounds(x,y, 0.8f,1f);
+        setBounds(x,y, 8f,10f);
         setRegion(elemTexReg);
         stateTime = 0;
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
@@ -19,7 +20,7 @@ public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
 
-    private static final float FALL_VELOCITY =  5;
+    private static final float FALL_VELOCITY =  -100;
 
     public void skill1End() {
     }
@@ -37,14 +38,13 @@ public class Block extends AbstractDynamicObject {
     private float stateTime;
     private State currentState;
     private Body body;
-    private float velocity;
     //marks
     private boolean sensorRight;
     private boolean sensorLeft;
     private boolean sensorUp;
     private boolean sensorDown;
 
-    public Block(GameWorld gameWorld, float x, float y, float width,float heght){
+    public Block(GameWorld gameWorld, float x, float y, float width,float height){
         this.gameWorld = gameWorld;
 
         assetBlocks = new Array<TextureRegion>();
@@ -55,13 +55,12 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockRed());
         assetBlocks.add(assets.getBlockYellow());
 
-        textureRegionBlock = assetBlocks.get(0);
+        textureRegionBlock = assetBlocks.get(1);
 
         // Sets initial values for position, width and height and initial frame as jumperStand.
-        setBounds(x, y, 1, 1);
+        setBounds(x, y, width, height);
         setRegion(textureRegionBlock);
         stateTime = 0;
-        velocity = 0;
 
         sensorDown = false;
         sensorLeft = false;
@@ -81,10 +80,7 @@ public class Block extends AbstractDynamicObject {
         body =gameWorld.createBody(blockDef);
         body.setFixedRotation(true);
         body.setGravityScale(0);
-        body.setLinearVelocity(0,-10);
-
-
-
+        body.setLinearVelocity(0,FALL_VELOCITY);
 
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
@@ -92,10 +88,9 @@ public class Block extends AbstractDynamicObject {
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
         fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
-        fixture.density = 1f;
-        fixture.friction = 1f;
-        fixture.restitution = 0f;
-
+        fixture.density = 0.1f;
+        fixture.friction = 0.1f;
+        fixture.restitution = 0.1f;
 
         body.createFixture(fixture).setUserData(this);
 
@@ -106,7 +101,7 @@ public class Block extends AbstractDynamicObject {
     private void defineSensors(){
         //Sensor Left
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.01f,0.45f, new Vector2(-0.49f,0),0);
+        polygonShape.setAsBox(0.1f,getHeight()/2, new Vector2((-getWidth()/2)+0.05f,0),0);
         FixtureDef sensorLeft = new FixtureDef();
         sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_LEFT_BIT;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -115,7 +110,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorLeft).setUserData(this);
 
         //Sensor Right
-        polygonShape.setAsBox(0.01f,0.45f, new Vector2(0.49f,0),0);
+        polygonShape.setAsBox(0.1f,getHeight()/2, new Vector2((getWidth()/2)-0.05f,0),0);
         FixtureDef sensorRight = new FixtureDef();
         sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_RIGHT_BIT;
         sensorRight.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -124,7 +119,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox(0.45f,0.01f, new Vector2(0,-0.49f),0);
+        polygonShape.setAsBox(0.1f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -133,7 +128,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox(0.45f,0.01f, new Vector2(0,0.49f),0);
+        polygonShape.setAsBox(0.1f,0.1f, new Vector2(0,(getHeight()/2)-0.05f),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -144,7 +139,6 @@ public class Block extends AbstractDynamicObject {
 
     public void stopFall(){
         currentState = State.IDLE;
-        body.setLinearVelocity(0,0);
     }
     public void fall(){
         currentState = State.FALL;
@@ -165,6 +159,11 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
+//        body.setType(BodyDef.BodyType.KinematicBody);
+//        float tmpX = getX();
+//        tmpX = (float)Math.ceil(tmpX);
+//        body.setTransform(tmpX,getY(),body.getAngle());
+//        body.setType(BodyDef.BodyType.DynamicBody);
        // body.setLinearVelocity(0,body.getLinearVelocity().y);
         switch (currentState){
             case IDLE:
@@ -186,8 +185,9 @@ public class Block extends AbstractDynamicObject {
 
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
-        if(sensorDown){body.setLinearVelocity(0,0);}
-        if(!sensorDown){currentState = State.FALL;}
+        if(!sensorDown){stopFall();}
+        body.setLinearVelocity(0,0);
+        textureRegionBlock = assetBlocks.get(1);
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
@@ -205,12 +205,16 @@ public class Block extends AbstractDynamicObject {
         if(!sensorDown){currentState = State.FALL;}
     }
     private void stateFall(float deltaTime){
-        stateTime += deltaTime;
+        body.setType(BodyDef.BodyType.DynamicBody);
+        if(sensorDown){stopFall();}
+        body.setLinearVelocity(0,FALL_VELOCITY);
+        textureRegionBlock = assetBlocks.get(3);
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
-        if(!sensorDown) {body.setLinearVelocity(0,-10);}
-        if(sensorDown){currentState = State.IDLE;}
+        stateTime += deltaTime;
+
+
     }
     private void stateDestroy(float deltaTime){
         gameWorld.destroyBody(body);

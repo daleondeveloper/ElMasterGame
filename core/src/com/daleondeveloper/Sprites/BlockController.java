@@ -25,7 +25,7 @@ public class BlockController {
     }
     public boolean addBlock(float x, float y){
         Random rnd = new Random ();
-        Block block = new Block(gameWorld,(float)rnd.nextInt(10)+2,gameWorld.getGameCamera().getWorldHeight(),1f,1f);
+        Block block = new Block(gameWorld,(float)rnd.nextInt(9)*10+5,gameWorld.getGameCamera().getWorldHeight(),9.95f,9.95f);
         arrayBlock.add(block);
         block.fall();
         return true;

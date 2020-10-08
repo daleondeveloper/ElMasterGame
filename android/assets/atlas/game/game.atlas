@@ -125,9 +125,9 @@ elementOfWaterWalk
      index: 3
 blockBlue
      rotate: false
-     xy: 749, 121
-     size: 32, 32
-     orig: 32, 32
+     xy: 759, 131
+     size: 16, 16
+     orig: 16, 16
      offset: 0, 0
      index: -1
 blockGreen

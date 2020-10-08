@@ -58,12 +58,12 @@ public class GameWorld {
 
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,gameCamera.getWorldHeight()/2);
+        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth(),gameCamera.getWorldHeight()/2);
 
         //Regions ( create regions around the playing zone for player and game element)
-        regionDown = new Platform(this,0,8,gameCamera.getWorldWidth(),2);
-        regionLeft = new Platform(this,0,0,2,gameCamera.getWorldHeight());
-        regionRight = new Platform(this,gameCamera.getWorldWidth()-2,0,2,gameCamera.getWorldHeight());
+        regionDown = new Platform(this,0,8,gameCamera.getWorldWidth(),10);
+        regionLeft = new Platform(this,0,0,5,gameCamera.getWorldHeight());
+        regionRight = new Platform(this,gameCamera.getWorldWidth()-5,0,5,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
 
         //create background fon
@@ -125,8 +125,8 @@ public class GameWorld {
         updateBlock(deltaTime);
         centerCamera(deltaTime);
 
-        checkPressedButtons();
-
+            checkPressedButtons();
+        this.
         gameCamera.update(deltaTime);
     }
 
