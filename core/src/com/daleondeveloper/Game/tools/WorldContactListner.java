@@ -82,15 +82,27 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT:
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_WATER_ELEM_SENSOR_UP_BIT:{
-                Block contactBlock = null;
+                Block block = null;
+                WaterElement waterElement = null;
+                System.out.println("In Start Contact");
                 if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
-                    contactBlock = (Block)fa.getUserData();
+                    block = (Block)fa.getUserData();
                 }else{
-                    contactBlock = (Block)fb.getUserData();
+                    block = (Block)fb.getUserData();
                 }
-                contactBlock.setSensorDown(true);
-
+                if(fa.getUserData() instanceof WaterElement){
+                    waterElement = (WaterElement)fa.getUserData();
+                    if(!waterElement.getSensorUp().contains(fb)) {
+                        waterElement.getSensorUp().add(fb);
+                    }
+                }else if(fb.getUserData() instanceof WaterElement){
+                    waterElement = (WaterElement)fb.getUserData();
+                    if(!waterElement.getSensorUp().contains(fa)) {
+                        waterElement.getSensorUp().add(fb);
+                    }                }
+                block.setSensorDown(true);
             }break;
+
 //            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_WATER_ELEM_BIT : {
 //                WaterElement waterElement;
 //                Block block;
@@ -127,24 +139,6 @@ public class WorldContactListner implements ContactListener {
 //            }break;
     }
 
-//            switch (fa.getFilterData().categoryBits){
-//                case CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
-//                    Block block = (Block) fa.getUserData();
-//                    //block.setSensorDown(true);
-//                }break;
-//                case CATEGORY_BLOCK_SENSOR_UP_BIT : {
-//                    Block block = (Block) fa.getUserData();
-//                    block.setSensorUp(true);
-//                }break;
-//                case CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
-//                    Block block = (Block) fa.getUserData();
-//                    block.setSensorRight(true);
-//                }break;
-//                case CATEGORY_BLOCK_SENSOR_LEFT_BIT : {
-//                    Block block = (Block) fa.getUserData();
-//                    block.setSensorLeft(true);
-//                }break;
-//            }
 
             if(fa.getUserData() instanceof WaterElement){
                 switch (faCatBit){
@@ -158,11 +152,11 @@ public class WorldContactListner implements ContactListener {
                         WaterElement hero = (WaterElement) fa.getUserData();
                         hero.getSensorRight().add(fb);
                     }break;
-                    case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
-                        System.out.println("sensor up active");
-                        WaterElement hero = (WaterElement) fa.getUserData();
-                        hero.getSensorUp().add(fb);
-                    }break;
+//                    case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
+//                        System.out.println("sensor up active");
+//                        WaterElement hero = (WaterElement) fa.getUserData();
+//                        hero.getSensorUp().add(fb);
+//                    }break;
                     case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT : {
                         System.out.println("sensor down active");
                         WaterElement hero = (WaterElement) fa.getUserData();
@@ -186,18 +180,28 @@ public class WorldContactListner implements ContactListener {
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
 
         switch (collisionDef) {
-           case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT :
-      //      case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT :
+            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT :
+            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT :
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
                 Block contactBlock = null;
+                WaterElement waterElement = null;
+                System.out.println("In End Contact");
                 if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
                     contactBlock = (Block)fa.getUserData();
                 }else{
                     contactBlock = (Block)fb.getUserData();
                 }
+                if(fa.getUserData() instanceof WaterElement){
+                    waterElement = (WaterElement)fa.getUserData();
+                    waterElement.getSensorUp().remove(fb);
+                }else if(fb.getUserData() instanceof WaterElement){
+                    waterElement = (WaterElement)fb.getUserData();
+                    waterElement.getSensorUp().remove(fa);
+                }
                 contactBlock.setSensorDown(false);
 
             }break;
+//
 
         }
 //            switch (faCatBit){
@@ -232,11 +236,11 @@ public class WorldContactListner implements ContactListener {
                         WaterElement hero = (WaterElement) fa.getUserData();
                         hero.getSensorRight().remove(fb);
                     }break;
-                    case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
-                        System.out.println("sensor up deactive");
-                        WaterElement hero = (WaterElement) fa.getUserData();
-                        hero.getSensorUp().remove(fb);
-                    }break;
+//                    case CATEGORY_WATER_ELEM_SENSOR_UP_BIT : {
+//                        System.out.println("sensor up deactive");
+//                        WaterElement hero = (WaterElement) fa.getUserData();
+//                        hero.getSensorUp().remove(fb);
+//                    }break;
                     case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT : {
                         WaterElement hero = (WaterElement) fa.getUserData();
                         hero.getSensorDown().remove(fb);

@@ -23,19 +23,10 @@ import java.util.List;
 public class WaterElement extends AbstractDynamicObject {
     private static final String TAG = WaterElement.class.getName();
 
-    private static final float CIRCLE_SHAPE_RADIUS_METERS = 30.0f / GameCamera.PPM;
-    private static final float SENSOR_HX = 0.1f;
-    private static final float SENSOR_HY = 0.01f;
     private static final float IMPULSE_Y = 30f;
     private static final float IMPULSE_FALL = -30f;
-    private static final float SCALE_IMPULSE_X = 30.0f;
-    private static final float POWER_JUMP_OFFSET_Y = 1.0f;
-    private static final int SUCCESSFUL_JUMP_SCORE = 2;
-    private static final int PERFECT_JUMP_SCORE = 3;
-    private static final float PERFECT_JUMP_TOLERANCE = 0.1f;
     private static final float MIN_SPEAK_TIME = 7.0f;
     private static final float MAX_SPEAK_TIME = 10.0f;
-    private static final int MAX_BULLETS = 1;
 
     private enum State{
         IDLE,WALK,JUMP,FALL,PUSH,DEAD,DISPOSE
@@ -136,7 +127,7 @@ public class WaterElement extends AbstractDynamicObject {
     private void defineSensors(){
         //Sensor Left
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.1f,(getHeight()/2)*0.99f, new Vector2((-getWidth()/2)+0.05f,0),0);
+        polygonShape.setAsBox(0.1f,(getHeight()/2)*0.95f, new Vector2((-getWidth()/2)+0.05f,0),0);
         FixtureDef sensorLeft = new FixtureDef();
         sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -145,7 +136,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorLeft).setUserData(this);
 
         //Sensor Right
-        polygonShape.setAsBox(0.1f,(getHeight()/2)*0.99f, new Vector2((getWidth()/2)-0.05f,0),0);
+        polygonShape.setAsBox(0.1f,(getHeight()/2)*0.95f, new Vector2((getWidth()/2)-0.05f,0),0);
         FixtureDef sensorRight = new FixtureDef();
         sensorRight.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT;
         sensorRight.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -154,7 +145,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.99f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -163,7 +154,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox((getWidth()/2)*0.99f,0.1f, new Vector2(0,(getHeight()/2)-0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.1f, new Vector2(0,(getHeight()/2)-0.05f),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -172,16 +163,6 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorUp).setUserData(this);
     }
 
-    private void removeFilters(){
-        //hero cant collide with anything
-        Filter filter = new Filter();
-        filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_BIT;
-        filter.maskBits = WorldContactListner.CATEGORY_BLOCK_BIT;
-
-        for(Fixture fixture : body.getFixtureList()){
-            fixture.setFilterData(filter);
-        }
-    }
 
     public void jump(){
         if(isWalk() || isIdle() || isPush()) {
@@ -293,7 +274,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     }
 
-        private void stateIdle(float deltaTime){
+    private void stateIdle(float deltaTime){
         //Logic
             if(stopElem){
                 stopElem = false;
@@ -317,7 +298,6 @@ public class WaterElement extends AbstractDynamicObject {
                 initVoice();
             }
         }
-
     private void stateJump(float deltaTime){
 //            if(activateElem){
 //                setFilters();
@@ -403,8 +383,6 @@ public class WaterElement extends AbstractDynamicObject {
         }
     @Override
     public void render(SpriteBatch spriteBatch) {
-
-
             draw(spriteBatch);
     }
 
