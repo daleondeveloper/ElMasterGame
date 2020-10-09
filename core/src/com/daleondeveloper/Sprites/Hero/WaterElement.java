@@ -15,6 +15,7 @@ import com.daleondeveloper.Game.GameCamera;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
+import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Platform;
 
 import java.util.ArrayList;
@@ -196,6 +197,11 @@ public class WaterElement extends AbstractDynamicObject {
         }else {
             moveRight = false;
         }
+        if(isPush()){
+            if((moveRight && sensorRight.size() > 0) || (!moveRight && sensorLeft.size() > 0)){
+                return;
+            }
+        }
         if(isIdle() || isPush()) {
             currentState = State.WALK;
             stateTime = 0;
@@ -221,16 +227,12 @@ public class WaterElement extends AbstractDynamicObject {
     public void idle(){
         currentState = State.IDLE;
         stateTime = 0;
-//        if(body.getLinearVelocity().x != 0 ){
-//            currentState = State.WALK;
-//        }
-        initVoice();
     }
     public void push(float impulse){
-        if(isIdle() || isWalk()){
-
+        if(isIdle() || isWalk() || isJump()){
+            currentState = State.PUSH;
+            stateTime = 0;
         }
-
     }
     public void onDead(){
         currentState = State.DEAD;
@@ -246,8 +248,6 @@ public class WaterElement extends AbstractDynamicObject {
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
-               // System.out.println(sensorDown);
-//                System.out.println("deltaTime = " + stateTime);
             }
         switch (currentState){
             case IDLE:
@@ -299,10 +299,6 @@ public class WaterElement extends AbstractDynamicObject {
             }
         }
     private void stateJump(float deltaTime){
-//            if(activateElem){
-//                setFilters();
-//                activateElem = false;
-//            }
             if(sensorDown.size() > 0 && stateTime > 0.1f){
                // idle();
             }
@@ -340,15 +336,18 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void statePush(float deltaTime){
-//            if(activateElem){
-//                setFilters();
-//                activateElem = false;
-//            }
-            if(sensorRight.size() > 0 && sensorLeft.size() > 0){
-                currentState = State.IDLE;
-                stateTime = 0;
+            if(turnImpulse == 0){
+                idle();
             }
-            System.out.println("deltaTime = " + stateTime);
+            if(moveRight && sensorRight.size() > 0){
+                for(Fixture f : sensorRight){
+                    if(f.getUserData() instanceof Block){
+                        Block block = (Block)f.getUserData();
+                        block.push(turnImpulse);
+                        //body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+                    }
+                }
+            }
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemPushAnim.getKeyFrame(stateTime, true));

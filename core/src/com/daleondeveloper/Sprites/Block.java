@@ -143,9 +143,10 @@ public class Block extends AbstractDynamicObject {
     public void fall(){
         currentState = State.FALL;
     }
-    public void push(WaterElement waterElement){
+    public void push(Float turnImpulse){
         currentState = State.PUSH;
-        body.setLinearVelocity(waterElement.getVelocity().x/2,body.getLinearVelocity().y);
+        stateTime = 0;
+        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
     }
     public void delete(){
         currentState = State.DESTROY;
@@ -159,12 +160,6 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-//        body.setType(BodyDef.BodyType.KinematicBody);
-//        float tmpX = getX();
-//        tmpX = (float)Math.ceil(tmpX);
-//        body.setTransform(tmpX,getY(),body.getAngle());
-//        body.setType(BodyDef.BodyType.DynamicBody);
-       // body.setLinearVelocity(0,body.getLinearVelocity().y);
         switch (currentState){
             case IDLE:
                 stateIdle(deltaTime);
@@ -201,7 +196,6 @@ public class Block extends AbstractDynamicObject {
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
-        if(sensorDown){body.setLinearVelocity(body.getLinearVelocity().x,0);}
         if(!sensorDown){currentState = State.FALL;}
     }
     private void stateFall(float deltaTime){
