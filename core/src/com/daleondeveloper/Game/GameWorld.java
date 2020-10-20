@@ -58,7 +58,18 @@ public class GameWorld {
 
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,20);
+        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,50);
+
+//        blockController.addBlock(5,30);
+//        blockController.addBlock(15,30);
+//        blockController.addBlock(25,30);
+//        blockController.addBlock(35,30);
+//        blockController.addBlock(45,30);
+//        blockController.addBlock(55,30);
+//        blockController.addBlock(65,30);
+//        blockController.addBlock(75,30);
+//        blockController.addBlock(85,30);
+//        blockController.addBlock(95,30);
 
         //Regions ( create regions around the playing zone for player and game element)
         regionDown = new Platform(this,0,8,gameCamera.getWorldWidth(),10);
@@ -125,9 +136,10 @@ public class GameWorld {
         updateBlock(deltaTime);
         centerCamera(deltaTime);
 
-            checkPressedButtons();
-        this.
-        gameCamera.update(deltaTime);
+        checkPressedButtons();
+        this.gameCamera.update(deltaTime);
+
+        System.out.println(box2DWorld.getBodyCount());
     }
 
     private void checkPressedButtons(){
@@ -136,7 +148,6 @@ public class GameWorld {
         }
         if(isRightButtonPressed()){
             waterElement.turn(20);
-
         }
     }
     private void updateBlock(float deltaTime){
@@ -171,6 +182,9 @@ public class GameWorld {
     private void renderBlock(SpriteBatch batch) {
         for (Block block : blockController.getArrayBlock()) {
             block.render(batch);
+            if(block.getUpPlatform() != null){
+                block.getUpPlatform().render(batch);
+            }
         }
     }
 

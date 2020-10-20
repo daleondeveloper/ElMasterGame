@@ -66,7 +66,9 @@ public class Platform extends AbstractDynamicObject {
         body.createFixture(fixtureDef).setUserData(this);
     }
 
-
+    public void delete(){
+        gameWorld.destroyBody(body);
+    }
 
     @Override
     public Vector2 getBodyPosition() {

@@ -23,17 +23,30 @@ public class BlockController {
         arrayBlock = new Array<Block>(10);
 
     }
-    public boolean addBlock(float x, float y){
+    public boolean addBlock (){
         Random rnd = new Random ();
-        Block block = new Block(gameWorld,(float)rnd.nextInt(9)*10+5,gameWorld.getGameCamera().getWorldHeight(),9.95f,9.95f);
+        Block block = new Block(gameWorld,(float)rnd.nextInt(9)*10+5,gameWorld.getGameCamera().getWorldHeight()-30,9.95f,9.95f);
         arrayBlock.add(block);
         block.fall();
+        return true;
+    }
+    public boolean addBlock(float x, float y){
+        Block block = new Block(gameWorld,x,y,9.95f,9.95f);
+        arrayBlock.add(block);
+        block.stopFall();
+        block.setSensorDown(false);
         return true;
     }
     public boolean deleteBlock(Block block){
 
 
         return true;
+    }
+    public void blockChecker(){
+        for(Block block : arrayBlock){
+            if(block.isIdle()){
+            }
+        }
     }
 
     public Array<Block> getArrayBlock() {

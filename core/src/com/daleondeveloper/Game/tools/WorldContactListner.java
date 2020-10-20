@@ -29,7 +29,7 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-
+        System.out.println("begin contact");
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
@@ -101,7 +101,7 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-
+        System.out.println("end Contact");
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
@@ -288,8 +288,14 @@ public class WorldContactListner implements ContactListener {
         if ((objFa instanceof Block) && (objFb instanceof Block)) {
             if (fa.getBody().getPosition().x > fb.getBody().getPosition().x) {
                 block = (Block) objFa;
+                if(!block.getContactLeftBlockList().contains((Block)objFb)) {
+                    block.getContactLeftBlockList().add((Block) objFb);
+                }
             } else {
                 block = (Block) objFb;
+                if(!block.getContactLeftBlockList().contains((Block) objFa)) {
+                    block.getContactLeftBlockList().add((Block) objFa);
+                }
             }
         } else if (objFa instanceof Block) {
             block = (Block) objFa;
@@ -308,8 +314,14 @@ public class WorldContactListner implements ContactListener {
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().x < fb.getBody().getPosition().x){
                 block = (Block)objFa;
+                if(!block.getContactRightBlockList().contains((Block) objFb)) {
+                    block.getContactRightBlockList().add((Block) objFb);
+                }
             }else{
                 block = (Block)objFb;
+                if(!block.getContactRightBlockList().contains((Block) objFa)) {
+                    block.getContactRightBlockList().add((Block) objFa);
+                }
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
@@ -418,8 +430,10 @@ public class WorldContactListner implements ContactListener {
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().x > fb.getBody().getPosition().x){
                 block = (Block)objFa;
+                block.getContactLeftBlockList().remove((Block)objFb);
             }else{
                 block = (Block)objFb;
+                block.getContactLeftBlockList().remove((Block)objFa);
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
@@ -438,8 +452,10 @@ public class WorldContactListner implements ContactListener {
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().x < fb.getBody().getPosition().x){
                 block = (Block)objFa;
+                block.getContactRightBlockList().remove((Block)objFb);
             }else{
                 block = (Block)objFb;
+                block.getContactRightBlockList().remove((Block)objFa);
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;

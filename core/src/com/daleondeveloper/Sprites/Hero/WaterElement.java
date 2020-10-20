@@ -52,6 +52,7 @@ public class WaterElement extends AbstractDynamicObject {
     private float timeToSpeak;
     private boolean turn;
     private float turnImpulse;
+    private float pushImpulse;
     private FixtureDef fixtureSkill;
     private CircleShape circleShapeSkillFixture;
 
@@ -80,6 +81,7 @@ public class WaterElement extends AbstractDynamicObject {
         stateTime = 0;
 
         turnImpulse = 0f;
+        pushImpulse = 0f;
         defineWaterElem();
 
         currentState = State.IDLE;
@@ -116,7 +118,7 @@ public class WaterElement extends AbstractDynamicObject {
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
         fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_BIT;
-        fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
+       // fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
         fixtureDef.shape = polygonShape;
         fixtureDef.density = 0.0f;
         body.createFixture(fixtureDef).setUserData(this);
@@ -218,11 +220,12 @@ public class WaterElement extends AbstractDynamicObject {
 
     }
     public void stopWalk(){
-        if(currentState == State.WALK){
+        if(currentState == State.WALK || currentState == State.PUSH){
             currentState = State.IDLE;
             stateTime = 0;
             body.setLinearVelocity(0,body.getLinearVelocity().y);
         }
+
     }
     public void idle(){
         currentState = State.IDLE;
@@ -291,16 +294,10 @@ public class WaterElement extends AbstractDynamicObject {
             setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
             if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
-            speakTime += deltaTime;
-
-
-            if(speakTime > timeToSpeak){
-                initVoice();
-            }
         }
     private void stateJump(float deltaTime){
             if(sensorDown.size() > 0 && stateTime > 0.1f){
-               // idle();
+                idle();
             }
             if(sensorUp.size() > 0 || stateTime > 0.5f){
                 fall();
@@ -338,19 +335,30 @@ public class WaterElement extends AbstractDynamicObject {
     private void statePush(float deltaTime){
             if(turnImpulse == 0){
                 idle();
+                return;
             }
             if(moveRight && sensorRight.size() > 0){
                 for(Fixture f : sensorRight){
                     if(f.getUserData() instanceof Block){
                         Block block = (Block)f.getUserData();
                         block.push(turnImpulse);
-                        //body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+                        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
                     }
                 }
             }
+            if(!moveRight && sensorLeft.size() > 0){
+                for(Fixture f : sensorLeft){
+                    if(f.getUserData() instanceof Block){
+                        Block block = (Block)f.getUserData();
+                        block.push(turnImpulse);
+                        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+                    }
+                }
+            }
+
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            setRegion((TextureRegion) elemPushAnim.getKeyFrame(stateTime, true));
+            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
             if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }

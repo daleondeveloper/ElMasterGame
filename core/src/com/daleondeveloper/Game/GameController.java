@@ -6,6 +6,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 
@@ -81,18 +82,52 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                  waterElement.jump();
                 break;
             case Input.Keys.RIGHT:
+                waterElement.stopWalk();
                 gameWorld.setRightButtonPressed(true);
                 break;
             case Input.Keys.LEFT:
+                waterElement.stopWalk();
                 gameWorld.setLeftButtonPressed(true);
                 break;
             case Input.Keys.C:
                 waterElement.push(4f);
                 break;
             case Input.Keys.Z:
-                gameWorld.getBlockController().addBlock(4,4);
+                gameWorld.getBlockController().addBlock();
 
                 break;
+            case Input.Keys.D:
+                    Block block = gameWorld.getBlockController().getArrayBlock().get(0);
+                    block.delete();
+                    break;
+                    case Input.Keys.NUM_1:
+                        gameWorld.getBlockController().addBlock(15,170);
+                    break;
+                    case Input.Keys.NUM_2:
+                        gameWorld.getBlockController().addBlock(25,170);
+                    break;
+                    case Input.Keys.NUM_3:
+                        gameWorld.getBlockController().addBlock(35,170);
+                    break;
+                    case Input.Keys.NUM_4:
+                        gameWorld.getBlockController().addBlock(45,170);
+                    break;
+                    case Input.Keys.NUM_5:
+                        gameWorld.getBlockController().addBlock(55,170);
+                    break;
+                    case Input.Keys.NUM_6:
+                        gameWorld.getBlockController().addBlock(65,170);
+                    break;
+                    case Input.Keys.NUM_7:
+                        gameWorld.getBlockController().addBlock(75,170);
+                    break;
+                    case Input.Keys.NUM_8:
+                        gameWorld.getBlockController().addBlock(85,170);
+                    break;
+                    case Input.Keys.NUM_9:
+                        gameWorld.getBlockController().addBlock(95,170);
+                    break;
+
         }
         return true;
     }
@@ -107,6 +142,9 @@ public class GameController implements GestureDetector.GestureListener, InputPro
             case Input.Keys.RIGHT :
                 waterElement.stopWalk();
                 gameWorld.setRightButtonPressed(false);
+                break;
+            case Input.Keys.C :
+                waterElement.idle();
                 break;
         }
         return true;

@@ -16,6 +16,9 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
@@ -36,8 +39,12 @@ public class Block extends AbstractDynamicObject {
     private Array<TextureRegion> assetBlocks;
     private TextureRegion textureRegionBlock;
     private float stateTime;
+    private boolean statePosition;
     private State currentState;
     private Body body;
+    private List<Block> contactLeftBlockList ;
+    private List<Block> contactRightBlockList ;
+    private Platform upPlatform;
     //marks
     private boolean sensorRight;
     private boolean sensorLeft;
@@ -61,6 +68,10 @@ public class Block extends AbstractDynamicObject {
         setBounds(x, y, width, height);
         setRegion(textureRegionBlock);
         stateTime = 0;
+        statePosition = false;
+
+        contactLeftBlockList = new ArrayList<Block>();
+        contactRightBlockList = new ArrayList<Block>();
 
         sensorDown = false;
         sensorLeft = false;
@@ -86,7 +97,7 @@ public class Block extends AbstractDynamicObject {
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
-        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
+//        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
         fixture.density = 0f;
         fixture.friction = 0f;
@@ -119,7 +130,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.11f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -137,11 +148,17 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorUp).setUserData(this);
     }
 
+    public void setStaticPosition(float x, float y){
+        body.setTransform(x,y,0);
+    }
     public void stopFall(){
         currentState = State.IDLE;
+        stateTime = 0;
+        statePosition = false;
     }
     public void fall(){
         currentState = State.FALL;
+        stateTime = 0;
     }
     public void push(Float turnImpulse){
         currentState = State.PUSH;
@@ -183,6 +200,16 @@ public class Block extends AbstractDynamicObject {
         if(!sensorDown){fall();}
         body.setLinearVelocity(0,0);
         textureRegionBlock = assetBlocks.get(1);
+        float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
+        if(stateTime > 0.2) {
+            statePosition = true;
+            centerBodyPositionY = (int) (body.getPosition().y + 0.5f);
+            body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
+        }
+        if(getUpPlatform() == null) {
+            createPlatformUnderBlock();
+        }
+
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
@@ -193,12 +220,22 @@ public class Block extends AbstractDynamicObject {
     }
     private void statePush(float deltaTime){
         stateTime += deltaTime;
+        if(upPlatform != null) {
+            deletePlatformUnderBlock();
+        }
+        if(!sensorDown){currentState = State.FALL;}
+        if(stateTime > 0.2) {
+            float centerBodyPositionY = (int) (body.getPosition().y + 0.5f);
+            body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
+        }
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
-        if(!sensorDown){currentState = State.FALL;}
     }
     private void stateFall(float deltaTime){
+        if(upPlatform != null) {
+            deletePlatformUnderBlock();
+        }
         body.setType(BodyDef.BodyType.DynamicBody);
         if(sensorDown){stopFall();}
         body.setLinearVelocity(0,FALL_VELOCITY);
@@ -211,6 +248,7 @@ public class Block extends AbstractDynamicObject {
 
     }
     private void stateDestroy(float deltaTime){
+        deletePlatformUnderBlock();
         gameWorld.destroyBody(body);
         currentState = State.DISPOSE;
     }
@@ -218,14 +256,129 @@ public class Block extends AbstractDynamicObject {
 
     }
 
+    private void createPlatformUnderBlock(){
+        float platformX = getX(),platformHX = 10f, platformY = getY() + 10, platformHY = 1f;
+        Platform left = null;
+        Platform right = null;
+        if(contactLeftBlockList.size() > 0) {
+            left = contactLeftBlockList.get(0).getUpPlatform();
+            platformX = left.getX();
+            platformHX += left.getWidth();
+        }
+        if(contactRightBlockList.size() > 0) {
+            right = contactRightBlockList.get(0).getUpPlatform();
+            platformHX += right.getWidth();
+        }
+        Platform platformBlockUp = new Platform(gameWorld,platformX+0.1f,platformY,platformHX-0.2f,platformHY);
+        if(getUpPlatform() != null){
+            getUpPlatform().delete();
+        }
+        setUpPlatform(platformBlockUp);
+        Block tmpBlock = this;
+        if(left != null) {
+            left.delete();
+            while (true) {
+                if (tmpBlock.getContactLeftBlockList().size() > 0) {
+                    tmpBlock.getContactLeftBlockList().get(0).setUpPlatform(platformBlockUp);
+                    tmpBlock = tmpBlock.getContactLeftBlockList().get(0);
+                } else {
+                    break;
+                }
+            }
+        }
+        tmpBlock = this;
+        if(right != null) {
+            right.delete();
+            while (true) {
+                if (tmpBlock.getContactRightBlockList().size() > 0) {
+                    //tmpBlock.getContactRightBlockList().get(0).getUpPlatform().delete();
+                    tmpBlock.getContactRightBlockList().get(0).setUpPlatform(platformBlockUp);
+                    tmpBlock = tmpBlock.getContactRightBlockList().get(0);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+    private void deletePlatformUnderBlock(){
+        float platformLeftX = getX(),platformLeftHX = 10f, platformLeftY = getY() + 10, platformLeftHY = 1f;
+        float platformRightX = getX(),platformRightHX = 10f, platformRightY = getY() + 10, platformRightHY = 1f;
+        Platform left = null;
+        Platform right = null;
+        if(contactLeftBlockList.size() > 0) {
+            //left = contactLeftBlockList.get(0).getUpPlatform();
+            for(Block block : contactLeftBlockList){
+                if(block.getUpPlatform() != null){
+                    block.setUpPlatform(null);
+                    if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
+                        block.getContactRightBlockList().remove(this);
+                    }
+                }
+            }
+        }
+        if(contactRightBlockList.size() > 0) {
+            //right = contactRightBlockList.get(0).getUpPlatform();
+            for(Block block : contactRightBlockList){
+                if(block.getUpPlatform() != null){
+                    block.setUpPlatform(null);
+                    if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
+                        block.getContactLeftBlockList().remove(this);
+                    }
+                }
+            }
+        }
+        if(upPlatform != null) {
+            getUpPlatform().delete();
+            setUpPlatform(null);
+        }
+    }
     @Override
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
     }
 
+    public boolean isIdle(){
+        if(currentState == State.IDLE){
+            return true;
+        }else return false;
+    }
+    public boolean isDestroy(){
+        if(currentState == State.DESTROY){
+            return true;
+        }else return false;
+    }
     @Override
     public boolean isDisposable() {
-        return false;
+        if(currentState == State.DISPOSE){
+            return true;
+        }else return false;
+    }
+
+
+
+    public List<Block> getContactLeftBlockList() {
+        return contactLeftBlockList;
+    }
+
+    public void setContactLeftBlockList(List<Block> contactLeftBlockList) {
+        this.contactLeftBlockList = contactLeftBlockList;
+    }
+
+    public List<Block> getContactRightBlockList() {
+        return contactRightBlockList;
+    }
+
+    public void setContactRightBlockList(List<Block> contactRightBlockList) {
+        this.contactRightBlockList = contactRightBlockList;
+    }
+
+
+    public Platform getUpPlatform() {
+        return upPlatform;
+    }
+
+    public void setUpPlatform(Platform upPlatform) {
+        this.upPlatform = upPlatform;
     }
 
     public boolean isSensorRight() {
