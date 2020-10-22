@@ -256,10 +256,18 @@ public class Block extends AbstractDynamicObject {
 
     }
 
+    // Створення платформи над блоком,
+    // до уваги беруться сусідні платформи і створюється спільна платформа,
+    //Спільна платформа покриває всі блоки які стоять рядом з нашим
+    //Силка у всіх сусідніх блоків буде зсилатися на одну силку платформи
     private void createPlatformUnderBlock() {
+        //Задаються початкові дані платформи
         float platformX = getX(), platformHX = 10f, platformY = getY() + 10, platformHY = 1f;
         Platform left = null;
         Platform right = null;
+
+        //Оновлення даних платформи блоку відносно сусідніх платформ
+        //Просвоєння сусідніх платформ відповідним зміним left і Right
         if (contactLeftBlockList.size() > 0) {
             left = contactLeftBlockList.get(0).getUpPlatform();
             if (left != null) {
@@ -273,11 +281,21 @@ public class Block extends AbstractDynamicObject {
                 platformHX += right.getWidth();
             }
         }
+
+        //Створення платформи
         Platform platformBlockUp = gameWorld.getPlatformController().addPlatform(platformX + 0.1f, platformY, platformHX - 0.2f, platformHY);
+        //Попереднє очищення платформи блока,
+        //якщо за якоїст ошибки вона у нього присутння
+        //подія у задумці відбутися не має
         if (getUpPlatform() != null) {
             getUpPlatform().delete();
         }
+        //Присвоєння створеної платформи блоку
         setUpPlatform(platformBlockUp);
+
+        //Якщо є сусідня платформа, призначення їй статусу dispose
+        //і присвоєння сусідньому блоку з ліва створену платформу
+        // силка на платформу у всіх лівих блоків одна тому одне відбувається тільки присвоєння
         if (left != null) {
         Block tmpBlock = this.getContactLeftBlockList().get(0);
             left.delete();
@@ -285,37 +303,41 @@ public class Block extends AbstractDynamicObject {
                 tmpBlock.setUpPlatform(platformBlockUp);
             }
         }
-
+        // Аналогічно верхній функції, тільки використовуються блоки з права
         if(right != null) {
-        Block tmpBlock = this.getContactRightBlockList().get(0);
+            Block tmpBlock = this.getContactRightBlockList().get(0);
             right.delete();
 
                 if (tmpBlock.getContactRightBlockList().size() > 0) {
                     tmpBlock.setUpPlatform(platformBlockUp);
                 }
             }
-
-       // platformBlockUp.delete();
-       // platformBlockUp =gameWorld.getPlatformController().addPlatform(platformX,platformY,platformHX,platformHY);
     }
+
+    //Присвоєння стану dispose платформі над блоком, і присвоєння цій зміні null значення
+    //відповідна дія буде використана і до сусідніх блоків цього блоку
+    //також блок буде видалений з списків контактів правих лівих блоків
+    //при статусі цього  блоку DISPOSE або DELETE
     private void deletePlatformUnderBlock(){
-        float platformLeftX = getX(),platformLeftHX = 10f, platformLeftY = getY() + 10, platformLeftHY = 1f;
-        float platformRightX = getX(),platformRightHX = 10f, platformRightY = getY() + 10, platformRightHY = 1f;
-        Platform left = null;
-        Platform right = null;
+        //Перевірка чи є бллоки з ліва
         if(contactLeftBlockList.size() > 0) {
             Block leftBlock = this;
+            //Видалення цього блоку зі списку лівого блоку при відповідних станах
             if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
                 leftBlock.getContactLeftBlockList().get(0).getContactRightBlockList().remove(this);
             }
+            //Проходження по всіх лівих блоках і присвоєння їх платформам стану DISPOSE
+            //І присвоєння значенню null
             while(true){
                     leftBlock = leftBlock.getContactLeftBlockList().get(0);
-                leftBlock.setUpPlatform(null);
-                if(leftBlock.getContactLeftBlockList().size() == 0){
-                        break;
+                    if(leftBlock.getUpPlatform() != null){
+                        leftBlock.getUpPlatform().delete();
                     }
+                    leftBlock.setUpPlatform(null);
+                    if(leftBlock.getContactLeftBlockList().size() == 0){ break;}
             }
         }
+        //Аналогічно верхній функції, тільки використовуються праві блоки
         if(contactRightBlockList.size() > 0) {
             Block rightBlock = this;
             if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
@@ -323,12 +345,15 @@ public class Block extends AbstractDynamicObject {
             }
             while(true){
                 rightBlock = rightBlock.getContactRightBlockList().get(0);
-                rightBlock.setUpPlatform(null);
-                if(rightBlock.getContactRightBlockList().size() == 0){
-                    break;
+                if(rightBlock.getUpPlatform() != null){
+                    rightBlock.getUpPlatform().delete();
                 }
+                rightBlock.setUpPlatform(null);
+                if(rightBlock.getContactRightBlockList().size() == 0){ break; }
             }
         }
+        //Якщо платформа цього блока не дорівнює null
+        //проводимо операцію відповідну як і до інших платформ у цьому методі
         if(upPlatform != null) {
            getUpPlatform().delete();
             setUpPlatform(null);
