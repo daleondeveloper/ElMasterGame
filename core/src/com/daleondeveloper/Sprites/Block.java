@@ -256,49 +256,47 @@ public class Block extends AbstractDynamicObject {
 
     }
 
-    private void createPlatformUnderBlock(){
-        float platformX = getX(),platformHX = 10f, platformY = getY() + 10, platformHY = 1f;
+    private void createPlatformUnderBlock() {
+        float platformX = getX(), platformHX = 10f, platformY = getY() + 10, platformHY = 1f;
         Platform left = null;
         Platform right = null;
-        if(contactLeftBlockList.size() > 0) {
+        if (contactLeftBlockList.size() > 0) {
             left = contactLeftBlockList.get(0).getUpPlatform();
-            platformX = left.getX();
-            platformHX += left.getWidth();
+            if (left != null) {
+                platformX = left.getX();
+                platformHX += left.getWidth();
+            }
         }
-        if(contactRightBlockList.size() > 0) {
+        if (contactRightBlockList.size() > 0) {
             right = contactRightBlockList.get(0).getUpPlatform();
-            platformHX += right.getWidth();
+            if (right != null) {
+                platformHX += right.getWidth();
+            }
         }
-        Platform platformBlockUp = new Platform(gameWorld,platformX+0.1f,platformY,platformHX-0.2f,platformHY);
-        if(getUpPlatform() != null){
+        Platform platformBlockUp = gameWorld.getPlatformController().addPlatform(platformX + 0.1f, platformY, platformHX - 0.2f, platformHY);
+        if (getUpPlatform() != null) {
             getUpPlatform().delete();
         }
         setUpPlatform(platformBlockUp);
-        Block tmpBlock = this;
-        if(left != null) {
+        if (left != null) {
+        Block tmpBlock = this.getContactLeftBlockList().get(0);
             left.delete();
-            while (true) {
-                if (tmpBlock.getContactLeftBlockList().size() > 0) {
-                    tmpBlock.getContactLeftBlockList().get(0).setUpPlatform(platformBlockUp);
-                    tmpBlock = tmpBlock.getContactLeftBlockList().get(0);
-                } else {
-                    break;
-                }
+            if (tmpBlock.getContactLeftBlockList().size() > 0) {
+                tmpBlock.setUpPlatform(platformBlockUp);
             }
         }
-        tmpBlock = this;
+
         if(right != null) {
+        Block tmpBlock = this.getContactRightBlockList().get(0);
             right.delete();
-            while (true) {
+
                 if (tmpBlock.getContactRightBlockList().size() > 0) {
-                    //tmpBlock.getContactRightBlockList().get(0).getUpPlatform().delete();
-                    tmpBlock.getContactRightBlockList().get(0).setUpPlatform(platformBlockUp);
-                    tmpBlock = tmpBlock.getContactRightBlockList().get(0);
-                } else {
-                    break;
+                    tmpBlock.setUpPlatform(platformBlockUp);
                 }
             }
-        }
+
+       // platformBlockUp.delete();
+       // platformBlockUp =gameWorld.getPlatformController().addPlatform(platformX,platformY,platformHX,platformHY);
     }
     private void deletePlatformUnderBlock(){
         float platformLeftX = getX(),platformLeftHX = 10f, platformLeftY = getY() + 10, platformLeftHY = 1f;
@@ -306,29 +304,33 @@ public class Block extends AbstractDynamicObject {
         Platform left = null;
         Platform right = null;
         if(contactLeftBlockList.size() > 0) {
-            //left = contactLeftBlockList.get(0).getUpPlatform();
-            for(Block block : contactLeftBlockList){
-                if(block.getUpPlatform() != null){
-                    block.setUpPlatform(null);
-                    if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
-                        block.getContactRightBlockList().remove(this);
+            Block leftBlock = this;
+            if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
+                leftBlock.getContactLeftBlockList().get(0).getContactRightBlockList().remove(this);
+            }
+            while(true){
+                    leftBlock = leftBlock.getContactLeftBlockList().get(0);
+                leftBlock.setUpPlatform(null);
+                if(leftBlock.getContactLeftBlockList().size() == 0){
+                        break;
                     }
-                }
             }
         }
         if(contactRightBlockList.size() > 0) {
-            //right = contactRightBlockList.get(0).getUpPlatform();
-            for(Block block : contactRightBlockList){
-                if(block.getUpPlatform() != null){
-                    block.setUpPlatform(null);
-                    if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
-                        block.getContactLeftBlockList().remove(this);
-                    }
+            Block rightBlock = this;
+            if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
+                rightBlock.getContactRightBlockList().get(0).getContactLeftBlockList().remove(this);
+            }
+            while(true){
+                rightBlock = rightBlock.getContactRightBlockList().get(0);
+                rightBlock.setUpPlatform(null);
+                if(rightBlock.getContactRightBlockList().size() == 0){
+                    break;
                 }
             }
         }
         if(upPlatform != null) {
-            getUpPlatform().delete();
+           getUpPlatform().delete();
             setUpPlatform(null);
         }
     }

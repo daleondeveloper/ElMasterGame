@@ -24,6 +24,7 @@ public class GameWorld {
     private boolean pauseCamera;
     //private ParallaxSB parallaxSB;
     private BlockController blockController;
+    private PlatformController platformController;
     private com.daleondeveloper.Sprites.Hero.WaterElement waterElement;
     private Platform regionDown;
     private Platform regionLeft;
@@ -55,7 +56,7 @@ public class GameWorld {
     private void createSprites(){
         //Block(create block factory  to create block)
         blockController = new BlockController(playScreen,this);
-
+        platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,50);
@@ -134,6 +135,7 @@ public class GameWorld {
         regionDown.update(deltaTime);
         background.update(deltaTime);
         updateBlock(deltaTime);
+        updatePlatform(deltaTime);
         centerCamera(deltaTime);
 
         checkPressedButtons();
@@ -159,6 +161,15 @@ public class GameWorld {
             }
         }
     }
+private void updatePlatform(float deltaTime){
+        Array<Platform> arrayPlatform = platformController.getPlatforms();
+        for(Platform platform: arrayPlatform){
+            platform.update(deltaTime);
+            if(platform.isDisposable()){
+                arrayPlatform.removeValue(platform,false);
+            }
+        }
+    }
 
     private void centerCamera(float deltaTime) {
         if (moveCamera && !pauseCamera) {
@@ -176,6 +187,7 @@ public class GameWorld {
         regionRight.render(batch);
         regionDown.render(batch);
         renderBlock(batch);
+        renderPlatform(batch);
 
     }
 
@@ -185,6 +197,11 @@ public class GameWorld {
             if(block.getUpPlatform() != null){
                 block.getUpPlatform().render(batch);
             }
+        }
+    }
+private void renderPlatform(SpriteBatch batch) {
+        for (Platform platform : platformController.getPlatforms()) {
+          //   platform.render(batch);
         }
     }
 
@@ -208,6 +225,10 @@ public class GameWorld {
 
     public BlockController getBlockController() {
         return blockController;
+    }
+
+    public PlatformController getPlatformController() {
+        return platformController;
     }
 
     public WaterElement getWaterElement() {

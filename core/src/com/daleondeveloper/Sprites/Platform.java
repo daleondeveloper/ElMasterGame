@@ -18,7 +18,7 @@ public class Platform extends AbstractDynamicObject {
     private static final float SCALE = 0.4f;
 
     private enum State{
-        STATIC;
+        STATIC,DISPOSABLE,DELETE;
     }
 
     private GameWorld gameWorld;
@@ -66,8 +66,10 @@ public class Platform extends AbstractDynamicObject {
         body.createFixture(fixtureDef).setUserData(this);
     }
 
+
+
     public void delete(){
-        gameWorld.destroyBody(body);
+        currentState = State.DELETE;
     }
 
     @Override
@@ -77,7 +79,15 @@ public class Platform extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-
+        switch (currentState){
+            case DELETE:
+                stateDelete(deltaTime);
+                break;
+        }
+    }
+    private void stateDelete (float deltaTime){
+        gameWorld.destroyBody(body);
+        currentState = State.DISPOSABLE;
     }
 
     @Override
@@ -85,8 +95,15 @@ public class Platform extends AbstractDynamicObject {
         draw(spriteBatch);
     }
 
+    public boolean isDestroy(){
+        if(currentState == State.DELETE){
+            return true;
+        }else return false;
+    }
     @Override
     public boolean isDisposable() {
-        return false;
+        if(currentState == State.DISPOSABLE){
+            return true;
+        }else return false;
     }
 }

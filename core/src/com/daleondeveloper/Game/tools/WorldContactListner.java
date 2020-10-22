@@ -173,7 +173,7 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
+        System.out.println("contact = " + contact + ", oldManifold = " + oldManifold);
     }
 
     @Override
