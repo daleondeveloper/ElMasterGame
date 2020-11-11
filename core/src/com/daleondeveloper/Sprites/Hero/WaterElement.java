@@ -234,6 +234,7 @@ public class WaterElement extends AbstractDynamicObject {
     public void push(float impulse){
         if(isIdle() || isWalk() || isJump()){
             currentState = State.PUSH;
+            turnImpulse = impulse;
             stateTime = 0;
         }
     }
@@ -350,8 +351,8 @@ public class WaterElement extends AbstractDynamicObject {
                 for(Fixture f : sensorLeft){
                     if(f.getUserData() instanceof Block){
                         Block block = (Block)f.getUserData();
-                        block.push(turnImpulse);
-                        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+                        block.push(-turnImpulse);
+                        body.setLinearVelocity(-turnImpulse,body.getLinearVelocity().y);
                     }
                 }
             }

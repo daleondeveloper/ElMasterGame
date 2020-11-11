@@ -197,7 +197,7 @@ private void updatePlatform(float deltaTime){
     }
 private void renderPlatform(SpriteBatch batch) {
         for (Platform platform : platformController.getPlatforms()) {
-          //   platform.render(batch);
+             platform.render(batch);
         }
     }
 

@@ -202,7 +202,6 @@ public class Block extends AbstractDynamicObject {
 //        body.setLinearVelocity(0,0);
         textureRegionBlock = assetBlocks.get(1);
         float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
-        System.out.println("deltaTime = " + stateTime);
         if(stateTime > 0.2) {
             statePosition = true;
      //       centerBodyPositionY = (int) (body.getPosition().y + 0.6f);
@@ -225,10 +224,11 @@ public class Block extends AbstractDynamicObject {
         if(upPlatform != null) {
             deletePlatformUnderBlock();
         }
-        if(!sensorDown){currentState = State.FALL;}
-        if(stateTime > 0.2) {
-            float centerBodyPositionY = (int) (body.getPosition().y + 0.5f);
-            body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
+       // if(!sensorDown){currentState = State.FALL;}
+    //    body.setLinearVelocity(4f,0);
+        if(stateTime > 0.01) {
+//            float centerBodyPositionY = (int) (body.getPosition().y + 0.5f);
+//            body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
         }
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -264,8 +264,8 @@ public class Block extends AbstractDynamicObject {
     //Силка у всіх сусідніх блоків буде зсилатися на одну силку платформи
     private void createPlatformUnderBlock() {
         //Задаються початкові дані платформи
-        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 4f;
-        platformY = (float)(getY() + 10)-platformHY*0.85f;
+        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 0.01f;
+        platformY = (float)Math.ceil((getY() + 5)*0.1)*10;
        // platformY = (float)(Math.ceil((getY()) * 0.1f)*10)-platformHY*0.75f;
         Platform left = null;
         Platform right = null;
