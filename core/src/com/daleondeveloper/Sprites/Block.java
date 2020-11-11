@@ -50,6 +50,7 @@ public class Block extends AbstractDynamicObject {
     private boolean sensorLeft;
     private boolean sensorUp;
     private boolean sensorDown;
+    private boolean sensorPlatform;
 
     public Block(GameWorld gameWorld, float x, float y, float width,float height){
         this.gameWorld = gameWorld;
@@ -90,7 +91,7 @@ public class Block extends AbstractDynamicObject {
         blockDef.type = BodyDef.BodyType.DynamicBody;
         body =gameWorld.createBody(blockDef);
         body.setFixedRotation(true);
-        body.setGravityScale(0);
+        body.setGravityScale(1);
         body.setLinearVelocity(0,FALL_VELOCITY);
 
         FixtureDef fixture = new FixtureDef();
@@ -99,7 +100,7 @@ public class Block extends AbstractDynamicObject {
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
 //        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
-        fixture.density = 0f;
+        fixture.density = 1f;
         fixture.friction = 0f;
         fixture.restitution = 0f;
 
@@ -197,14 +198,15 @@ public class Block extends AbstractDynamicObject {
 
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
-        if(!sensorDown){fall();}
-        body.setLinearVelocity(0,0);
+//        if(!sensorDown){fall();}
+//        body.setLinearVelocity(0,0);
         textureRegionBlock = assetBlocks.get(1);
         float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
+        System.out.println("deltaTime = " + stateTime);
         if(stateTime > 0.2) {
             statePosition = true;
-            centerBodyPositionY = (int) (body.getPosition().y + 0.5f);
-            body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
+     //       centerBodyPositionY = (int) (body.getPosition().y + 0.6f);
+     //       body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
         }
         if(getUpPlatform() == null) {
             createPlatformUnderBlock();
@@ -237,7 +239,7 @@ public class Block extends AbstractDynamicObject {
             deletePlatformUnderBlock();
         }
         body.setType(BodyDef.BodyType.DynamicBody);
-        if(sensorDown){stopFall();}
+//        if(sensorDown){stopFall();}
         body.setLinearVelocity(0,FALL_VELOCITY);
         textureRegionBlock = assetBlocks.get(3);
         // Update this Sprite to correspond with the position of the Box2D body.
@@ -262,7 +264,9 @@ public class Block extends AbstractDynamicObject {
     //Силка у всіх сусідніх блоків буде зсилатися на одну силку платформи
     private void createPlatformUnderBlock() {
         //Задаються початкові дані платформи
-        float platformX = getX(), platformHX = 10f, platformY = getY() + 10, platformHY = 1f;
+        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 4f;
+        platformY = (float)(getY() + 10)-platformHY*0.85f;
+       // platformY = (float)(Math.ceil((getY()) * 0.1f)*10)-platformHY*0.75f;
         Platform left = null;
         Platform right = null;
 

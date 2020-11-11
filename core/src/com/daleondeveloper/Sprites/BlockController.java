@@ -33,7 +33,7 @@ public class BlockController {
     public boolean addBlock(float x, float y){
         Block block = new Block(gameWorld,x,y,9.95f,9.95f);
         arrayBlock.add(block);
-        block.stopFall();
+        block.fall();
         block.setSensorDown(false);
         return true;
     }

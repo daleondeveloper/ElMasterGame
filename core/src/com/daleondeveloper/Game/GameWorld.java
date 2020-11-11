@@ -13,16 +13,12 @@ import com.daleondeveloper.Sprites.Hero.WaterElement;
 public class GameWorld {
     private static final String TAG = GameWorld.class.getName();
 
-    private static final float CAMERA_VELOCITY = 4.0f;
-    private static final float ENEMY_PROBABILITY = 0.3f; // 30%
-
     private PlayScreen playScreen;
     private World box2DWorld;
     private int level;
     private GameCamera gameCamera;
     private  boolean moveCamera;
     private boolean pauseCamera;
-    //private ParallaxSB parallaxSB;
     private BlockController blockController;
     private PlatformController platformController;
     private com.daleondeveloper.Sprites.Hero.WaterElement waterElement;
@@ -73,7 +69,7 @@ public class GameWorld {
 //        blockController.addBlock(95,30);
 
         //Regions ( create regions around the playing zone for player and game element)
-        regionDown = new Platform(this,0,8,gameCamera.getWorldWidth(),10);
+        regionDown = new Platform(this,0,10,gameCamera.getWorldWidth(),10);
         regionLeft = new Platform(this,0,0,5,gameCamera.getWorldHeight());
         regionRight = new Platform(this,gameCamera.getWorldWidth()-5,0,5,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
@@ -194,9 +190,9 @@ private void updatePlatform(float deltaTime){
     private void renderBlock(SpriteBatch batch) {
         for (Block block : blockController.getArrayBlock()) {
             block.render(batch);
-            if(block.getUpPlatform() != null){
-                block.getUpPlatform().render(batch);
-            }
+//            if(block.getUpPlatform() != null){
+//                block.getUpPlatform().render(batch);
+//            }
         }
     }
 private void renderPlatform(SpriteBatch batch) {

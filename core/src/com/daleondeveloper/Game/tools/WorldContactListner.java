@@ -83,6 +83,8 @@ public class WorldContactListner implements ContactListener {
             //Контакт блоків з регіонами
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockStartContactDown(fa,fb);
+                System.out.println("contact = " + contact);
+                block.stopFall();
             }break;
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockStartContactUp(fa,fb);
