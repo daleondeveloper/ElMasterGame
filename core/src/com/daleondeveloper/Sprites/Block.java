@@ -6,18 +6,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
-import com.daleondeveloper.Game.GameCamera;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
-import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
@@ -50,7 +49,7 @@ public class Block extends AbstractDynamicObject {
     private boolean sensorLeft;
     private boolean sensorUp;
     private boolean sensorDown;
-    private boolean sensorPlatform;
+    private Set<Platform> contactPlatformList;
 
     public Block(GameWorld gameWorld, float x, float y, float width,float height){
         this.gameWorld = gameWorld;
@@ -73,6 +72,7 @@ public class Block extends AbstractDynamicObject {
 
         contactLeftBlockList = new ArrayList<Block>();
         contactRightBlockList = new ArrayList<Block>();
+        contactPlatformList = new HashSet<Platform>();
 
         sensorDown = false;
         sensorLeft = false;
@@ -153,9 +153,11 @@ public class Block extends AbstractDynamicObject {
         body.setTransform(x,y,0);
     }
     public void stopFall(){
-        currentState = State.IDLE;
-        stateTime = 0;
-        statePosition = false;
+        if(currentState == State.FALL) {
+            currentState = State.IDLE;
+            stateTime = 0;
+            statePosition = false;
+        }
     }
     public void fall(){
         currentState = State.FALL;
@@ -198,14 +200,13 @@ public class Block extends AbstractDynamicObject {
 
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
-//        if(!sensorDown){fall();}
-//        body.setLinearVelocity(0,0);
-        textureRegionBlock = assetBlocks.get(1);
+        if(contactPlatformList.size() == 0){fall();}
+        body.setLinearVelocity(0,0);
         float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
         if(stateTime > 0.2) {
-            statePosition = true;
-     //       centerBodyPositionY = (int) (body.getPosition().y + 0.6f);
-     //       body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
+       //     statePosition = true;
+            //       centerBodyPositionY = (int) (body.getPosition().y + 0.6f);
+            //       body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
         }
         if(getUpPlatform() == null) {
             createPlatformUnderBlock();
@@ -213,6 +214,7 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        textureRegionBlock = assetBlocks.get(1);
         setRegion(textureRegionBlock);
 
         stateTime += deltaTime;
@@ -220,18 +222,18 @@ public class Block extends AbstractDynamicObject {
 
     }
     private void statePush(float deltaTime){
+        System.out.println("deltaTimePush = " + stateTime);
+        body.setType(BodyDef.BodyType.DynamicBody);
         stateTime += deltaTime;
         if(upPlatform != null) {
             deletePlatformUnderBlock();
         }
-       // if(!sensorDown){currentState = State.FALL;}
-    //    body.setLinearVelocity(4f,0);
-        if(stateTime > 0.01) {
-//            float centerBodyPositionY = (int) (body.getPosition().y + 0.5f);
-//            body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
-        }
+        if(contactPlatformList.size() == 0){currentState = State.FALL;}
+        //body.setLinearVelocity(4f,0);
+
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        textureRegionBlock =assetBlocks.get(3);
         setRegion(textureRegionBlock);
     }
     private void stateFall(float deltaTime){
@@ -239,7 +241,7 @@ public class Block extends AbstractDynamicObject {
             deletePlatformUnderBlock();
         }
         body.setType(BodyDef.BodyType.DynamicBody);
-//        if(sensorDown){stopFall();}
+        if(contactPlatformList.size() > 0){stopFall();}
         body.setLinearVelocity(0,FALL_VELOCITY);
         textureRegionBlock = assetBlocks.get(3);
         // Update this Sprite to correspond with the position of the Box2D body.
@@ -442,5 +444,9 @@ public class Block extends AbstractDynamicObject {
 
     public void setSensorDown(boolean sensorDown) {
         this.sensorDown = sensorDown;
+    }
+
+    public Set<Platform> getContactPlatformList() {
+        return contactPlatformList;
     }
 }

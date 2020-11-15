@@ -29,7 +29,7 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("begin contact");
+
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
@@ -83,8 +83,13 @@ public class WorldContactListner implements ContactListener {
             //Контакт блоків з регіонами
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockStartContactDown(fa,fb);
-                System.out.println("contact = " + contact);
-                block.stopFall();
+                Platform platform = null;
+                if(fa.getUserData() instanceof Platform){
+                    platform = (Platform)fa.getUserData();
+                }else{
+                    platform = (Platform)fb.getUserData();
+                }
+                block.getContactPlatformList().add(platform);
             }break;
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockStartContactUp(fa,fb);
@@ -103,7 +108,7 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        System.out.println("end Contact");
+
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
@@ -157,6 +162,13 @@ public class WorldContactListner implements ContactListener {
             //Кінець контактів блоків з регіонами
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockEndContactDown(fa,fb);
+                Platform platform = null;
+                if(fa.getUserData() instanceof Platform){
+                    platform = (Platform)fa.getUserData();
+                }else{
+                    platform = (Platform)fb.getUserData();
+                }
+                block.getContactPlatformList().remove(platform);
             }break;
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockEndContactUp(fa,fb);
@@ -175,7 +187,6 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-        System.out.println("contact = " + contact + ", oldManifold = " + oldManifold);
     }
 
     @Override

@@ -146,7 +146,6 @@ public class GameWorld {
         checkPressedButtons();
         this.gameCamera.update(deltaTime);
 
-        System.out.println(box2DWorld.getBodyCount());
     }
 
     private void checkPressedButtons(){
