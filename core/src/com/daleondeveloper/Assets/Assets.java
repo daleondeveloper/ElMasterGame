@@ -55,6 +55,7 @@ public class Assets implements Disposable,AssetErrorListener {
     private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
     private static final String TEXTURE_ATLAS_GAME = "atlas/game/game.atlas";
     private static final String TEXTURE_ATLAS_GUI = "atlas/gui/gui.atlas";
+    private static final String TEXTURE_ATLAS_NEWGAME = "atlas/newGame/newGame.atlas";
 
     private static Assets instance;
     private AssetManager assetManager;
@@ -103,8 +104,12 @@ public class Assets implements Disposable,AssetErrorListener {
         TextureAtlas atlasGame = assetManager.get(TEXTURE_ATLAS_GAME);
         TextureAtlas atlasHelp = assetManager.get(TEXTURE_ATLAS_HELP);
         TextureAtlas atlasGUI = assetManager.get(TEXTURE_ATLAS_GUI);
+        TextureAtlas atlasNewGame = assetManager.get(TEXTURE_ATLAS_NEWGAME);
 
         for(Texture texture : atlasGame.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        for(Texture texture : atlasNewGame.getTextures()){
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
         for(Texture texture : atlasGUI.getTextures()){
@@ -112,9 +117,9 @@ public class Assets implements Disposable,AssetErrorListener {
         }
 
         i18NElementMaster = new AssetI18NElementMaster(assetManager);
-        assetGame = new AssetGame(atlasGame);
-        assetBlock = new AssetBlock(atlasGame);
-        assetWaterElement = new AssetWaterElement(atlasGame);
+        assetGame = new AssetGame(atlasGame, atlasNewGame);
+        assetBlock = new AssetBlock(atlasNewGame);
+        assetWaterElement = new AssetWaterElement(atlasGame,atlasNewGame);
         assetHelp = new AssetHelp(atlasHelp);
         assetGUI = new AssetGUI(atlasGUI);
         assetSounds = new AssetSounds(assetManager);
@@ -131,6 +136,7 @@ public class Assets implements Disposable,AssetErrorListener {
         assetManager.load(TEXTURE_ATLAS_GAME, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_GUI, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_HELP, TextureAtlas.class);
+        assetManager.load(TEXTURE_ATLAS_NEWGAME, TextureAtlas.class);
     }
 
     private void loadSounds(){

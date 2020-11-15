@@ -51,6 +51,12 @@ public class Background extends AbstractDynamicObject {
     private void definePlatform(){
     }
 
+    public void setRegionGates(){
+        setRegion(Assets.getInstance().getAssetGame().getGates());
+    }
+    public void setRegionGameFon(){
+        setRegion(Assets.getInstance().getAssetGame().getGameFon());
+    }
 
 
     @Override

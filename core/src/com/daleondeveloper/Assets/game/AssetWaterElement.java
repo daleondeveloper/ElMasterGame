@@ -12,12 +12,15 @@ public class AssetWaterElement implements IAssetSprite {
     private static final float SCALE = 0.7f;
 
     private TextureRegion elementOfWater;
+    private TextureRegion newHero;
     private Animation elementOfWaterPush;
     private Animation elementOfWaterStand;
     private Animation elementOfWaterWalk;
 
-    public AssetWaterElement(TextureAtlas atlas){
+    public AssetWaterElement(TextureAtlas atlas, TextureAtlas newAtlas){
         Array<TextureAtlas.AtlasRegion> regions;
+
+        newHero = newAtlas.findRegion("Hero");
 
         elementOfWater = atlas.findRegion("elementOfWater",1);
         //animation
@@ -48,6 +51,10 @@ public class AssetWaterElement implements IAssetSprite {
 
     public TextureRegion getElementOfWater() {
         return elementOfWater;
+    }
+
+    public TextureRegion getNewHero() {
+        return newHero;
     }
 
     public Animation getElementOfWaterPush() {

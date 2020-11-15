@@ -22,14 +22,14 @@ public class AssetBlock implements IAssetSprite {
     public  AssetBlock(TextureAtlas atlas){
         Array<TextureAtlas.AtlasRegion> regions;
 
-        blockBlue = atlas.findRegion("blockBlue");
-        blockPurr = atlas.findRegion("blockPurr");
-        blockRed = atlas.findRegion("blockRed");
-        blockYellow = atlas.findRegion("blockYellow");
-        blockGreen = atlas.findRegion("blockGreen");
+        blockBlue = atlas.findRegion("Block_Fire");
+        blockPurr = atlas.findRegion("Block_Lightning");
+        blockRed = atlas.findRegion("Block_Snow");
+        blockYellow = atlas.findRegion("Block_Water");
+        blockGreen = atlas.findRegion("Block_Water");
 
         //animation
-        regions = atlas.findRegions("destroyWind");
+        regions = atlas.findRegions("Block_Water");
         destroyWind =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
     }

@@ -36,6 +36,7 @@ public class WaterElement extends AbstractDynamicObject {
     private PlayScreen playScreen;
     private GameWorld gameWorld;
     private TextureRegion elemTexReg;
+    private TextureRegion newHero;
     private Animation elemStandAnim;
     private Animation elemWalkAnim;
     private Animation elemPushAnim;
@@ -69,6 +70,7 @@ public class WaterElement extends AbstractDynamicObject {
         this.gameWorld = gameWorld;
 
         AssetWaterElement assetWaterElem = Assets.getInstance().getAssetWaterElement();
+        newHero = assetWaterElem.getNewHero();
         elemStandAnim = assetWaterElem.getElementOfWaterStand();
         elemWalkAnim = assetWaterElem.getElementOfWaterWalk();
         elemPushAnim = assetWaterElem.getElementOfWaterPush();
@@ -292,7 +294,8 @@ public class WaterElement extends AbstractDynamicObject {
             //render
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
+           // setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
+            setRegion(newHero);
             if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }

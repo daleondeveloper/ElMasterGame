@@ -101,31 +101,31 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                     block.delete();
                     break;
                     case Input.Keys.NUM_1:
-                        gameWorld.getBlockController().addBlock(15,170);
+                        gameWorld.getBlockController().addBlock(50,400);
                     break;
                     case Input.Keys.NUM_2:
-                        gameWorld.getBlockController().addBlock(25,170);
+                        gameWorld.getBlockController().addBlock(60,400);
                     break;
                     case Input.Keys.NUM_3:
-                        gameWorld.getBlockController().addBlock(35,170);
+                        gameWorld.getBlockController().addBlock(70,400);
                     break;
                     case Input.Keys.NUM_4:
-                        gameWorld.getBlockController().addBlock(45,170);
+                        gameWorld.getBlockController().addBlock(80,400);
                     break;
                     case Input.Keys.NUM_5:
-                        gameWorld.getBlockController().addBlock(55,170);
+                        gameWorld.getBlockController().addBlock(90,400);
                     break;
                     case Input.Keys.NUM_6:
-                        gameWorld.getBlockController().addBlock(65,170);
+                        gameWorld.getBlockController().addBlock(100,400);
                     break;
                     case Input.Keys.NUM_7:
-                        gameWorld.getBlockController().addBlock(75,170);
+                        gameWorld.getBlockController().addBlock(110,400);
                     break;
                     case Input.Keys.NUM_8:
-                        gameWorld.getBlockController().addBlock(85,170);
+                        gameWorld.getBlockController().addBlock(120,400);
                     break;
                     case Input.Keys.NUM_9:
-                        gameWorld.getBlockController().addBlock(95,170);
+                        gameWorld.getBlockController().addBlock(130,400);
                     break;
 
         }

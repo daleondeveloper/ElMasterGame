@@ -19,6 +19,7 @@ public class ElMaster extends DirectedGame {
 
 	public static final int  APPLICATION_WIDTH = 420;
 	public static final int APPLICATION_HEIGHT = 840;
+	public static final int GAME_WORLD_CELL = 24;
 	public static final String TITLE = "ElMaster";
 
 	private SpriteBatch gameBatch;

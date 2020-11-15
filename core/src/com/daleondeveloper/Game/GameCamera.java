@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class GameCamera {
     private static final String TAG = GameCamera.class.getName();
 
-    public static final float PPM = 4.2f;
+    public static final float PPM = 2.1f;
 
     private OrthographicCamera camera;
     private Viewport viewPort;

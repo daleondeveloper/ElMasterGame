@@ -26,6 +26,8 @@ public class GameWorld {
     private Platform regionLeft;
     private Platform regionRight;
     private Background background;
+    private Background gates;
+    private Background backgroundGameFon;
 
     private boolean rightButtonPressed;
     private boolean leftButtonPressed;
@@ -55,7 +57,7 @@ public class GameWorld {
         platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,50);
+        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
 //        blockController.addBlock(5,30);
 //        blockController.addBlock(15,30);
@@ -69,13 +71,18 @@ public class GameWorld {
 //        blockController.addBlock(95,30);
 
         //Regions ( create regions around the playing zone for player and game element)
-        regionDown = new Platform(this,0,10,gameCamera.getWorldWidth(),10);
-        regionLeft = new Platform(this,0,0,5,gameCamera.getWorldHeight());
-        regionRight = new Platform(this,gameCamera.getWorldWidth()-5,0,5,gameCamera.getWorldHeight());
+        regionDown = new Platform(this,0,170,gameCamera.getWorldWidth(),10);
+        regionLeft = new Platform(this,45,0,5,gameCamera.getWorldHeight());
+        regionRight = new Platform(this,150,0,5,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
 
         //create background fon
         background = new Background(this,0, 0,gameCamera.getWorldWidth(),gameCamera.getWorldHeight());
+        gates = new Background(this,-7.1f,
+                53.05f,600*0.357f,960*0.357f);
+        gates.setRegionGates();
+        backgroundGameFon = new Background(this,40,170,120,180);
+        backgroundGameFon.setRegionGameFon();
     }
     private void createBackground(){
        // parallaxSB = new ParallaxSB(gameCamera);
@@ -130,6 +137,8 @@ public class GameWorld {
         regionRight.update(deltaTime);
         regionDown.update(deltaTime);
         background.update(deltaTime);
+        gates.update(deltaTime);
+        backgroundGameFon.update(deltaTime);
         updateBlock(deltaTime);
         updatePlatform(deltaTime);
         centerCamera(deltaTime);
@@ -178,12 +187,14 @@ private void updatePlatform(float deltaTime){
         // This order is important.
         // This determines if a sprite has to be drawn in front or behind another sprite.
         background.render(batch);
+        backgroundGameFon.render(batch);
         waterElement.render(batch);
         regionLeft.render(batch);
         regionRight.render(batch);
         regionDown.render(batch);
         renderBlock(batch);
         renderPlatform(batch);
+        gates.render(batch);
 
     }
 

@@ -18,9 +18,10 @@ public class AssetGame {
     private TextureRegion buttonWodden;
     private TextureRegion gameFon;
     private TextureRegion paper;
+    private TextureRegion gates;
 
 
-    public AssetGame(TextureAtlas atlas) {
+    public AssetGame(TextureAtlas atlas, TextureAtlas newAtlas) {
 
 
         button = atlas.findRegion("button");
@@ -30,8 +31,9 @@ public class AssetGame {
         buttonRigthMini = atlas.findRegion("buttonRigthMini");
         buttonSave = atlas.findRegion("buttonSave");
         buttonWodden = atlas.findRegion("buttonWodden");
-        gameFon = atlas.findRegion("gameFon");
+        gameFon = newAtlas.findRegion("gamefon");
         paper = atlas.findRegion("paper");
+        gates = newAtlas.findRegion("Game_Gates");
 
     }
 
@@ -72,4 +74,7 @@ public class AssetGame {
         return paper;
     }
 
+    public TextureRegion getGates() {
+        return gates;
+    }
 }
