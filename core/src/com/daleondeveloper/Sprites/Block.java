@@ -44,6 +44,9 @@ public class Block extends AbstractDynamicObject {
     private List<Block> contactLeftBlockList ;
     private List<Block> contactRightBlockList ;
     private Platform upPlatform;
+
+    private float pushImpulse;
+
     //marks
     private boolean sensorRight;
     private boolean sensorLeft;
@@ -70,6 +73,8 @@ public class Block extends AbstractDynamicObject {
         stateTime = 0;
         statePosition = false;
 
+        pushImpulse = 10;
+
         contactLeftBlockList = new ArrayList<Block>();
         contactRightBlockList = new ArrayList<Block>();
         contactPlatformList = new HashSet<Platform>();
@@ -92,7 +97,7 @@ public class Block extends AbstractDynamicObject {
         body =gameWorld.createBody(blockDef);
         body.setFixedRotation(true);
         body.setGravityScale(1);
-        body.setLinearVelocity(0,FALL_VELOCITY);
+        body.setLinearVelocity(body.getLinearVelocity().x,FALL_VELOCITY);
 
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
@@ -100,7 +105,7 @@ public class Block extends AbstractDynamicObject {
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
 //        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
-        fixture.density = 1f;
+        fixture.density = 0f;
         fixture.friction = 0f;
         fixture.restitution = 0f;
 
@@ -152,6 +157,11 @@ public class Block extends AbstractDynamicObject {
     public void setStaticPosition(float x, float y){
         body.setTransform(x,y,0);
     }
+
+    public void idle(){
+        currentState = State.IDLE;
+        stateTime = 0;
+    }
     public void stopFall(){
         if(currentState == State.FALL) {
             currentState = State.IDLE;
@@ -164,9 +174,11 @@ public class Block extends AbstractDynamicObject {
         stateTime = 0;
     }
     public void push(Float turnImpulse){
-        currentState = State.PUSH;
-        stateTime = 0;
-        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+        if(currentState == State.IDLE) {
+            currentState = State.PUSH;
+            stateTime = 0;
+            pushImpulse = turnImpulse;
+        }
     }
     public void delete(){
         currentState = State.DESTROY;
@@ -229,7 +241,8 @@ public class Block extends AbstractDynamicObject {
             deletePlatformUnderBlock();
         }
         if(contactPlatformList.size() == 0){currentState = State.FALL;}
-        //body.setLinearVelocity(4f,0);
+        body.setLinearVelocity(10, body.getLinearVelocity().y);
+
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);

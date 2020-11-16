@@ -145,6 +145,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 break;
             case Input.Keys.C :
                 waterElement.idle();
+
                 break;
         }
         return true;

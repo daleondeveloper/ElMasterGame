@@ -57,6 +57,8 @@ public class WaterElement extends AbstractDynamicObject {
     private FixtureDef fixtureSkill;
     private CircleShape circleShapeSkillFixture;
 
+    private Block pushBlock;
+
     //marks
     private List<Fixture> sensorRight;
     private List<Fixture> sensorLeft;
@@ -93,6 +95,7 @@ public class WaterElement extends AbstractDynamicObject {
         stopElem = false;
         activateElem = true;
         currentPlatform = null;
+        pushBlock = null;
 
         sensorDown = new ArrayList<Fixture>();
         sensorLeft = new ArrayList<Fixture>();
@@ -114,7 +117,7 @@ public class WaterElement extends AbstractDynamicObject {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = gameWorld.createBody(bodyDef);
         body.setFixedRotation(true);
-       // body.setGravityScale(0);
+        body.setGravityScale(10);
 
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
@@ -173,14 +176,7 @@ public class WaterElement extends AbstractDynamicObject {
         if(isWalk() || isIdle() || isPush()) {
             stateTime = 0;
             currentState = State.JUMP;
-         //   body.applyLinearImpulse(new Vector2(0, IMPULSE_Y), body.getWorldCenter(), true);
-            body.applyLinearImpulse(0, 15,getWidth()/2,getHeight()/2,true);
-        }
-    }
-    public void endJump(){
-        if(isJump() && getVelocity().y < -0.001f){
-            currentState = State.IDLE;
-            stateTime = 0;
+            body.applyLinearImpulse(0, 50,getWidth()/2,getHeight()/2,true);
         }
     }
     public void fall(){
@@ -205,10 +201,9 @@ public class WaterElement extends AbstractDynamicObject {
                 return;
             }
         }
-        if(isIdle() || isPush()) {
+        if(isIdle()) {
             currentState = State.WALK;
             stateTime = 0;
-
         }
         if(isJump()){
             if((impulse > 0 && sensorRight.size() > 0) ||
@@ -218,8 +213,8 @@ public class WaterElement extends AbstractDynamicObject {
             body.setLinearVelocity(impulse,body.getLinearVelocity().y);
         }
         turnImpulse = impulse;
-
     }
+
     public void stopWalk(){
         if(currentState == State.WALK || currentState == State.PUSH){
             currentState = State.IDLE;
@@ -231,6 +226,9 @@ public class WaterElement extends AbstractDynamicObject {
     public void idle(){
         currentState = State.IDLE;
         stateTime = 0;
+        if(pushBlock != null){
+            pushBlock.idle();
+        }
     }
     public void push(float impulse){
         if(isIdle() || isWalk() || isJump()){
@@ -332,6 +330,7 @@ public class WaterElement extends AbstractDynamicObject {
                         Block block = (Block)f.getUserData();
                         block.push(turnImpulse);
                         body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+                        pushBlock = block;
                     }
                 }
             }
@@ -341,6 +340,7 @@ public class WaterElement extends AbstractDynamicObject {
                         Block block = (Block)f.getUserData();
                         block.push(-turnImpulse);
                         body.setLinearVelocity(-turnImpulse,body.getLinearVelocity().y);
+                        pushBlock = block;
                     }
                 }
             }
