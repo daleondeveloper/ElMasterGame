@@ -46,6 +46,7 @@ public class Block extends AbstractDynamicObject {
     private Platform upPlatform;
 
     private float pushImpulse;
+    private float returnCellsPosition;
 
     //marks
     private boolean sensorRight;
@@ -74,6 +75,7 @@ public class Block extends AbstractDynamicObject {
         statePosition = false;
 
         pushImpulse = 10;
+        returnCellsPosition = x;
 
         contactLeftBlockList = new ArrayList<Block>();
         contactRightBlockList = new ArrayList<Block>();
@@ -189,9 +191,20 @@ public class Block extends AbstractDynamicObject {
     }
 
 
-
     @Override
     public void update(float deltaTime) {
+        float x = body.getPosition().x;
+        if(x > 144 && x < 146) {returnCellsPosition = 145;}
+            else if (x > 54 && x < 56) {returnCellsPosition = 55;}
+            else if(x > 64 && x < 66) {returnCellsPosition = 65;}
+            else if(x > 74 && x < 76) {returnCellsPosition = 75;}
+            else if(x > 84 && x < 86) {returnCellsPosition = 85;}
+            else if(x > 94 && x < 96) {returnCellsPosition = 95;}
+            else if(x > 104 && x < 106) {returnCellsPosition = 105;}
+            else if(x > 114 && x < 116) {returnCellsPosition = 115;}
+            else if(x > 124 && x < 126) {returnCellsPosition = 125;}
+            else if(x > 134 && x < 136){returnCellsPosition = 135;}
+
         switch (currentState){
             case IDLE:
                 stateIdle(deltaTime);
@@ -215,11 +228,20 @@ public class Block extends AbstractDynamicObject {
         if(contactPlatformList.size() == 0){fall();}
         body.setLinearVelocity(0,0);
         float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
-        if(stateTime > 0.2) {
+//        if(stateTime > 0.2) {
+            if(body.getPosition().x - returnCellsPosition > 0.01f ||
+            body.getPosition().x - returnCellsPosition < -0.01f){
+//                if(body.getPosition().x != returnCellsPosition){
+                body.setType(BodyDef.BodyType.DynamicBody);
+                body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
+                if(getUpPlatform() != null){
+                    deletePlatformUnderBlock();
+                }
+            }
        //     statePosition = true;
             //       centerBodyPositionY = (int) (body.getPosition().y + 0.6f);
             //       body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
-        }
+       // }
         if(getUpPlatform() == null) {
             createPlatformUnderBlock();
         }
@@ -315,22 +337,20 @@ public class Block extends AbstractDynamicObject {
         //Якщо є сусідня платформа, призначення їй статусу dispose
         //і присвоєння сусідньому блоку з ліва створену платформу
         // силка на платформу у всіх лівих блоків одна тому одне відбувається тільки присвоєння
-        if (left != null) {
-        Block tmpBlock = this.getContactLeftBlockList().get(0);
-            left.delete();
-            if (tmpBlock.getContactLeftBlockList().size() > 0) {
+//        if (left != null) {
+            if (this.getContactLeftBlockList().size() > 0) {
+                Block tmpBlock = this.getContactLeftBlockList().get(0);
                 tmpBlock.setUpPlatform(platformBlockUp);
             }
-        }
+//        }
         // Аналогічно верхній функції, тільки використовуються блоки з права
-        if(right != null) {
-            Block tmpBlock = this.getContactRightBlockList().get(0);
-            right.delete();
+//        if(right != null) {
 
-                if (tmpBlock.getContactRightBlockList().size() > 0) {
-                    tmpBlock.setUpPlatform(platformBlockUp);
+        if (this.getContactRightBlockList().size() > 0) {
+            Block tmpBlock = this.getContactRightBlockList().get(0);
+            tmpBlock.setUpPlatform(platformBlockUp);
                 }
-            }
+//            }
     }
 
     //Присвоєння стану dispose платформі над блоком, і присвоєння цій зміні null значення
