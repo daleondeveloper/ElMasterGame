@@ -191,7 +191,6 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 
     //Перевірка чи один з Fixture являється героєм , якщо так повернення його і задіяння відповідного сенсору

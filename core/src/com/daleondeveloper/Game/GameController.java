@@ -100,6 +100,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                     Block block = gameWorld.getBlockController().getArrayBlock().get(0);
                     block.delete();
                     break;
+
                     case Input.Keys.NUM_1:
                         gameWorld.getBlockController().addBlock(50,400);
                     break;

@@ -136,6 +136,7 @@ public class GameWorld {
     }
 
     public void update(float deltaTime){
+        System.out.println(this.box2DWorld.getBodyCount());
         waterElement.update(deltaTime);
         regionLeft.update(deltaTime);
         regionRight.update(deltaTime);
@@ -163,7 +164,7 @@ public class GameWorld {
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
         System.out.println("deltaTime = " + timeCreateBlock);
-        if(timeCreateBlock > 1){
+        if(timeCreateBlock > 1000){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }

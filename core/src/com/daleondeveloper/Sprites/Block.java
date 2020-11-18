@@ -193,6 +193,11 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
+        for(Platform p : getContactPlatformList()){
+            if(p.isDisposable()){
+                contactPlatformList.remove(p);
+            }
+        }
         float x = body.getPosition().x;
         if(x > 144 && x < 146) {returnCellsPosition = 145;}
             else if (x > 54 && x < 56) {returnCellsPosition = 55;}
