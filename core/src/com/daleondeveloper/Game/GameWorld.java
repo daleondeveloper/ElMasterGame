@@ -29,6 +29,8 @@ public class GameWorld {
     private Background gates;
     private Background backgroundGameFon;
 
+    private float timeCreateBlock;
+
     private boolean rightButtonPressed;
     private boolean leftButtonPressed;
 
@@ -44,6 +46,8 @@ public class GameWorld {
 
         rightButtonPressed = false;
         leftButtonPressed = false;
+
+        timeCreateBlock = 0;
 
         createSprites();
         createBackground();
@@ -157,6 +161,12 @@ public class GameWorld {
         }
     }
     private void updateBlock(float deltaTime){
+        timeCreateBlock += deltaTime;
+        System.out.println("deltaTime = " + timeCreateBlock);
+        if(timeCreateBlock > 1){
+            timeCreateBlock = 0;
+            getBlockController().addBlock();
+        }
         Array<Block> arrayBlock = blockController.getArrayBlock();
         for(Block block: arrayBlock){
             block.update(deltaTime);
