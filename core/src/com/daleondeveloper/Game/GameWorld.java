@@ -1,5 +1,6 @@
 package com.daleondeveloper.Game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
@@ -19,8 +20,10 @@ public class GameWorld {
     private GameCamera gameCamera;
     private  boolean moveCamera;
     private boolean pauseCamera;
+
     private BlockController blockController;
     private PlatformController platformController;
+
     private com.daleondeveloper.Sprites.Hero.WaterElement waterElement;
     private Platform regionDown;
     private Platform regionLeft;
@@ -28,6 +31,7 @@ public class GameWorld {
     private Background background;
     private Background gates;
     private Background backgroundGameFon;
+    private GameSensor firstLineBlockChecker;
 
     private float timeCreateBlock;
 
@@ -63,6 +67,7 @@ public class GameWorld {
         //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
+        firstLineBlockChecker = new GameSensor(playScreen,this,55,185,90,1);
 //        blockController.addBlock(5,30);
 //        blockController.addBlock(15,30);
 //        blockController.addBlock(25,30);
@@ -80,18 +85,18 @@ public class GameWorld {
         regionRight = new Platform(this,150,0,5,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
 
-        //create background fon
+
+    }
+    private void createBackground(){
+       // parallaxSB = new ParallaxSB(gameCamera);
+        //background = new Image(Assets.getInstance().getAssetGame().getGameFon());
+//create background fon
         background = new Background(this,0, 0,gameCamera.getWorldWidth(),gameCamera.getWorldHeight());
         gates = new Background(this,-7.1f,
                 53.05f,600*0.357f,960*0.357f);
         gates.setRegionGates();
         backgroundGameFon = new Background(this,40,170,120,180);
         backgroundGameFon.setRegionGameFon();
-    }
-    private void createBackground(){
-       // parallaxSB = new ParallaxSB(gameCamera);
-        //background = new Image(Assets.getInstance().getAssetGame().getGameFon());
-
         if (!DebugConstants.HIDE_BACKGROUND) {
             loadBackground();
         }
@@ -136,7 +141,6 @@ public class GameWorld {
     }
 
     public void update(float deltaTime){
-        System.out.println(this.box2DWorld.getBodyCount());
         waterElement.update(deltaTime);
         regionLeft.update(deltaTime);
         regionRight.update(deltaTime);
@@ -147,6 +151,7 @@ public class GameWorld {
         updateBlock(deltaTime);
         updatePlatform(deltaTime);
         centerCamera(deltaTime);
+        firstLineBlockChecker.update(deltaTime);
 
         checkPressedButtons();
         this.gameCamera.update(deltaTime);
@@ -163,8 +168,7 @@ public class GameWorld {
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        System.out.println("deltaTime = " + timeCreateBlock);
-        if(timeCreateBlock > 1000){
+        if(timeCreateBlock > 3){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }
@@ -205,6 +209,7 @@ private void updatePlatform(float deltaTime){
         renderBlock(batch);
         renderPlatform(batch);
         gates.render(batch);
+        firstLineBlockChecker.render(batch);
 
     }
 
@@ -301,5 +306,9 @@ private void renderPlatform(SpriteBatch batch) {
         if(leftButtonPressed){
             rightButtonPressed = false;
         }
+    }
+
+    public GameSensor getFirstLineBlockChecker() {
+        return firstLineBlockChecker;
     }
 }

@@ -105,7 +105,7 @@ public class Block extends AbstractDynamicObject {
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
-//        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
+        fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
         fixture.density = 0f;
         fixture.friction = 0f;
@@ -243,10 +243,6 @@ public class Block extends AbstractDynamicObject {
                     deletePlatformUnderBlock();
                 }
             }
-       //     statePosition = true;
-            //       centerBodyPositionY = (int) (body.getPosition().y + 0.6f);
-            //       body.setTransform(body.getPosition().x, centerBodyPositionY, 0);
-       // }
         if(getUpPlatform() == null) {
             createPlatformUnderBlock();
         }
@@ -293,6 +289,10 @@ public class Block extends AbstractDynamicObject {
     }
     private void stateDestroy(float deltaTime){
         deletePlatformUnderBlock();
+        GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
+        if(gameSensor.getFirstLineBlocks().contains(this)){
+            gameSensor.getFirstLineBlocks().remove(this);
+        }
         gameWorld.destroyBody(body);
         currentState = State.DISPOSE;
     }

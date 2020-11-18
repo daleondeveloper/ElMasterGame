@@ -2,6 +2,7 @@ package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.Sprites.Platform;
 
@@ -21,6 +22,7 @@ public class WorldContactListner implements ContactListener {
     public static final short CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT = 256;
     public static final short CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT = 512;
     public static final short CATEGORY_WATER_ELEM_SENSOR_UP_BIT = 1024;
+    public static final short CATEGORY_GAME_WORLD_SENSOR = 2048;
 
 
 
@@ -101,8 +103,20 @@ public class WorldContactListner implements ContactListener {
                 Block block = blockStartContactRight(fa,fb);
             }break;
 
-
-
+            //Контакт з сенсорами ігрового світу
+            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
+                System.out.println("contact = " + contact);
+                GameSensor gameSensor = null;
+                Block block = null;
+                if(fa.getUserData() instanceof GameSensor){
+                    gameSensor = (GameSensor)fa.getUserData();
+                    block = (Block)fb.getUserData();
+                }else if(fb.getUserData() instanceof GameSensor){
+                    gameSensor = (GameSensor)fb.getUserData();
+                    block = (Block)fa.getUserData();
+                }else{break;}
+                gameSensor.getFirstLineBlocks().add(block);
+            }break;
     }
     }
 
@@ -179,7 +193,10 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockEndContactRight(fa,fb);
             }break;
-
+            //Контакт з сенсорами ігрового світу
+            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
+                System.out.println("contact = " + contact);
+            }
 
 
         }
