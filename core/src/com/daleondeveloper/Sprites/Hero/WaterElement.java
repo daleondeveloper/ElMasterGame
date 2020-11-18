@@ -248,6 +248,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
+        body.setGravityScale(10);
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
@@ -282,6 +283,7 @@ public class WaterElement extends AbstractDynamicObject {
             if(stopElem){stopElem = false; }
             if(sensorDown.size() == 0){ fall();}
 
+            body.setGravityScale(0);
             body.setLinearVelocity(0,0);
 
             //render
@@ -352,9 +354,11 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void stateWalk(float deltaTime){
+
             if(activateElem){
                 activateElem = false;
             }
+            body.setGravityScale(0);
             body.setLinearVelocity(new Vector2(turnImpulse*2,getVelocity().y));
 
             if(sensorDown.size() < 1){

@@ -229,8 +229,8 @@ public class Block extends AbstractDynamicObject {
         body.setLinearVelocity(0,0);
         float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
 //        if(stateTime > 0.2) {
-            if(body.getPosition().x - returnCellsPosition > 0.01f ||
-            body.getPosition().x - returnCellsPosition < -0.01f){
+            if(body.getPosition().x - returnCellsPosition > 0.05f ||
+            body.getPosition().x - returnCellsPosition < -0.05f){
 //                if(body.getPosition().x != returnCellsPosition){
                 body.setType(BodyDef.BodyType.DynamicBody);
                 body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
@@ -301,7 +301,7 @@ public class Block extends AbstractDynamicObject {
     //Силка у всіх сусідніх блоків буде зсилатися на одну силку платформи
     private void createPlatformUnderBlock() {
         //Задаються початкові дані платформи
-        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 0.01f;
+        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 0.25f;
         platformY = (float)Math.ceil((getY() + 5)*0.1)*10;
        // platformY = (float)(Math.ceil((getY()) * 0.1f)*10)-platformHY*0.75f;
         Platform left = null;
@@ -337,20 +337,33 @@ public class Block extends AbstractDynamicObject {
         //Якщо є сусідня платформа, призначення їй статусу dispose
         //і присвоєння сусідньому блоку з ліва створену платформу
         // силка на платформу у всіх лівих блоків одна тому одне відбувається тільки присвоєння
-//        if (left != null) {
-            if (this.getContactLeftBlockList().size() > 0) {
-                Block tmpBlock = this.getContactLeftBlockList().get(0);
+        if (left != null) {
+            Block tmpBlock = this;
+            while(tmpBlock.getContactLeftBlockList().size() > 0){
+                tmpBlock = tmpBlock.getContactLeftBlockList().get(0);
+                if(tmpBlock.getUpPlatform() != null) {
+                    tmpBlock.getUpPlatform().delete();
+                }
                 tmpBlock.setUpPlatform(platformBlockUp);
             }
-//        }
+//            if (this.getContactLeftBlockList().size() > 0) {
+//              //  Block tmpBlock = this.getContactLeftBlockList().get(0);
+//                tmpBlock.setUpPlatform(platformBlockUp);
+//            }
+        }
         // Аналогічно верхній функції, тільки використовуються блоки з права
 //        if(right != null) {
-
-        if (this.getContactRightBlockList().size() > 0) {
-            Block tmpBlock = this.getContactRightBlockList().get(0);
-            tmpBlock.setUpPlatform(platformBlockUp);
+        if (right != null) {
+            Block tmpBlock = this;
+            while (tmpBlock.getContactRightBlockList().size() > 0) {
+                tmpBlock = tmpBlock.getContactRightBlockList().get(0);
+                if (tmpBlock.getUpPlatform() != null) {
+                    tmpBlock.getUpPlatform().delete();
                 }
-//            }
+                tmpBlock.setUpPlatform(platformBlockUp);
+            }
+        }
+
     }
 
     //Присвоєння стану dispose платформі над блоком, і присвоєння цій зміні null значення
