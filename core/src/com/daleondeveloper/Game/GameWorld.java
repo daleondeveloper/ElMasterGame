@@ -168,7 +168,7 @@ public class GameWorld {
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 3){
+        if(timeCreateBlock > 1000){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }

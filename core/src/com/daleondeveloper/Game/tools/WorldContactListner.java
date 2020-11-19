@@ -76,6 +76,7 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
                 Block blockDown = blockStartContactDown(fa,fb);
                 Block blockUp = blockStartContactUp(fa,fb);
+
             }break;
             case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
                 Block blockRight = blockStartContactRight(fa,fb);
@@ -105,7 +106,6 @@ public class WorldContactListner implements ContactListener {
 
             //Контакт з сенсорами ігрового світу
             case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
-                System.out.println("contact = " + contact);
                 GameSensor gameSensor = null;
                 Block block = null;
                 if(fa.getUserData() instanceof GameSensor){
@@ -167,6 +167,7 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
                 Block blockDown = blockEndContactDown(fa,fb);
                 Block blockUp = blockEndContactUp(fa,fb);
+
             }break;
             case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
                 Block blockRight = blockEndContactRight(fa,fb);
@@ -272,21 +273,27 @@ public class WorldContactListner implements ContactListener {
     //Перевірка чи один з Fixture являється блоком , якщо так повернення його і задіяння відповідного сенсору
     public Block blockStartContactDown(Fixture fa,Fixture  fb){
         Block block = null;
+        Fixture fixture = null;
         Object objFa = fa.getUserData();
         Object objFb = fb.getUserData();
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
                 block = (Block)objFa;
+                fixture = fb;
             }else{
                 block = (Block)objFb;
+                fixture = fa;
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
+            fixture = fb;
         }else if(objFb instanceof Block){
             block = (Block)objFb;
+            fixture = fa;
         }
         if(block != null) {
             block.setSensorDown(true);
+            block.getContactDownList().add(fixture);
         }
         return block;
     }
@@ -414,21 +421,27 @@ public class WorldContactListner implements ContactListener {
     //Перевірка чи один з Fixture являється блоком , якщо так повернення його і деактивація відповідного сенсору
     public Block blockEndContactDown(Fixture fa,Fixture  fb){
         Block block = null;
+        Fixture fixture = null;
         Object objFa = fa.getUserData();
         Object objFb = fb.getUserData();
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
                 block = (Block)objFa;
+                fixture = fb;
             }else{
                 block = (Block)objFb;
+                fixture = fa;
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
+            fixture = fb;
         }else if(objFb instanceof Block){
             block = (Block)objFb;
+            fixture = fa;
         }
         if(block !=null) {
             block.setSensorDown(false);
+            block.getContactDownList().remove(fixture);
         }
         return block;
     }

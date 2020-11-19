@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
@@ -43,6 +44,8 @@ public class Block extends AbstractDynamicObject {
     private Body body;
     private List<Block> contactLeftBlockList ;
     private List<Block> contactRightBlockList ;
+    private List<Fixture> contactUpList ;
+    private List<Fixture> contactDownList ;
     private Platform upPlatform;
 
     private float pushImpulse;
@@ -79,6 +82,8 @@ public class Block extends AbstractDynamicObject {
 
         contactLeftBlockList = new ArrayList<Block>();
         contactRightBlockList = new ArrayList<Block>();
+        contactDownList = new ArrayList<Fixture>();
+        contactUpList = new ArrayList<Fixture>();
         contactPlatformList = new HashSet<Platform>();
 
         sensorDown = false;
@@ -120,7 +125,7 @@ public class Block extends AbstractDynamicObject {
     private void defineSensors(){
         //Sensor Left
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(0.1f,(getHeight()/2)*0.95f, new Vector2((-getWidth()/2)+0.05f,0),0);
+        polygonShape.setAsBox(0.1f,(getHeight()/2)*0.95f, new Vector2((-getWidth()/2)+0.03f,0),0);
         FixtureDef sensorLeft = new FixtureDef();
         sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_LEFT_BIT;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -138,7 +143,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.11f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.8f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -211,6 +216,18 @@ public class Block extends AbstractDynamicObject {
             else if(x > 114 && x < 116) {returnCellsPosition = 115;}
             else if(x > 124 && x < 126) {returnCellsPosition = 125;}
             else if(x > 134 && x < 136){returnCellsPosition = 135;}
+        if(contactDownList.size() == 0){
+            sensorDown = false;
+        }
+//        if(contactUpBlockList.size() == 0){
+//            sensorUp = false;
+//        }
+//        if(contactLeftBlockList.size() == 0){
+//            sensorLeft = false;
+//        }
+//        if(contactRightBlockList.size() == 0){
+//            sensorRight = false;
+//        }
 
         switch (currentState){
             case IDLE:
@@ -218,6 +235,7 @@ public class Block extends AbstractDynamicObject {
                 break;
             case PUSH:
                 statePush(deltaTime);
+                break;
             case FALL:
                 stateFall(deltaTime);
                 break;
@@ -232,7 +250,7 @@ public class Block extends AbstractDynamicObject {
 
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
-        if(contactPlatformList.size() == 0){fall();}
+        if(!sensorDown){fall();}
         body.setLinearVelocity(0,0);
 
             if(body.getPosition().x - returnCellsPosition > 0.05f ||
@@ -263,13 +281,13 @@ public class Block extends AbstractDynamicObject {
         if(upPlatform != null) {
             deletePlatformUnderBlock();
         }
-        if(contactPlatformList.size() == 0){currentState = State.FALL;}
+        if(contactPlatformList.size() == 0){fall();}
         body.setLinearVelocity(10, body.getLinearVelocity().y);
 
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        textureRegionBlock =assetBlocks.get(3);
+        textureRegionBlock =assetBlocks.get(2);
         setRegion(textureRegionBlock);
     }
     private void stateFall(float deltaTime){
@@ -280,6 +298,14 @@ public class Block extends AbstractDynamicObject {
         if(contactPlatformList.size() > 0){stopFall();}
         body.setLinearVelocity(0,FALL_VELOCITY);
         textureRegionBlock = assetBlocks.get(3);
+//        if(body.getPosition().x - returnCellsPosition > 0.025f ||
+//                body.getPosition().x - returnCellsPosition < -0.025f){
+//            body.setType(BodyDef.BodyType.DynamicBody);
+//            body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
+//            if(getUpPlatform() != null){
+//                deletePlatformUnderBlock();
+//            }
+//        }
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
@@ -288,11 +314,13 @@ public class Block extends AbstractDynamicObject {
 
     }
     private void stateDestroy(float deltaTime){
+        body.setType(BodyDef.BodyType.KinematicBody);
         deletePlatformUnderBlock();
         GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
         if(gameSensor.getFirstLineBlocks().contains(this)){
             gameSensor.getFirstLineBlocks().remove(this);
         }
+
         gameWorld.destroyBody(body);
         currentState = State.DISPOSE;
     }
@@ -438,7 +466,13 @@ public class Block extends AbstractDynamicObject {
         }else return false;
     }
 
+    public List<Fixture> getContactUpList() {
+        return contactUpList;
+    }
 
+    public List<Fixture> getContactDownList() {
+        return contactDownList;
+    }
 
     public List<Block> getContactLeftBlockList() {
         return contactLeftBlockList;
@@ -500,4 +534,6 @@ public class Block extends AbstractDynamicObject {
     public Set<Platform> getContactPlatformList() {
         return contactPlatformList;
     }
+
+
 }

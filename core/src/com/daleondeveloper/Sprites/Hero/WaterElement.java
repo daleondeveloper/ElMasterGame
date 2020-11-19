@@ -286,7 +286,7 @@ public class WaterElement extends AbstractDynamicObject {
             if(stopElem){stopElem = false; }
             if(sensorDown.size() == 0){ fall();}
 
-            body.setGravityScale(0);
+            body.setGravityScale(1);
             body.setLinearVelocity(0,0);
 
             //render
@@ -361,7 +361,7 @@ public class WaterElement extends AbstractDynamicObject {
             if(activateElem){
                 activateElem = false;
             }
-            body.setGravityScale(0);
+            body.setGravityScale(1);
             body.setLinearVelocity(new Vector2(turnImpulse*2,getVelocity().y));
 
             if(sensorDown.size() < 1){

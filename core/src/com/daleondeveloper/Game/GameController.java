@@ -90,7 +90,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 gameWorld.setLeftButtonPressed(true);
                 break;
             case Input.Keys.C:
-                waterElement.push(10f);
+                waterElement.push(30f);
                 break;
             case Input.Keys.Z:
                 gameWorld.getBlockController().addBlock();
