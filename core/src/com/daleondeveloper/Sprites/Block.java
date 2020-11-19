@@ -193,11 +193,13 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        for(Platform p : getContactPlatformList()){
+        Set<Platform> tmpSet = new HashSet<Platform>();
+        for(Platform p : contactPlatformList){
             if(p.isDisposable()){
-                contactPlatformList.remove(p);
+                tmpSet.add(p);
             }
         }
+        contactPlatformList.removeAll(tmpSet);
         float x = body.getPosition().x;
         if(x > 144 && x < 146) {returnCellsPosition = 145;}
             else if (x > 54 && x < 56) {returnCellsPosition = 55;}
@@ -232,11 +234,9 @@ public class Block extends AbstractDynamicObject {
         body.setType(BodyDef.BodyType.StaticBody);
         if(contactPlatformList.size() == 0){fall();}
         body.setLinearVelocity(0,0);
-        float centerBodyPositionY = (body.getPosition().y - (int)body.getPosition().y);
-//        if(stateTime > 0.2) {
+
             if(body.getPosition().x - returnCellsPosition > 0.05f ||
             body.getPosition().x - returnCellsPosition < -0.05f){
-//                if(body.getPosition().x != returnCellsPosition){
                 body.setType(BodyDef.BodyType.DynamicBody);
                 body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
                 if(getUpPlatform() != null){

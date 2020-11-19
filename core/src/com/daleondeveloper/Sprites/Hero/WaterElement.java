@@ -275,6 +275,9 @@ public class WaterElement extends AbstractDynamicObject {
             case DISPOSE:
                 break;
         }
+            if(sensorDown.size() == 0){
+                body.setGravityScale(10);
+            }
 
     }
 
