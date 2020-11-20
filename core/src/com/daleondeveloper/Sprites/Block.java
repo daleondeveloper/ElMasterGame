@@ -44,8 +44,8 @@ public class Block extends AbstractDynamicObject {
     private Body body;
     private List<Block> contactLeftBlockList ;
     private List<Block> contactRightBlockList ;
-    private List<Fixture> contactUpList ;
-    private List<Fixture> contactDownList ;
+    private List<AbstractGameObject> contactUpList ;
+    private List<AbstractGameObject> contactDownList ;
     private Platform upPlatform;
 
     private float pushImpulse;
@@ -82,8 +82,8 @@ public class Block extends AbstractDynamicObject {
 
         contactLeftBlockList = new ArrayList<Block>();
         contactRightBlockList = new ArrayList<Block>();
-        contactDownList = new ArrayList<Fixture>();
-        contactUpList = new ArrayList<Fixture>();
+        contactDownList = new ArrayList<AbstractGameObject>();
+        contactUpList = new ArrayList<AbstractGameObject>();
         contactPlatformList = new HashSet<Platform>();
 
         sensorDown = false;
@@ -143,7 +143,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.8f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -466,11 +466,12 @@ public class Block extends AbstractDynamicObject {
         }else return false;
     }
 
-    public List<Fixture> getContactUpList() {
+
+    public List<AbstractGameObject> getContactUpList() {
         return contactUpList;
     }
 
-    public List<Fixture> getContactDownList() {
+    public List<AbstractGameObject> getContactDownList() {
         return contactDownList;
     }
 

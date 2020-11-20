@@ -1,6 +1,7 @@
 package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
@@ -36,6 +37,11 @@ public class WorldContactListner implements ContactListener {
         Fixture fb = contact.getFixtureB();
 
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
+
+        AbstractGameObject abstractGameObject = (AbstractGameObject)fa.getUserData();
+        abstractGameObject.addFixToFixOnContact((AbstractGameObject)fb.getUserData());
+        abstractGameObject = (AbstractGameObject)fb.getUserData();
+        abstractGameObject.addFixToFixOnContact((AbstractGameObject)fa.getUserData());
 
         switch (collisionDef) {
             //Кнотакт з героєм
@@ -125,6 +131,11 @@ public class WorldContactListner implements ContactListener {
 
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
+
+        AbstractGameObject abstractGameObject = (AbstractGameObject)fa.getUserData();
+        abstractGameObject.removeFixOnContact((AbstractGameObject)fb.getUserData(),(AbstractGameObject)fa.getUserData());
+//        abstractGameObject = (AbstractGameObject)fb.getUserData();
+//        abstractGameObject.removeFixOnContact(fa);
 
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
 
@@ -293,7 +304,7 @@ public class WorldContactListner implements ContactListener {
         }
         if(block != null) {
             block.setSensorDown(true);
-            block.getContactDownList().add(fixture);
+            block.getContactDownList().add((AbstractGameObject)fixture.getUserData());
         }
         return block;
     }
@@ -441,7 +452,7 @@ public class WorldContactListner implements ContactListener {
         }
         if(block !=null) {
             block.setSensorDown(false);
-            block.getContactDownList().remove(fixture);
+            block.getContactDownList().remove((AbstractGameObject)fixture.getUserData());
         }
         return block;
     }

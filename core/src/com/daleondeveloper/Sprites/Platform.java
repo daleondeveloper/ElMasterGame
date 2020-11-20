@@ -5,12 +5,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Platform extends AbstractDynamicObject {
     private static final String TAG = Platform.class.getName();
@@ -86,6 +90,11 @@ public class Platform extends AbstractDynamicObject {
         }
     }
     private void stateDelete (float deltaTime){
+        Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
+        objToDelete.addAll(fixOnContact);
+        for(AbstractGameObject fixture : objToDelete){
+            removeFixOnContact(this,fixture);
+        }
         gameWorld.destroyBody(body);
         currentState = State.DISPOSABLE;
     }
@@ -105,5 +114,15 @@ public class Platform extends AbstractDynamicObject {
         if(currentState == State.DISPOSABLE){
             return true;
         }else return false;
+    }
+
+    @Override
+    public Set<AbstractGameObject> removeFixOnContact(AbstractGameObject mainFix, AbstractGameObject contactFix) {
+        if(contactFix instanceof Block){
+            Block contactBlock = (Block)contactFix;
+            contactBlock.getContactDownList().remove(mainFix);
+            contactBlock.getContactPlatformList().remove(this);
+        }
+        return super.removeFixOnContact(mainFix,contactFix);
     }
 }
