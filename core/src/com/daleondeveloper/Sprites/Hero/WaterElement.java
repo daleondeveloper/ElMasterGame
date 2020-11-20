@@ -15,6 +15,7 @@ import com.daleondeveloper.Game.GameCamera;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
+import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Platform;
 
@@ -60,10 +61,10 @@ public class WaterElement extends AbstractDynamicObject {
     private Block pushBlock;
 
     //marks
-    private List<Fixture> sensorRight;
-    private List<Fixture> sensorLeft;
-    private List<Fixture> sensorUp;
-    private List<Fixture> sensorDown;
+    private List<AbstractGameObject> sensorRight;
+    private List<AbstractGameObject> sensorLeft;
+    private List<AbstractGameObject> sensorUp;
+    private List<AbstractGameObject> sensorDown;
 
     private State debugState;
 
@@ -97,10 +98,10 @@ public class WaterElement extends AbstractDynamicObject {
         currentPlatform = null;
         pushBlock = null;
 
-        sensorDown = new ArrayList<Fixture>();
-        sensorLeft = new ArrayList<Fixture>();
-        sensorRight = new ArrayList<Fixture>();
-        sensorUp = new ArrayList<Fixture>();
+        sensorDown = new ArrayList<AbstractGameObject>();
+        sensorLeft = new ArrayList<AbstractGameObject>();
+        sensorRight = new ArrayList<AbstractGameObject>();
+        sensorUp = new ArrayList<AbstractGameObject>();
 
         initVoice();
     }
@@ -330,9 +331,9 @@ public class WaterElement extends AbstractDynamicObject {
                 return;
             }
             if(moveRight && sensorRight.size() > 0){
-                for(Fixture f : sensorRight){
-                    if(f.getUserData() instanceof Block){
-                        Block block = (Block)f.getUserData();
+                for(AbstractGameObject f : sensorRight){
+                    if(f instanceof Block){
+                        Block block = (Block)f;
                         block.push(turnImpulse);
                         body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
                         pushBlock = block;
@@ -340,9 +341,9 @@ public class WaterElement extends AbstractDynamicObject {
                 }
             }
             if(!moveRight && sensorLeft.size() > 0){
-                for(Fixture f : sensorLeft){
-                    if(f.getUserData() instanceof Block){
-                        Block block = (Block)f.getUserData();
+                for(AbstractGameObject f : sensorLeft){
+                    if(f instanceof Block){
+                        Block block = (Block)f;
                         block.push(-turnImpulse);
                         body.setLinearVelocity(-turnImpulse,body.getLinearVelocity().y);
                         pushBlock = block;
@@ -394,22 +395,21 @@ public class WaterElement extends AbstractDynamicObject {
         return false;
     }
 
-    public List<Fixture> getSensorRight() {
+    public List<AbstractGameObject> getSensorRight() {
         return sensorRight;
     }
 
-    public List<Fixture> getSensorLeft() {
+    public List<AbstractGameObject> getSensorLeft() {
         return sensorLeft;
     }
 
-    public List<Fixture> getSensorUp() {
+    public List<AbstractGameObject> getSensorUp() {
         return sensorUp;
     }
 
-    public List<Fixture> getSensorDown() {
+    public List<AbstractGameObject> getSensorDown() {
         return sensorDown;
     }
-
 
     @Override
     public Vector2 getBodyPosition() {

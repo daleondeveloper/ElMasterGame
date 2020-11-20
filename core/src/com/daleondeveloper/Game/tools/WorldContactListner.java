@@ -227,13 +227,13 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            if(!waterElement.getSensorDown().contains(fb)) {
-                waterElement.getSensorDown().add(fb);
+            if(!waterElement.getSensorDown().contains((AbstractGameObject)fb.getUserData())) {
+                waterElement.getSensorDown().add((AbstractGameObject)fb.getUserData());
             }
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            if(!waterElement.getSensorDown().contains(fa)) {
-                waterElement.getSensorDown().add(fb);
+            if(!waterElement.getSensorDown().contains((AbstractGameObject)fa.getUserData())) {
+                waterElement.getSensorDown().add((AbstractGameObject)fa.getUserData());
             }                }
         return waterElement;
     }
@@ -241,13 +241,13 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            if(!waterElement.getSensorUp().contains(fb)) {
-                waterElement.getSensorUp().add(fb);
+            if(!waterElement.getSensorUp().contains((AbstractGameObject)fb.getUserData())) {
+                waterElement.getSensorUp().add((AbstractGameObject)fb.getUserData());
             }
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            if(!waterElement.getSensorUp().contains(fa)) {
-                waterElement.getSensorUp().add(fb);
+            if(!waterElement.getSensorUp().contains((AbstractGameObject)fa.getUserData())) {
+                waterElement.getSensorUp().add((AbstractGameObject)fa.getUserData());
             }                }
         return waterElement;
     }
@@ -255,13 +255,13 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            if(!waterElement.getSensorRight().contains(fb)) {
-                waterElement.getSensorRight().add(fb);
+            if(!waterElement.getSensorRight().contains((AbstractGameObject)fb.getUserData())) {
+                waterElement.getSensorRight().add((AbstractGameObject)fb.getUserData());
             }
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            if(!waterElement.getSensorRight().contains(fa)) {
-                waterElement.getSensorRight().add(fb);
+            if(!waterElement.getSensorRight().contains((AbstractGameObject)fa.getUserData())) {
+                waterElement.getSensorRight().add((AbstractGameObject)fa.getUserData());
             }                }
         return waterElement;
     }
@@ -269,13 +269,13 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            if(!waterElement.getSensorLeft().contains(fb)) {
-                waterElement.getSensorLeft().add(fb);
+            if(!waterElement.getSensorLeft().contains((AbstractGameObject)fb.getUserData())) {
+                waterElement.getSensorLeft().add((AbstractGameObject)fb.getUserData());
             }
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            if(!waterElement.getSensorLeft().contains(fa)) {
-                waterElement.getSensorLeft().add(fb);
+            if(!waterElement.getSensorLeft().contains((AbstractGameObject)fa.getUserData())) {
+                waterElement.getSensorLeft().add((AbstractGameObject)fa.getUserData());
             }                }
         return waterElement;
     }
@@ -386,11 +386,11 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            waterElement.getSensorDown().remove(fb);
+            waterElement.getSensorDown().remove((AbstractGameObject)fb.getUserData());
 
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            waterElement.getSensorDown().remove(fa);
+            waterElement.getSensorDown().remove((AbstractGameObject)fa.getUserData());
             }
         return waterElement;
     }
@@ -398,10 +398,10 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            waterElement.getSensorUp().remove(fb);
+            waterElement.getSensorUp().remove((AbstractGameObject)fb.getUserData());
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            waterElement.getSensorUp().remove(fa);
+            waterElement.getSensorUp().remove((AbstractGameObject)fa.getUserData());
             }
         return waterElement;
     }
@@ -409,10 +409,10 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            waterElement.getSensorRight().remove(fb);
+            waterElement.getSensorRight().remove((AbstractGameObject)fb.getUserData());
         }else if(fb.getUserData() instanceof WaterElement) {
             waterElement = (WaterElement) fb.getUserData();
-            waterElement.getSensorRight().remove(fa);
+            waterElement.getSensorRight().remove((AbstractGameObject)fa.getUserData());
         }
         return waterElement;
     }
@@ -420,10 +420,10 @@ public class WorldContactListner implements ContactListener {
         WaterElement waterElement = null;
         if(fa.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fa.getUserData();
-            waterElement.getSensorLeft().remove(fb);
+            waterElement.getSensorLeft().remove((AbstractGameObject)fb.getUserData());
         }else if(fb.getUserData() instanceof WaterElement){
             waterElement = (WaterElement)fb.getUserData();
-            waterElement.getSensorLeft().remove(fa);
+            waterElement.getSensorLeft().remove((AbstractGameObject)fa.getUserData());
             }
         return waterElement;
     }

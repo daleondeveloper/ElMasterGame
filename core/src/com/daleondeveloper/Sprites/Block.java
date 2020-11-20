@@ -13,6 +13,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
+import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -143,7 +144,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.4f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -320,6 +321,11 @@ public class Block extends AbstractDynamicObject {
         if(gameSensor.getFirstLineBlocks().contains(this)){
             gameSensor.getFirstLineBlocks().remove(this);
         }
+        Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
+        objToDelete.addAll(fixOnContact);
+        for(AbstractGameObject abstractGO : objToDelete){
+            removeFixOnContact(this,abstractGO);
+        }
 
         gameWorld.destroyBody(body);
         currentState = State.DISPOSE;
@@ -466,6 +472,25 @@ public class Block extends AbstractDynamicObject {
         }else return false;
     }
 
+    @Override
+    public Set<AbstractGameObject> removeFixOnContact(AbstractGameObject mainFix, AbstractGameObject contactFix) {
+        if(contactFix instanceof Block){
+            Block block = (Block) contactFix;
+            block.getContactDownList().remove(this);
+            block.getContactUpList().remove(this);
+            block.getContactLeftBlockList().remove(this);
+            block.getContactRightBlockList().remove(this);
+        }
+        if(contactFix instanceof WaterElement){
+            WaterElement hero = (WaterElement) contactFix;
+            hero.getSensorDown().remove(this);
+            hero.getSensorUp().remove(this);
+            hero.getSensorLeft().remove(this);
+            hero.getSensorRight().remove(this);
+        }
+
+        return super.removeFixOnContact(mainFix, contactFix);
+    }
 
     public List<AbstractGameObject> getContactUpList() {
         return contactUpList;
