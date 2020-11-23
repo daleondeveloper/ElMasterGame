@@ -70,7 +70,7 @@ public class ElMaster extends DirectedGame {
 
 		//Sets a splash Screen
 		ScreenManager.getInstance().initialize(this);
-		ScreenManager.getInstance().showScreen(ScreenEnum.SPLASH, ScreenTransitionEnum.ROTATING,this);
+		ScreenManager.getInstance().showScreen(ScreenEnum.SPLASH, null,this);
 
 	}
 
