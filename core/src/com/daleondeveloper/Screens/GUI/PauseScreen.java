@@ -92,19 +92,19 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     }
 
     private void defineButtons() {
-        play = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonRight()),
-                new TextureRegionDrawable(assetGUI.getButtonRightMini()));
+        play = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
 
-        home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonExit()),
-                new TextureRegionDrawable(assetGUI.getButtonExit()));
+        home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
 
-        audio = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSoundOn()),
-                new TextureRegionDrawable(assetGUI.getButtonSoundOn()),
-                new TextureRegionDrawable(assetGUI.getButtonSoundOff()));
+        audio = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
         audio.setChecked(!prefs.isAudio());
 
-        rateGame = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonOnline()),
-                new TextureRegionDrawable(assetGUI.getButtonOnline()));
+        rateGame = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
 
         reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSettings()),
                 new TextureRegionDrawable(assetGUI.getButtonSettings()));

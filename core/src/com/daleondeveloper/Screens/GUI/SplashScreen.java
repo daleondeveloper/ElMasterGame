@@ -96,11 +96,11 @@ public class SplashScreen extends GUIAbstractScreen {
         stage.addActor(heroBlock);
         stage.addActor(loadingBar);
 
-        atlas = assetManager.get(TEXTURE_ATLAS_NUMBERS, TextureAtlas.class);
-        for(int i = 0; i < numbers.length; i++){
-            numbers[i] = new Image(atlas.findRegion(String.valueOf(i)));
-            stage.addActor(numbers[i]);
-        }
+//        atlas = assetManager.get(TEXTURE_ATLAS_NUMBERS, TextureAtlas.class);
+//        for(int i = 0; i < numbers.length; i++){
+//            numbers[i] = new Image(atlas.findRegion(String.valueOf(i)));
+//            stage.addActor(numbers[i]);
+//        }
 
         loadingBar.setPosition(10,410);
 

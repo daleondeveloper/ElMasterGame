@@ -1,0 +1,40 @@
+mainMenu.png
+size: 422, 974
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+backgroundGates
+  rotate: false
+  xy: 1, 1
+  size: 420, 840
+  orig: 420, 840
+  offset: 0, 0
+  index: -1
+button_help
+  rotate: false
+  xy: 133, 843
+  size: 75, 74
+  orig: 75, 74
+  offset: 0, 0
+  index: -1
+button_highScore
+  rotate: false
+  xy: 133, 843
+  size: 75, 74
+  orig: 75, 74
+  offset: 0, 0
+  index: -1
+button_settings
+  rotate: false
+  xy: 133, 843
+  size: 75, 74
+  orig: 75, 74
+  offset: 0, 0
+  index: -1
+button_start
+  rotate: false
+  xy: 1, 843
+  size: 130, 130
+  orig: 420, 840
+  offset: 145, 355
+  index: -1

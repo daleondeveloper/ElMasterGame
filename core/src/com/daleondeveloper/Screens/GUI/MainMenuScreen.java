@@ -30,19 +30,9 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class MainMenuScreen extends GUIAbstractScreen {
     private static final String TAG = MainMenuScreen.class.getName();
 
-    private static final float JUMPER_SCALE = 1.3f;
-    private static final float ROCKET_BACKGROUND_SCALE = 0.2f;
     private static final float TITLE_OFFSET_Y = 600.0f;
-    private static final float ROCKET_BG_OFFSET_X = 200.0f;
-    private static final float ROCKET_BG_OFFSET_Y = 50.0f;
-    private static final float CLOUD_OFFSET_X = 40.0f;
-    private static final float CLOUD_OFFSET_Y = 20.0f;
-    private static final float JUMPER_OFFSET_Y = 200.0f;
-    private static final float ROCKET_FG_OFFSET_Y = 40.0f;
-    private static final float BUTTONS_OFFSET_Y = 350.0f;
-    private static final float BUTTONS_ANIM_DURATION = 1.0f;
-    private static final float BUTTONS_MOVE_BY_AMOUNT = 10.0f;
-    private static final float BUTTON_OFFSET_X = 75.0f;
+    private static final float TITLE_BUTTON_WIDTH_COEFFICIENT = 0.18f;
+    private static final float TITLE_BIG_BUTTON_WIDTH_COEFFICIENT = 0.33f;
 
     private Assets assets;
     private AssetGUI assetGUI;
@@ -53,9 +43,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private Image menuBg;
     private Label gameTitle;
 
-    private ImageButton play;
-
-    private ImageButton exit;
+    private ImageButton buttonStart;
+    private ImageButton buttonHelp;
+    private ImageButton buttonSettings;
+    private ImageButton buttonHighScore;
 
     public MainMenuScreen(ElMaster game) {
         super(game);
@@ -94,7 +85,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         hideBannerAd();
 
         // Background
-        menuBg = new Image(assetGUI.getMainFon());
+        menuBg = new Image(assetGUI.getBackgroundGates());
         stage.addActor(menuBg);
 
         // Title
@@ -104,26 +95,32 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
         // Buttons
         defineButtons();
-        stage.addActor(exit);
-        stage.addActor(play);
-    }
+        stage.addActor(buttonHelp);
+        stage.addActor(buttonSettings);
+        stage.addActor(buttonHighScore);
+        stage.addActor(buttonStart);
+     }
 
     private void defineButtons() {
-        play = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonRight()),
-                new TextureRegionDrawable(assetGUI.getButtonRightMini()));
+        buttonStart = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonStart()));
+        buttonHelp = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        buttonHighScore = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHighScore()),
+                new TextureRegionDrawable(assetGUI.getButtonHighScore()));
+        buttonSettings = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSettings()),
+                new TextureRegionDrawable(assetGUI.getButtonSettings()));
 
-        exit = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonExit()),
-                new TextureRegionDrawable(assetGUI.getButtonExit()));
 
         // Events
-        play.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
-        exit.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                signOut();
-                Gdx.app.exit();
-            }
-        }));
+        buttonStart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
+//        exit.addListener(ListenerHelper.runnableListener(new Runnable() {
+//            @Override
+//            public void run() {
+//                signOut();
+//                Gdx.app.exit();
+//            }
+//        }));
     }
 
     @Override
@@ -134,22 +131,39 @@ public class MainMenuScreen extends GUIAbstractScreen {
         float h = stage.getHeight();
 
         // Place the menu background in the middle of the screen
-        menuBg.setX(0);
-        menuBg.setY(0);
+            menuBg.setX(0);
+        if(h > assetGUI.getBackgroundGates().getRegionHeight()) {
+            menuBg.setY((h - assetGUI.getBackgroundGates().getRegionHeight()));
+        }else{
+            menuBg.setY(0);
+        }
         menuBg.setWidth(w);
-        menuBg.setHeight(h);
+        menuBg.setHeight(w*2);
 
         // Place the title
-        gameTitle.setPosition(((w  / 2)-gameTitle.getPrefWidth()/2), TITLE_OFFSET_Y);
+        gameTitle.setPosition(((w / 2)-gameTitle.getPrefWidth()/2), TITLE_OFFSET_Y);
 
-        // Place buttons
-        play.setX((w  / 2) - play.getWidth()/2);
-        play.setY((h / 2 ) - play.getHeight());
+        //Place buttons
+        buttonStart.setWidth(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
+        buttonStart.setX((w / 2) - buttonStart.getWidth() / 2);
+        buttonStart.setHeight(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
+        buttonStart.setY(h - (buttonStart.getHeight() * 3));
 
-        float x = play.getX();//- audio.getWidth() / 2;
-        float y = play.getY() - play.getHeight();// + play.getHeight()/2 ;
+        buttonSettings.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+        buttonSettings.setX(w * 0.24f);
+        buttonSettings.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+        buttonSettings.setY(buttonStart.getY() - buttonSettings.getHeight());
 
-        exit.setPosition(x, y);
+        buttonHighScore.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+        buttonHighScore.setX(buttonSettings.getX() + buttonSettings.getWidth());
+        buttonHighScore.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+        buttonHighScore.setY(buttonStart.getY() - buttonSettings.getHeight() * 2);
+
+        buttonHelp.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+        buttonHelp.setX(buttonHighScore.getX() + buttonHighScore.getWidth());
+        buttonHelp.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+        buttonHelp.setY(buttonStart.getY() - buttonSettings.getHeight());
+
 
         // Buttons Animations
         //setButtonsAnimation();
@@ -157,31 +171,31 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
     private void setButtonsAnimation() {
         // Disable events
-        play.setTouchable(Touchable.disabled);
-
-        exit.setTouchable(Touchable.disabled);
-
-        // Only available on Android version
-        //rateGame.setVisible(!(playServices instanceof DummyPlayServices));
-        //showLeaderboards.setVisible(!(playServices instanceof DummyPlayServices));
-
-        // Set actions
-        play.clearActions();
-
-        play.addAction(sequence(moveBy(0, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut),
-                run(new Runnable() {
-                    public void run () {
-                        // Enable events
-                        play.setTouchable(Touchable.enabled);
-                    }
-                })));
-        play.addAction(sequence(moveBy(0, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut),
-                run(new Runnable() {
-                    public void run () {
-                        // Enable events
-                        exit.setTouchable(Touchable.enabled);
-                    }
-                })));
+//        play.setTouchable(Touchable.disabled);
+//
+//        exit.setTouchable(Touchable.disabled);
+//
+//        // Only available on Android version
+//        //rateGame.setVisible(!(playServices instanceof DummyPlayServices));
+//        //showLeaderboards.setVisible(!(playServices instanceof DummyPlayServices));
+//
+//        // Set actions
+//        play.clearActions();
+//
+//        play.addAction(sequence(moveBy(0, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut),
+//                run(new Runnable() {
+//                    public void run () {
+//                        // Enable events
+//                        play.setTouchable(Touchable.enabled);
+//                    }
+//                })));
+//        play.addAction(sequence(moveBy(0, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut),
+//                run(new Runnable() {
+//                    public void run () {
+//                        // Enable events
+//                        exit.setTouchable(Touchable.enabled);
+//                    }
+//                })));
     }
 
     private void showLeaderboards() {

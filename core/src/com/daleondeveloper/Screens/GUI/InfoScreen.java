@@ -88,8 +88,8 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         stage.addActor(mainTable);
 
         // Pause button
-        pause = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonPause()),
-                new TextureRegionDrawable(assetGUI.getButtonStory()));
+        pause = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
+                new TextureRegionDrawable(assetGUI.getButtonStart()));
         pause.setPosition(0, stage.getHeight() - pause.getHeight());
         pause.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
@@ -119,11 +119,11 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     }
 
     private Table getGameOverButtonsTable() {
-        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStory()),
-                new TextureRegionDrawable(assetGUI.getButtonPause()));
+        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
 
-        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStory()),
-                new TextureRegionDrawable(assetGUI.getButtonPause()));
+        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
 
         reload.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
         home.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
@@ -147,8 +147,8 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     }
 
     private Table getHelpButtonsTable() {
-        ImageButton gotIt = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonLeft()),
-                new TextureRegionDrawable(assetGUI.getButtonLeftMini()));
+        ImageButton gotIt = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
         gotIt.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
