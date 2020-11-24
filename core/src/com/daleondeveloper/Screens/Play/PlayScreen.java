@@ -88,11 +88,11 @@ public class PlayScreen extends PlayAbstractScreen{
             boolean finish = false;
 
             // Show game controllers help
-            finish = !finish && prefs.mustShowHelp();
-            if (finish) {
-                infoScreen.showHelp();
-                prefs.setShowHelp(false);
-            }
+//            finish = !finish && prefs.mustShowHelp();
+//            if (finish) {
+//                infoScreen.showHelp();
+//                prefs.setShowHelp(false);
+//            }
 
             finish = !finish && levelCompleted;
             if (finish) {

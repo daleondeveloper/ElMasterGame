@@ -74,11 +74,11 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     @Override
     public void build() {
         gameOverTable = getGameOverTable();
-        helpTable = getHelpTable();
+        //helpTable = getHelpTable();
 
         Stack stack = new Stack();
         stack.add(gameOverTable);
-        stack.add(helpTable);
+        //stack.add(helpTable);
 
         Table mainTable = new Table();
         mainTable.setDebug(DebugConstants.DEBUG_LINES);
@@ -147,7 +147,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     }
 
     private Table getHelpButtonsTable() {
-        ImageButton gotIt = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
+        ImageButton gotIt = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
                 new TextureRegionDrawable(assetGUI.getButtonHelp()));
         gotIt.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
@@ -222,7 +222,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
 
     public void showHelp() {
         gameOverTable.setVisible(false);
-        helpTable.setVisible(true);
+      //  helpTable.setVisible(true);
         pause.setVisible(false);
         playScreen.getHud().setVisible(false);
         startStageAnimation(false, new Runnable() {

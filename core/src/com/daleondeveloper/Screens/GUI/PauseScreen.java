@@ -68,7 +68,7 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     public void build() {
         // Background
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
-        pixmap.setColor(0, 255, 0, DIM_ALPHA);
+        pixmap.setColor(255, 0, 0, DIM_ALPHA);
         pixmap.fill();
         TextureRegion dim = new TextureRegion(new Texture(pixmap));
         pixmap.dispose();
