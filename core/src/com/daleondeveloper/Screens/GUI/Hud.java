@@ -24,7 +24,7 @@ public class Hud extends GUIOverlayAbstractScreen {
     private static final String TAG = Hud.class.getName();
 
     private static final float PAD_TOP = 50.0f;
-    private static final float PAD_BOTTOM = 80.0f;
+    private static final float PAD_BOTTOM = 800.0f;
     private static final float SWING_DELAY = 0.02f;
     private static final int POWER_BAR_WIDTH = 250;
     private static final int POWER_BAR_HEIGHT = 15;
@@ -86,9 +86,9 @@ public class Hud extends GUIOverlayAbstractScreen {
         Table table = new Table();
         table.setDebug(DebugConstants.DEBUG_LINES);
         table.bottom();
-        if (DebugConstants.SHOW_FPS) {
+        //if (DebugConstants.SHOW_FPS) {
             table.add(getFPSTable()).row();
-        }
+        //}
         table.add(containerPerfectJump).row();
         table.padBottom(PAD_BOTTOM);
         return table;
@@ -117,10 +117,10 @@ public class Hud extends GUIOverlayAbstractScreen {
 //    }
 
     private void updateFPS() {
-        if (DebugConstants.SHOW_FPS) {
+       // if (DebugConstants.SHOW_FPS) {
             fps = Gdx.graphics.getFramesPerSecond();
             fpsLabel.setText(String.valueOf(fps));
-        }
+        //}
     }
 
     @Override

@@ -89,7 +89,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
 
         // Pause button
         pause = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
-                new TextureRegionDrawable(assetGUI.getButtonStart()));
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
         pause.setPosition(0, stage.getHeight() - pause.getHeight());
         pause.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
