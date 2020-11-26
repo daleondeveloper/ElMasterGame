@@ -88,9 +88,9 @@ public class Assets implements Disposable,AssetErrorListener {
 
         loadTextureAtlas();
 
-        loadSounds();
+        //loadSounds();
 
-        loadMusic();
+        //loadMusic();
     }
 
     public void finishLoading() {
