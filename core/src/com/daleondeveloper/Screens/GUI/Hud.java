@@ -4,11 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.fonts.AssetFonts;
+import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.GUI.widget.PowerBar;
@@ -33,6 +37,7 @@ public class Hud extends GUIOverlayAbstractScreen {
     private static final float FADE_OUT_DURATION = 0.6f;
 
     private I18NBundle i18NGameThreeBundle;
+    private AssetGUI assetGUI;
     private int score;
     private Label scoreLabel;
     private int fps;
@@ -42,12 +47,21 @@ public class Hud extends GUIOverlayAbstractScreen {
     private Container containerPerfectJump;
     private Table mainTable;
 
+    private Image gameWindow;
+    private ImageButton gameButtonLeft;
+    private ImageButton gameButtonRight;
+    private ImageButton gameButtonPush;
+    private ImageButton gameButtonJump;
+
+
     public Hud(ElMaster game) {
         super(game);
 
         i18NGameThreeBundle = Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle();
         score = 0;
         fps = 0;
+
+        assetGUI = Assets.getInstance().getAssetGUI();
 
         // Styles
         AssetFonts assetFonts = Assets.getInstance().getAssetFonts();
@@ -67,6 +81,24 @@ public class Hud extends GUIOverlayAbstractScreen {
         mainTable.add(getTopTable()).height(stage.getHeight() / 2).row();
         mainTable.add(getBottomTable()).height(stage.getHeight() / 2);
         stage.addActor(mainTable);
+
+        gameWindow = new Image(new TextureRegionDrawable(assetGUI.getGameWindow()));
+        stage.addActor(gameWindow);
+
+        defineButtons();
+
+        stage.addActor(gameButtonJump);
+        stage.addActor(gameButtonPush);
+        stage.addActor(gameButtonLeft);
+        stage.addActor(gameButtonRight);
+    }
+
+    private void defineButtons(){
+        gameButtonLeft = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonLeft()));
+        gameButtonRight = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonRight()));
+        gameButtonJump = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonJump()));
+        gameButtonPush = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonPush()));
+
     }
 
     private Table getTopTable() {
@@ -144,6 +176,25 @@ public class Hud extends GUIOverlayAbstractScreen {
 //        }
         stage.act();
         updateFPS();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+
+        float x = stage.getWidth() / 2;
+        float y = stage.getHeight() / 2;
+
+        gameWindow.setPosition(x - gameWindow.getWidth() / 2,0);
+
+
+        gameButtonPush.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.1f, gameWindow.getY()  + gameWindow.getHeight() * 0.42f);
+        gameButtonJump.setPosition(gameButtonPush.getX() + gameButtonPush.getWidth() , gameWindow.getY() + gameWindow.getHeight() * 0.1f);
+        gameButtonRight.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.9f - gameButtonRight.getWidth(),
+                gameWindow.getY() + gameWindow.getHeight() / 4);
+        gameButtonLeft.setPosition(gameButtonRight.getX() - gameButtonLeft.getWidth() * 1.1f,
+                gameWindow.getY() + gameWindow.getHeight() / 4);
+
     }
 
     public void addScore(int value) {
