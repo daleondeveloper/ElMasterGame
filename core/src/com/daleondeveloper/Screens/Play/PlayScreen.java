@@ -68,8 +68,8 @@ public class PlayScreen extends PlayAbstractScreen{
         //Render logic
 
         worldRenderer.render();
-        infoScreen.render();
         hud.render();
+        infoScreen.render();
         pauseScreen.render();
 
         //Analys game result

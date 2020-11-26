@@ -17,9 +17,9 @@ public class AssetMusic {
     private Music songGame;
 
     public AssetMusic(AssetManager am) {
-        songMainMenu = am.get(Assets.MUSIC_FILE_MAIN_MENU, Music.class);
-        songCredits = am.get(Assets.MUSIC_FILE_CREDITS, Music.class);
-        songGame = am.get(Assets.MUSIC_FILE_GAME, Music.class);
+//        songMainMenu = am.get(Assets.MUSIC_FILE_MAIN_MENU, Music.class);
+//        songCredits = am.get(Assets.MUSIC_FILE_CREDITS, Music.class);
+//        songGame = am.get(Assets.MUSIC_FILE_GAME, Music.class);
     }
 
     public Music getSongMainMenu() {

@@ -54,7 +54,7 @@ public class Assets implements Disposable,AssetErrorListener {
     // Texture atlas
     private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
     private static final String TEXTURE_ATLAS_GAME = "atlas/game/game.atlas";
-    private static final String TEXTURE_ATLAS_GUI = "atlas/gui/mainMenu.atlas";
+    private static final String TEXTURE_ATLAS_GUI = "atlas/gui/gui.atlas";
     private static final String TEXTURE_ATLAS_NEWGAME = "atlas/newGame/newGame.atlas";
 
     private static Assets instance;

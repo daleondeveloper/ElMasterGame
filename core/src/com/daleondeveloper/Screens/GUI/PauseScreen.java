@@ -43,12 +43,13 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     private I18NBundle i18NGameThreeBundle;
     private Label.LabelStyle labelStyleBig;
     private Image screenPauseBg;
+    private Image pauseWindow;
     private Label pauseLabel;
-    private ImageButton play;
-    private ImageButton home;
+    private ImageButton resume;
+    private ImageButton mainMenu;
     private ImageButton audio;
-    private ImageButton rateGame;
-    private ImageButton reload;
+    private ImageButton settings;
+    private ImageButton restart;
 
     public PauseScreen(ElMaster game, PlayScreen playScreen) {
         super(game);
@@ -75,48 +76,51 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         screenPauseBg = new Image(dim);
         stage.addActor(screenPauseBg);
 
+        pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));
+        stage.addActor(pauseWindow);
+
         // Title
         pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleBig);
-        stage.addActor(pauseLabel);
+        //stage.addActor(pauseLabel);
 
         // Buttons
         defineButtons();
-        stage.addActor(home);
+        stage.addActor(mainMenu);
         stage.addActor(audio);
-        stage.addActor(rateGame);
-        stage.addActor(reload);
-        stage.addActor(play);
+        stage.addActor(settings);
+        stage.addActor(restart);
+        stage.addActor(resume);
 
         // Initially hidden
         setVisible(false);
     }
 
     private void defineButtons() {
-        play = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        resume = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonResume()),
+                new TextureRegionDrawable(assetGUI.getPauseButtonResume()));
 
-        home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        mainMenu = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()),
+                new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()));
 
         audio = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
                 new TextureRegionDrawable(assetGUI.getButtonHelp()),
                 new TextureRegionDrawable(assetGUI.getButtonHelp()));
         audio.setChecked(!prefs.isAudio());
 
-        rateGame = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        settings = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonSettings()),
+                new TextureRegionDrawable(assetGUI.getPauseButtonSettings()));
 
-        reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSettings()),
-                new TextureRegionDrawable(assetGUI.getButtonSettings()));
+        restart = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonRestart()),
+                new TextureRegionDrawable(assetGUI.getPauseButtonRestart()));
 
         // Events
-        play.addListener(ListenerHelper.runnableListener(new Runnable() {
+        resume.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 playScreen.setGameStateRunning();
             }
         }));
-        home.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
+        mainMenu.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
         audio.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
@@ -125,23 +129,24 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
                 AudioManager.getInstance().onSettingsUpdated();
             }
         }));
-        rateGame.addListener(ListenerHelper.runnableListener(new Runnable() {
+        settings.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 rateGame();
             }
         }));
-        reload.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
+        restart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
     }
 
     private void setVisible(boolean visible) {
         screenPauseBg.setVisible(visible);
+        pauseWindow.setVisible(visible);
         pauseLabel.setVisible(visible);
-        play.setVisible(visible);
-        home.setVisible(visible);
-        audio.setVisible(visible);
-        rateGame.setVisible(visible);
-        reload.setVisible(visible);
+        resume.setVisible(visible);
+        mainMenu.setVisible(visible);
+        audio.setVisible(false);
+        settings.setVisible(visible);
+        restart.setVisible(visible);
     }
 
     @Override
@@ -168,14 +173,16 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     }
 
     private void placeButtons(float width, float height) {
-        play.setX((width - play.getWidth()) / 2);
-        play.setY((height - play.getHeight()) / 2 - BUTTONS_OFFSET_Y);
-        float x = play.getX() + play.getWidth() / 2 - audio.getWidth() / 2;
-        float y = play.getY() + play.getHeight() / 2 - audio.getHeight() / 2;
-        home.setPosition(x, y);
-        audio.setPosition(x, y);
-        rateGame.setPosition(x, y);
-        reload.setPosition(x, y);
+        resume.setX((width - resume.getWidth()) / 2);
+        resume.setY((height - resume.getHeight()) / 2 - BUTTONS_OFFSET_Y);
+        float x = width / 2;
+        float y = height / 2;
+        pauseWindow.setPosition(x - pauseWindow.getWidth() / 2, y - pauseWindow.getHeight() / 2);
+        resume.setPosition(x - resume.getWidth() / 2, y + 75);
+        mainMenu.setPosition(x - resume.getWidth() / 2, y + 25);
+        //audio.setPosition(x, y);
+        settings.setPosition(x - settings.getWidth() / 2, y - 25);
+        restart.setPosition(x - restart.getWidth() / 2, y - 75);
     }
 
     public boolean isPauseScreenVisible() {
@@ -184,35 +191,35 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
 
     private void setButtonsAnimation() {
         // Disable events
-        play.setTouchable(Touchable.disabled);
-        home.setTouchable(Touchable.disabled);
+        resume.setTouchable(Touchable.disabled);
+        mainMenu.setTouchable(Touchable.disabled);
         audio.setTouchable(Touchable.disabled);
-        rateGame.setTouchable(Touchable.disabled);
-        reload.setTouchable(Touchable.disabled);
+        settings.setTouchable(Touchable.disabled);
+        restart.setTouchable(Touchable.disabled);
 
         // Only available on Android version
     //    rateGame.setVisible(!(playServices instanceof DummyPlayServices));
 
         // Set actions
-        play.clearActions();
-        home.clearActions();
+        resume.clearActions();
+        mainMenu.clearActions();
         audio.clearActions();
-        rateGame.clearActions();
+        settings.clearActions();
 
-        play.addAction(sequence(moveBy(0, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut),
+        resume.addAction(
                 run(new Runnable() {
                     public void run () {
                         // Enable events
-                        play.setTouchable(Touchable.enabled);
-                        home.setTouchable(Touchable.enabled);
+                        resume.setTouchable(Touchable.enabled);
+                        mainMenu.setTouchable(Touchable.enabled);
                         audio.setTouchable(Touchable.enabled);
-                        rateGame.setTouchable(Touchable.enabled);
-                        reload.setTouchable(Touchable.enabled);
+                        settings.setTouchable(Touchable.enabled);
+                        restart.setTouchable(Touchable.enabled);
                     }
-                })));
-        home.addAction(moveBy(BUTTONS_MOVE_BY_AMOUNT, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut));
-        audio.addAction(moveBy(-BUTTONS_MOVE_BY_AMOUNT, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut));
-        rateGame.addAction(moveBy(0, BUTTONS_MOVE_BY_AMOUNT * 2, BUTTONS_ANIM_DURATION, Interpolation.bounceOut));
+                }));
+//        mainMenu.addAction(moveBy(BUTTONS_MOVE_BY_AMOUNT, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut));
+//        audio.addAction(moveBy(-BUTTONS_MOVE_BY_AMOUNT, BUTTONS_MOVE_BY_AMOUNT, BUTTONS_ANIM_DURATION, Interpolation.bounceOut));
+//        settings.addAction(moveBy(0, BUTTONS_MOVE_BY_AMOUNT * 2, BUTTONS_ANIM_DURATION, Interpolation.bounceOut));
     }
 
     @Override
