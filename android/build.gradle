@@ -1,4 +1,12 @@
 android {
+    signingConfigs {
+        debug {
+            storeFile file('E:\\ElMaster\\keystore\\keystore.jks')
+            keyAlias 'key0'
+            keyPassword 'cneltynYFE'
+            storePassword 'cneltynYFE0206'
+        }
+    }
     aaptOptions {
         ignoreAssetsPattern '!raw'
     }

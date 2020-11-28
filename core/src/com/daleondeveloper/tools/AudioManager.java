@@ -41,7 +41,7 @@ public class AudioManager {
 
     public void playSound(Sound sound, float volume, float pitch, float pan) {
         if (GameSettings.getInstance().isAudio()) {
-            sound.play(1, pitch, pan);
+//            sound.play(1, pitch, pan);
         }
     }
 
@@ -58,9 +58,9 @@ public class AudioManager {
 
     private void playMusic() {
         if (GameSettings.getInstance().isAudio()) {
-            playingMusic.setLooping(true);
-            playingMusic.setVolume(1);
-            playingMusic.play();
+//            playingMusic.setLooping(true);
+//            playingMusic.setVolume(1);
+//            playingMusic.play();
         }
     }
 
