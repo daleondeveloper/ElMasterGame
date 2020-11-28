@@ -59,7 +59,6 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
-
         // Styles
         labelStyleBig = new Label.LabelStyle();
         labelStyleBig.font = assets.getAssetFonts().getBig();

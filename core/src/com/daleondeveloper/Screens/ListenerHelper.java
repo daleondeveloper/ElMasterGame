@@ -38,11 +38,27 @@ public class ListenerHelper {
                         AudioManager.getInstance().playSound(Assets.getInstance().getAssetSounds().getClick());
                         runnable.run();
                     }
+                    @Override
+                    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
+                        return true;
+                    }
+
+                };
+    }
+    public static InputListener runnableListenerTouchDown(final Runnable runnable) {
+        return
+                new InputListener() {
 
                     @Override
                     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                        // Audio effect
+                        AudioManager.getInstance().playSound(Assets.getInstance().getAssetSounds().getClick());
+                        runnable.run();
                         return true;
                     }
+
                 };
     }
+
 }

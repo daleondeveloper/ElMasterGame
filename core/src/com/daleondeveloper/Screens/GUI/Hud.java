@@ -2,6 +2,9 @@ package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,7 +18,10 @@ import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
+import com.daleondeveloper.Game.GameController;
 import com.daleondeveloper.Screens.GUI.widget.PowerBar;
+import com.daleondeveloper.Screens.ListenerHelper;
+import com.daleondeveloper.Screens.Play.PlayScreen;
 
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -36,6 +42,7 @@ public class Hud extends GUIOverlayAbstractScreen {
     private static final float SCALE_TO_DURATION = 0.7f;
     private static final float FADE_OUT_DURATION = 0.6f;
 
+    private PlayScreen playScreen;
     private I18NBundle i18NGameThreeBundle;
     private AssetGUI assetGUI;
     private int score;
@@ -54,9 +61,10 @@ public class Hud extends GUIOverlayAbstractScreen {
     private ImageButton gameButtonJump;
 
 
-    public Hud(ElMaster game) {
+    public Hud(ElMaster game, PlayScreen playScreen) {
         super(game);
 
+        this.playScreen = playScreen;
         i18NGameThreeBundle = Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle();
         score = 0;
         fps = 0;
@@ -91,13 +99,84 @@ public class Hud extends GUIOverlayAbstractScreen {
         stage.addActor(gameButtonPush);
         stage.addActor(gameButtonLeft);
         stage.addActor(gameButtonRight);
+
     }
 
     private void defineButtons(){
-        gameButtonLeft = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonLeft()));
+        gameButtonLeft = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonLeft()),
+                new TextureRegionDrawable(assetGUI.getButtonHelp()));
         gameButtonRight = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonRight()));
         gameButtonJump = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonJump()));
         gameButtonPush = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonPush()));
+        ;
+        gameButtonLeft.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                    playScreen.getInputProcessor().keyDown(21);
+            }
+
+        }));
+        gameButtonLeft.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                playScreen.getInputProcessor().keyUp(21);
+            }
+        }));
+gameButtonRight.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                    playScreen.getInputProcessor().keyDown(22);
+            }
+
+        }));
+        gameButtonRight.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                playScreen.getInputProcessor().keyUp(22);
+            }
+        }));
+gameButtonPush.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                    playScreen.getInputProcessor().keyDown(31);
+            }
+
+        }));
+        gameButtonPush.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                playScreen.getInputProcessor().keyUp(31);
+            }
+        }));
+gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                    playScreen.getInputProcessor().keyDown(62);
+            }
+
+        }));
+        gameButtonJump.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                playScreen.getInputProcessor().keyUp(62);
+            }
+        }));
+
+
+
+//gameButtonJump.addListener(ListenerHelper.runnableListener(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(gameButtonJump.getTouchable() == Touchable.enabled) {
+//                    playScreen.getInputProcessor().keyDown(62);
+//                }
+//                if(gameButtonJump.getTouchable() == Touchable.disabled){
+//                    playScreen.getInputProcessor().keyUp(62);
+//                }
+//            }
+//
+//        }));
+
 
     }
 
@@ -157,6 +236,7 @@ public class Hud extends GUIOverlayAbstractScreen {
 
     @Override
     public void update(float deltaTime) {
+
 //        if (swing || !powerBar.isEmpty()) {
 //            swingTime += deltaTime;
 //            if (swingTime > SWING_DELAY) {
@@ -195,6 +275,8 @@ public class Hud extends GUIOverlayAbstractScreen {
         gameButtonLeft.setPosition(gameButtonRight.getX() - gameButtonLeft.getWidth() * 1.1f,
                 gameWindow.getY() + gameWindow.getHeight() / 4);
 
+
+
     }
 
     public void addScore(int value) {
@@ -230,5 +312,22 @@ public class Hud extends GUIOverlayAbstractScreen {
         SequenceAction sequenceOne = sequence(alpha(1), scaleTo(1.0f, 1.0f, SCALE_TO_DURATION, Interpolation.bounceOut));
         SequenceAction sequenceTwo = sequence(fadeOut(FADE_OUT_DURATION), scaleTo(0.0f, 0.0f));
         containerPerfectJump.addAction(sequence(sequenceOne, sequenceTwo));
+    }
+
+
+    public ImageButton getGameButtonLeft() {
+        return gameButtonLeft;
+    }
+
+    public ImageButton getGameButtonRight() {
+        return gameButtonRight;
+    }
+
+    public ImageButton getGameButtonPush() {
+        return gameButtonPush;
+    }
+
+    public ImageButton getGameButtonJump() {
+        return gameButtonJump;
     }
 }

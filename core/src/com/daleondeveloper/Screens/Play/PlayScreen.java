@@ -31,7 +31,7 @@ public class PlayScreen extends PlayAbstractScreen{
     public PlayScreen(ElMaster game) {
         super(game);
 
-        hud = new Hud(game);
+        hud = new Hud(game,this);
         infoScreen = new InfoScreen(game,this);
         pauseScreen = new PauseScreen(game,this);
 
@@ -54,6 +54,7 @@ public class PlayScreen extends PlayAbstractScreen{
         background = new Image(Assets.getInstance().getAssetGame().getGameFon());
 
     }
+
 
     @Override
     public void render(float deltaTime){
@@ -202,6 +203,14 @@ public class PlayScreen extends PlayAbstractScreen{
 
     public PauseScreen getPauseScreen() {
         return pauseScreen;
+    }
+
+    public GameWorld getGameWorld() {
+        return gameWorld;
+    }
+
+    public WorldController getWorldController() {
+        return worldController;
     }
 
     public void setLevelIsCompleted() {

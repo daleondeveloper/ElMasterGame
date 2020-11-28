@@ -95,6 +95,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 playScreen.setGameStatePaused();
+
             }
         }));
         stage.addActor(pause);
@@ -153,7 +154,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 // Enable input for PlayScreen
-                Gdx.input.setInputProcessor(playScreen.getInputProcessor());
+//                Gdx.input.setInputProcessor(playScreen.getInputProcessor());
                 startStageAnimation(true, new Runnable() {
                     @Override
                     public void run() {
