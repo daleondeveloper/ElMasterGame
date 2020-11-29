@@ -172,7 +172,7 @@ public class GameWorld {
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 20000){
+        if(timeCreateBlock > 2){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }

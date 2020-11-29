@@ -134,9 +134,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
         float h = stage.getHeight();
 
 
-        if( height / width < 2){
-            offSetX = (width - ( height / 2))/2;
-            w = height / 2;
+        if( height / width < 1.5f){
+//            offSetX = (width - ( height / 2))/2;
+            offSetX = (w - 420)/2;
+//            w = height / 2;
         }
 
 
@@ -145,39 +146,61 @@ public class MainMenuScreen extends GUIAbstractScreen {
        background.setHeight(height);
         background.setWidth(height * 1.8f);
         background.setPosition(w/2 - width /2, h/2 - height/2);
-            menuBg.setX(0 + offSetX);
-        if(h > assetGUI.getBackgroundGates().getRegionHeight()) {
-            menuBg.setY((h - assetGUI.getBackgroundGates().getRegionHeight()));
-        }else{
-            menuBg.setY(0);
-        }
-        menuBg.setWidth(w);
-        menuBg.setHeight(w*2);
+        menuBg.setWidth(420);
+        menuBg.setX(w/2 - menuBg.getWidth()/2);
+        //if(h > assetGUI.getBackgroundGates().getRegionHeight()) {
+//        }else{
+//            menuBg.setY(0);
+//        }
+        menuBg.setHeight(840);
+        menuBg.setY(0);
 
+        w = 420 + ((w - 420) /2);
         // Place the title
-        gameTitle.setPosition(((w / 2)-gameTitle.getPrefWidth()/2) + offSetX, TITLE_OFFSET_Y);
+        gameTitle.setPosition(50 + offSetX, TITLE_OFFSET_Y);
 
         //Place buttons
-        buttonStart.setWidth(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
-        buttonStart.setX((w / 2) - buttonStart.getWidth() / 2 + offSetX);
-        buttonStart.setHeight(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
-        buttonStart.setY(h - (buttonStart.getHeight() * 3));
+        buttonStart.setWidth(128);
+        buttonStart.setX(148 + offSetX);
+        buttonStart.setHeight(128);
+        buttonStart.setY(840 - 255 - 128);
 
-        buttonSettings.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonSettings.setX(w * 0.24f + offSetX);
-        buttonSettings.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonSettings.setY(buttonStart.getY() - buttonSettings.getHeight());
+        buttonSettings.setWidth(75);
+        buttonSettings.setX(96 + offSetX);
+        buttonSettings.setHeight(75);
+        buttonSettings.setY(840 - 384 - 75);
 
-        buttonHighScore.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonHighScore.setX(buttonSettings.getX() + buttonSettings.getWidth());
-        buttonHighScore.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonHighScore.setY(buttonStart.getY() - buttonSettings.getHeight() * 2);
+        buttonHighScore.setWidth(75);
+        buttonHighScore.setX(171 + offSetX);
+        buttonHighScore.setHeight(75);
+        buttonHighScore.setY(840 - 455 - 75);
 
-        buttonHelp.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonHelp.setX(buttonHighScore.getX() + buttonHighScore.getWidth());
-        buttonHelp.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonHelp.setY(buttonStart.getY() - buttonSettings.getHeight());
+        buttonHelp.setWidth(75);
+        buttonHelp.setX(249 + offSetX);
+        buttonHelp.setHeight(75);
+        buttonHelp.setY(840 - 378 - 75);
 
+
+//        buttonStart.setWidth(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
+//        buttonStart.setX((w / 2) - buttonStart.getWidth() / 2 + offSetX);
+//        buttonStart.setHeight(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
+//        buttonStart.setY(h - (buttonStart.getHeight() * 3));
+
+//        buttonSettings.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+//        buttonSettings.setX(w * 0.24f + offSetX);
+//        buttonSettings.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+//        buttonSettings.setY(buttonStart.getY() - buttonSettings.getHeight());
+//
+//        buttonHighScore.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+//        buttonHighScore.setX(buttonSettings.getX() + buttonSettings.getWidth());
+//        buttonHighScore.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+//        buttonHighScore.setY(buttonStart.getY() - buttonSettings.getHeight() * 2);
+//
+//        buttonHelp.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+//        buttonHelp.setX(buttonHighScore.getX() + buttonHighScore.getWidth());
+//        buttonHelp.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
+//        buttonHelp.setY(buttonStart.getY() - buttonSettings.getHeight());
+//
 
         // Buttons Animations
         //setButtonsAnimation();
