@@ -1,54 +1,54 @@
 newGame.png
-size: 806, 1693
+size: 1416, 842
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Block_Fire
   rotate: false
-  xy: 0, 0
+  xy: 1, 1
   size: 44, 44
   orig: 44, 44
   offset: 0, 0
   index: -1
 Block_Lightning
   rotate: false
-  xy: 44, 0
+  xy: 47, 1
   size: 44, 44
   orig: 44, 44
   offset: 0, 0
   index: -1
 Block_Snow
   rotate: false
-  xy: 88, 0
+  xy: 93, 1
   size: 44, 44
   orig: 44, 44
   offset: 0, 0
   index: -1
 Block_Water
   rotate: false
-  xy: 132, 0
+  xy: 139, 1
   size: 44, 44
   orig: 44, 44
   offset: 0, 0
   index: -1
-Game_Gates
-  rotate: false
-  xy: 176, 0
-  size: 563, 901
-  orig: 563, 901
-  offset: 0, 0
-  index: -1
 gamefon
   rotate: false
-  xy: 0, 901
+  xy: 185, 1
   size: 528, 792
   orig: 528, 792
   offset: 0, 0
   index: -1
 Hero
   rotate: false
-  xy: 528, 901
+  xy: 715, 1
   size: 278, 438
   orig: 308, 513
   offset: 30, 42
+  index: -1
+open_gates
+  rotate: false
+  xy: 995, 1
+  size: 420, 840
+  orig: 420, 840
+  offset: 0, 0
   index: -1

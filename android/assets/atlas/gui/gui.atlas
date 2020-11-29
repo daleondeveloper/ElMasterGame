@@ -1,116 +1,123 @@
 gui.png
-size: 422, 1789
+size: 1984, 1074
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 backgroundGates
   rotate: false
-  xy: 1, 948
+  xy: 1429, 233
   size: 420, 840
   orig: 420, 840
   offset: 0, 0
   index: -1
+background
+  rotate: false
+  xy: 403, 233
+  size: 1024, 576
+  orig: 1024, 576
+  offset: 0, 0
+  index: -1
 button_help
   rotate: false
-  xy: 307, 107
+  xy: 1200, 1
   size: 75, 77
   orig: 75, 83
   offset: 0, 3
   index: -1
 button_highScore
   rotate: false
-  xy: 1, 186
+  xy: 1123, 1
   size: 75, 77
   orig: 75, 81
   offset: 0, 2
   index: -1
 button_settings
   rotate: false
-  xy: 155, 107
+  xy: 894, 1
   size: 72, 75
   orig: 75, 75
   offset: 2, 0
   index: -1
 button_start
   rotate: false
-  xy: 232, 186
+  xy: 1431, 1
   size: 130, 130
   orig: 420, 840
   offset: 145, 355
   index: -1
 buttonPanel
   rotate: false
-  xy: 1, 318
+  xy: 1563, 1
   size: 420, 230
   orig: 420, 230
   offset: 0, 0
   index: -1
 jumpButton
   rotate: false
-  xy: 1, 107
+  xy: 817, 1
   size: 75, 74
   orig: 75, 74
   offset: 0, 0
   index: -1
 leftButton
   rotate: false
-  xy: 155, 186
+  xy: 1354, 1
   size: 75, 88
   orig: 75, 88
   offset: 0, 0
   index: -1
 mainMenuButton
   rotate: false
-  xy: 1, 54
+  xy: 613, 1
   size: 202, 51
   orig: 219, 52
   offset: 7, 1
   index: -1
 pauseButton
   rotate: false
-  xy: 78, 107
+  xy: 968, 1
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 pauseWindow
   rotate: false
-  xy: 1, 550
+  xy: 1, 233
   size: 400, 396
   orig: 400, 396
   offset: 0, 0
   index: -1
 pushButton
   rotate: false
-  xy: 229, 107
+  xy: 1045, 1
   size: 76, 76
   orig: 79, 78
   offset: 0, 2
   index: -1
 restartButton
   rotate: false
-  xy: 205, 1
+  xy: 1, 1
   size: 202, 51
   orig: 219, 52
   offset: 7, 1
   index: -1
 resumeButton
   rotate: false
-  xy: 1, 1
+  xy: 205, 1
   size: 202, 51
   orig: 219, 52
   offset: 7, 1
   index: -1
 rughtButton
   rotate: false
-  xy: 78, 186
+  xy: 1277, 1
   size: 75, 88
   orig: 75, 88
   offset: 0, 0
   index: -1
 settingsButton
   rotate: false
-  xy: 205, 54
+  xy: 409, 1
   size: 202, 51
   orig: 219, 52
   offset: 7, 1

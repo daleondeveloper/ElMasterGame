@@ -34,7 +34,7 @@ public class Background extends AbstractDynamicObject {
 
 
         AssetGUI assetBlock = Assets.getInstance().getAssetGUI();
-        assetPlatform = assetBlock.getBackgroundGates();
+        assetPlatform = assetBlock.getBackground();
 
         setBounds(x,y,width,height);
         setRegion(assetPlatform);

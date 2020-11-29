@@ -24,6 +24,7 @@ public class AssetGUI {
     private TextureRegion gameButtonJump;
     private TextureRegion gameButtonPush;
     private TextureRegion gameWindow;
+    private TextureRegion background;
 
     private TextureRegion backgroundGates;
 
@@ -32,6 +33,7 @@ public class AssetGUI {
     public AssetGUI(TextureAtlas atlasGUI){
         Array<TextureAtlas.AtlasRegion> regions;
 
+        background = atlasGUI.findRegion("background");
         buttonStart = atlasGUI.findRegion("button_start");
         buttonSettings = atlasGUI.findRegion("button_settings");
         buttonHighScore = atlasGUI.findRegion("button_highScore");
@@ -114,5 +116,9 @@ public class AssetGUI {
 
     public TextureRegion getBackgroundGates() {
         return backgroundGates;
+    }
+
+    public TextureRegion getBackground() {
+        return background;
     }
 }

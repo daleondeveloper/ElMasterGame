@@ -34,6 +34,7 @@ public class GameWorld {
     private GameSensor firstLineBlockChecker;
 
     private float timeCreateBlock;
+    private float offSetY;
 
     private boolean rightButtonPressed;
     private boolean leftButtonPressed;
@@ -52,6 +53,7 @@ public class GameWorld {
         leftButtonPressed = false;
 
         timeCreateBlock = 0;
+        offSetY = 0;
 
         createSprites();
         createBackground();
@@ -67,7 +69,7 @@ public class GameWorld {
         //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
-        firstLineBlockChecker = new GameSensor(playScreen,this,55,185,90,1);
+        firstLineBlockChecker = new GameSensor(playScreen,this,55,155,90,1);
 //        blockController.addBlock(5,30);
 //        blockController.addBlock(15,30);
 //        blockController.addBlock(25,30);
@@ -80,7 +82,7 @@ public class GameWorld {
 //        blockController.addBlock(95,30);
 
         //Regions ( create regions around the playing zone for player and game element)
-        regionDown = new Platform(this,0,170,gameCamera.getWorldWidth(),10);
+        regionDown = new Platform(this,0,140,gameCamera.getWorldWidth(),10);
         regionLeft = new Platform(this,45,0,5,gameCamera.getWorldHeight());
         regionRight = new Platform(this,150,0,5,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
@@ -92,10 +94,12 @@ public class GameWorld {
         //background = new Image(Assets.getInstance().getAssetGame().getGameFon());
 //create background fon
         background = new Background(this,0, 0,gameCamera.getWorldWidth(),gameCamera.getWorldHeight());
-        gates = new Background(this,-7.1f,
-                53.05f,600*0.357f,960*0.357f);
+        gates = new Background(this,15,
+                0,170,170 * 2);
+        gates.setCenterY(gameCamera.getWorldHeight() / 2 + 3);
+
         gates.setRegionGates();
-        backgroundGameFon = new Background(this,40,170,120,180);
+        backgroundGameFon = new Background(this,40,140,120,180);
         backgroundGameFon.setRegionGameFon();
         if (!DebugConstants.HIDE_BACKGROUND) {
             loadBackground();
@@ -168,7 +172,7 @@ public class GameWorld {
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 2){
+        if(timeCreateBlock > 20000){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }
@@ -203,13 +207,13 @@ private void updatePlatform(float deltaTime){
         background.render(batch);
         backgroundGameFon.render(batch);
         waterElement.render(batch);
-        regionLeft.render(batch);
-        regionRight.render(batch);
-        regionDown.render(batch);
+      //  regionLeft.render(batch);
+      //  regionRight.render(batch);
+       // regionDown.render(batch);
         renderBlock(batch);
         renderPlatform(batch);
         gates.render(batch);
-        firstLineBlockChecker.render(batch);
+      //  firstLineBlockChecker.render(batch);
 
     }
 

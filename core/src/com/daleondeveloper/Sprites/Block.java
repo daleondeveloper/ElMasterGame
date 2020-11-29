@@ -144,7 +144,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.9f,0.4f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.9f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -254,8 +254,8 @@ public class Block extends AbstractDynamicObject {
         if(!sensorDown){fall();}
         body.setLinearVelocity(0,0);
 
-            if(body.getPosition().x - returnCellsPosition > 0.05f ||
-            body.getPosition().x - returnCellsPosition < -0.05f){
+            if(this.getX() + 5 - returnCellsPosition > 0.01f ||
+            this.getX() + 5 - returnCellsPosition < -0.01f){
                 body.setType(BodyDef.BodyType.DynamicBody);
                 body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
                 if(getUpPlatform() != null){
@@ -300,8 +300,8 @@ public class Block extends AbstractDynamicObject {
         body.setLinearVelocity(0,FALL_VELOCITY);
         textureRegionBlock = assetBlocks.get(3);
 
-        if(body.getPosition().x - returnCellsPosition > 0.05f ||
-                body.getPosition().x - returnCellsPosition < -0.05f){
+        if(this.getX() + 5 - returnCellsPosition > 0.01f ||
+                this.getX() + 5 - returnCellsPosition < -0.01f){
             body.setType(BodyDef.BodyType.DynamicBody);
             body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
             if(getUpPlatform() != null){
@@ -349,7 +349,7 @@ public class Block extends AbstractDynamicObject {
     //Силка у всіх сусідніх блоків буде зсилатися на одну силку платформи
     private void createPlatformUnderBlock() {
         //Задаються початкові дані платформи
-        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 0.25f;
+        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 0.025f;
         platformY = (float)Math.ceil((getY() + 5)*0.1)*10;
        // platformY = (float)(Math.ceil((getY()) * 0.1f)*10)-platformHY*0.75f;
         Platform left = null;

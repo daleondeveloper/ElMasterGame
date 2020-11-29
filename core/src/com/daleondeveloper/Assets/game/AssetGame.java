@@ -33,7 +33,7 @@ public class AssetGame {
         buttonWodden = atlas.findRegion("buttonWodden");
         gameFon = newAtlas.findRegion("gamefon");
         paper = atlas.findRegion("paper");
-        gates = newAtlas.findRegion("Game_Gates");
+        gates = newAtlas.findRegion("open_gates");
 
     }
 

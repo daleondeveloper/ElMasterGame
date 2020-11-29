@@ -23,7 +23,14 @@ public class GameCamera {
         camera = new OrthographicCamera();
         viewPort = new ExtendViewport(width,height,camera);
 
-        viewPort.update(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),true);
+        int cameraWidth = Gdx.graphics.getWidth();
+        int cameraHeight = Gdx.graphics.getHeight();
+
+        if((cameraHeight / cameraWidth) < 2){
+            cameraWidth = cameraHeight / 2;
+        }
+
+        viewPort.update(cameraWidth,cameraHeight,true);
     }
 
     public void update(float deltaTime){

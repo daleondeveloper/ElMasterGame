@@ -265,6 +265,7 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         float x = stage.getWidth() / 2;
         float y = stage.getHeight() / 2;
 
+
         gameWindow.setPosition(x - gameWindow.getWidth() / 2,0);
 
 

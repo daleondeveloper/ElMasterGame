@@ -43,6 +43,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private Image menuBg;
     private Label gameTitle;
 
+    private Image background;
     private ImageButton buttonStart;
     private ImageButton buttonHelp;
     private ImageButton buttonSettings;
@@ -50,7 +51,6 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
     public MainMenuScreen(ElMaster game) {
         super(game);
-
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
         assetSprites = assets.getAssetGame();
@@ -85,6 +85,8 @@ public class MainMenuScreen extends GUIAbstractScreen {
         hideBannerAd();
 
         // Background
+        background = new Image(assetGUI.getBackground());
+        stage.addActor(background);
         menuBg = new Image(assetGUI.getBackgroundGates());
         stage.addActor(menuBg);
 
@@ -125,13 +127,25 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
     @Override
     public void resize(int width, int height) {
+        float offSetX = 0;
         super.resize(width, height);
 
         float w = stage.getWidth(); // Same as stage.getViewport().getWorldWidth()
         float h = stage.getHeight();
 
+
+        if( height / width < 2){
+            offSetX = (width - ( height / 2))/2;
+            w = height / 2;
+        }
+
+
+
         // Place the menu background in the middle of the screen
-            menuBg.setX(0);
+       background.setHeight(height);
+        background.setWidth(height * 1.8f);
+        background.setPosition(w/2 - width /2, h/2 - height/2);
+            menuBg.setX(0 + offSetX);
         if(h > assetGUI.getBackgroundGates().getRegionHeight()) {
             menuBg.setY((h - assetGUI.getBackgroundGates().getRegionHeight()));
         }else{
@@ -141,16 +155,16 @@ public class MainMenuScreen extends GUIAbstractScreen {
         menuBg.setHeight(w*2);
 
         // Place the title
-        gameTitle.setPosition(((w / 2)-gameTitle.getPrefWidth()/2), TITLE_OFFSET_Y);
+        gameTitle.setPosition(((w / 2)-gameTitle.getPrefWidth()/2) + offSetX, TITLE_OFFSET_Y);
 
         //Place buttons
         buttonStart.setWidth(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
-        buttonStart.setX((w / 2) - buttonStart.getWidth() / 2);
+        buttonStart.setX((w / 2) - buttonStart.getWidth() / 2 + offSetX);
         buttonStart.setHeight(w * TITLE_BIG_BUTTON_WIDTH_COEFFICIENT);
         buttonStart.setY(h - (buttonStart.getHeight() * 3));
 
         buttonSettings.setWidth(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
-        buttonSettings.setX(w * 0.24f);
+        buttonSettings.setX(w * 0.24f + offSetX);
         buttonSettings.setHeight(w * TITLE_BUTTON_WIDTH_COEFFICIENT);
         buttonSettings.setY(buttonStart.getY() - buttonSettings.getHeight());
 
