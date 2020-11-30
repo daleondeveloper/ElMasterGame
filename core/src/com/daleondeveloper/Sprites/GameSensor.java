@@ -59,7 +59,7 @@ public class GameSensor extends AbstractDynamicObject {
 //        body.createFixture(fixtureDef).setUserData(this);
 
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(95,2);
+        polygonShape.setAsBox(115,2);
         FixtureDef sensorLeft = new FixtureDef();
         sensorLeft.filter.categoryBits = WorldContactListner.CATEGORY_GAME_WORLD_SENSOR;
         sensorLeft.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -75,7 +75,8 @@ public class GameSensor extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        if(firstLineBlocks.size() > 9){
+
+        if(firstLineBlocks.size() > 11){
             for(Block block : firstLineBlocks){
                 block.delete();
             }

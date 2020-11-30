@@ -69,7 +69,7 @@ public class GameWorld {
         //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
-        firstLineBlockChecker = new GameSensor(playScreen,this,55,135,90,1);
+        firstLineBlockChecker = new GameSensor(playScreen,this,45,145,90,1);
 //        blockController.addBlock(5,30);
 //        blockController.addBlock(15,30);
 //        blockController.addBlock(25,30);
