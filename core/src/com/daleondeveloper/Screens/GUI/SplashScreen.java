@@ -58,7 +58,7 @@ public class SplashScreen extends GUIAbstractScreen {
             percent = Interpolation.linear.apply(percent, assetManager.getProgress(), ALPHA);
 
             // Update positions (and size) to match the percentage
-            heroBlock.setPosition(15 + (300 * percent),413);
+            heroBlock.setPosition(loadingBar.getX() + ((loadingBar.getWidth()- heroBlock.getWidth()) * percent) ,loadingBar.getY() * 1.01f);
             int intPercent = (int)(percent*100);
             System.out.println(percent);
 
@@ -102,7 +102,7 @@ public class SplashScreen extends GUIAbstractScreen {
 //            stage.addActor(numbers[i]);
 //        }
 
-        loadingBar.setPosition(10,410);
+
 
         // Load the rest of assets asynchronously
         Assets.getInstance().init(assetManager);
@@ -122,7 +122,8 @@ public class SplashScreen extends GUIAbstractScreen {
 
         float w = stage.getWidth(); // Same as stage.getViewport().getWorldWidth()
         float h = stage.getHeight();
-
+        loadingBar.setWidth(w * 0.9f);
+        loadingBar.setPosition(w / 2 - loadingBar.getWidth() / 2,410);
 //        // Make the background fill the screen
 //        screenBg.setSize(w, h);
 //

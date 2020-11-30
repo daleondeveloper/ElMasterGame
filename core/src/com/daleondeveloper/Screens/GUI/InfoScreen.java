@@ -41,7 +41,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     private Label.LabelStyle labelStyleSmall;
     private Table gameOverTable;
     private Table helpTable;
-    private ImageButton pause;
+    private Image pause;
     private Label gameOverLabel;
     private Label scoreLabel;
     private Label highScoreLabel;
@@ -88,10 +88,8 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         stage.addActor(mainTable);
 
         // Pause button
-        pause = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
-        pause.setPosition(stage.getWidth() - pause.getWidth(), stage.getHeight() - pause.getHeight());
-        pause.addListener(ListenerHelper.runnableListener(new Runnable() {
+        pause = new Image(new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        pause.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
                 playScreen.setGameStatePaused();
@@ -182,6 +180,19 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     @Override
     public void render() {
         stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+
+        float x = stage.getWidth() ;
+        float y = stage.getHeight();
+
+        pause.setWidth(x * 0.179f);
+        pause.setHeight(y * 0.1f);
+        pause.setPosition(x - pause.getWidth() , y - pause.getHeight());
+        pause.setBounds(pause.getX(),pause.getY(),pause.getWidth(),pause.getHeight());
     }
 
     public void showGameOver() {
