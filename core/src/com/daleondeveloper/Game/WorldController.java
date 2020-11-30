@@ -112,10 +112,13 @@ public class WorldController implements Disposable {
     }
 
     public boolean isGameOver() {
-        WaterElement jumper = gameWorld.getWaterElement();
+        WaterElement hero = gameWorld.getWaterElement();
         GameCamera gameCamera = gameWorld.getGameCamera();
 
-        return (jumper.getBodyPosition().y + jumper.getHeight() / 2 + GAME_OVER_OFFSET < gameCamera.position().y - gameCamera.getWorldHeight() / 2);
+        if(hero.getSensorUp().size() > 0){
+            return true;
+        }
+        return false;
     }
 
     @Override

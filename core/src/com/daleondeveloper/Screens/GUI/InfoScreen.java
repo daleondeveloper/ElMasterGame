@@ -118,11 +118,9 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     }
 
     private Table getGameOverButtonsTable() {
-        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonRestart()));
 
-        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()));
 
         reload.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
         home.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
@@ -220,7 +218,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         highScoreLabel.setText(i18NGameThreeBundle.format("infoScreen.highScore", bestScore));
 
         gameOverTable.setVisible(true);
-        helpTable.setVisible(false);
+//        helpTable.setVisible(false);
         pause.setVisible(false);
         hud.setVisible(false);
         startStageAnimation(false, new Runnable() {
