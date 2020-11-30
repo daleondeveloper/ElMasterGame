@@ -206,17 +206,26 @@ public class Block extends AbstractDynamicObject {
             }
         }
         contactPlatformList.removeAll(tmpSet);
+//        if(x > 144 && x < 146) {returnCellsPosition = 145;}
+//        else if (x > 54 && x < 56) {returnCellsPosition = 55;}
+//        else if(x > 64 && x < 66) {returnCellsPosition = 65;}
+//        else if(x > 74 && x < 76) {returnCellsPosition = 75;}
+//        else if(x > 84 && x < 86) {returnCellsPosition = 85;}
+//        else if(x > 94 && x < 96) {returnCellsPosition = 95;}
+//        else if(x > 104 && x < 106) {returnCellsPosition = 105;}
+//        else if(x > 114 && x < 116) {returnCellsPosition = 115;}
+//        else if(x > 124 && x < 126) {returnCellsPosition = 125;}
+//        else if(x > 134 && x < 136){returnCellsPosition = 135;}
         float x = body.getPosition().x;
-        if(x > 144 && x < 146) {returnCellsPosition = 145;}
-            else if (x > 54 && x < 56) {returnCellsPosition = 55;}
-            else if(x > 64 && x < 66) {returnCellsPosition = 65;}
-            else if(x > 74 && x < 76) {returnCellsPosition = 75;}
-            else if(x > 84 && x < 86) {returnCellsPosition = 85;}
-            else if(x > 94 && x < 96) {returnCellsPosition = 95;}
-            else if(x > 104 && x < 106) {returnCellsPosition = 105;}
-            else if(x > 114 && x < 116) {returnCellsPosition = 115;}
-            else if(x > 124 && x < 126) {returnCellsPosition = 125;}
-            else if(x > 134 && x < 136){returnCellsPosition = 135;}
+            int leftReg = 44,rightReg = 46;
+            for(int i = 0; i < 12; i++){
+                if(x > leftReg && x < rightReg){
+                    returnCellsPosition = (leftReg + rightReg)/2;
+                    break;
+                }
+                leftReg += 10;
+                rightReg += 10;
+            }
         if(contactDownList.size() == 0){
             sensorDown = false;
         }
