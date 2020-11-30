@@ -55,10 +55,10 @@ public class Hud extends GUIOverlayAbstractScreen {
     private Table mainTable;
 
     private Image gameWindow;
-    private ImageButton gameButtonLeft;
-    private ImageButton gameButtonRight;
-    private ImageButton gameButtonPush;
-    private ImageButton gameButtonJump;
+    private Image gameButtonLeft;
+    private Image gameButtonRight;
+    private Image gameButtonPush;
+    private Image gameButtonJump;
 
 
     public Hud(ElMaster game, PlayScreen playScreen) {
@@ -103,11 +103,10 @@ public class Hud extends GUIOverlayAbstractScreen {
     }
 
     private void defineButtons(){
-        gameButtonLeft = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonLeft()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
-        gameButtonRight = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonRight()));
-        gameButtonJump = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonJump()));
-        gameButtonPush = new ImageButton(new TextureRegionDrawable(assetGUI.getGameButtonPush()));
+        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getGameButtonLeft()));
+        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getGameButtonRight()));
+        gameButtonJump = new Image(new TextureRegionDrawable(assetGUI.getGameButtonJump()));
+        gameButtonPush = new Image(new TextureRegionDrawable(assetGUI.getGameButtonPush()));
         ;
         gameButtonLeft.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
@@ -266,13 +265,26 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         float y = stage.getHeight() / 2;
 
 
-        gameWindow.setPosition(x - gameWindow.getWidth() / 2,0);
-
+        gameWindow.setPosition(0,0);
+        gameWindow.setWidth(stage.getWidth());
+        gameWindow.setHeight(stage.getHeight() / 3);
 
         gameButtonPush.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.1f, gameWindow.getY()  + gameWindow.getHeight() * 0.42f);
+
+        gameButtonPush.setWidth(gameWindow.getWidth() *0.179f);
+        gameButtonPush.setHeight(gameWindow.getHeight() * 0.3125f);
+
         gameButtonJump.setPosition(gameButtonPush.getX() + gameButtonPush.getWidth() , gameWindow.getY() + gameWindow.getHeight() * 0.1f);
+        gameButtonJump.setWidth(gameWindow.getWidth() *0.179f);
+        gameButtonJump.setHeight(gameWindow.getHeight() * 0.3125f);
+
+        gameButtonRight.setWidth(gameWindow.getWidth() * 0.179f);
+        gameButtonRight.setHeight(gameWindow.getHeight() * 0.367f);
         gameButtonRight.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.9f - gameButtonRight.getWidth(),
                 gameWindow.getY() + gameWindow.getHeight() / 4);
+
+        gameButtonLeft.setWidth(gameWindow.getWidth() *0.179f);
+        gameButtonLeft.setHeight(gameWindow.getHeight() * 0.367f);
         gameButtonLeft.setPosition(gameButtonRight.getX() - gameButtonLeft.getWidth() * 1.1f,
                 gameWindow.getY() + gameWindow.getHeight() / 4);
 
@@ -316,19 +328,4 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
     }
 
 
-    public ImageButton getGameButtonLeft() {
-        return gameButtonLeft;
-    }
-
-    public ImageButton getGameButtonRight() {
-        return gameButtonRight;
-    }
-
-    public ImageButton getGameButtonPush() {
-        return gameButtonPush;
-    }
-
-    public ImageButton getGameButtonJump() {
-        return gameButtonJump;
-    }
 }
