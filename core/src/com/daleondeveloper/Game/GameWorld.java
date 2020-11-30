@@ -101,7 +101,7 @@ public class GameWorld {
         gates.setCenterY(gameCamera.getWorldHeight() / 2 + 3);
 
         gates.setRegionGates();
-        backgroundGameFon = new Background(this,40,140,120,180);
+        backgroundGameFon = new Background(this,40,140,120,220);
         backgroundGameFon.setRegionGameFon();
         if (!DebugConstants.HIDE_BACKGROUND) {
             loadBackground();
