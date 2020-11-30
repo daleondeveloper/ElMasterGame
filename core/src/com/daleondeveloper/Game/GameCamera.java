@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameCamera {
@@ -21,22 +22,33 @@ public class GameCamera {
         float height = ElMaster.APPLICATION_HEIGHT/PPM;
 
         camera = new OrthographicCamera();
-        viewPort = new ExtendViewport(width,height,camera);
+        viewPort = new FitViewport(width,height,camera);
 
         int cameraWidth = Gdx.graphics.getWidth();
         int cameraHeight = Gdx.graphics.getHeight();
 
-        if((cameraHeight / cameraWidth) < 2){
-            cameraWidth = cameraHeight / 2;
-        }
-
         viewPort.update(cameraWidth,cameraHeight,true);
+
     }
 
     public void update(float deltaTime){
 
     }
     public void resize(int width, int height) {
+
+
+//        if((height / width) < 2){
+//            width = height / 2;
+//            viewPort.update(width,height,true);
+//
+//        } else if((height / width) > 2){
+//            height = width * 2;
+//            viewPort.update(width,height,true);
+//            viewPort.setScreenY(Gdx.graphics.getHeight() - height / 2);
+//        }else {
+//            viewPort.update(width,height,true);
+//
+//        }
         viewPort.update(width, height, false);
     }
 
