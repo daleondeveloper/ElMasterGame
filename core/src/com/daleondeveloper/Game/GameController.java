@@ -160,23 +160,11 @@ public class GameController implements GestureDetector.GestureListener, InputPro
 
     @Override
     public boolean touchDown(float screenX, float screenY, int pointer, int button) {
-//        ImageButton gameButtonLeft = playScreen.getHud().getGameButtonLeft();
-//        ImageButton gameButtonRight = playScreen.getHud().getGameButtonRight();
-//        ImageButton gameButtonPush = playScreen.getHud().getGameButtonPush();
-//        ImageButton gameButtonJump = playScreen.getHud().getGameButtonJump();
-//
-//        if(gameButtonLeft.getX() > screenX && (gameButtonLeft.getX() + gameButtonLeft.getWidth()) < screenX &&
-//                gameButtonLeft.getY() > screenY && (gameButtonLeft.getY() + gameButtonLeft.getHeight()) < screenY){
-//            System.out.println("screenX = " + screenX + ", screenY = " + screenY + ", pointer = " + pointer + ", button = " + button);
-//        }
-
-
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("screenX = " + screenX + ", screenY = " + screenY + ", pointer = " + pointer + ", button = " + button);
         return true;
     }
 

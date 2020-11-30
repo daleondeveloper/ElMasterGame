@@ -174,7 +174,7 @@ public class WaterElement extends AbstractDynamicObject {
 
 
     public void jump(){
-        if(isWalk() || isIdle() || isPush()) {
+        if(isWalk() || isIdle()) {
             stateTime = 0;
             currentState = State.JUMP;
             body.applyLinearImpulse(0, 50,getWidth()/2,getHeight()/2,true);
@@ -192,32 +192,35 @@ public class WaterElement extends AbstractDynamicObject {
         }
     }
     public void turn(float impulse){
-        if(impulse > 0){
-            moveRight = true;
-        }else {
-            moveRight = false;
-        }
-        if(isPush()){
-            if((moveRight && sensorRight.size() > 0) || (!moveRight && sensorLeft.size() > 0)){
-                return;
+        if(currentState != State.PUSH) {
+            if (impulse > 0) {
+                moveRight = true;
+            } else {
+                moveRight = false;
             }
-        }
-        if(isIdle()) {
-            currentState = State.WALK;
-            stateTime = 0;
-        }
-        if(isJump()){
-            if((impulse > 0 && sensorRight.size() > 0) ||
-                    (impulse < 0 && sensorLeft.size() > 0)){
-                impulse = 0;
+            if (isPush()) {
+                if ((moveRight && sensorRight.size() > 0) || (!moveRight && sensorLeft.size() > 0)) {
+                    return;
+                }
             }
-            body.setLinearVelocity(impulse,body.getLinearVelocity().y);
+            if (isIdle()) {
+                currentState = State.WALK;
+                stateTime = 0;
+            }
+            if (isJump()) {
+                if ((impulse > 0 && sensorRight.size() > 0) ||
+                        (impulse < 0 && sensorLeft.size() > 0)) {
+                    impulse = 0;
+                }
+                body.setLinearVelocity(impulse, body.getLinearVelocity().y);
+            }
+            turnImpulse = impulse;
         }
-        turnImpulse = impulse;
+
     }
 
     public void stopWalk(){
-        if(currentState == State.WALK || currentState == State.PUSH){
+        if(currentState == State.WALK){
             currentState = State.IDLE;
             stateTime = 0;
             body.setLinearVelocity(0,body.getLinearVelocity().y);
@@ -285,7 +288,7 @@ public class WaterElement extends AbstractDynamicObject {
     private void stateIdle(float deltaTime){
         //Logic
             if(stopElem){stopElem = false; }
-            if(sensorDown.size() == 0){ fall();}
+            if(sensorDown.size() == 0 || stateTime > 5){ fall();}
 
             body.setGravityScale(1);
             body.setLinearVelocity(0,0);
