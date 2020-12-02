@@ -115,7 +115,7 @@ public class WorldController implements Disposable {
         WaterElement hero = gameWorld.getWaterElement();
         GameCamera gameCamera = gameWorld.getGameCamera();
 
-        if(hero.getSensorUp().size() > 0){
+        if(hero.getSensorUp().size() > 0 && !hero.isJump() && !hero.isFall()) {
             return true;
         }
         return false;

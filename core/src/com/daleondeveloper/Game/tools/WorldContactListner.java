@@ -49,6 +49,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
                 WaterElement waterElement = heroStartContactDown(fa,fb);
                 Block block = blockStartContactUp(fa,fb);
+                block.setContactHero(waterElement);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroStartContactDown(fa,fb);
@@ -57,6 +59,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
                 WaterElement waterElement = heroStartContactUp(fa,fb);
                 Block block = blockStartContactDown(fa,fb);
+                block.setContactHero(waterElement);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroStartContactUp(fa,fb);
@@ -65,6 +69,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{
                 WaterElement waterElement = heroStartContactLeft(fa,fb);
                 Block block = blockStartContactRight(fa,fb);
+                block.setContactHero(waterElement);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroStartContactLeft(fa,fb);
@@ -73,6 +79,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_BLOCK_SENSOR_LEFT_BIT:{
                 WaterElement waterElement = heroStartContactRight(fa,fb);
                 Block block = blockStartContactLeft(fa,fb);
+                block.setContactHero(waterElement);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroStartContactRight(fa,fb);
@@ -145,6 +153,7 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
                 WaterElement waterElement = heroEndContactDown(fa,fb);
                 Block block = blockEndContactUp(fa,fb);
+                block.setContactHero(null);
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroEndContactDown(fa,fb);
@@ -153,6 +162,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
                 WaterElement waterElement = heroEndContactUp(fa,fb);
                 Block block = blockEndContactDown(fa,fb);
+                block.setContactHero(null);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroEndContactUp(fa,fb);
@@ -161,6 +172,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{
                 WaterElement waterElement = heroEndContactLeft(fa,fb);
                 Block block = blockEndContactRight(fa,fb);
+                block.setContactHero(null);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroEndContactLeft(fa,fb);
@@ -169,6 +182,8 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_BLOCK_SENSOR_LEFT_BIT:{
                 WaterElement waterElement = heroEndContactRight(fa,fb);
                 Block block = blockEndContactLeft(fa,fb);
+                block.setContactHero(null);
+
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroEndContactRight(fa,fb);

@@ -21,6 +21,7 @@ import com.daleondeveloper.Sprites.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class WaterElement extends AbstractDynamicObject {
     private static final String TAG = WaterElement.class.getName();
@@ -257,6 +258,7 @@ public class WaterElement extends AbstractDynamicObject {
                 debugState = currentState;
                 System.out.println(debugState);
             }
+           checkContacts();
         switch (currentState){
             case IDLE:
                 stateIdle(deltaTime);
@@ -288,7 +290,7 @@ public class WaterElement extends AbstractDynamicObject {
     private void stateIdle(float deltaTime){
         //Logic
             if(stopElem){stopElem = false; }
-            if(sensorDown.size() == 0 || stateTime > 5){ fall();}
+            if(sensorDown.size() == 0 || stateTime > 5){ fall(); return;}
 
             body.setGravityScale(1);
             body.setLinearVelocity(0,0);
@@ -302,8 +304,8 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void stateJump(float deltaTime){
-            if(sensorDown.size() > 0 && stateTime > 1f){ idle(); }
-            if(sensorUp.size() > 0){ fall(); }
+            if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
+            if(sensorUp.size() > 0){ fall(); return;}
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
             // Update this Sprite to correspond with the position of the Box2D body.
@@ -347,7 +349,7 @@ public class WaterElement extends AbstractDynamicObject {
                 for(AbstractGameObject f : sensorLeft){
                     if(f instanceof Block){
                         Block block = (Block)f;
-                        block.push(-turnImpulse);
+                        block.push(turnImpulse);
                         body.setLinearVelocity(-turnImpulse,body.getLinearVelocity().y);
                         pushBlock = block;
                     }
@@ -388,6 +390,39 @@ public class WaterElement extends AbstractDynamicObject {
             gameWorld.destroyBody(body);
             currentState = State.DISPOSE;
         }
+
+        private void checkContacts(){
+            List<AbstractGameObject> tmpList = new ArrayList<AbstractGameObject>();
+            tmpList.addAll(sensorRight);
+        for(AbstractGameObject obj : tmpList){
+            if(Math.abs(getX() - obj.getX()) -  getWidth() > 2){
+                sensorRight.remove(obj);
+            }
+        }
+        tmpList.clear();
+         tmpList.addAll(sensorLeft);
+        for(AbstractGameObject obj : tmpList){
+            if(Math.abs(obj.getX() - getX()) - obj.getWidth() > 2){
+                sensorLeft.remove(obj);
+            }
+        }
+        tmpList.clear();
+         tmpList.addAll(sensorDown);
+        for(AbstractGameObject obj : tmpList){
+            if(Math.abs(getY() - obj.getY() ) - obj.getHeight() > 2){
+                sensorDown.remove(obj);
+            }
+        }
+        tmpList.clear();
+         tmpList.addAll(sensorUp);
+        for(AbstractGameObject obj : tmpList){
+            if(Math.abs(obj.getY() - getY()) - getHeight() > 2){
+                sensorUp.remove(obj);
+            }
+        }
+        tmpList.clear();
+
+        }
     @Override
     public void render(SpriteBatch spriteBatch) {
             draw(spriteBatch);
@@ -425,4 +460,5 @@ public class WaterElement extends AbstractDynamicObject {
     public boolean isWalk(){return currentState == State.WALK;}
     public boolean isJump(){return currentState == State.JUMP;}
     public boolean isPush(){return currentState == State.PUSH;}
+    public boolean isFall(){return currentState == State.FALL;}
 }

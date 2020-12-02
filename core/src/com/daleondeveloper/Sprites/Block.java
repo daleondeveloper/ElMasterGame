@@ -47,6 +47,7 @@ public class Block extends AbstractDynamicObject {
     private Set<Block> contactRightBlockList ;
     private Set<AbstractGameObject> contactUpList ;
     private Set<AbstractGameObject> contactDownList ;
+    private WaterElement contactHero;
     private Platform upPlatform;
 
     private float pushImpulse;
@@ -86,6 +87,7 @@ public class Block extends AbstractDynamicObject {
         contactDownList = new HashSet<AbstractGameObject>();
         contactUpList = new HashSet<AbstractGameObject>();
         contactPlatformList = new HashSet<Platform>();
+        contactHero = null;
 
         sensorDown = false;
         sensorLeft = false;
@@ -144,7 +146,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.9f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.9f,0.2f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -182,7 +184,7 @@ public class Block extends AbstractDynamicObject {
         stateTime = 0;
     }
     public void push(Float turnImpulse){
-        if(currentState == State.IDLE) {
+        if(currentState == State.IDLE && contactUpList.isEmpty()) {
             currentState = State.PUSH;
             stateTime = 0;
             pushImpulse = turnImpulse;
@@ -206,16 +208,6 @@ public class Block extends AbstractDynamicObject {
             }
         }
         contactPlatformList.removeAll(tmpSet);
-//        if(x > 144 && x < 146) {returnCellsPosition = 145;}
-//        else if (x > 54 && x < 56) {returnCellsPosition = 55;}
-//        else if(x > 64 && x < 66) {returnCellsPosition = 65;}
-//        else if(x > 74 && x < 76) {returnCellsPosition = 75;}
-//        else if(x > 84 && x < 86) {returnCellsPosition = 85;}
-//        else if(x > 94 && x < 96) {returnCellsPosition = 95;}
-//        else if(x > 104 && x < 106) {returnCellsPosition = 105;}
-//        else if(x > 114 && x < 116) {returnCellsPosition = 115;}
-//        else if(x > 124 && x < 126) {returnCellsPosition = 125;}
-//        else if(x > 134 && x < 136){returnCellsPosition = 135;}
         float x = body.getPosition().x;
             int leftReg = 44,rightReg = 46;
             for(int i = 0; i < 12; i++){
@@ -229,15 +221,6 @@ public class Block extends AbstractDynamicObject {
         if(contactDownList.size() == 0){
             sensorDown = false;
         }
-//        if(contactUpBlockList.size() == 0){
-//            sensorUp = false;
-//        }
-//        if(contactLeftBlockList.size() == 0){
-//            sensorLeft = false;
-//        }
-//        if(contactRightBlockList.size() == 0){
-//            sensorRight = false;
-//        }
 
         switch (currentState){
             case IDLE:
@@ -291,7 +274,17 @@ public class Block extends AbstractDynamicObject {
         if(upPlatform != null) {
             deletePlatformUnderBlock();
         }
-        if(contactPlatformList.size() == 0){fall();}
+        if(contactPlatformList.size() == 0){fall(); return;}
+
+        if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 13){
+            if(contactHero.getX() - getX() > 1){
+                body.setLinearVelocity(10, body.getLinearVelocity().y);
+            }else if(contactHero.getX() - getX() < -1){
+                body.setLinearVelocity(-10, body.getLinearVelocity().y);
+            }
+
+        }else{idle();return;}
+
         body.setLinearVelocity(10, body.getLinearVelocity().y);
 
 
@@ -636,5 +629,11 @@ public class Block extends AbstractDynamicObject {
         return contactPlatformList;
     }
 
+    public WaterElement getContactHero() {
+        return contactHero;
+    }
 
+    public void setContactHero(WaterElement contactHero) {
+        this.contactHero = contactHero;
+    }
 }
