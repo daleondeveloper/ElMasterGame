@@ -289,7 +289,7 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
                 gameWindow.getY() + gameWindow.getHeight() / 4);
 
         scoreLabel.setFontScaleX(x * 0.005f);
-        fpsLabel.setFontScaleX(x * 0.0025f);
+       // fpsLabel.setFontScaleX();
 //        scoreLabel.setPosition(x - (scoreLabel.getWidth() / 2),stage.getHeight() * 0.8f);
        // fpsLabel.setPosition(x - (fpsLabel.getWidth() / 2),stage.getHeight() * 0.5f);
 
