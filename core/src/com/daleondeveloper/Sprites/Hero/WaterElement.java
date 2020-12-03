@@ -258,7 +258,7 @@ public class WaterElement extends AbstractDynamicObject {
                 debugState = currentState;
                 System.out.println(debugState);
             }
-           checkContacts();
+          // checkContacts();
         switch (currentState){
             case IDLE:
                 stateIdle(deltaTime);
@@ -292,7 +292,7 @@ public class WaterElement extends AbstractDynamicObject {
             if(stopElem){stopElem = false; }
             if(sensorDown.size() == 0 || stateTime > 5){ fall(); return;}
 
-            body.setGravityScale(1);
+           // body.setGravityScale(1);
             body.setLinearVelocity(0,0);
 
             //render

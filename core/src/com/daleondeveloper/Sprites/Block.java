@@ -42,6 +42,7 @@ public class Block extends AbstractDynamicObject {
     private float stateTime;
     private boolean statePosition;
     private State currentState;
+    private float checkTime;
     private Body body;
     private Set<Block> contactLeftBlockList ;
     private Set<Block> contactRightBlockList ;
@@ -49,6 +50,7 @@ public class Block extends AbstractDynamicObject {
     private Set<AbstractGameObject> contactDownList ;
     private WaterElement contactHero;
     private Platform upPlatform;
+    private Platform downPlatform;
 
     private float pushImpulse;
     private float returnCellsPosition;
@@ -77,6 +79,7 @@ public class Block extends AbstractDynamicObject {
         setBounds(x, y, width, height);
         setRegion(textureRegionBlock);
         stateTime = 0;
+        checkTime = 0;
         statePosition = false;
 
         pushImpulse = 10;
@@ -122,6 +125,16 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(fixture).setUserData(this);
 
         defineSensors();
+        float x = body.getPosition().x;
+        int leftReg = 44,rightReg = 46;
+        for(int i = 0; i < 12; i++){
+            if(x > leftReg && x < rightReg){
+                returnCellsPosition = (leftReg + rightReg)/2;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
 
 
     }
@@ -146,7 +159,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.9f,0.2f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.9f,0.5f, new Vector2(0,(-getHeight()/2)+0.05f),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -201,23 +214,16 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        Set<Platform> tmpSet = new HashSet<Platform>();
-        for(Platform p : contactPlatformList){
-            if(p.isDisposable()){
-                tmpSet.add(p);
-            }
-        }
-        contactPlatformList.removeAll(tmpSet);
-        float x = body.getPosition().x;
-            int leftReg = 44,rightReg = 46;
-            for(int i = 0; i < 12; i++){
-                if(x > leftReg && x < rightReg){
-                    returnCellsPosition = (leftReg + rightReg)/2;
-                    break;
-                }
-                leftReg += 10;
-                rightReg += 10;
-            }
+        checkTime += deltaTime;
+
+//        Set<Platform> tmpSet = new HashSet<Platform>();
+//        for(Platform p : contactPlatformList){
+//            if(p.isDisposable()){
+//                tmpSet.add(p);
+//            }
+//        }
+//        contactPlatformList.removeAll(tmpSet);
+
         if(contactDownList.size() == 0){
             sensorDown = false;
         }
@@ -243,9 +249,9 @@ public class Block extends AbstractDynamicObject {
 
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
-        if(!sensorDown){fall();}
+        if(!sensorDown){fall();return;}
+       // if(stateTime > 1){fall();return;}
         body.setLinearVelocity(0,0);
-
             if(this.getX() + 5 - returnCellsPosition > 0.01f ||
             this.getX() + 5 - returnCellsPosition < -0.01f){
                 body.setType(BodyDef.BodyType.DynamicBody);
@@ -268,6 +274,16 @@ public class Block extends AbstractDynamicObject {
 
     }
     private void statePush(float deltaTime){
+        float x = body.getPosition().x;
+        int leftReg = 44,rightReg = 46;
+        for(int i = 0; i < 12; i++){
+            if(x > leftReg && x < rightReg){
+                returnCellsPosition = (leftReg + rightReg)/2;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
         System.out.println("deltaTimePush = " + stateTime);
         body.setType(BodyDef.BodyType.DynamicBody);
         stateTime += deltaTime;
@@ -278,9 +294,9 @@ public class Block extends AbstractDynamicObject {
 
         if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 13){
             if(contactHero.getX() - getX() > 1){
-                body.setLinearVelocity(10, body.getLinearVelocity().y);
+                body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
             }else if(contactHero.getX() - getX() < -1){
-                body.setLinearVelocity(-10, body.getLinearVelocity().y);
+                body.setLinearVelocity(-pushImpulse, body.getLinearVelocity().y);
             }
 
         }else{idle();return;}
@@ -343,6 +359,19 @@ public class Block extends AbstractDynamicObject {
     }
     private void stateDead(float deltaTime){
 
+    }
+
+    private void checkContacts(){
+        Set<AbstractGameObject> tmpSet = new HashSet<AbstractGameObject>();
+        tmpSet.addAll(contactDownList);
+        for(AbstractGameObject contactObj : tmpSet){
+            if((Math.abs((contactObj.getY() + contactObj.getHeight()/2) - (getY() + getHeight()/2))
+                    > (this.getHeight() + contactObj.getHeight())  / 2 ) ||
+                    (Math.abs((contactObj.getX() + contactObj.getWidth()/2) - (getX() + getWidth()/2))
+                            > (this.getWidth() + contactObj.getWidth()) / 2)){
+                contactDownList.remove(contactObj);
+            }
+        }
     }
 
     // Створення платформи над блоком,
