@@ -77,10 +77,19 @@ public class GameSensor extends AbstractDynamicObject {
     public void update(float deltaTime) {
 
         if(firstLineBlocks.size() > 11){
+            int blockCountInFirstLine = 0;
             for(Block block : firstLineBlocks){
-                block.delete();
+                if(block.isIdle()){
+                    blockCountInFirstLine++;
+                }
             }
-            playScreen.getHud().addScore(10);
+            if(blockCountInFirstLine > 11) {
+                for (Block block : firstLineBlocks) {
+                    block.delete();
+                }
+
+                playScreen.getHud().addScore(10);
+            }
         }
 
     }

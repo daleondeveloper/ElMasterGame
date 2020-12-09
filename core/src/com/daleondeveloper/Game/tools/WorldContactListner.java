@@ -44,6 +44,50 @@ public class WorldContactListner implements ContactListener {
         abstractGameObject.addFixToFixOnContact((AbstractGameObject)fa.getUserData());
 
         switch (collisionDef) {
+            case CATEGORY_BLOCK_BIT :
+            {
+                Block blockA = (Block)fa.getUserData();
+                Block blockB = (Block)fb.getUserData();
+                float blocksWidth = (blockA.getWidth() + blockB.getWidth()) / 2 ;
+                float blocksHeight = (blockA.getHeight() + blockB.getHeight()) / 2 ;
+
+
+                    if(Math.abs(blockA.getY() - blockB.getY()) > blocksHeight * 0.9f){
+                        if(blockA.getY() - blockB.getY() > 0){
+                            blockA.getContactDownList().add((AbstractGameObject)fb.getUserData());
+                            blockB.getContactUpList().add((AbstractGameObject)fa.getUserData());
+                        }else if(blockA.getY() - blockB.getY() < 0){
+                            blockB.getContactDownList().add((AbstractGameObject)fa.getUserData());
+                            blockA.getContactUpList().add((AbstractGameObject)fb.getUserData());
+                        }
+                    }
+                    if(Math.abs(blockA.getX() - blockB.getX()) > blocksWidth * 0.9f){
+                        if(blockA.getX() - blockB.getX() > 0){
+                            blockA.getContactLeftBlockList().add(blockB);
+                            blockB.getContactRightBlockList().add(blockA);
+                        }if(blockA.getX() - blockB.getX() < 0){
+                            blockA.getContactRightBlockList().add(blockB);
+                            blockB.getContactLeftBlockList().add(blockA);
+                        }
+                    }
+
+            }break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT :{
+                WaterElement hero = null;
+                Block block = null;
+                if(fa.getUserData() instanceof WaterElement){
+                    hero = (WaterElement)fa.getUserData();
+                    block = (Block)fb.getUserData();
+                }else if(fa.getUserData() instanceof Block){
+                    hero = (WaterElement)fb.getUserData();
+                    block = (Block)fa.getUserData();
+                }else{break;}
+
+                float widthDifference = (hero.getWidth() + block.getWidth())/2;
+                float heightDifference = (hero.getHeight() + block.getHeight())/2;
+
+
+            }break;
             //Кнотакт з героєм
             //Нижній сенсор
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
@@ -55,47 +99,47 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT: {
                 WaterElement waterElement = heroStartContactDown(fa,fb);
             }break;
-            //Верхній сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
-                WaterElement waterElement = heroStartContactUp(fa,fb);
-                Block block = blockStartContactDown(fa,fb);
-                block.setContactHero(waterElement);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroStartContactUp(fa,fb);
-            }break;
-            //Лівий сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{
-                WaterElement waterElement = heroStartContactLeft(fa,fb);
-                Block block = blockStartContactRight(fa,fb);
-                block.setContactHero(waterElement);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroStartContactLeft(fa,fb);
-            }break;
-            //Правий сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_BLOCK_SENSOR_LEFT_BIT:{
-                WaterElement waterElement = heroStartContactRight(fa,fb);
-                Block block = blockStartContactLeft(fa,fb);
-                block.setContactHero(waterElement);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroStartContactRight(fa,fb);
-            }break;
+//            //Верхній сенсор
+//            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
+//                WaterElement waterElement = heroStartContactUp(fa,fb);
+//                Block block = blockStartContactDown(fa,fb);
+//                block.setContactHero(waterElement);
+//
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroStartContactUp(fa,fb);
+//            }break;
+//            //Лівий сенсор
+//            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{
+//                WaterElement waterElement = heroStartContactLeft(fa,fb);
+//                Block block = blockStartContactRight(fa,fb);
+//                block.setContactHero(waterElement);
+//
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroStartContactLeft(fa,fb);
+//            }break;
+//            //Правий сенсор
+//            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_BLOCK_SENSOR_LEFT_BIT:{
+//                WaterElement waterElement = heroStartContactRight(fa,fb);
+//                Block block = blockStartContactLeft(fa,fb);
+//                block.setContactHero(waterElement);
+//
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroStartContactRight(fa,fb);
+//            }break;
 
             //Контакт блоків між собою
-            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
-                Block blockDown = blockStartContactDown(fa,fb);
-                Block blockUp = blockStartContactUp(fa,fb);
-
-            }break;
-            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
-                Block blockRight = blockStartContactRight(fa,fb);
-                Block blockLeft = blockStartContactLeft(fa,fb);
-            }break;
+//            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
+//                Block blockDown = blockStartContactDown(fa,fb);
+//                Block blockUp = blockStartContactUp(fa,fb);
+//
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
+//                Block blockRight = blockStartContactRight(fa,fb);
+//                Block blockLeft = blockStartContactLeft(fa,fb);
+//            }break;
 
             //Контакт блоків з регіонами
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
@@ -108,15 +152,15 @@ public class WorldContactListner implements ContactListener {
                 }
                 block.getContactPlatformList().add(platform);
             }break;
-            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockStartContactUp(fa,fb);
-            }break;
-            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockStartContactLeft(fa,fb);
-            }break;
-            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockStartContactRight(fa,fb);
-            }break;
+//            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockStartContactUp(fa,fb);
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockStartContactLeft(fa,fb);
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockStartContactRight(fa,fb);
+//            }break;
 
             //Контакт з сенсорами ігрового світу
             case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
@@ -140,8 +184,8 @@ public class WorldContactListner implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-        AbstractGameObject abstractGameObject = (AbstractGameObject)fa.getUserData();
-        abstractGameObject.removeFixOnContact((AbstractGameObject)fb.getUserData(),(AbstractGameObject)fa.getUserData());
+ //       AbstractGameObject abstractGameObject = (AbstractGameObject)fa.getUserData();
+ //       abstractGameObject.removeFixOnContact((AbstractGameObject)fb.getUserData(),(AbstractGameObject)fa.getUserData());
 //        abstractGameObject = (AbstractGameObject)fb.getUserData();
 //        abstractGameObject.removeFixOnContact(fa);
 
@@ -190,36 +234,36 @@ public class WorldContactListner implements ContactListener {
             }break;
 
             //Кінець контактів блоків між собою
-            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
-                Block blockDown = blockEndContactDown(fa,fb);
-                Block blockUp = blockEndContactUp(fa,fb);
-
-            }break;
-            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
-                Block blockRight = blockEndContactRight(fa,fb);
-                Block blockLeft = blockEndContactLeft(fa,fb);
-            }break;
+//            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
+//                Block blockDown = blockEndContactDown(fa,fb);
+//                Block blockUp = blockEndContactUp(fa,fb);
+//
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
+//                Block blockRight = blockEndContactRight(fa,fb);
+//                Block blockLeft = blockEndContactLeft(fa,fb);
+//            }break;
 
             //Кінець контактів блоків з регіонами
-            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockEndContactDown(fa,fb);
-                Platform platform = null;
-                if(fa.getUserData() instanceof Platform){
-                    platform = (Platform)fa.getUserData();
-                }else{
-                    platform = (Platform)fb.getUserData();
-                }
-                block.getContactPlatformList().remove(platform);
-            }break;
-            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockEndContactUp(fa,fb);
-            }break;
-            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockEndContactLeft(fa,fb);
-            }break;
-            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockEndContactRight(fa,fb);
-            }break;
+//            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockEndContactDown(fa,fb);
+//                Platform platform = null;
+//                if(fa.getUserData() instanceof Platform){
+//                    platform = (Platform)fa.getUserData();
+//                }else{
+//                    platform = (Platform)fb.getUserData();
+//                }
+//                block.getContactPlatformList().remove(platform);
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockEndContactUp(fa,fb);
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockEndContactLeft(fa,fb);
+//            }break;
+//            case CATEGORY_BLOCK_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT : {
+//                Block block = blockEndContactRight(fa,fb);
+//            }break;
             //Контакт з сенсорами ігрового світу
             case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
                 System.out.println("contact = " + contact);

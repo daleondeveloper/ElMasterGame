@@ -1,7 +1,6 @@
 package com.daleondeveloper.Sprites;
 
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
@@ -26,7 +25,7 @@ public class BlockController {
     }
     public boolean addBlock (){
         Random rnd = new Random ();
-        Block block = new Block(gameWorld,(float)rnd.nextInt(12)*10+40,gameWorld.getGameCamera().getWorldHeight()-30,9.95f,9.95f);
+        Block block = new Block(gameWorld,(float)rnd.nextInt(12)*10+40,gameWorld.getGameCamera().getWorldHeight()-30,10f,10f);
         arrayBlock.add(block);
         block.fall();
         return true;
