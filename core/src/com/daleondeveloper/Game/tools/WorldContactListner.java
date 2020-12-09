@@ -37,6 +37,8 @@ public class WorldContactListner implements ContactListener {
         Fixture fb = contact.getFixtureB();
 
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
+        System.out.println("Contact Begin");
+        System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
 
         AbstractGameObject abstractGameObject = (AbstractGameObject)fa.getUserData();
         abstractGameObject.addFixToFixOnContact((AbstractGameObject)fb.getUserData());
@@ -44,8 +46,7 @@ public class WorldContactListner implements ContactListener {
         abstractGameObject.addFixToFixOnContact((AbstractGameObject)fa.getUserData());
 
         switch (collisionDef) {
-            case CATEGORY_BLOCK_BIT :
-            {
+            case CATEGORY_BLOCK_BIT : {
                 Block blockA = (Block)fa.getUserData();
                 Block blockB = (Block)fb.getUserData();
                 float blocksWidth = (blockA.getWidth() + blockB.getWidth()) / 2 ;
@@ -86,19 +87,89 @@ public class WorldContactListner implements ContactListener {
                 float widthDifference = (hero.getWidth() + block.getWidth())/2;
                 float heightDifference = (hero.getHeight() + block.getHeight())/2;
 
+                if(Math.abs(hero.getY() - block.getY()) > heightDifference * 0.8f){
+                    if(hero.getY() - block.getY() > 0){
+                        hero.getSensorDown().add((AbstractGameObject)fb.getUserData());
+                        block.getContactUpList().add((AbstractGameObject)fa.getUserData());
+                    }else if(hero.getY() - block.getY() < 0){
+                        block.getContactDownList().add((AbstractGameObject)fa.getUserData());
+                        hero.getSensorUp().add((AbstractGameObject)fb.getUserData());
+                    }
+                }
+                if(Math.abs(hero.getX() - block.getX()) > widthDifference * 0.8f){
+                    if(hero.getX() - block.getX() > 0){
+                        hero.getSensorLeft().add(block);
+                        block.getContactRightBlockList().add(hero);
+                    }if(hero.getX() - block.getX() < 0){
+                        hero.getSensorRight().add(block);
+                        block.getContactLeftBlockList().add(hero);
+                    }
+                }
 
+            }break;
+            case CATEGORY_WATER_ELEM_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroStartContactDown(fa,fb);
+                WaterElement hero = null;
+                Platform platform = null;
+                if(fa.getUserData() instanceof WaterElement){
+                    hero = (WaterElement)fa.getUserData();
+                    platform = (Platform) fb.getUserData();
+                }else if(fa.getUserData() instanceof Platform){
+                    hero = (WaterElement)fb.getUserData();
+                    platform = (Platform) fa.getUserData();
+                }else{break;}
+
+                float heightDifference = (hero.getHeight() + platform.getHeight())/2;
+
+                if(Math.abs(hero.getY() - platform.getY()) > heightDifference * 0.8f){
+                    if(hero.getY() - platform.getY() > 0){
+                        hero.getSensorDown().add((AbstractGameObject)fb.getUserData());
+                    }
+                }
+
+
+            }break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_REGION_BIT : {
+                Block block = null;//blockStartContactDown(fa,fb);
+                Platform platform = null;
+                if(fa.getUserData() instanceof Platform){
+                    platform = (Platform)fa.getUserData();
+                    block = (Block)fb.getUserData();
+                }else{
+                    platform = (Platform)fb.getUserData();
+                    block = (Block)fa.getUserData();
+                }
+                block.getContactPlatformList().add(platform);
+
+                float heightDifference = (platform.getHeight() + block.getHeight())/2;
+
+                if(Math.abs(platform.getY() - block.getY()) > heightDifference * 0.9f){
+                    if(platform.getY() - block.getY() < 0){
+                        block.getContactDownList().add((AbstractGameObject)fa.getUserData());
+                        //platform.getSensorUp().add((AbstractGameObject)fb.getUserData());
+                    }
+                }
+            }break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
+                GameSensor gameSensor = null;
+                Block block = null;
+                if(fa.getUserData() instanceof GameSensor){
+                    gameSensor = (GameSensor)fa.getUserData();
+                    block = (Block)fb.getUserData();
+                }else if(fb.getUserData() instanceof GameSensor){
+                    gameSensor = (GameSensor)fb.getUserData();
+                    block = (Block)fa.getUserData();
+                }else{break;}
+                gameSensor.getFirstLineBlocks().add(block);
             }break;
             //Кнотакт з героєм
             //Нижній сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
-                WaterElement waterElement = heroStartContactDown(fa,fb);
-                Block block = blockStartContactUp(fa,fb);
-                block.setContactHero(waterElement);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroStartContactDown(fa,fb);
-            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
+//                WaterElement waterElement = heroStartContactDown(fa,fb);
+//                Block block = blockStartContactUp(fa,fb);
+//                block.setContactHero(waterElement);
+//
+//            }break;
 //            //Верхній сенсор
 //            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
 //                WaterElement waterElement = heroStartContactUp(fa,fb);
@@ -142,16 +213,6 @@ public class WorldContactListner implements ContactListener {
 //            }break;
 
             //Контакт блоків з регіонами
-            case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
-                Block block = blockStartContactDown(fa,fb);
-                Platform platform = null;
-                if(fa.getUserData() instanceof Platform){
-                    platform = (Platform)fa.getUserData();
-                }else{
-                    platform = (Platform)fb.getUserData();
-                }
-                block.getContactPlatformList().add(platform);
-            }break;
 //            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
 //                Block block = blockStartContactUp(fa,fb);
 //            }break;
@@ -163,18 +224,6 @@ public class WorldContactListner implements ContactListener {
 //            }break;
 
             //Контакт з сенсорами ігрового світу
-            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
-                GameSensor gameSensor = null;
-                Block block = null;
-                if(fa.getUserData() instanceof GameSensor){
-                    gameSensor = (GameSensor)fa.getUserData();
-                    block = (Block)fb.getUserData();
-                }else if(fb.getUserData() instanceof GameSensor){
-                    gameSensor = (GameSensor)fb.getUserData();
-                    block = (Block)fa.getUserData();
-                }else{break;}
-                gameSensor.getFirstLineBlocks().add(block);
-            }break;
     }
     }
 
@@ -190,48 +239,118 @@ public class WorldContactListner implements ContactListener {
 //        abstractGameObject.removeFixOnContact(fa);
 
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
+        System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
 
         switch (collisionDef) {
+            case CATEGORY_BLOCK_BIT : {
+                Block blockA = (Block)fa.getUserData();
+                Block blockB = (Block)fb.getUserData();
+                //Видалення з списків блоку А всіх контактів блоку Б
+                blockA.getContactRightBlockList().remove(blockB);
+                blockA.getContactLeftBlockList().remove(blockB);
+                blockA.getContactDownList().remove(blockB);
+                blockA.getContactUpList().remove(blockB);
+
+                //Видалення з списків блоку Б всіх контактів блоку А
+                blockB.getContactRightBlockList().remove(blockA);
+                blockB.getContactLeftBlockList().remove(blockA);
+                blockB.getContactDownList().remove(blockA);
+                blockB.getContactUpList().remove(blockA);
+
+            }break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT :{
+                WaterElement hero = null;
+                Block block = null;
+                if(fa.getUserData() instanceof WaterElement){
+                    hero = (WaterElement)fa.getUserData();
+                    block = (Block)fb.getUserData();
+                }else if(fa.getUserData() instanceof Block){
+                    hero = (WaterElement)fb.getUserData();
+                    block = (Block)fa.getUserData();
+                }else{break;}
+
+                hero.getSensorLeft().remove(block);
+                hero.getSensorRight().remove(block);
+                hero.getSensorDown().remove(block);
+                hero.getSensorUp().remove(block);
+
+                block.getContactRightBlockList().remove(hero);
+                block.getContactLeftBlockList().remove(hero);
+                block.getContactUpList().remove(hero);
+                block.getContactDownList().remove(hero);
+
+            }break;
+            case CATEGORY_WATER_ELEM_BIT | CATEGORY_REGION_BIT: {
+                WaterElement hero = null;
+                Platform platform = null;
+                if(fa.getUserData() instanceof WaterElement){
+                    hero = (WaterElement)fa.getUserData();
+                    platform = (Platform) fb.getUserData();
+                }else if(fa.getUserData() instanceof Platform){
+                    hero = (WaterElement)fb.getUserData();
+                    platform = (Platform) fa.getUserData();
+                }else{break;}
+
+                hero.getSensorDown().remove(platform);
+
+            }break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_REGION_BIT : {
+                Block block = null;//blockStartContactDown(fa,fb);
+                Platform platform = null;
+                if(fa.getUserData() instanceof Platform){
+                    platform = (Platform)fa.getUserData();
+                    block = (Block)fb.getUserData();
+                }else{
+                    platform = (Platform)fb.getUserData();
+                    block = (Block)fa.getUserData();
+                }
+
+                block.getContactDownList().remove(platform);
+            }break;
+            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
+                System.out.println("contact = " + contact);
+            }
+
             //Кінець Кнотакта з героєм
             //Нижній сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
-                WaterElement waterElement = heroEndContactDown(fa,fb);
-                Block block = blockEndContactUp(fa,fb);
-                block.setContactHero(null);
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroEndContactDown(fa,fb);
-            }break;
-            //Верхній сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
-                WaterElement waterElement = heroEndContactUp(fa,fb);
-                Block block = blockEndContactDown(fa,fb);
-                block.setContactHero(null);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroEndContactUp(fa,fb);
-            }break;
-            //Лівий сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{
-                WaterElement waterElement = heroEndContactLeft(fa,fb);
-                Block block = blockEndContactRight(fa,fb);
-                block.setContactHero(null);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroEndContactLeft(fa,fb);
-            }break;
-            //Правий сенсор
-            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_BLOCK_SENSOR_LEFT_BIT:{
-                WaterElement waterElement = heroEndContactRight(fa,fb);
-                Block block = blockEndContactLeft(fa,fb);
-                block.setContactHero(null);
-
-            }break;
-            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroEndContactRight(fa,fb);
-            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
+//                WaterElement waterElement = heroEndContactDown(fa,fb);
+//                Block block = blockEndContactUp(fa,fb);
+//                block.setContactHero(null);
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroEndContactDown(fa,fb);
+//            }break;
+//            //Верхній сенсор
+//            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT:{
+//                WaterElement waterElement = heroEndContactUp(fa,fb);
+//                Block block = blockEndContactDown(fa,fb);
+//                block.setContactHero(null);
+//
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroEndContactUp(fa,fb);
+//            }break;
+//            //Лівий сенсор
+//            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{
+//                WaterElement waterElement = heroEndContactLeft(fa,fb);
+//                Block block = blockEndContactRight(fa,fb);
+//                block.setContactHero(null);
+//
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroEndContactLeft(fa,fb);
+//            }break;
+//            //Правий сенсор
+//            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_BLOCK_SENSOR_LEFT_BIT:{
+//                WaterElement waterElement = heroEndContactRight(fa,fb);
+//                Block block = blockEndContactLeft(fa,fb);
+//                block.setContactHero(null);
+//
+//            }break;
+//            case CATEGORY_WATER_ELEM_SENSOR_RIGHT_BIT | CATEGORY_REGION_BIT: {
+//                WaterElement waterElement = heroEndContactRight(fa,fb);
+//            }break;
 
             //Кінець контактів блоків між собою
 //            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
@@ -265,9 +384,6 @@ public class WorldContactListner implements ContactListener {
 //                Block block = blockEndContactRight(fa,fb);
 //            }break;
             //Контакт з сенсорами ігрового світу
-            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
-                System.out.println("contact = " + contact);
-            }
 
 
         }

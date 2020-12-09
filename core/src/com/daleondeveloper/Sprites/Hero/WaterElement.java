@@ -20,6 +20,7 @@ import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Platform;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -62,10 +63,10 @@ public class WaterElement extends AbstractDynamicObject {
     private Block pushBlock;
 
     //marks
-    private List<AbstractGameObject> sensorRight;
-    private List<AbstractGameObject> sensorLeft;
-    private List<AbstractGameObject> sensorUp;
-    private List<AbstractGameObject> sensorDown;
+    private Set<AbstractGameObject> sensorRight;
+    private Set<AbstractGameObject> sensorLeft;
+    private Set<AbstractGameObject> sensorUp;
+    private Set<AbstractGameObject> sensorDown;
 
     private State debugState;
 
@@ -99,10 +100,10 @@ public class WaterElement extends AbstractDynamicObject {
         currentPlatform = null;
         pushBlock = null;
 
-        sensorDown = new ArrayList<AbstractGameObject>();
-        sensorLeft = new ArrayList<AbstractGameObject>();
-        sensorRight = new ArrayList<AbstractGameObject>();
-        sensorUp = new ArrayList<AbstractGameObject>();
+        sensorDown = new HashSet<AbstractGameObject>();
+        sensorLeft = new HashSet<AbstractGameObject>();
+        sensorRight = new HashSet<AbstractGameObject>();
+        sensorUp = new HashSet<AbstractGameObject>();
 
         initVoice();
     }
@@ -125,12 +126,12 @@ public class WaterElement extends AbstractDynamicObject {
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
         fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_BIT;
-       // fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
+        fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
         fixtureDef.shape = polygonShape;
         //fixtureDef.density = 0.0f;
         body.createFixture(fixtureDef).setUserData(this);
 
-        defineSensors();
+       // defineSensors();
 
     }
 
@@ -253,7 +254,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        body.setGravityScale(10);
+       body.setGravityScale(10);
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
@@ -298,8 +299,8 @@ public class WaterElement extends AbstractDynamicObject {
             //render
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-           // setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
-            setRegion(newHero);
+            setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
+//            setRegion(newHero);
             if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
@@ -309,9 +310,9 @@ public class WaterElement extends AbstractDynamicObject {
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
             // Update this Sprite to correspond with the position of the Box2D body.
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
-            if(!moveRight){setFlip(true,false);}
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateFall(float deltaTime){
@@ -324,9 +325,9 @@ public class WaterElement extends AbstractDynamicObject {
             }
             body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
 
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
-            if(!moveRight){setFlip(true,false);}
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void statePush(float deltaTime){
@@ -357,9 +358,9 @@ public class WaterElement extends AbstractDynamicObject {
             }
 
             // Update this Sprite to correspond with the position of the Box2D body.
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
-            if(!moveRight){setFlip(true,false);}
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateWalk(float deltaTime){
@@ -381,9 +382,9 @@ public class WaterElement extends AbstractDynamicObject {
                 fall();
             }
             // Update this Sprite to correspond with the position of the Box2D body.
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemWalkAnim.getKeyFrame(stateTime, true));
-            if(!moveRight){setFlip(true,false);}
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        if(!moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateDead(float deltaTime){
@@ -433,19 +434,19 @@ public class WaterElement extends AbstractDynamicObject {
         return false;
     }
 
-    public List<AbstractGameObject> getSensorRight() {
+    public Set<AbstractGameObject> getSensorRight() {
         return sensorRight;
     }
 
-    public List<AbstractGameObject> getSensorLeft() {
+    public Set<AbstractGameObject> getSensorLeft() {
         return sensorLeft;
     }
 
-    public List<AbstractGameObject> getSensorUp() {
+    public Set<AbstractGameObject> getSensorUp() {
         return sensorUp;
     }
 
-    public List<AbstractGameObject> getSensorDown() {
+    public Set<AbstractGameObject> getSensorDown() {
         return sensorDown;
     }
 

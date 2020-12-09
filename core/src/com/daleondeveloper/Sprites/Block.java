@@ -126,7 +126,7 @@ public class Block extends AbstractDynamicObject {
 
         body.createFixture(fixture).setUserData(this);
 
-        defineSensors();
+       // defineSensors();
         float x = body.getPosition().x;
         int leftReg = 44,rightReg = 46;
         for(int i = 0; i < 12; i++){
