@@ -57,6 +57,8 @@ public class WaterElement extends AbstractDynamicObject {
     private boolean turn;
     private float turnImpulse;
     private float pushImpulse;
+    private float returnCellsPositionY;
+    private int returnCellsPositionX;
     private FixtureDef fixtureSkill;
     private CircleShape circleShapeSkillFixture;
 
@@ -124,14 +126,14 @@ public class WaterElement extends AbstractDynamicObject {
 
         FixtureDef fixtureDef = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
-        polygonShape.setAsBox(getWidth()/2f,getHeight()/2f);
+        polygonShape.setAsBox(getWidth()/2f,getHeight()/2f );
         fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_BIT;
         fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
         fixtureDef.shape = polygonShape;
         //fixtureDef.density = 0.0f;
         body.createFixture(fixtureDef).setUserData(this);
 
-       // defineSensors();
+        defineSensors();
 
     }
 
@@ -156,7 +158,7 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.1f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,1.2f, new Vector2(0,(-getHeight()/2)),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT;
         sensorDown.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -259,6 +261,7 @@ public class WaterElement extends AbstractDynamicObject {
                 debugState = currentState;
                 System.out.println(debugState);
             }
+        System.out.println("Down : " + sensorDown.size() + "// Up : " + sensorUp.size() + "//Left : " + sensorLeft.size() + "//Right : " + sensorRight.size());
           // checkContacts();
         switch (currentState){
             case IDLE:
@@ -291,11 +294,11 @@ public class WaterElement extends AbstractDynamicObject {
     private void stateIdle(float deltaTime){
         //Logic
             if(stopElem){stopElem = false; }
-            if(sensorDown.size() == 0 || stateTime > 5){ fall(); return;}
+            if(sensorDown.size() == 0 ){ fall(); return;}
 
            // body.setGravityScale(1);
             body.setLinearVelocity(0,0);
-
+            body.setTransform(body.getPosition().x,returnCellsPositionY + 2.5f,0);
             //render
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -305,6 +308,16 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void stateJump(float deltaTime){
+        float y = body.getPosition().y - 2;
+        int leftReg = 144,rightReg = 146;
+        for(int i = 0; i < 20; i++){
+            if(y > leftReg && y < rightReg){
+                returnCellsPositionY = (rightReg + leftReg) / 2 ;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
             if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
             if(sensorUp.size() > 0){ fall(); return;}
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
@@ -316,6 +329,16 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void stateFall(float deltaTime){
+        float y = body.getPosition().y - 2;
+        int leftReg = 144,rightReg = 146;
+        for(int i = 0; i < 20; i++){
+            if(y > leftReg && y < rightReg){
+                returnCellsPositionY = (rightReg + leftReg) / 2 ;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
             if(sensorDown.size() > 0){ idle(); }
             if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){
                 body.getLinearVelocity().x = 0;
@@ -336,7 +359,9 @@ public class WaterElement extends AbstractDynamicObject {
                 idle();
                 return;
             }
-            if(moveRight && sensorRight.size() > 0){
+        body.setTransform(body.getPosition().x,returnCellsPositionY + 2.5f,0);
+
+        if(moveRight && sensorRight.size() > 0){
                 for(AbstractGameObject f : sensorRight){
                     if(f instanceof Block){
                         Block block = (Block)f;
@@ -368,10 +393,11 @@ public class WaterElement extends AbstractDynamicObject {
             if(activateElem){
                 activateElem = false;
             }
-            body.setGravityScale(1);
-            body.setLinearVelocity(new Vector2(turnImpulse*2,getVelocity().y));
+            body.setGravityScale(0);
+            body.setLinearVelocity(new Vector2(turnImpulse*2,0));
+        body.setTransform(body.getPosition().x,returnCellsPositionY + 2.5f,0);
 
-            if(sensorDown.size() < 1){
+        if(sensorDown.size() < 1){
                 fall();
             }
 //            if((sensorLeft.size() > 0 && body.getLinearVelocity().x < 0 ) ||

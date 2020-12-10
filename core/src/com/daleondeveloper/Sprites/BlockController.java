@@ -25,13 +25,13 @@ public class BlockController {
     }
     public boolean addBlock (){
         Random rnd = new Random ();
-        Block block = new Block(gameWorld,(float)rnd.nextInt(12)*10+40,gameWorld.getGameCamera().getWorldHeight()-30,10f,10f);
+        Block block = new Block(gameWorld,(float)rnd.nextInt(12)*10+40,gameWorld.getGameCamera().getWorldHeight()-30,9.99f,9.99f);
         arrayBlock.add(block);
         block.fall();
         return true;
     }
     public boolean addBlock(float x, float y){
-        Block block = new Block(gameWorld,x,y,9.95f,9.95f);
+        Block block = new Block(gameWorld,x,y,9.98f,9.98f);
         arrayBlock.add(block);
         block.fall();
         block.setSensorDown(false);

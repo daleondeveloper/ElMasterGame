@@ -63,6 +63,10 @@ public class Block extends AbstractDynamicObject {
     private boolean sensorDown;
     private Set<Platform> contactPlatformList;
 
+    //Fixture Sensors
+    Fixture sensorY;
+    float sensorTime;
+
     public Block(GameWorld gameWorld, float x, float y, float width,float height){
         this.gameWorld = gameWorld;
 
@@ -81,6 +85,7 @@ public class Block extends AbstractDynamicObject {
         setRegion(textureRegionBlock);
         stateTime = 0;
         checkTime = 0;
+        sensorTime = 0;
         statePosition = false;
 
         pushImpulse = 10;
@@ -123,10 +128,13 @@ public class Block extends AbstractDynamicObject {
         fixture.density = 0f;
         fixture.friction = 0f;
         fixture.restitution = 0f;
+        fixture.isSensor = false;
 
         body.createFixture(fixture).setUserData(this);
 
-       // defineSensors();
+
+        defineSensors();
+
         float x = body.getPosition().x;
         int leftReg = 44,rightReg = 46;
         for(int i = 0; i < 12; i++){
@@ -211,13 +219,15 @@ public class Block extends AbstractDynamicObject {
     }
     @Override
     public Vector2 getBodyPosition() {
-        return null;
+        return body.getPosition();
     }
 
 
     @Override
     public void update(float deltaTime) {
         checkTime += deltaTime;
+
+
 
 //        Set<Platform> tmpSet = new HashSet<Platform>();
 //        for(Platform p : contactPlatformList){
@@ -271,25 +281,29 @@ public class Block extends AbstractDynamicObject {
     private void stateIdle(float deltaTime){
         body.setType(BodyDef.BodyType.StaticBody);
         if(!sensorDown){fall();return;}
-       // if(stateTime > 1){fall();return;}
-        body.setLinearVelocity(0,0);
-            if(this.getX() + 5 - returnCellsPosition > 0.01f ||
-            this.getX() + 5 - returnCellsPosition < -0.01f){
-                body.setType(BodyDef.BodyType.DynamicBody);
-//                body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
-                if(getUpPlatform() != null){
-                    deletePlatformUnderBlock();
-                }
-            }
-        if(this.getY() + 5 - returnCellsPositionY > 0.01f ||
-                this.getY() + 5 - returnCellsPositionY < -0.01f){
-            body.setType(BodyDef.BodyType.DynamicBody);
-//            body.applyForceToCenter(0,(returnCellsPosition-body.getPosition().y)*1000,true);
-            if(getUpPlatform() != null){
-                deletePlatformUnderBlock();
-            }
-        }
-        body.setTransform(returnCellsPosition,(returnCellsPositionY),0);
+//        float centerBodyPositionX = body.getPosition().x;
+//        float centerBodyPositionY = body.getPosition().y;
+//       // if(stateTime > 1){fall();return;}
+//        body.setLinearVelocity(0,0);
+//            if(this.getX() + 5 - returnCellsPosition > 0.01f ||
+//            this.getX() + 5 - returnCellsPosition < -0.01f){
+//              //  body.setType(BodyDef.BodyType.DynamicBody);
+//                centerBodyPositionX = returnCellsPosition;
+////                body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
+//                if(getUpPlatform() != null){
+//                    deletePlatformUnderBlock();
+//                }
+//            }
+//        if(this.getY() + 5 - returnCellsPositionY > 0.01f ||
+//                this.getY() + 5 - returnCellsPositionY < -0.01f){
+////            body.setType(BodyDef.BodyType.DynamicBody);
+//            centerBodyPositionY = returnCellsPositionY;
+////            body.applyForceToCenter(0,(returnCellsPosition-body.getPosition().y)*1000,true);
+//            if(getUpPlatform() != null){
+//                deletePlatformUnderBlock();
+//            }
+//        }
+        body.setTransform(returnCellsPosition,returnCellsPositionY,0);
         if(getUpPlatform() == null) {
             createPlatformUnderBlock();
         }
@@ -319,16 +333,18 @@ public class Block extends AbstractDynamicObject {
         if(upPlatform != null) {
             deletePlatformUnderBlock();
         }
-        if(contactPlatformList.size() == 0){fall(); return;}
+        if(contactDownList.size() == 0){
+            fall(); return;}
 
-        if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 13){
+        if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15){
             if(contactHero.getX() - getX() > 1){
                 body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
             }else if(contactHero.getX() - getX() < -1){
                 body.setLinearVelocity(-pushImpulse, body.getLinearVelocity().y);
             }
 
-        }else{idle();return;}
+        }else{
+            idle();return;}
 
         body.setLinearVelocity(10, body.getLinearVelocity().y);
 
@@ -637,6 +653,7 @@ public class Block extends AbstractDynamicObject {
 
         return super.removeFixOnContact(mainFix, contactFix);
     }
+
 
     public Set<AbstractGameObject> getContactLeftBlockList() {
         return contactLeftBlockList;
