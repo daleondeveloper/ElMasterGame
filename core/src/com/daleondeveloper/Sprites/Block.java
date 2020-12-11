@@ -169,7 +169,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.9f,0.5f, new Vector2(0,(-getHeight()/2)+0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.3f, new Vector2(0,(-getHeight()/2)),0);
 //        polygonShape.setAsBox(10,10, new Vector2(getWidth()/2,getHeight()/2),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
@@ -179,7 +179,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.5f, new Vector2(0,(getHeight()/2)-0.05f),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.3f, new Vector2(0,(getHeight()/2)),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -638,7 +638,7 @@ public class Block extends AbstractDynamicObject {
     public Set<AbstractGameObject> removeFixOnContact(AbstractGameObject mainFix, AbstractGameObject contactFix) {
         if(contactFix instanceof Block){
             Block block = (Block) contactFix;
-          //  block.getContactDownList().remove(this);
+            block.getContactDownList().remove(this);
             block.getContactUpList().remove(this);
             block.getContactLeftBlockList().remove(this);
             block.getContactRightBlockList().remove(this);
