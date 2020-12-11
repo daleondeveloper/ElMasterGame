@@ -231,7 +231,7 @@ public class WorldContactListner implements ContactListener {
             }break;
 
             //Контакт з сенсорами ігрового світу
-            case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_GAME_WORLD_SENSOR : {
+            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
                 GameSensor gameSensor = null;
                 Block block = null;
                 if(fa.getUserData() instanceof GameSensor){
