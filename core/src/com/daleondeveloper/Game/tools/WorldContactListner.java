@@ -395,7 +395,6 @@ public class WorldContactListner implements ContactListener {
                 }else{
                     platform = (Platform)fb.getUserData();
                 }
-                block.getContactPlatformList().remove(platform);
             }break;
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_REGION_BIT : {
                 Block block = blockEndContactUp(fa,fb);

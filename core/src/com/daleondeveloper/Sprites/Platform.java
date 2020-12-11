@@ -121,7 +121,6 @@ public class Platform extends AbstractDynamicObject {
         if(contactFix instanceof Block){
             Block contactBlock = (Block)contactFix;
             contactBlock.getContactDownList().remove(mainFix);
-            contactBlock.getContactPlatformList().remove(this);
         }
         return super.removeFixOnContact(mainFix,contactFix);
     }

@@ -107,17 +107,17 @@ public class HeroSkill extends AbstractDynamicObject {
         for(Block block : blockCollisions){
             if(block.getBodyPosition().x > heroVector2.x && heroSeeRigth){
                 blockInUsesSkill = block;
-                block.skill1Start();
+//                block.skill1Start();
             }else if(block.getBodyPosition().x < heroVector2.x && !heroSeeRigth){
                 blockInUsesSkill = block;
-                block.skill1Start();
+//                block.skill1Start();
             }
         }
     }
     //Uses from hero class
     public void endSkill(){
         if(blockInUsesSkill != null) {
-            blockInUsesSkill.skill1End();
+//            blockInUsesSkill.skill1End();
         }
     }
 }
