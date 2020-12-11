@@ -298,7 +298,7 @@ public class WaterElement extends AbstractDynamicObject {
 
            // body.setGravityScale(1);
             body.setLinearVelocity(0,0);
-            body.setTransform(body.getPosition().x,returnCellsPositionY + 2.5f,0);
+            body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
             //render
             // Update this Sprite to correspond with the position of the Box2D body.
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -309,10 +309,10 @@ public class WaterElement extends AbstractDynamicObject {
         }
     private void stateJump(float deltaTime){
         float y = body.getPosition().y - 2;
-        int leftReg = 144,rightReg = 146;
+        int leftReg = 139,rightReg = 149;
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
-                returnCellsPositionY = (rightReg + leftReg) / 2 ;
+                returnCellsPositionY = leftReg + 1 ;
                 break;
             }
             leftReg += 10;
@@ -330,10 +330,10 @@ public class WaterElement extends AbstractDynamicObject {
         }
     private void stateFall(float deltaTime){
         float y = body.getPosition().y - 2;
-        int leftReg = 144,rightReg = 146;
+        int leftReg = 139,rightReg = 149;
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
-                returnCellsPositionY = (rightReg + leftReg) / 2 ;
+                returnCellsPositionY = leftReg + 1 ;
                 break;
             }
             leftReg += 10;
@@ -359,7 +359,7 @@ public class WaterElement extends AbstractDynamicObject {
                 idle();
                 return;
             }
-        body.setTransform(body.getPosition().x,returnCellsPositionY + 2.5f,0);
+        body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
 
         if(moveRight && sensorRight.size() > 0){
                 for(AbstractGameObject f : sensorRight){
@@ -395,7 +395,7 @@ public class WaterElement extends AbstractDynamicObject {
             }
             body.setGravityScale(0);
             body.setLinearVelocity(new Vector2(turnImpulse*2,0));
-        body.setTransform(body.getPosition().x,returnCellsPositionY + 2.5f,0);
+        body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
 
         if(sensorDown.size() < 1){
                 fall();
