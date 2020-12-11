@@ -295,13 +295,13 @@ public class Block extends AbstractDynamicObject {
         //Set push velocity
         if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15){
             if(contactHero.getX() - getX() > 1){
-                body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
-            }else if(contactHero.getX() - getX() < -1){
                 body.setLinearVelocity(-pushImpulse, body.getLinearVelocity().y);
+            }else if(contactHero.getX() - getX() < -1){
+                body.setLinearVelocity(pushImpulse , body.getLinearVelocity().y);
             }
 
         }else{ idle();return;}
-//        body.setLinearVelocity(10, body.getLinearVelocity().y);
+        //body.setLinearVelocity(1, body.getLinearVelocity().y);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
