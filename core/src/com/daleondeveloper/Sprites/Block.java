@@ -23,49 +23,39 @@ import java.util.Set;
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
-
     private static final float FALL_VELOCITY =  -100;
-
-    public void skill1End() {
-    }
-
-    public void skill1Start() {
-    }
 
     private enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
     }
 
     private GameWorld gameWorld;
+    private Body body;
+
     private Array<TextureRegion> assetBlocks;
     private TextureRegion textureRegionBlock;
+
+    private State currentState;
     private float stateTime;
     private boolean statePosition;
-    private State currentState;
     private float checkTime;
-    private Body body;
-    private Set<AbstractGameObject> contactLeftBlockList ;
-    private Set<AbstractGameObject> contactRightBlockList ;
-    private Set<AbstractGameObject> contactUpList ;
-    private Set<AbstractGameObject> contactDownList ;
-    private WaterElement contactHero;
-    private Platform upPlatform;
-    private Platform downPlatform;
 
     private float pushImpulse;
     private float returnCellsPosition;
     private float returnCellsPositionY;
 
-    //marks
+    //sensors contacted objects
+        //Sets
+    private Set<AbstractGameObject> contactLeftBlockList ;
+    private Set<AbstractGameObject> contactRightBlockList ;
+    private Set<AbstractGameObject> contactUpList ;
+    private Set<AbstractGameObject> contactDownList ;
+    private WaterElement contactHero;
+        //Mark
     private boolean sensorRight;
     private boolean sensorLeft;
     private boolean sensorUp;
     private boolean sensorDown;
-    private Set<Platform> contactPlatformList;
-
-    //Fixture Sensors
-    Fixture sensorY;
-    float sensorTime;
 
     public Block(GameWorld gameWorld, float x, float y, float width,float height){
         this.gameWorld = gameWorld;
@@ -85,18 +75,17 @@ public class Block extends AbstractDynamicObject {
         setRegion(textureRegionBlock);
         stateTime = 0;
         checkTime = 0;
-        sensorTime = 0;
         statePosition = false;
 
         pushImpulse = 10;
         returnCellsPosition = x;
         returnCellsPosition = y;
 
+        //Initial sensor values
         contactLeftBlockList = new HashSet<AbstractGameObject>();
         contactRightBlockList = new HashSet<AbstractGameObject>();
         contactDownList = new HashSet<AbstractGameObject>();
         contactUpList = new HashSet<AbstractGameObject>();
-        contactPlatformList = new HashSet<Platform>();
         contactHero = null;
 
         sensorDown = false;
@@ -107,7 +96,16 @@ public class Block extends AbstractDynamicObject {
         defineBlock();
 
         currentState = State.IDLE;
-
+        float BPx = body.getPosition().x;
+        int leftReg = 44,rightReg = 46;
+        for(int i = 0; i < 12; i++){
+            if(BPx > leftReg && BPx < rightReg){
+                returnCellsPosition = (leftReg + rightReg)/2;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
     }
 
     private void defineBlock(){
@@ -132,20 +130,7 @@ public class Block extends AbstractDynamicObject {
 
         body.createFixture(fixture).setUserData(this);
 
-
         defineSensors();
-
-        float x = body.getPosition().x;
-        int leftReg = 44,rightReg = 46;
-        for(int i = 0; i < 12; i++){
-            if(x > leftReg && x < rightReg){
-                returnCellsPosition = (leftReg + rightReg)/2;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-
 
     }
     private void defineSensors(){
@@ -188,10 +173,8 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorUp).setUserData(this);
     }
 
-    public void setStaticPosition(float x, float y){
-        body.setTransform(x,y,0);
-    }
 
+    //Change of state through methods with additional functionality necessary before change of state
     public void idle(){
         currentState = State.IDLE;
         stateTime = 0;
@@ -217,25 +200,11 @@ public class Block extends AbstractDynamicObject {
     public void delete(){
         currentState = State.DESTROY;
     }
-    @Override
-    public Vector2 getBodyPosition() {
-        return body.getPosition();
-    }
 
-
+    //Update method, and update methods depending on the state of the object
     @Override
     public void update(float deltaTime) {
         checkTime += deltaTime;
-
-
-
-//        Set<Platform> tmpSet = new HashSet<Platform>();
-//        for(Platform p : contactPlatformList){
-//           if(p.isDisposable()){
-//                tmpSet.add(p);
-//            }
-//        }
-//        contactPlatformList.removeAll(tmpSet);
 
         if(contactDownList.size() == 0){
             sensorDown = false;
@@ -277,36 +246,26 @@ public class Block extends AbstractDynamicObject {
         }
 
     }
-
     private void stateIdle(float deltaTime){
+        //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.StaticBody);
         if(!sensorDown){fall();return;}
-//        float centerBodyPositionX = body.getPosition().x;
-//        float centerBodyPositionY = body.getPosition().y;
-//       // if(stateTime > 1){fall();return;}
-//        body.setLinearVelocity(0,0);
-//            if(this.getX() + 5 - returnCellsPosition > 0.01f ||
-//            this.getX() + 5 - returnCellsPosition < -0.01f){
-//              //  body.setType(BodyDef.BodyType.DynamicBody);
-//                centerBodyPositionX = returnCellsPosition;
-////                body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
-//                if(getUpPlatform() != null){
-//                    deletePlatformUnderBlock();
-//                }
-//            }
-//        if(this.getY() + 5 - returnCellsPositionY > 0.01f ||
-//                this.getY() + 5 - returnCellsPositionY < -0.01f){
-////            body.setType(BodyDef.BodyType.DynamicBody);
-//            centerBodyPositionY = returnCellsPositionY;
-////            body.applyForceToCenter(0,(returnCellsPosition-body.getPosition().y)*1000,true);
-//            if(getUpPlatform() != null){
-//                deletePlatformUnderBlock();
-//            }
-//        }
-        body.setTransform(returnCellsPosition,returnCellsPositionY,0);
-        if(getUpPlatform() == null) {
-            createPlatformUnderBlock();
+
+        //Check the correctness of the list of the lower sensor every 1 second
+        if(stateTime > 1){
+            stateTime = 0;
+            Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
+            for(AbstractGameObject obj : contactDownList){
+                if(Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2)) * 1.01f > (getWidth() + obj.getWidth())/2 ||
+                        Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2)) * 0.9f > (getHeight() + obj.getHeight())/2){
+                   objToDel.add(obj);
+                }
+            }
+            contactDownList.removeAll(objToDel);
         }
+
+        //Setting a fixed block position may cause the contacts to break
+        body.setTransform(returnCellsPosition,returnCellsPositionY,0);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -314,10 +273,9 @@ public class Block extends AbstractDynamicObject {
         setRegion(textureRegionBlock);
 
         stateTime += deltaTime;
-
-
     }
     private void statePush(float deltaTime){
+        //Setting a fixed value for the X coordinate
         float x = body.getPosition().x;
         int leftReg = 44,rightReg = 46;
         for(int i = 0; i < 12; i++){
@@ -328,14 +286,13 @@ public class Block extends AbstractDynamicObject {
             leftReg += 10;
             rightReg += 10;
         }
+
+        //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.DynamicBody);
-        stateTime += deltaTime;
-        if(upPlatform != null) {
-            deletePlatformUnderBlock();
-        }
         if(contactDownList.size() == 0){
             fall(); return;}
 
+        //Set push velocity
         if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15){
             if(contactHero.getX() - getX() > 1){
                 body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
@@ -343,18 +300,18 @@ public class Block extends AbstractDynamicObject {
                 body.setLinearVelocity(-pushImpulse, body.getLinearVelocity().y);
             }
 
-        }else{
-            idle();return;}
-
-        body.setLinearVelocity(10, body.getLinearVelocity().y);
-
+        }else{ idle();return;}
+//        body.setLinearVelocity(10, body.getLinearVelocity().y);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         textureRegionBlock =assetBlocks.get(2);
         setRegion(textureRegionBlock);
+
+        stateTime += deltaTime;
     }
     private void stateFall(float deltaTime){
+        //Setting a fixed value for the Y coordinate
         float y = body.getPosition().y;
         int leftReg = 144,rightReg = 146;
         for(int i = 0; i < 20; i++){
@@ -365,45 +322,31 @@ public class Block extends AbstractDynamicObject {
             leftReg += 10;
             rightReg += 10;
         }
-        if(upPlatform != null) {
-            deletePlatformUnderBlock();
-        }
-        body.setType(BodyDef.BodyType.DynamicBody);
-        if(contactPlatformList.size() > 0){stopFall();}
-        if(contactDownList.size() > 0){stopFall();}
-        body.setLinearVelocity(0,FALL_VELOCITY);
-        textureRegionBlock = assetBlocks.get(3);
 
-        if(this.getX() + 5 - returnCellsPosition > 0.01f ||
-                this.getX() + 5 - returnCellsPosition < -0.01f){
-            body.setType(BodyDef.BodyType.DynamicBody);
-            body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
-            if(getUpPlatform() != null){
-                deletePlatformUnderBlock();
-            }
-        }
-//        if(body.getPosition().x - returnCellsPosition > 0.025f ||
-//                body.getPosition().x - returnCellsPosition < -0.025f){
-//            body.setType(BodyDef.BodyType.DynamicBody);
-//            body.applyForceToCenter((returnCellsPosition-body.getPosition().x)*1000,0,true);
-//            if(getUpPlatform() != null){
-//                deletePlatformUnderBlock();
-//            }
-//        }
+        //Change body type and check the main allegations to change the state to another immediately
+        body.setType(BodyDef.BodyType.DynamicBody);
+        if(contactDownList.size() > 0){stopFall();}
+
+        //Change fall velocity
+        body.setLinearVelocity(0,FALL_VELOCITY);
+
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        textureRegionBlock = assetBlocks.get(3);
         setRegion(textureRegionBlock);
         stateTime += deltaTime;
-
-
     }
     private void stateDestroy(float deltaTime){
+        //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.KinematicBody);
-        deletePlatformUnderBlock();
+
+        // Remove a block from the GameSensor object's contact list
         GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
         if(gameSensor.getFirstLineBlocks().contains(this)){
             gameSensor.getFirstLineBlocks().remove(this);
         }
+
+        // Remove a block from the contact list of all its contacts
         Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
         objToDelete.addAll(fixOnContact);
         for(AbstractGameObject abstractGO : objToDelete){
@@ -416,209 +359,24 @@ public class Block extends AbstractDynamicObject {
     private void stateDead(float deltaTime){
 
     }
-
-    private void checkContacts(){
-        Set<AbstractGameObject> tmpSet = new HashSet<AbstractGameObject>();
-        tmpSet.addAll(contactDownList);
-        for(AbstractGameObject contactObj : tmpSet){
-            if((Math.abs((contactObj.getY() + contactObj.getHeight()/2) - (getY() + getHeight()/2))
-                    > (this.getHeight() + contactObj.getHeight())  / 2 ) ||
-                    (Math.abs((contactObj.getX() + contactObj.getWidth()/2) - (getX() + getWidth()/2))
-                            > (this.getWidth() + contactObj.getWidth()) / 2)){
-              //  contactDownList.remove(contactObj);
-            }
-        }
-    }
-
-    // Створення платформи над блоком,
-    // до уваги беруться сусідні платформи і створюється спільна платформа,
-    //Спільна платформа покриває всі блоки які стоять рядом з нашим
-    //Силка у всіх сусідніх блоків буде зсилатися на одну силку платформи
-    private void createPlatformUnderBlock() {
-//        //Задаються початкові дані платформи
-//        float platformX = getX(), platformHX = 10f, platformY = getY() + 10f, platformHY = 0.025f;
-//        platformY = (float)Math.ceil((getY() + 5)*0.1)*10;
-//       // platformY = (float)(Math.ceil((getY()) * 0.1f)*10)-platformHY*0.75f;
-//        Platform left = null;
-//        Platform right = null;
-//
-//        //Оновлення даних платформи блоку відносно сусідніх платформ
-//        //Просвоєння сусідніх платформ відповідним зміним left і Right
-//        if (contactLeftBlockList.size() > 0) {
-//            Block leftBlock = this;
-//
-//            while (true){
-//                Block prevLeftBlock = leftBlock;
-//                if(leftBlock.getContactLeftBlockList().size() > 0){
-//                    for(Block block : leftBlock.getContactLeftBlockList()){
-//                        float posYDifference = Math.abs(getY() - block.getY());
-//                        if(posYDifference < 1){
-//                            leftBlock = block;
-//                        }
-//                    }
-//                }else{
-//                    break;
-//                }
-//                if(prevLeftBlock == leftBlock){
-//                    break;
-//                }
-//            }
-//                platformX = leftBlock.getX() ;
-//                platformHX += getX() - leftBlock.getX();
-//        }
-//        if (contactRightBlockList.size() > 0) {
-//            Block rightBlock= this;
-//
-//            while (true){
-//                Block prevRightBlock = rightBlock;
-//                if(rightBlock.getContactRightBlockList().size() > 0){
-//                    for(Block block : rightBlock.getContactRightBlockList()){
-//                        float posYDifference = Math.abs(getY() - block.getY());
-//                        if(posYDifference < 1){
-//                            rightBlock = block;
-//                        }
-//                    }
-//                }else{
-//                    break;
-//                }
-//                if(prevRightBlock == rightBlock){
-//                    break;
-//                }
-//            }
-//                platformHX += rightBlock.getX() - getX();
-//        }
-//
-//        //Створення платформи
-//        Platform platformBlockUp = gameWorld.getPlatformController().addPlatform(platformX + 0.5f, platformY, platformHX - 1f, platformHY);
-//        //Попереднє очищення платформи блока,
-//        //якщо за якоїст ошибки вона у нього присутння
-//        //подія у задумці відбутися не має
-//        if (getUpPlatform() != null) {
-//            getUpPlatform().delete();
-//        }
-//        //Присвоєння створеної платформи блоку
-//        setUpPlatform(platformBlockUp);
-//
-//        //Якщо є сусідня платформа, призначення їй статусу dispose
-//        //і присвоєння сусідньому блоку з ліва створену платформу
-//        // силка на платформу у всіх лівих блоків одна тому одне відбувається тільки присвоєння
-//            Block tmpBlock = this;
-//            while(tmpBlock.getContactLeftBlockList().size() > 0){
-//                Block prevLeftBlock = tmpBlock;
-//                for(Block block : tmpBlock.getContactLeftBlockList()){
-//                    float posYDifference = Math.abs(getY() - block.getY());
-//                    if(posYDifference < 1){
-//                        tmpBlock = block;
-//                    }
-//                }
-//                if(prevLeftBlock == tmpBlock){
-//                    break;
-//                }
-//                if(tmpBlock.getUpPlatform() != null) {
-//                    tmpBlock.getUpPlatform().delete();
-//                }
-//                tmpBlock.setUpPlatform(platformBlockUp);
-////            if (this.getContactLeftBlockList().size() > 0) {
-////              //  Block tmpBlock = this.getContactLeftBlockList().get(0);
-////                tmpBlock.setUpPlatform(platformBlockUp);
-////            }
-//        }
-//        // Аналогічно верхній функції, тільки використовуються блоки з права
-////        if(right != null) {
-//            tmpBlock = this;
-//            while (tmpBlock.getContactRightBlockList().size() > 0) {
-//                Block prevRightBlock = tmpBlock;
-//                for(Block block : tmpBlock.getContactRightBlockList()){
-//                    float posYDifference = Math.abs(getY() - block.getY());
-//                    if(posYDifference < 1){
-//                        tmpBlock = block;
-//                    }
-//                }
-//                if(prevRightBlock == tmpBlock){
-//                    break;
-//                }
-//                if (tmpBlock.getUpPlatform() != null) {
-//                    tmpBlock.getUpPlatform().delete();
-//                }
-//                tmpBlock.setUpPlatform(platformBlockUp);
-//
-//            }
-//
-
-    }
-
-    //Присвоєння стану dispose платформі над блоком, і присвоєння цій зміні null значення
-    //відповідна дія буде використана і до сусідніх блоків цього блоку
-    //також блок буде видалений з списків контактів правих лівих блоків
-    //при статусі цього  блоку DISPOSE або DELETE
-    private void deletePlatformUnderBlock(){
-//        //Перевірка чи є бллоки з ліва
-//        if(contactLeftBlockList.size() > 0) {
-//            Block leftBlock = this;
-//            //Видалення цього блоку зі списку лівого блоку при відповідних станах
-////            if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
-////                leftBlock.getContactLeftBlockList().get(0).getContactRightBlockList().remove(this);
-////            }
-//            //Проходження по всіх лівих блоках і присвоєння їх платформам стану DISPOSE
-//            //І присвоєння значенню null
-//            while(true){
-//                Block prevLeftBlock = leftBlock;
-//                for(Block block : leftBlock.getContactLeftBlockList()){
-//                    float posYDifference = Math.abs(getY() - block.getY());
-//                    if(posYDifference < 1){
-//                        leftBlock = block;
-//                    }
-//
-//                }
-//
-//                    if(leftBlock.getUpPlatform() != null){
-//                        leftBlock.getUpPlatform().delete();
-//                    }
-//                    leftBlock.setUpPlatform(null);
-//                    if(leftBlock.getContactLeftBlockList().size() == 0){ break;}
-//                    if(prevLeftBlock == leftBlock){
-//                        break;
-//                    }
-//            }
-//        }
-//        //Аналогічно верхній функції, тільки використовуються праві блоки
-//        if(contactRightBlockList.size() > 0) {
-//            Block rightBlock = this;
-////            if(currentState == State.DISPOSE || currentState ==State.DESTROY) {
-////                rightBlock.getContactRightBlockList().get(0).getContactLeftBlockList().remove(this);
-////            }
-//            while(true){
-//                Block prevRightBlock = rightBlock;
-//                for(Block block : rightBlock.getContactRightBlockList()){
-//                    float posYDifference = Math.abs(getY() - block.getY());
-//                    if(posYDifference < 1){
-//                        rightBlock = block;
-//                    }
-//                }
-//                if(rightBlock.getUpPlatform() != null){
-//                    rightBlock.getUpPlatform().delete();
-//                }
-//                rightBlock.setUpPlatform(null);
-//                if(rightBlock.getContactRightBlockList().size() == 0){ break; }
-//                if(prevRightBlock == rightBlock){
-//                    break;
-//                }
-//            }
-//        }
-//        //Якщо платформа цього блока не дорівнює null
-//        //проводимо операцію відповідну як і до інших платформ у цьому методі
-//        if(upPlatform != null) {
-//           getUpPlatform().delete();
-//            setUpPlatform(null);
-//        }
-    }
     @Override
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
     }
 
+    //Methods of checking the state of the object
     public boolean isIdle(){
         if(currentState == State.IDLE){
+            return true;
+        }else return false;
+    }
+    public boolean isIFall(){
+        if(currentState == State.FALL){
+            return true;
+        }else return false;
+    }
+    public boolean isPush(){
+        if(currentState == State.PUSH){
             return true;
         }else return false;
     }
@@ -634,6 +392,14 @@ public class Block extends AbstractDynamicObject {
         }else return false;
     }
 
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
+    //вНЕСТИ ОПИС МЕТОДА
     @Override
     public Set<AbstractGameObject> removeFixOnContact(AbstractGameObject mainFix, AbstractGameObject contactFix) {
         if(contactFix instanceof Block){
@@ -655,6 +421,12 @@ public class Block extends AbstractDynamicObject {
     }
 
 
+    // Getters and Setters
+    @Override
+    public Vector2 getBodyPosition() {
+        return body.getPosition();
+    }
+
     public Set<AbstractGameObject> getContactLeftBlockList() {
         return contactLeftBlockList;
     }
@@ -669,14 +441,6 @@ public class Block extends AbstractDynamicObject {
 
     public Set<AbstractGameObject> getContactDownList() {
         return contactDownList;
-    }
-
-    public Platform getUpPlatform() {
-        return upPlatform;
-    }
-
-    public void setUpPlatform(Platform upPlatform) {
-        this.upPlatform = upPlatform;
     }
 
     public boolean isSensorRight() {
@@ -709,10 +473,6 @@ public class Block extends AbstractDynamicObject {
 
     public void setSensorDown(boolean sensorDown) {
         this.sensorDown = sensorDown;
-    }
-
-    public Set<Platform> getContactPlatformList() {
-        return contactPlatformList;
     }
 
     public WaterElement getContactHero() {
