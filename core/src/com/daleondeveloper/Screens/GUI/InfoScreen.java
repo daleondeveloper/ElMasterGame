@@ -15,6 +15,7 @@ import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Screens.ScreenEnum;
+import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
 
@@ -92,6 +93,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         pause.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
+                GameSettings.getInstance().save();
                 playScreen.setGameStatePaused();
 
             }
@@ -121,8 +123,13 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonRestart()));
 
         ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()));
+        reload.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
 
-        reload.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
+            }
+        }));
         home.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
 
         Table table = new Table();

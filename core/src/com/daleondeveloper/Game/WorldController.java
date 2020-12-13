@@ -116,6 +116,7 @@ public class WorldController implements Disposable {
         GameCamera gameCamera = gameWorld.getGameCamera();
 
         if(hero.getSensorUp().size() > 0 && !hero.isJump() && !hero.isFall()) {
+            GameSettings.getInstance().deleteSave();
             return true;
         }
         return false;

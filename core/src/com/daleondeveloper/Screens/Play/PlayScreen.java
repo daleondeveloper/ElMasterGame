@@ -1,5 +1,7 @@
 package com.daleondeveloper.Screens.Play;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -10,6 +12,9 @@ import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
 import com.daleondeveloper.Screens.GUI.PauseScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
+import com.daleondeveloper.Screens.ScreenEnum;
+import com.daleondeveloper.Screens.ScreenManager;
+import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
 
 public class PlayScreen extends PlayAbstractScreen{
@@ -148,6 +153,9 @@ public class PlayScreen extends PlayAbstractScreen{
     public void pause() {
         AudioManager.getInstance().pauseMusic();
         doPause();
+        prefs.setHero(gameWorld.getWaterElement());
+        prefs.setBlockController(gameWorld.getBlockController());
+     //   prefs.save();
     }
 
     public void doPause() {

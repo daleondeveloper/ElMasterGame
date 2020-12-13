@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
+import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
@@ -79,7 +80,7 @@ public class Block extends AbstractDynamicObject {
 
         pushImpulse = 10;
         returnCellsPosition = x;
-        returnCellsPosition = y;
+        returnCellsPositionY = y;
 
         //Initial sensor values
         contactLeftBlockList = new HashSet<AbstractGameObject>();
@@ -481,5 +482,13 @@ public class Block extends AbstractDynamicObject {
 
     public void setContactHero(WaterElement contactHero) {
         this.contactHero = contactHero;
+    }
+
+    public float getReturnCellsPosition() {
+        return returnCellsPosition;
+    }
+
+    public float getReturnCellsPositionY() {
+        return returnCellsPositionY;
     }
 }

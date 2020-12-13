@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetWaterElement;
+import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Game.GameCamera;
 import com.daleondeveloper.Game.GameWorld;
@@ -58,7 +59,7 @@ public class WaterElement extends AbstractDynamicObject {
     private float turnImpulse;
     private float pushImpulse;
     private float returnCellsPositionY;
-    private int returnCellsPositionX;
+    private float returnCellsPositionX;
     private FixtureDef fixtureSkill;
     private CircleShape circleShapeSkillFixture;
 
@@ -249,6 +250,15 @@ public class WaterElement extends AbstractDynamicObject {
         currentState = State.DEAD;
     }
 
+    public boolean load(){
+        GameSettings.getInstance().loadHero();
+        body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
+        returnCellsPositionX = GameSettings.getInstance().getHeroX();
+        returnCellsPositionY = GameSettings.getInstance().getHeroY();
+        body.setTransform(returnCellsPositionX,returnCellsPositionY,0);
+        return true;
+    }
+
     @Override
     public void renderDebug(ShapeRenderer shapeRenderer) {
         super.renderDebug(shapeRenderer);
@@ -256,6 +266,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
+        System.out.println(toString());
        body.setGravityScale(10);
             if(currentState != debugState){
                 debugState = currentState;
@@ -338,6 +349,9 @@ public class WaterElement extends AbstractDynamicObject {
             }
             leftReg += 10;
             rightReg += 10;
+        }
+        if(getY() < 0){
+            returnCellsPositionY = 200;
         }
             if(sensorDown.size() > 0){ idle(); }
             if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){
@@ -483,9 +497,28 @@ public class WaterElement extends AbstractDynamicObject {
     public Vector2 getVelocity(){
         return body.getLinearVelocity();
     }
+
+    public float getReturnCellsPositionY() {
+        return returnCellsPositionY;
+    }
+
+    public float getReturnCellsPositionX() {
+        return returnCellsPositionX;
+    }
+
     public boolean isIdle(){return currentState == State.IDLE;}
     public boolean isWalk(){return currentState == State.WALK;}
     public boolean isJump(){return currentState == State.JUMP;}
     public boolean isPush(){return currentState == State.PUSH;}
     public boolean isFall(){return currentState == State.FALL;}
+
+    @Override
+    public String toString() {
+        return "WaterElement{" +
+                ", currentState=" + currentState +
+                ", moveRight=" + moveRight +
+                ", returnCellsPositionY=" + returnCellsPositionY +
+                ", returnCellsPositionX=" + returnCellsPositionX +
+                '}';
+    }
 }

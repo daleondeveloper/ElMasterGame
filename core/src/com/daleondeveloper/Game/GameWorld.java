@@ -11,15 +11,21 @@ import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.*;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 public class GameWorld {
     private static final String TAG = GameWorld.class.getName();
 
     private PlayScreen playScreen;
     private World box2DWorld;
+    private GameSettings gameSettings;
     private int level;
     private GameCamera gameCamera;
     private  boolean moveCamera;
     private boolean pauseCamera;
+    private boolean firstLauch;
 
     private BlockController blockController;
     private PlatformController platformController;
@@ -48,6 +54,7 @@ public class GameWorld {
         gameCamera = new GameCamera();
         moveCamera = false;
         pauseCamera = false;
+        firstLauch = true;
 
         rightButtonPressed = false;
         leftButtonPressed = false;
@@ -59,15 +66,19 @@ public class GameWorld {
         createBackground();
 
         gameObjectToCreate = new Array<AbstractGameObject>();
+
+
+
     }
 
     private void createSprites(){
         //Block(create block factory  to create block)
         blockController = new BlockController(playScreen,this);
+        GameSettings.getInstance().setBlockController(blockController);
         platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new com.daleondeveloper.Sprites.Hero.WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
+        waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
         firstLineBlockChecker = new GameSensor(playScreen,this,45,145,90,1);
 //        blockController.addBlock(5,30);
@@ -113,7 +124,7 @@ public class GameWorld {
         GameSettings prefs = GameSettings.getInstance();
         int backgroundid = prefs.getBackgroundId();
         prefs.setBackgroundId((backgroundid % 5)+1);
-        prefs.save();
+     //   prefs.save();
         switch (backgroundid){
             case 1:
                 assetBackground.getHelp_1();
@@ -136,6 +147,58 @@ public class GameWorld {
         }
     }
 
+    private void loadGames(){
+       waterElement.load();
+       blockController.load();
+       for(Block block : blockController.getArrayBlock()){
+           if(Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*1.1f <= (block.getWidth() + waterElement.getWidth())/2 &&
+           Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*0.95f <= (block.getHeight() + waterElement.getHeight())/2){
+               if(block.getBodyPosition().x - waterElement.getBodyPosition().x >= 0){
+                   block.getContactLeftBlockList().add(waterElement);
+                   waterElement.getSensorRight().add(block);
+               }else {
+                   block.getContactRightBlockList().add(waterElement);
+                   waterElement.getSensorLeft().add(block);
+               }
+           }
+           if(Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*1.1f <= (block.getHeight() + waterElement.getHeight())/2 &&
+                   Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*0.95f <= (block.getWidth() + waterElement.getWidth())/2){
+               if(block.getBodyPosition().y - waterElement.getBodyPosition().y >= 0){
+                   block.getContactDownList().add(waterElement);
+                   waterElement.getSensorUp().add(block);
+               }else{
+                   block.getContactUpList().add(waterElement);
+                   waterElement.getSensorDown().add(block);
+               }
+           }
+       }
+       for (Block blockA : blockController.getArrayBlock()){
+           for(Block blockB : blockController.getArrayBlock()){
+               if(blockA == blockB)continue;
+               if(Math.abs(blockA.getBodyPosition().x - blockB.getBodyPosition().x) * 1.1f <= (blockA.getWidth() + blockB.getWidth())/2 &&
+               Math.abs(blockA.getBodyPosition().y - blockB.getBodyPosition().y) * 0.95f <= (blockA.getHeight() + blockB.getHeight())/2){
+                   if(blockA.getBodyPosition().x - blockB.getBodyPosition().x >= 0){
+                       blockA.getContactLeftBlockList().add(blockB);
+                       blockB.getContactRightBlockList().add(blockA);
+                   }else {
+                       blockA.getContactRightBlockList().add(blockB);
+                       blockB.getContactLeftBlockList().add(blockA);
+                   }
+               }
+               if(Math.abs(blockA.getBodyPosition().y - blockB.getBodyPosition().y) * 1.1f <= (blockA.getHeight() + blockB.getHeight()) &&
+                       Math.abs(blockA.getBodyPosition().x - blockB.getBodyPosition().x) * 0.9f <= (blockA.getWidth() + blockB.getWidth())/2){
+                   if(blockA.getBodyPosition().y - blockB.getBodyPosition().y >= 0){
+                       blockA.getContactDownList().add(blockB);
+                       blockB.getContactUpList().add(blockA);
+                   }else{
+                       blockA.getContactUpList().add(blockB);
+                       blockB.getContactDownList().add(blockA);
+                   }
+               }
+           }
+       }
+    }
+
     public void handleGameObjectsToCreate(){
         while(gameObjectToCreate.size > 0){
             AbstractGameObject  gameObject = gameObjectToCreate.pop();
@@ -147,6 +210,13 @@ public class GameWorld {
     }
 
     public void update(float deltaTime){
+        if(firstLauch){
+            GameSettings.getInstance().load();
+            GameSettings.getInstance().setHero(waterElement);
+            GameSettings.getInstance().setBlockController(blockController);
+            loadGames();
+            firstLauch = false;
+        }
         waterElement.update(deltaTime);
         regionLeft.update(deltaTime);
         regionRight.update(deltaTime);
@@ -178,13 +248,14 @@ public class GameWorld {
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }
-        Array<Block> arrayBlock = blockController.getArrayBlock();
-        for(Block block: arrayBlock){
+        List<Block> arrayBlock = new ArrayList<Block>();
+        for(Block block: blockController.getArrayBlock()){
             block.update(deltaTime);
             if(block.isDisposable()){
-                arrayBlock.removeValue(block,true);
+                arrayBlock.add(block);
             }
         }
+        blockController.getArrayBlock().removeAll(arrayBlock);
     }
 private void updatePlatform(float deltaTime){
         Array<Platform> arrayPlatform = platformController.getPlatforms();

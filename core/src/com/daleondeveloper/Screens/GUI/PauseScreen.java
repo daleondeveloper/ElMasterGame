@@ -18,6 +18,7 @@ import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Screens.ScreenEnum;
+import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
 
@@ -134,7 +135,14 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
                 rateGame();
             }
         }));
-        restart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
+        restart.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                GameSettings.getInstance().deleteSave();
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+
+            }
+        }));
     }
 
     private void setVisible(boolean visible) {

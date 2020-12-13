@@ -1,17 +1,21 @@
 package com.daleondeveloper.Sprites;
 
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BlockController {
     private static final String TAG = BlockController.class.getName();
 
 
-    private Array<Block> arrayBlock ;
+    private List<Block> arrayBlock ;
     private GameWorld gameWorld;
     private PlayScreen playScreen;
 
@@ -20,7 +24,7 @@ public class BlockController {
         this.gameWorld = gameWorld;
         this.playScreen = playScreen;
 
-        arrayBlock = new Array<Block>(10);
+        arrayBlock = new ArrayList<Block>(10);
 
     }
     public boolean addBlock (){
@@ -49,7 +53,14 @@ public class BlockController {
         }
     }
 
-    public Array<Block> getArrayBlock() {
+    public void load(){
+        GameSettings.getInstance().loadBlock();
+        for(Vector2 vec : GameSettings.getInstance().getBlockVector()){
+            addBlock(vec.x,vec.y);
+        }
+    }
+
+    public List<Block> getArrayBlock() {
         return arrayBlock;
     }
 }

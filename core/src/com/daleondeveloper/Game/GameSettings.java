@@ -2,6 +2,16 @@ package com.daleondeveloper.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.math.Vector2;
+import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.BlockController;
+import com.daleondeveloper.Sprites.Hero.WaterElement;
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by AGMCORP on 10/15/2018.
@@ -21,6 +31,7 @@ public class GameSettings {
     // Singleton: unique instance
     private static GameSettings instance;
 
+    private PlayScreen playScreen;
     private int countdownAd; // No need to persist it
     private boolean showHelp; // No need to persist it
     private Preferences prefs;
@@ -28,11 +39,23 @@ public class GameSettings {
     private int backgroundId;
     private boolean audio;
 
+    private WaterElement hero;
+    private float heroX;
+    private float heroY;
+
+    private BlockController blockController;
+    private List<Vector2> blockVector;
+
     // Singleton: prevent instantiation from other classes
     private GameSettings() {
         countdownAd = DEF_COUNT_AD;
         showHelp = true;
         prefs = Gdx.app.getPreferences(SETTINGS);
+        blockController = new BlockController(null,null);
+        heroX = 100;
+        heroY = 170;
+        blockVector = new ArrayList<Vector2>();
+
     }
 
     // Singleton: retrieve instance
@@ -48,11 +71,59 @@ public class GameSettings {
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
     }
+    public void loadHero(){
+        heroX = prefs.getFloat("HERO_POSITION_X");
+        heroY = prefs.getFloat("HERO_POSITION_Y");
+        if(heroX < 40) {
+            heroX = 100;
+        }
+        if(heroY < 140) {
+            heroY = 200;
+        }
+    }
+    public void loadBlock(){
+        for(int i = 0; i < prefs.getInteger("BLOCK_COUNT"); i++){
+            blockVector.add(new Vector2(prefs.getFloat("BLOCK_" + i + "_POSITION_X"),
+                    prefs.getFloat("BLOCK_" + i + "_POSITION_Y")));
+        }
+    }
 
     public void save() {
+        prefs.clear();
+        blockVector.clear();
         prefs.putInteger(HIGH_SCORE, highScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
+        if(hero != null) {
+            if(hero.getBodyPosition().x > 40) {
+                prefs.putFloat("HERO_POSITION_X", hero.getBodyPosition().x);
+            }else {
+                prefs.putInteger("HERO_POSITION_X", 100);
+
+            }
+            if(hero.getBodyPosition().y > 140) {
+                prefs.putFloat("HERO_POSITION_Y", hero.getBodyPosition().y);
+            }else{
+                prefs.putFloat("HERO_POSITION_Y", 170);
+
+            }
+        }
+        if(blockController != null) {
+            prefs.putInteger("BLOCK_COUNT", blockController.getArrayBlock().size());
+            for (int i = 0; i < blockController.getArrayBlock().size(); i++) {
+                prefs.putFloat("BLOCK_" + i + "_POSITION_X", blockController.getArrayBlock().get(i).getBodyPosition().x);
+                prefs.putFloat("BLOCK_" + i + "_POSITION_Y", blockController.getArrayBlock().get(i).getBodyPosition().y);
+            }
+        }
+        prefs.flush();
+    }
+    public void deleteSave(){
+        prefs.clear();
+        blockVector.clear();
+//        prefs.putInteger("BLOCK_COUNT", 0);
+//
+//        prefs.putInteger("HERO_POSITION_X", 100);
+//        prefs.putInteger("HERO_POSITION_Y", 200);
         prefs.flush();
     }
 
@@ -98,5 +169,33 @@ public class GameSettings {
 
     public void setAudio(boolean audio) {
         this.audio = audio;
+    }
+
+    public BlockController getBlockController() {
+        return blockController;
+    }
+
+    public void setBlockController(BlockController blockController) {
+        this.blockController = blockController;
+    }
+
+    public WaterElement getHero() {
+        return hero;
+    }
+
+    public void setHero(WaterElement hero) {
+        this.hero = hero;
+    }
+
+    public float getHeroX() {
+        return heroX;
+    }
+
+    public float getHeroY() {
+        return heroY;
+    }
+
+    public List<Vector2> getBlockVector() {
+        return blockVector;
     }
 }
