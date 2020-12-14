@@ -2,9 +2,6 @@ package com.daleondeveloper.Screens;
 
 import com.daleondeveloper.Game.ElMaster;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
 
 public class ScreenManager {
     private static final String TAG = ScreenManager.class.getName();

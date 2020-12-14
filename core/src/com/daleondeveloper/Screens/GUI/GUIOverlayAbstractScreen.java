@@ -13,10 +13,6 @@ import com.daleondeveloper.Game.ElMaster;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public abstract class GUIOverlayAbstractScreen implements Disposable {
     private static final String TAG = GUIOverlayAbstractScreen.class.getName();
 

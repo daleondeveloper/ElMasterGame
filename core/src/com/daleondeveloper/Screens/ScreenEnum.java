@@ -5,10 +5,6 @@ import com.daleondeveloper.Screens.GUI.MainMenuScreen;
 import com.daleondeveloper.Screens.GUI.SplashScreen;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public enum ScreenEnum {
     SPLASH {
         public AbstractScreen getScreen(ElMaster game, Object... params) {

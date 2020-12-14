@@ -9,11 +9,6 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.daleondeveloper.Screens.AbstractScreen;
 import com.daleondeveloper.Screens.transitions.IScreenTransition;
 
-
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public abstract class DirectedGame implements ApplicationListener {
     private static final String TAG = DirectedGame.class.getName();
 

@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-/**
- * Created by AGMCORP on 10/15/2018.
- */
+
 
 public class GameSettings {
     private static final String TAG = GameSettings.class.getName();
@@ -96,13 +94,13 @@ public class GameSettings {
         prefs.putBoolean(AUDIO, audio);
         if(hero != null) {
             if(hero.getBodyPosition().x > 40) {
-                prefs.putFloat("HERO_POSITION_X", hero.getBodyPosition().x);
+                prefs.putFloat("HERO_POSITION_X", hero.getX());
             }else {
                 prefs.putInteger("HERO_POSITION_X", 100);
 
             }
             if(hero.getBodyPosition().y > 140) {
-                prefs.putFloat("HERO_POSITION_Y", hero.getBodyPosition().y);
+                prefs.putFloat("HERO_POSITION_Y", hero.getY());
             }else{
                 prefs.putFloat("HERO_POSITION_Y", 170);
 

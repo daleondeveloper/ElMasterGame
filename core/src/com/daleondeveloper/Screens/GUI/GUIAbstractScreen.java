@@ -12,10 +12,6 @@ import com.daleondeveloper.Screens.AbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
 
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public abstract class GUIAbstractScreen extends AbstractScreen {
     private static final String TAG = GUIAbstractScreen.class.getName();
 

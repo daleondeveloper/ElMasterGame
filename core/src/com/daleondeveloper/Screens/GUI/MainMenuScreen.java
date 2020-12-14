@@ -23,10 +23,6 @@ import com.daleondeveloper.tools.AudioManager;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public class MainMenuScreen extends GUIAbstractScreen {
     private static final String TAG = MainMenuScreen.class.getName();
 

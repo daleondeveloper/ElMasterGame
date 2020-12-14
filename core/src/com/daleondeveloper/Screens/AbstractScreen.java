@@ -8,10 +8,6 @@ import com.daleondeveloper.Game.ElMaster;
 //import uy.com.agm.gamefour.admob.IAdsController;
 //import uy.com.agm.gamefour.playservices.IPlayServices;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public abstract class AbstractScreen implements Screen {
     private static final String TAG = AbstractScreen.class.getName();
 

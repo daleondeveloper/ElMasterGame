@@ -3,12 +3,6 @@ package com.daleondeveloper.Assets.Audio.music;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 
-import com.daleondeveloper.Assets.Assets;
-
-/**
- * Created by AGMCORP on 18/9/2018.
- */
-
 public class AssetMusic {
     private static final String TAG = AssetMusic.class.getName();
 

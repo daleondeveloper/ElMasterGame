@@ -1,9 +1,5 @@
 package com.daleondeveloper.Game;
 
-/**
- * Created by AGMCORP on 19/9/2018.
- */
-
 public class DebugConstants {
     // Master variable: turns debug mode on or off
     public static final boolean TURN_ON_DEBUG = false;

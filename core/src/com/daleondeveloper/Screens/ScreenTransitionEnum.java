@@ -3,9 +3,6 @@ package com.daleondeveloper.Screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.daleondeveloper.Screens.transitions.*;
-/**
- * Created by AGMCORP on 17/9/2018.
- */
 
 public enum ScreenTransitionEnum {
     COLOR_FADE_WHITE {

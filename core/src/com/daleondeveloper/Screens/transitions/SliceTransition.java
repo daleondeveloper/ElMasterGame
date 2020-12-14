@@ -5,10 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.utils.Array;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public class SliceTransition implements IScreenTransition {
     private static final String TAG = SliceTransition.class.getName();
 

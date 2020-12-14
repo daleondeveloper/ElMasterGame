@@ -6,10 +6,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.daleondeveloper.Screens.AbstractScreen;
 
-/**
- * Created by AGMCORP on 21/9/2018.
- */
-
 public class WorldRenderer {
     private static final String TAG = WorldRenderer.class.getName();
 

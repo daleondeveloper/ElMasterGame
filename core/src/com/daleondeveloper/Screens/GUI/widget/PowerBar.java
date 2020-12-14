@@ -9,9 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-/**
- * Created by AGMCORP on 12/10/2018.
- */
 
 public class PowerBar extends ProgressBar {
     private static final String TAG = PowerBar.class.getName();

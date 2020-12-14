@@ -7,10 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-/**
- * Created by AGMCORP on 18/9/2018.
- */
-
 public class AnimatedActor extends Actor {
     private static final String TAG = AnimatedActor.class.getName();
 

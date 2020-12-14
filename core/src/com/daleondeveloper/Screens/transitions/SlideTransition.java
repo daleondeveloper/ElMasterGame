@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 
-/**
- * Created by AGMCORP on 17/9/2018.
- */
 public class SlideTransition implements IScreenTransition {
     private static final String TAG = SlideTransition.class.getName();
 

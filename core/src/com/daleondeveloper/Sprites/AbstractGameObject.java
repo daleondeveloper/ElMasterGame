@@ -8,10 +8,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by AGMCORP on 19/9/2018.
- */
-
 public abstract class AbstractGameObject extends Sprite {
 
     protected Set<AbstractGameObject> fixOnContact;

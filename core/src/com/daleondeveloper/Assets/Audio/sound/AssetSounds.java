@@ -5,12 +5,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 
-import com.daleondeveloper.Assets.Assets;
-
-/**
- * Created by AGMCORP on 18/9/2018.
- */
-
 public class AssetSounds {
     private static final String TAG = AssetSounds.class.getName();
 

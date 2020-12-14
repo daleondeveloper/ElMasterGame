@@ -11,11 +11,6 @@ import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 
-
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public class SplashScreen extends GUIAbstractScreen {
     private static final String TAG = SplashScreen.class.getName();
 

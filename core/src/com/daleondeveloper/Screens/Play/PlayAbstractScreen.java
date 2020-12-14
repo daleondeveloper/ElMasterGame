@@ -3,11 +3,6 @@ package com.daleondeveloper.Screens.Play;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.AbstractScreen;
 
-
-/**
- * Created by AGMCORP on 17/9/2018.
- */
-
 public abstract class PlayAbstractScreen extends AbstractScreen {
     private static final String TAG = PlayAbstractScreen.class.getName();
 

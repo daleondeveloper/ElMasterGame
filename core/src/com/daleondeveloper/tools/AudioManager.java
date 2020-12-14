@@ -4,11 +4,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.daleondeveloper.Game.GameSettings;
 
-
-/**
- * Created by AGMCORP on 10/21/2018.
- */
-
 public class AudioManager {
     private static final String TAG = AudioManager.class.getName();
 

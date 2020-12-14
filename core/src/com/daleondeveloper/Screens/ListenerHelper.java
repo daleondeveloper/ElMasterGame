@@ -5,9 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.tools.AudioManager;
 
-/**
- * Created by AGMCORP on 10/14/2018.
- */
 
 public class ListenerHelper {
     private static final String TAG = ListenerHelper.class.getName();

@@ -5,11 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Disposable;
 
-
-/**
- * Created by AGMCORP on 18/9/2018.
- */
-
 public class AssetFonts implements Disposable {
     private static final String TAG = AssetFonts.class.getName();
 
