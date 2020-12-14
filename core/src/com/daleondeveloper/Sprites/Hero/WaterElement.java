@@ -253,8 +253,8 @@ public class WaterElement extends AbstractDynamicObject {
     public boolean load(){
         GameSettings.getInstance().loadHero();
         body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
-        returnCellsPositionX = GameSettings.getInstance().getHeroX();
-        returnCellsPositionY = GameSettings.getInstance().getHeroY();
+        returnCellsPositionX = GameSettings.getInstance().getHeroX() + getWidth()/2;
+        returnCellsPositionY = GameSettings.getInstance().getHeroY() + getHeight()/2;
         body.setTransform(returnCellsPositionX,returnCellsPositionY,0);
         return true;
     }
@@ -373,6 +373,9 @@ public class WaterElement extends AbstractDynamicObject {
                 idle();
                 return;
             }
+            if(sensorDown.size() == 0){
+                fall();
+            }
         body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
 
         if(moveRight && sensorRight.size() > 0){
@@ -414,10 +417,6 @@ public class WaterElement extends AbstractDynamicObject {
         if(sensorDown.size() < 1){
                 fall();
             }
-//            if((sensorLeft.size() > 0 && body.getLinearVelocity().x < 0 ) ||
-//                    (sensorRight.size() > 0 && body.getLinearVelocity().x > 0)){
-//                fall();
-//            }
             if(!gameWorld.isRightButtonPressed() && !gameWorld.isLeftButtonPressed()){
                 fall();
             }
@@ -429,6 +428,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
     private void stateDead(float deltaTime){
             gameWorld.destroyBody(body);
+            body = null;
             currentState = State.DISPOSE;
         }
 

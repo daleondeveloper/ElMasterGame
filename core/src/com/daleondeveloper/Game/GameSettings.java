@@ -11,9 +11,6 @@ import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
-
-
 
 public class GameSettings {
     private static final String TAG = GameSettings.class.getName();
@@ -109,8 +106,8 @@ public class GameSettings {
         if(blockController != null) {
             prefs.putInteger("BLOCK_COUNT", blockController.getArrayBlock().size());
             for (int i = 0; i < blockController.getArrayBlock().size(); i++) {
-                prefs.putFloat("BLOCK_" + i + "_POSITION_X", blockController.getArrayBlock().get(i).getBodyPosition().x);
-                prefs.putFloat("BLOCK_" + i + "_POSITION_Y", blockController.getArrayBlock().get(i).getBodyPosition().y);
+                prefs.putFloat("BLOCK_" + i + "_POSITION_X", blockController.getArrayBlock().get(i).getX());
+                prefs.putFloat("BLOCK_" + i + "_POSITION_Y", blockController.getArrayBlock().get(i).getY());
             }
         }
         prefs.flush();

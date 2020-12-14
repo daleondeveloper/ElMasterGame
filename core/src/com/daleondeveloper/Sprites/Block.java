@@ -24,7 +24,8 @@ import java.util.Set;
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
-    private static final float FALL_VELOCITY =  -100;
+
+    private static float fall_velocity = -50;
 
     private enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
@@ -116,7 +117,7 @@ public class Block extends AbstractDynamicObject {
         body =gameWorld.createBody(blockDef);
         body.setFixedRotation(true);
         body.setGravityScale(1);
-        body.setLinearVelocity(body.getLinearVelocity().x,FALL_VELOCITY);
+        body.setLinearVelocity(body.getLinearVelocity().x,fall_velocity);
 
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
@@ -278,10 +279,10 @@ public class Block extends AbstractDynamicObject {
     private void statePush(float deltaTime){
         //Setting a fixed value for the X coordinate
         float x = body.getPosition().x;
-        int leftReg = 44,rightReg = 46;
+        int leftReg = 40,rightReg = 50;
         for(int i = 0; i < 12; i++){
-            if(x > leftReg && x < rightReg){
-                returnCellsPosition = (leftReg + rightReg)/2;
+            if(x >= leftReg && x < rightReg){
+                returnCellsPosition = (rightReg + leftReg) >> 1;
                 break;
             }
             leftReg += 10;
@@ -317,7 +318,7 @@ public class Block extends AbstractDynamicObject {
         int leftReg = 144,rightReg = 146;
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
-                returnCellsPositionY = (leftReg + rightReg)/2;
+                returnCellsPositionY = (leftReg + rightReg) >> 1;
                 break;
             }
             leftReg += 10;
@@ -329,7 +330,7 @@ public class Block extends AbstractDynamicObject {
         if(contactDownList.size() > 0){stopFall();}
 
         //Change fall velocity
-        body.setLinearVelocity(0,FALL_VELOCITY);
+        body.setLinearVelocity(0,fall_velocity);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -355,6 +356,7 @@ public class Block extends AbstractDynamicObject {
         }
 
         gameWorld.destroyBody(body);
+            body = null;
         currentState = State.DISPOSE;
     }
     private void stateDead(float deltaTime){
@@ -490,5 +492,13 @@ public class Block extends AbstractDynamicObject {
 
     public float getReturnCellsPositionY() {
         return returnCellsPositionY;
+    }
+
+    public static float getFall_velocity() {
+        return fall_velocity;
+    }
+
+    public static void setFall_velocity(float fall_velocity) {
+        Block.fall_velocity = fall_velocity;
     }
 }

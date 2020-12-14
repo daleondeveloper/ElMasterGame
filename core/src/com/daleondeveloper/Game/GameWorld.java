@@ -150,28 +150,28 @@ public class GameWorld {
     private void loadGames(){
        waterElement.load();
        blockController.load();
-       for(Block block : blockController.getArrayBlock()){
-           if(Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*1.1f <= (block.getWidth() + waterElement.getWidth())/2 &&
-           Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*0.95f <= (block.getHeight() + waterElement.getHeight())/2){
-               if(block.getBodyPosition().x - waterElement.getBodyPosition().x >= 0){
-                   block.getContactLeftBlockList().add(waterElement);
-                   waterElement.getSensorRight().add(block);
-               }else {
-                   block.getContactRightBlockList().add(waterElement);
-                   waterElement.getSensorLeft().add(block);
-               }
-           }
-           if(Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*1.1f <= (block.getHeight() + waterElement.getHeight())/2 &&
-                   Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*0.95f <= (block.getWidth() + waterElement.getWidth())/2){
-               if(block.getBodyPosition().y - waterElement.getBodyPosition().y >= 0){
-                   block.getContactDownList().add(waterElement);
-                   waterElement.getSensorUp().add(block);
-               }else{
-                   block.getContactUpList().add(waterElement);
-                   waterElement.getSensorDown().add(block);
-               }
-           }
-       }
+//       for(Block block : blockController.getArrayBlock()){
+//           if(Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*1.1f <= (block.getWidth() + waterElement.getWidth())/2 &&
+//           Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*0.95f <= (block.getHeight() + waterElement.getHeight())/2){
+//               if(block.getBodyPosition().x - waterElement.getBodyPosition().x >= 0){
+//                   block.getContactLeftBlockList().add(waterElement);
+//                   waterElement.getSensorRight().add(block);
+//               }else {
+//                   block.getContactRightBlockList().add(waterElement);
+//                   waterElement.getSensorLeft().add(block);
+//               }
+//           }
+//           if(Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*1.1f <= (block.getHeight() + waterElement.getHeight())/2 &&
+//                   Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*0.95f <= (block.getWidth() + waterElement.getWidth())/2){
+//               if(block.getBodyPosition().y - waterElement.getBodyPosition().y >= 0){
+//                   block.getContactDownList().add(waterElement);
+//                   waterElement.getSensorUp().add(block);
+//               }else{
+//                   block.getContactUpList().add(waterElement);
+//                   waterElement.getSensorDown().add(block);
+//               }
+//           }
+//       }
        for (Block blockA : blockController.getArrayBlock()){
            for(Block blockB : blockController.getArrayBlock()){
                if(blockA == blockB)continue;
