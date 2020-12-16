@@ -37,8 +37,8 @@ public class WorldContactListner implements ContactListener {
         Fixture fb = contact.getFixtureB();
 
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
-        System.out.println("Contact Begin");
-        System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
+     //   System.out.println("Contact Begin");
+    //    System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
 
         AbstractGameObject abstractGameObject = (AbstractGameObject)fa.getUserData();
         abstractGameObject.addFixToFixOnContact((AbstractGameObject)fb.getUserData());
@@ -259,7 +259,7 @@ public class WorldContactListner implements ContactListener {
 //        abstractGameObject.removeFixOnContact(fa);
 
         int collisionDef = fa.getFilterData().categoryBits | fb.getFilterData().categoryBits;
-        System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
+      //  System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
 
         switch (collisionDef) {
 //            case CATEGORY_BLOCK_BIT :
@@ -379,12 +379,12 @@ public class WorldContactListner implements ContactListener {
             case CATEGORY_BLOCK_SENSOR_UP_BIT | CATEGORY_BLOCK_SENSOR_DOWN_BIT : {
                 Block blockDown = blockEndContactDown(fa,fb);
                 Block blockUp = blockEndContactUp(fa,fb);
+                System.out.println(blockDown.toString());
 
             }break;
             case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
                 Block blockRight = blockEndContactRight(fa,fb);
-                Block blockLeft = blockEndContactLeft(fa,fb);
-            }break;
+                Block blockLeft = blockEndContactLeft(fa,fb); }break;
 
             //Кінець контактів блоків з регіонами
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_REGION_BIT : {
@@ -629,27 +629,27 @@ public class WorldContactListner implements ContactListener {
     //Перевірка чи один з Fixture являється блоком , якщо так повернення його і деактивація відповідного сенсору
     public Block blockEndContactDown(Fixture fa,Fixture  fb){
         Block block = null;
-        Fixture fixture = null;
+        Block fixture = null;
         Object objFa = fa.getUserData();
         Object objFb = fb.getUserData();
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().y > fb.getBody().getPosition().y){
                 block = (Block)objFa;
-                fixture = fb;
+                fixture = (Block)objFb;
             }else{
                 block = (Block)objFb;
-                fixture = fa;
+                fixture = (Block)objFa;
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
-            fixture = fb;
+            fixture = (Block)objFb;
         }else if(objFb instanceof Block){
             block = (Block)objFb;
-            fixture = fa;
+            fixture = (Block)objFa;
         }
         if(block !=null) {
             block.setSensorDown(false);
-            block.getContactDownList().remove((AbstractGameObject)fixture.getUserData());
+            block.getContactDownList().remove(fixture);
         }
         return block;
     }

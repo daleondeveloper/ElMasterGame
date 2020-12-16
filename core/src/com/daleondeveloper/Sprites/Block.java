@@ -258,7 +258,7 @@ public class Block extends AbstractDynamicObject {
             stateTime = 0;
             Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
             for(AbstractGameObject obj : contactDownList){
-                if(Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2)) * 1.01f > (getWidth() + obj.getWidth())/2 ||
+                if(Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2)) * 0.9f > (getWidth() + obj.getWidth())/2 ||
                         Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2)) * 0.9f > (getHeight() + obj.getHeight())/2){
                    objToDel.add(obj);
                 }
@@ -279,7 +279,7 @@ public class Block extends AbstractDynamicObject {
     private void statePush(float deltaTime){
         //Setting a fixed value for the X coordinate
         float x = body.getPosition().x;
-        int leftReg = 40,rightReg = 50;
+        int leftReg = 44,rightReg = 46;
         for(int i = 0; i < 12; i++){
             if(x >= leftReg && x < rightReg){
                 returnCellsPosition = (rightReg + leftReg) >> 1;
@@ -295,15 +295,18 @@ public class Block extends AbstractDynamicObject {
             fall(); return;}
 
         //Set push velocity
-        if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15){
-            if(contactHero.getX() - getX() > 1){
+        if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15) {
+            if (contactHero.getX() - getX() > 1) {
                 body.setLinearVelocity(-pushImpulse, body.getLinearVelocity().y);
-            }else if(contactHero.getX() - getX() < -1){
-                body.setLinearVelocity(pushImpulse , body.getLinearVelocity().y);
+            } else if (contactHero.getX() - getX() < -1) {
+                body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
             }
-
-        }else{ idle();return;}
+        }
+//        }else{ idle();return;}
         //body.setLinearVelocity(1, body.getLinearVelocity().y);
+
+        //Setting a fixed block position may cause the contacts to break
+        body.setTransform(body.getPosition().x,returnCellsPositionY,0);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);

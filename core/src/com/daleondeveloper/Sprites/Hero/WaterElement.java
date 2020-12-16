@@ -266,13 +266,14 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        System.out.println(toString());
-       body.setGravityScale(10);
+        if(body != null) {
+            body.setGravityScale(10);
+        }
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
             }
-        System.out.println("Down : " + sensorDown.size() + "// Up : " + sensorUp.size() + "//Left : " + sensorLeft.size() + "//Right : " + sensorRight.size());
+       // System.out.println("Down : " + sensorDown.size() + "// Up : " + sensorUp.size() + "//Left : " + sensorLeft.size() + "//Right : " + sensorRight.size());
           // checkContacts();
         switch (currentState){
             case IDLE:
@@ -296,7 +297,7 @@ public class WaterElement extends AbstractDynamicObject {
             case DISPOSE:
                 break;
         }
-            if(sensorDown.size() == 0){
+            if(body != null && sensorDown.size() == 0 ){
                 body.setGravityScale(10);
             }
 
@@ -368,12 +369,11 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void statePush(float deltaTime){
-        System.out.println("deltaTime = " + stateTime);
             if(turnImpulse == 0){
                 idle();
                 return;
             }
-            if(sensorDown.size() == 0){
+            if(sensorDown.size() == 0 && sensorLeft.size() == 0 && sensorRight.size() == 0){
                 fall();
             }
         body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
