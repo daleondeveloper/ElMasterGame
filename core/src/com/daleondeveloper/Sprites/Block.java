@@ -156,7 +156,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.3f, new Vector2(0,(-getHeight()/2)),0);
+        polygonShape.setAsBox((getWidth()/2)*0.9f,0.3f, new Vector2(0,(-getHeight()/2)),0);
 //        polygonShape.setAsBox(10,10, new Vector2(getWidth()/2,getHeight()/2),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
@@ -166,7 +166,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox((getWidth()/2)*0.95f,0.3f, new Vector2(0,(getHeight()/2)),0);
+        polygonShape.setAsBox((getWidth()/2)*0.9f,0.3f, new Vector2(0,(getHeight()/2)),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -207,6 +207,9 @@ public class Block extends AbstractDynamicObject {
     @Override
     public void update(float deltaTime) {
         checkTime += deltaTime;
+        if(checkTime > 0.25f){
+            checkContacts();
+        }
 
         if(contactDownList.size() == 0){
             sensorDown = false;
@@ -248,23 +251,113 @@ public class Block extends AbstractDynamicObject {
         }
 
     }
+    private void checkContacts(){
+        Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
+
+        for(AbstractGameObject obj : contactDownList){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.99f > widthDist ||
+                    yDist * 0.99f  > heightDist ||
+                    centerDist > centerWidthHeight
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        contactDownList.removeAll(objToDel);
+
+        objToDel.clear();
+        for(AbstractGameObject obj : contactUpList){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.99f > widthDist ||
+                    yDist * 0.99f  > heightDist ||
+                    centerDist * 0.99f > centerWidthHeight
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        contactUpList.removeAll(objToDel);
+
+        objToDel.clear();
+        for(AbstractGameObject obj : contactRightBlockList){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.99f > widthDist ||
+                    yDist * 0.99f  > heightDist ||
+                    centerDist * 0.99f > centerWidthHeight
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        contactRightBlockList.removeAll(objToDel);
+
+        objToDel.clear();
+        for(AbstractGameObject obj : contactLeftBlockList){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.99f > widthDist ||
+                    yDist * 0.99f  > heightDist ||
+                    centerDist * 0.99f > centerWidthHeight
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        contactLeftBlockList.removeAll(objToDel);
+
+    }
     private void stateIdle(float deltaTime){
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.StaticBody);
-        if(!sensorDown){fall();return;}
 
         //Check the correctness of the list of the lower sensor every 1 second
-        if(stateTime > 1){
+        if(stateTime > 100){
             stateTime = 0;
             Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
-            for(AbstractGameObject obj : contactDownList){
-                if(Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2)) * 0.9f > (getWidth() + obj.getWidth())/2 ||
-                        Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2)) * 0.9f > (getHeight() + obj.getHeight())/2){
-                   objToDel.add(obj);
-                }
-            }
+
+//            for(AbstractGameObject obj : contactDownList){
+//                float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
+//                float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+//                float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+//
+//                float widthDist = (getWidth() + obj.getWidth())/2 ;
+//                float heightDist = (getHeight() + obj.getHeight())/2;
+//                float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+//                if(xDist * 0.99f > widthDist ||
+//                        yDist * 0.99f  > heightDist ||
+//                        centerDist * 0.99f > centerWidthHeight
+//
+//                ){
+//                   objToDel.add(obj);
+//                }
+//            }
             contactDownList.removeAll(objToDel);
         }
+        if(contactDownList.size() == 0){fall();return;}
 
         //Setting a fixed block position may cause the contacts to break
         body.setTransform(returnCellsPosition,returnCellsPositionY,0);
