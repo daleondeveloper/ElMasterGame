@@ -1,124 +1,89 @@
 gui.png
-size: 1984, 1074
+size: 954, 1377
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-backgroundGates
+button/button_help
   rotate: false
-  xy: 1429, 233
-  size: 420, 840
-  orig: 420, 840
+  xy: 153, 153
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
-background
+button/button_highscore
   rotate: false
-  xy: 403, 233
-  size: 1024, 576
-  orig: 1024, 576
+  xy: 457, 153
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
-button_help
+button/button_jump
   rotate: false
-  xy: 1200, 1
-  size: 75, 77
-  orig: 75, 83
-  offset: 0, 3
-  index: -1
-button_highScore
-  rotate: false
-  xy: 1123, 1
-  size: 75, 77
-  orig: 75, 81
-  offset: 0, 2
-  index: -1
-button_settings
-  rotate: false
-  xy: 894, 1
-  size: 72, 75
-  orig: 75, 75
-  offset: 2, 0
-  index: -1
-button_start
-  rotate: false
-  xy: 1431, 1
-  size: 130, 130
-  orig: 420, 840
-  offset: 145, 355
-  index: -1
-buttonPanel
-  rotate: false
-  xy: 1563, 1
-  size: 420, 230
-  orig: 420, 230
+  xy: 305, 153
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
-jumpButton
+button/button_left
   rotate: false
-  xy: 817, 1
-  size: 75, 74
-  orig: 75, 74
+  xy: 571, 1
+  size: 126, 146
+  orig: 126, 146
   offset: 0, 0
   index: -1
-leftButton
+button/button_pause
   rotate: false
-  xy: 1354, 1
-  size: 75, 88
-  orig: 75, 88
+  xy: 609, 153
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
-mainMenuButton
+button/button_push
   rotate: false
-  xy: 613, 1
-  size: 202, 51
-  orig: 219, 52
-  offset: 7, 1
-  index: -1
-pauseButton
-  rotate: false
-  xy: 968, 1
-  size: 75, 75
-  orig: 75, 75
+  xy: 1, 153
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
-pauseWindow
+button/button_right
   rotate: false
-  xy: 1, 233
-  size: 400, 396
-  orig: 400, 396
+  xy: 443, 1
+  size: 126, 146
+  orig: 126, 146
   offset: 0, 0
   index: -1
-pushButton
+button/button_settings
   rotate: false
-  xy: 1045, 1
-  size: 76, 76
-  orig: 79, 78
-  offset: 0, 2
+  xy: 699, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
   index: -1
-restartButton
+button/button_start
+  rotate: false
+  xy: 453, 305
+  size: 258, 256
+  orig: 258, 256
+  offset: 0, 0
+  index: -1
+panel/button_panel
   rotate: false
   xy: 1, 1
-  size: 202, 51
-  orig: 219, 52
-  offset: 7, 1
-  index: -1
-resumeButton
-  rotate: false
-  xy: 205, 1
-  size: 202, 51
-  orig: 219, 52
-  offset: 7, 1
-  index: -1
-rughtButton
-  rotate: false
-  xy: 1277, 1
-  size: 75, 88
-  orig: 75, 88
+  size: 440, 100
+  orig: 440, 100
   offset: 0, 0
   index: -1
-settingsButton
+panel/game_panel
   rotate: false
-  xy: 409, 1
-  size: 202, 51
-  orig: 219, 52
-  offset: 7, 1
+  xy: 1, 305
+  size: 450, 254
+  orig: 450, 260
+  offset: 0, 6
+  index: -1
+panel/menu_panel
+  rotate: false
+  xy: 1, 563
+  size: 952, 813
+  orig: 952, 813
+  offset: 0, 0
   index: -1

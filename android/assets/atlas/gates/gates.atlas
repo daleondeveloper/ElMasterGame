@@ -1,0 +1,373 @@
+gates-0.png
+size: 973, 877
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bowl/left/left_bowl
+  rotate: false
+  xy: 849, 445
+  size: 123, 196
+  orig: 1260, 840
+  offset: 394, 454
+  index: 3
+bowl/left/left_bowl
+  rotate: false
+  xy: 501, 643
+  size: 123, 227
+  orig: 1260, 840
+  offset: 394, 454
+  index: 6
+bowl/left/left_bowl
+  rotate: false
+  xy: 751, 643
+  size: 123, 233
+  orig: 1260, 840
+  offset: 394, 454
+  index: 7
+bowl/right/right_bowl
+  rotate: false
+  xy: 599, 445
+  size: 123, 189
+  orig: 1260, 840
+  offset: 728, 454
+  index: 1
+bowl/right/right_bowl
+  rotate: false
+  xy: 126, 643
+  size: 123, 219
+  orig: 1260, 840
+  offset: 728, 454
+  index: 2
+bowl/right/right_bowl
+  rotate: false
+  xy: 724, 445
+  size: 123, 194
+  orig: 1260, 840
+  offset: 728, 454
+  index: 3
+bowl/right/right_bowl
+  rotate: false
+  xy: 376, 643
+  size: 123, 224
+  orig: 1260, 840
+  offset: 728, 454
+  index: 4
+bowl/right/right_bowl
+  rotate: false
+  xy: 1, 643
+  size: 123, 213
+  orig: 1260, 840
+  offset: 728, 454
+  index: 5
+bowl/right/right_bowl
+  rotate: false
+  xy: 251, 643
+  size: 123, 223
+  orig: 1260, 840
+  offset: 728, 454
+  index: 6
+bowl/right/right_bowl
+  rotate: false
+  xy: 626, 643
+  size: 123, 232
+  orig: 1260, 840
+  offset: 728, 454
+  index: 7
+dragon/black/black_dragon_head
+  rotate: false
+  xy: 1, 261
+  size: 182, 170
+  orig: 1260, 840
+  offset: 540, 658
+  index: -1
+dragon/black/black_dragon_left_hand_sphere
+  rotate: false
+  xy: 113, 89
+  size: 110, 87
+  orig: 1260, 840
+  offset: 416, 708
+  index: -1
+dragon/black/black_dragon_right_hand_sphere
+  rotate: false
+  xy: 577, 1
+  size: 93, 84
+  orig: 1260, 840
+  offset: 731, 712
+  index: -1
+dragon/blue/blue_dragon_head
+  rotate: false
+  xy: 442, 89
+  size: 177, 166
+  orig: 1260, 840
+  offset: 542, 660
+  index: -1
+dragon/blue/blue_dragon_left_hand_sphere
+  rotate: false
+  xy: 468, 1
+  size: 107, 84
+  orig: 1260, 840
+  offset: 414, 711
+  index: -1
+dragon/blue/blue_dragon_right_hand_sphere
+  rotate: false
+  xy: 672, 1
+  size: 96, 85
+  orig: 1260, 840
+  offset: 726, 711
+  index: -1
+dragon/red/red_dragon_head
+  rotate: false
+  xy: 185, 261
+  size: 182, 170
+  orig: 1260, 840
+  offset: 540, 658
+  index: -1
+dragon/red/red_dragon_left_hand_sphere
+  rotate: false
+  xy: 338, 89
+  size: 102, 89
+  orig: 1260, 840
+  offset: 424, 706
+  index: -1
+dragon/red/red_dragon_right_hand_sphere
+  rotate: false
+  xy: 770, 1
+  size: 104, 86
+  orig: 1260, 840
+  offset: 720, 710
+  index: -1
+dragon/yellow/yellow_dragon_head
+  rotate: false
+  xy: 621, 89
+  size: 182, 170
+  orig: 1260, 840
+  offset: 540, 658
+  index: -1
+dragon/yellow/yellow_dragon_left_hand_sphere
+  rotate: false
+  xy: 1, 89
+  size: 110, 86
+  orig: 1260, 840
+  offset: 414, 709
+  index: -1
+dragon/yellow/yellow_dragon_right_hand_sphere
+  rotate: false
+  xy: 225, 89
+  size: 111, 88
+  orig: 1260, 840
+  offset: 713, 708
+  index: -1
+eyes_backlight/left/backlight_dragon_left
+  rotate: false
+  xy: 333, 1
+  size: 38, 38
+  orig: 1260, 840
+  offset: 491, 622
+  index: 1
+eyes_backlight/left/backlight_dragon_left
+  rotate: false
+  xy: 93, 1
+  size: 30, 30
+  orig: 1260, 840
+  offset: 497, 626
+  index: 2
+eyes_backlight/left/backlight_dragon_left
+  rotate: false
+  xy: 1, 1
+  size: 28, 28
+  orig: 1260, 840
+  offset: 498, 627
+  index: 3
+eyes_backlight/main/backlight_dragon_main
+  rotate: false
+  xy: 373, 1
+  size: 93, 44
+  orig: 1260, 840
+  offset: 583, 725
+  index: 1
+eyes_backlight/main/backlight_dragon_main
+  rotate: false
+  xy: 246, 1
+  size: 85, 35
+  orig: 1260, 840
+  offset: 587, 729
+  index: 2
+eyes_backlight/main/backlight_dragon_main
+  rotate: false
+  xy: 125, 1
+  size: 83, 33
+  orig: 1260, 840
+  offset: 588, 730
+  index: 3
+eyes_backlight/right/backlight_dragon_right
+  rotate: false
+  xy: 210, 1
+  size: 34, 33
+  orig: 1260, 840
+  offset: 727, 624
+  index: 1
+eyes_backlight/right/backlight_dragon_right
+  rotate: false
+  xy: 61, 1
+  size: 30, 30
+  orig: 1260, 840
+  offset: 727, 626
+  index: 2
+eyes_backlight/right/backlight_dragon_right
+  rotate: false
+  xy: 31, 1
+  size: 28, 28
+  orig: 1260, 840
+  offset: 728, 627
+  index: 3
+portal/portal
+  rotate: false
+  xy: 369, 261
+  size: 297, 178
+  orig: 1260, 840
+  offset: 474, 662
+  index: 1
+portal/portal
+  rotate: false
+  xy: 1, 445
+  size: 297, 182
+  orig: 1260, 840
+  offset: 474, 658
+  index: 2
+portal/portal
+  rotate: false
+  xy: 668, 261
+  size: 297, 182
+  orig: 1260, 840
+  offset: 474, 658
+  index: 3
+portal/portal
+  rotate: false
+  xy: 300, 445
+  size: 297, 182
+  orig: 1260, 840
+  offset: 474, 658
+  index: 4
+
+gates-1.png
+size: 924, 932
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+open/gate_open
+  rotate: false
+  xy: 1, 1
+  size: 223, 370
+  orig: 1260, 840
+  offset: 515, 316
+  index: 1
+open/gate_open
+  rotate: false
+  xy: 226, 1
+  size: 224, 374
+  orig: 1260, 840
+  offset: 516, 316
+  index: 2
+open/gate_open
+  rotate: false
+  xy: 452, 1
+  size: 231, 372
+  orig: 1260, 840
+  offset: 514, 316
+  index: 3
+open/gate_open
+  rotate: false
+  xy: 685, 1
+  size: 238, 370
+  orig: 1260, 840
+  offset: 510, 316
+  index: 4
+open/gate_open
+  rotate: false
+  xy: 1, 377
+  size: 247, 369
+  orig: 1260, 840
+  offset: 504, 316
+  index: 5
+open/gate_open
+  rotate: false
+  xy: 250, 377
+  size: 252, 369
+  orig: 1260, 840
+  offset: 501, 316
+  index: 6
+open/gate_open
+  rotate: false
+  xy: 504, 377
+  size: 254, 370
+  orig: 1260, 840
+  offset: 499, 316
+  index: 7
+portal/portal
+  rotate: false
+  xy: 1, 749
+  size: 301, 182
+  orig: 1260, 840
+  offset: 474, 658
+  index: 5
+portal/portal
+  rotate: false
+  xy: 304, 749
+  size: 301, 180
+  orig: 1260, 840
+  offset: 474, 660
+  index: 6
+portal/portal
+  rotate: false
+  xy: 607, 749
+  size: 301, 180
+  orig: 1260, 840
+  offset: 474, 660
+  index: 7
+
+gates-2.png
+size: 840, 452
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bowl/left/left_bowl
+  rotate: false
+  xy: 1, 1
+  size: 418, 224
+  orig: 1260, 840
+  offset: 394, 454
+  index: 1
+bowl/left/left_bowl
+  rotate: false
+  xy: 421, 1
+  size: 418, 224
+  orig: 1260, 840
+  offset: 394, 454
+  index: 2
+bowl/left/left_bowl
+  rotate: false
+  xy: 1, 227
+  size: 418, 224
+  orig: 1260, 840
+  offset: 394, 454
+  index: 4
+bowl/left/left_bowl
+  rotate: false
+  xy: 421, 227
+  size: 416, 224
+  orig: 1260, 840
+  offset: 394, 454
+  index: 5
+
+gates-3.png
+size: 627, 739
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+gates_stairs_colum&dragon
+  rotate: false
+  xy: 1, 1
+  size: 625, 737
+  orig: 1260, 840
+  offset: 317, 0
+  index: -1

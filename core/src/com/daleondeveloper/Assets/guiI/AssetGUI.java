@@ -9,53 +9,37 @@ import javax.xml.soap.Text;
 public class AssetGUI {
     private static final String TAG = AssetGUI.class.getName();
 
-    private TextureRegion buttonStart;
+    //private TextureRegion buttonStart;
+
     private TextureRegion buttonHelp;
     private TextureRegion buttonHighScore;
     private TextureRegion buttonSettings;
     private TextureRegion buttonPause;
-    private TextureRegion pauseButtonSettings;
-    private TextureRegion pauseButtonResume;
-    private TextureRegion pauseButtonMainMenu;
-    private TextureRegion pauseButtonRestart;
-    private TextureRegion pauseWindow;
-    private TextureRegion gameButtonLeft;
-    private TextureRegion gameButtonRight;
-    private TextureRegion gameButtonJump;
-    private TextureRegion gameButtonPush;
+    private TextureRegion buttonStart;
+    private TextureRegion buttonLeft;
+    private TextureRegion buttonRight;
+    private TextureRegion buttonJump;
+    private TextureRegion buttonPush;
     private TextureRegion gameWindow;
-    private TextureRegion background;
-
-    private TextureRegion backgroundGates;
-
-
+    private TextureRegion pauseWindow;
+    private TextureRegion buttonForPauseWindow;
 
     public AssetGUI(TextureAtlas atlasGUI){
         Array<TextureAtlas.AtlasRegion> regions;
 
-        background = atlasGUI.findRegion("background");
-        buttonStart = atlasGUI.findRegion("button_start");
-        buttonSettings = atlasGUI.findRegion("button_settings");
-        buttonHighScore = atlasGUI.findRegion("button_highScore");
-        buttonHelp = atlasGUI.findRegion("button_help");
-        backgroundGates = atlasGUI.findRegion("backgroundGates");
-        buttonPause = atlasGUI.findRegion("pauseButton");
-        pauseButtonSettings = atlasGUI.findRegion("settingsButton");
-        pauseButtonMainMenu = atlasGUI.findRegion("mainMenuButton");
-        pauseButtonResume = atlasGUI.findRegion("resumeButton");
-        pauseButtonRestart = atlasGUI.findRegion("restartButton");
-        pauseWindow = atlasGUI.findRegion("pauseWindow");
-        gameButtonJump = atlasGUI.findRegion("jumpButton");
-        gameButtonPush = atlasGUI.findRegion("pushButton");
-        gameButtonLeft = atlasGUI.findRegion("leftButton");
-        gameButtonRight = atlasGUI.findRegion("rughtButton");
-        gameWindow = atlasGUI.findRegion("buttonPanel");
+        buttonHelp = atlasGUI.findRegion("button/button_help");
+        buttonHighScore = atlasGUI.findRegion("button/button_highscore");
+        buttonSettings = atlasGUI.findRegion("button/button_settings");
+        buttonPause = atlasGUI.findRegion("button/button_pause");
+        buttonStart = atlasGUI.findRegion("button/button_start");
+        buttonLeft = atlasGUI.findRegion("button/button_left");
+        buttonRight = atlasGUI.findRegion("button/button_right");
+        buttonJump = atlasGUI.findRegion("button/button_jump");
+        buttonPush = atlasGUI.findRegion("button/button_push");
+        gameWindow = atlasGUI.findRegion("panel/game_panel");
+        pauseWindow = atlasGUI.findRegion("panel/menu_panel");
+        buttonForPauseWindow = atlasGUI.findRegion("panel/button_panel");
 
-
-    }
-
-    public TextureRegion getButtonStart() {
-        return buttonStart;
     }
 
     public TextureRegion getButtonHelp() {
@@ -74,51 +58,35 @@ public class AssetGUI {
         return buttonPause;
     }
 
-    public TextureRegion getPauseButtonSettings() {
-        return pauseButtonSettings;
+    public TextureRegion getButtonStart() {
+        return buttonStart;
     }
 
-    public TextureRegion getPauseButtonResume() {
-        return pauseButtonResume;
+    public TextureRegion getButtonLeft() {
+        return buttonLeft;
     }
 
-    public TextureRegion getPauseButtonMainMenu() {
-        return pauseButtonMainMenu;
+    public TextureRegion getButtonRight() {
+        return buttonRight;
     }
 
-    public TextureRegion getPauseButtonRestart() {
-        return pauseButtonRestart;
+    public TextureRegion getButtonJump() {
+        return buttonJump;
     }
 
-    public TextureRegion getPauseWindow() {
-        return pauseWindow;
-    }
-
-    public TextureRegion getGameButtonLeft() {
-        return gameButtonLeft;
-    }
-
-    public TextureRegion getGameButtonRight() {
-        return gameButtonRight;
-    }
-
-    public TextureRegion getGameButtonJump() {
-        return gameButtonJump;
-    }
-
-    public TextureRegion getGameButtonPush() {
-        return gameButtonPush;
+    public TextureRegion getButtonPush() {
+        return buttonPush;
     }
 
     public TextureRegion getGameWindow() {
         return gameWindow;
     }
 
-    public TextureRegion getBackgroundGates() {
-        return backgroundGates;
+    public TextureRegion getPauseWindow() {
+        return pauseWindow;
     }
 
-    public TextureRegion getBackground() {
-        return background;
+    public TextureRegion getButtonForPauseWindow() {
+        return buttonForPauseWindow;
     }
 }

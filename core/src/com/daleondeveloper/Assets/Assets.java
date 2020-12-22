@@ -11,8 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.I18NBundle;
 
+import com.daleondeveloper.Assets.game.AssetBackground;
 import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Assets.game.AssetGame;
+import com.daleondeveloper.Assets.game.AssetGates;
+import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Assets.game.AssetWaterElement;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
@@ -52,22 +55,36 @@ public class Assets implements Disposable,AssetErrorListener {
     public static final String MUSIC_FILE_GAME = "audio/music/songGame.ogg";
 
     // Texture atlas
-    private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
-    private static final String TEXTURE_ATLAS_GAME = "atlas/game/game.atlas";
     private static final String TEXTURE_ATLAS_GUI = "atlas/gui/gui.atlas";
+    private static final String TEXTURE_ATLAS_BLOCK = "atlas/blocks/blocks.atlas";
+    private static final String TEXTURE_ATLAS_HERO = "atlas/hero/hero.atlas";
+    private static final String TEXTURE_ATLAS_GATES = "atlas/gates/gates.atlas";
+    private static final String TEXTURE_ATLAS_BACKGROUND = "atlas/background/background.atlas";
+
+    private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
     private static final String TEXTURE_ATLAS_NEWGAME = "atlas/newGame/newGame.atlas";
+    private static final String TEXTURE_ATLAS_GAME = "atlas/game/game.atlas";
+
+
+
 
     private static Assets instance;
     private AssetManager assetManager;
     private AssetI18NElementMaster i18NElementMaster;
-    private AssetGame assetGame;
-    private AssetWaterElement assetWaterElement;
-    private AssetBlock assetBlock;
-    private AssetHelp assetHelp;
     private AssetGUI assetGUI;
+    private AssetBlock assetBlock;
+    private AssetHero assetHero;
+    private AssetGates assetGates;
+    private AssetBackground assetBackground;
+
     private AssetFonts assetFonts;
     private AssetMusic assetMusic;
     private AssetSounds assetSounds;
+
+
+    private AssetGame assetGame;
+    private AssetWaterElement assetWaterElement;
+    private AssetHelp assetHelp;
 
     private Assets(){
     }
@@ -101,10 +118,32 @@ public class Assets implements Disposable,AssetErrorListener {
         }
         Gdx.app.debug(TAG, "********************************");
 
+        TextureAtlas atlasGUI = assetManager.get(TEXTURE_ATLAS_GUI);
+        TextureAtlas atlasBlock = assetManager.get(TEXTURE_ATLAS_BLOCK);
+        TextureAtlas atlasHero = assetManager.get(TEXTURE_ATLAS_HERO);
+        TextureAtlas atlasGates = assetManager.get(TEXTURE_ATLAS_GATES);
+        TextureAtlas atlasBackground = assetManager.get(TEXTURE_ATLAS_BACKGROUND);
+
         TextureAtlas atlasGame = assetManager.get(TEXTURE_ATLAS_GAME);
         TextureAtlas atlasHelp = assetManager.get(TEXTURE_ATLAS_HELP);
-        TextureAtlas atlasGUI = assetManager.get(TEXTURE_ATLAS_GUI);
         TextureAtlas atlasNewGame = assetManager.get(TEXTURE_ATLAS_NEWGAME);
+
+        for(Texture texture : atlasGUI.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        for(Texture texture : atlasBlock.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        for(Texture texture : atlasHero.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        for(Texture texture : atlasGates.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        for(Texture texture : atlasBackground.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+
 
         for(Texture texture : atlasGame.getTextures()){
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -112,19 +151,22 @@ public class Assets implements Disposable,AssetErrorListener {
         for(Texture texture : atlasNewGame.getTextures()){
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
-        for(Texture texture : atlasGUI.getTextures()){
-            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        }
+
 
         i18NElementMaster = new AssetI18NElementMaster(assetManager);
-        assetGame = new AssetGame(atlasGame, atlasNewGame);
-        assetBlock = new AssetBlock(atlasNewGame);
-        assetWaterElement = new AssetWaterElement(atlasGame,atlasNewGame);
-        assetHelp = new AssetHelp(atlasHelp);
         assetGUI = new AssetGUI(atlasGUI);
+        assetBlock = new AssetBlock(atlasBlock);
+        assetHero = new AssetHero(atlasHero);
+        assetGates = new AssetGates(atlasGates);
+        assetBackground = new AssetBackground(atlasBackground);
+
         assetSounds = new AssetSounds(assetManager);
         assetMusic = new AssetMusic(assetManager);
         assetFonts = new AssetFonts();
+
+        assetGame = new AssetGame(atlasGame, atlasNewGame);
+        assetWaterElement = new AssetWaterElement(atlasGame,atlasNewGame);
+        assetHelp = new AssetHelp(atlasHelp);
     }
 
 
@@ -133,8 +175,13 @@ public class Assets implements Disposable,AssetErrorListener {
     }
 
     private void loadTextureAtlas(){
-        assetManager.load(TEXTURE_ATLAS_GAME, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_GUI, TextureAtlas.class);
+        assetManager.load(TEXTURE_ATLAS_BLOCK, TextureAtlas.class);
+        assetManager.load(TEXTURE_ATLAS_HERO, TextureAtlas.class);
+        assetManager.load(TEXTURE_ATLAS_GATES, TextureAtlas.class);
+        assetManager.load(TEXTURE_ATLAS_BACKGROUND, TextureAtlas.class);
+
+        assetManager.load(TEXTURE_ATLAS_GAME, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_HELP, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_NEWGAME, TextureAtlas.class);
     }
@@ -182,6 +229,18 @@ public class Assets implements Disposable,AssetErrorListener {
 
     public AssetGame getAssetGame() {
         return assetGame;
+    }
+
+    public AssetHero getAssetHero() {
+        return assetHero;
+    }
+
+    public AssetGates getAssetGates() {
+        return assetGates;
+    }
+
+    public AssetBackground getAssetBackground() {
+        return assetBackground;
     }
 
     public AssetHelp getAssetHelp() {

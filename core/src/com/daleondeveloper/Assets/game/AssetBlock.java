@@ -11,60 +11,82 @@ public class AssetBlock implements IAssetSprite {
 
     private static final float SCALE = 0.7f;
 
-    private TextureRegion blockBlue;
-    private TextureRegion blockPurr;
-    private TextureRegion blockGreen;
-    private TextureRegion blockRed;
-    private TextureRegion blockYellow;
+    private TextureRegion blockFire;
+    private TextureRegion blockSnow;
+    private TextureRegion blockWater;
+    private TextureRegion blockLight;
 
-    private Animation destroyWind;
+    private Animation destroyFire;
+    private Animation destroySnow;
+    private Animation destroyWater;
+    private Animation destroyLight;
 
     public  AssetBlock(TextureAtlas atlas){
         Array<TextureAtlas.AtlasRegion> regions;
 
-        blockBlue = atlas.findRegion("Block_Fire");
-        blockPurr = atlas.findRegion("Block_Lightning");
-        blockRed = atlas.findRegion("Block_Snow");
-        blockYellow = atlas.findRegion("Block_Water");
-        blockGreen = atlas.findRegion("Block_Water");
+        blockFire = atlas.findRegion("fire/main");
+        blockSnow = atlas.findRegion("snow/main");
+        blockWater = atlas.findRegion("water/main");
+        blockLight = atlas.findRegion("light/light_main");
 
         //animation
-        regions = atlas.findRegions("Block_Water");
-        destroyWind =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions = atlas.findRegions("fire/destroy/destroy");
+        destroyFire =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
+
+        regions = atlas.findRegions("snow/destroy/snow");
+        destroySnow =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions.clear();
+
+        regions = atlas.findRegions("water/destroy/destroy");
+        destroyWater =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions.clear();
+
+        regions = atlas.findRegions("light/destroy/destroy");
+        destroyLight =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions.clear();
+
     }
 
     @Override
     public float getWidth() {
-        return (blockBlue.getRegionWidth() / GameCamera.PPM) * SCALE;
+        return (blockFire.getRegionWidth() / GameCamera.PPM) * SCALE;
     }
 
     @Override
     public float getHeight() {
-        return (blockBlue.getRegionWidth() / GameCamera.PPM) * SCALE;
+        return (blockFire.getRegionWidth() / GameCamera.PPM) * SCALE;
     }
 
-    public TextureRegion getBlockBlue() {
-        return blockBlue;
+    public TextureRegion getBlockFire() {
+        return blockFire;
     }
 
-    public TextureRegion getBlockPurr() {
-        return blockPurr;
+    public TextureRegion getBlockSnow() {
+        return blockSnow;
     }
 
-    public TextureRegion getBlockGreen() {
-        return blockGreen;
+    public TextureRegion getBlockWater() {
+        return blockWater;
     }
 
-    public TextureRegion getBlockRed() {
-        return blockRed;
+    public TextureRegion getBlockLight() {
+        return blockLight;
     }
 
-    public TextureRegion getBlockYellow() {
-        return blockYellow;
+    public Animation getDestroyFire() {
+        return destroyFire;
     }
 
-    public Animation getDestroyWind() {
-        return destroyWind;
+    public Animation getDestroySnow() {
+        return destroySnow;
+    }
+
+    public Animation getDestroyWater() {
+        return destroyWater;
+    }
+
+    public Animation getDestroyLight() {
+        return destroyLight;
     }
 }
