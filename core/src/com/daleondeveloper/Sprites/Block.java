@@ -156,7 +156,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorRight).setUserData(this);
 
         //Sensor Down
-        polygonShape.setAsBox((getWidth()/2)*0.9f,0.3f, new Vector2(0,(-getHeight()/2)),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.3f, new Vector2(0,(-getHeight()/2)),0);
 //        polygonShape.setAsBox(10,10, new Vector2(getWidth()/2,getHeight()/2),0);
         FixtureDef sensorDown = new FixtureDef();
         sensorDown.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_DOWN_BIT;
@@ -166,7 +166,7 @@ public class Block extends AbstractDynamicObject {
         body.createFixture(sensorDown).setUserData(this);
 
         //Sensor Up
-        polygonShape.setAsBox((getWidth()/2)*0.9f,0.3f, new Vector2(0,(getHeight()/2)),0);
+        polygonShape.setAsBox((getWidth()/2)*0.95f,0.3f, new Vector2(0,(getHeight()/2)),0);
         FixtureDef sensorUp = new FixtureDef();
         sensorUp.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_SENSOR_UP_BIT;
         sensorUp.filter.maskBits = WorldContactListner.MASK_ALL;
@@ -208,7 +208,7 @@ public class Block extends AbstractDynamicObject {
     public void update(float deltaTime) {
         checkTime += deltaTime;
         if(checkTime > 0.25f){
-            checkContacts();
+           // checkContacts();
         }
 
         if(contactDownList.size() == 0){
@@ -335,26 +335,26 @@ public class Block extends AbstractDynamicObject {
         body.setType(BodyDef.BodyType.StaticBody);
 
         //Check the correctness of the list of the lower sensor every 1 second
-        if(stateTime > 100){
+        if(stateTime > 1){
             stateTime = 0;
             Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
 
-//            for(AbstractGameObject obj : contactDownList){
-//                float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
-//                float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
-//                float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
-//
-//                float widthDist = (getWidth() + obj.getWidth())/2 ;
-//                float heightDist = (getHeight() + obj.getHeight())/2;
-//                float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
-//                if(xDist * 0.99f > widthDist ||
-//                        yDist * 0.99f  > heightDist ||
-//                        centerDist * 0.99f > centerWidthHeight
-//
-//                ){
-//                   objToDel.add(obj);
-//                }
-//            }
+            for(AbstractGameObject obj : contactDownList){
+                float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
+                float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+                float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+                float widthDist = (getWidth() + obj.getWidth())/2 ;
+                float heightDist = (getHeight() + obj.getHeight())/2;
+                float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+                if(xDist * 0.99f > widthDist ||
+                        yDist * 0.99f  > heightDist ||
+                        centerDist > centerWidthHeight
+
+                ){
+                   objToDel.add(obj);
+                }
+            }
             contactDownList.removeAll(objToDel);
         }
         if(contactDownList.size() == 0){fall();return;}
@@ -372,7 +372,7 @@ public class Block extends AbstractDynamicObject {
     private void statePush(float deltaTime){
         //Setting a fixed value for the X coordinate
         float x = body.getPosition().x;
-        int leftReg = 44,rightReg = 46;
+        int leftReg = 42,rightReg = 48;
         for(int i = 0; i < 12; i++){
             if(x >= leftReg && x < rightReg){
                 returnCellsPosition = (rightReg + leftReg) >> 1;

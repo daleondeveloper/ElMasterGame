@@ -96,7 +96,7 @@ public class WorldContactListner implements ContactListener {
 
             }break;
             case CATEGORY_BLOCK_SENSOR_DOWN_BIT | CATEGORY_BLOCK_BIT : {
-                                Block blockDown = blockStartContactDown(fa,fb);
+              Block blockDown = blockStartContactDown(fa,fb);
 
             }
             case CATEGORY_BLOCK_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT : {
@@ -150,78 +150,6 @@ public class WorldContactListner implements ContactListener {
       //  System.out.println(fa.getFilterData().categoryBits + " ::::: " + fb.getFilterData().categoryBits);
 
         switch (collisionDef) {
-//            case CATEGORY_BLOCK_BIT :
-//            case CATEGORY_BLOCK_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT : {
-//                Block blockA = (Block)fa.getUserData();
-//                Block blockB = (Block)fb.getUserData();
-//                //Видалення з списків блоку А всіх контактів блоку Б
-//                blockA.getContactRightBlockList().remove(blockB);
-//                blockA.getContactLeftBlockList().remove(blockB);
-//                blockA.getContactDownList().remove(blockB);
-//                blockA.getContactUpList().remove(blockB);
-//
-//                //Видалення з списків блоку Б всіх контактів блоку А
-//                blockB.getContactRightBlockList().remove(blockA);
-//                blockB.getContactLeftBlockList().remove(blockA);
-//                blockB.getContactDownList().remove(blockA);
-//                blockB.getContactUpList().remove(blockA);
-//
-//            }break;
-//            case CATEGORY_BLOCK_BIT | CATEGORY_WATER_ELEM_BIT :
-//            case CATEGORY_WATER_ELEM_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT : {
-//                WaterElement hero = null;
-//                Block block = null;
-//                if(fa.getUserData() instanceof WaterElement){
-//                    hero = (WaterElement)fa.getUserData();
-//                    block = (Block)fb.getUserData();
-//                }else if(fa.getUserData() instanceof Block){
-//                    hero = (WaterElement)fb.getUserData();
-//                    block = (Block)fa.getUserData();
-//                }else{break;}
-//
-//                hero.getSensorLeft().remove(block);
-//                hero.getSensorRight().remove(block);
-//                hero.getSensorDown().remove(block);
-//                hero.getSensorUp().remove(block);
-//
-//                block.getContactRightBlockList().remove(hero);
-//                block.getContactLeftBlockList().remove(hero);
-//                block.getContactUpList().remove(hero);
-//                block.getContactDownList().remove(hero);
-//            //    block.setContactHero(null);
-//
-//            }break;
-//            case CATEGORY_WATER_ELEM_BIT | CATEGORY_REGION_BIT: {
-//                WaterElement hero = null;
-//                Platform platform = null;
-//                if(fa.getUserData() instanceof WaterElement){
-//                    hero = (WaterElement)fa.getUserData();
-//                    platform = (Platform) fb.getUserData();
-//                }else if(fa.getUserData() instanceof Platform){
-//                    hero = (WaterElement)fb.getUserData();
-//                    platform = (Platform) fa.getUserData();
-//                }else{break;}
-//
-//                hero.getSensorDown().remove(platform);
-//
-//            }break;
-//            case CATEGORY_BLOCK_BIT | CATEGORY_REGION_BIT : {
-//                Block block = null;//blockStartContactDown(fa,fb);
-//                Platform platform = null;
-//                if(fa.getUserData() instanceof Platform){
-//                    platform = (Platform)fa.getUserData();
-//                    block = (Block)fb.getUserData();
-//                }else{
-//                    platform = (Platform)fb.getUserData();
-//                    block = (Block)fa.getUserData();
-//                }
-//
-//                block.getContactDownList().remove(platform);
-//            }break;
-//            case CATEGORY_BLOCK_BIT | CATEGORY_GAME_WORLD_SENSOR : {
-//                System.out.println("contact = " + contact);
-//            }
-
             //Кінець Кнотакта з героєм
             //Нижній сенсор
             case CATEGORY_WATER_ELEM_SENSOR_DOWN_BIT | CATEGORY_BLOCK_SENSOR_UP_BIT:{
@@ -395,21 +323,27 @@ public class WorldContactListner implements ContactListener {
     }
     public Block blockStartContactUp(Fixture fa,Fixture  fb){
         Block block = null;
+        Fixture fixture = null;
         Object objFa = fa.getUserData();
         Object objFb = fb.getUserData();
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().y < fb.getBody().getPosition().y){
                 block = (Block)objFa;
+                fixture = fb;
             }else{
                 block = (Block)objFb;
+                fixture = fa;
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
+            fixture = fb;
         }else if(objFb instanceof Block){
             block = (Block)objFb;
+            fixture = fa;
         }
         if(block != null) {
             block.setSensorUp(true);
+            block.getContactUpList().add((AbstractGameObject)fixture.getUserData());
         }
         return block;
     }
@@ -543,21 +477,27 @@ public class WorldContactListner implements ContactListener {
     }
     public Block blockEndContactUp(Fixture fa,Fixture  fb){
         Block block = null;
+        Fixture fixture = null;
         Object objFa = fa.getUserData();
         Object objFb = fb.getUserData();
         if((objFa instanceof Block) && (objFb instanceof  Block)){
             if(fa.getBody().getPosition().y < fb.getBody().getPosition().y){
                 block = (Block)objFa;
+                fixture = fb;
             }else{
                 block = (Block)objFb;
+                fixture = fa;
             }
         }else if(objFa instanceof Block){
             block = (Block)objFa;
+            fixture = fb;
         }else if(objFb instanceof Block){
             block = (Block)objFb;
+            fixture = fa;
         }
         if(block != null) {
             block.setSensorUp(false);
+            block.getContactUpList().remove((AbstractGameObject)fixture.getUserData());
         }
         return block;
     }

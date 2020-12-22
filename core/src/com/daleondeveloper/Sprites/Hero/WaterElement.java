@@ -266,6 +266,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
+        checkContacts();
         if(body != null) {
             body.setGravityScale(10);
         } else {
@@ -302,6 +303,82 @@ public class WaterElement extends AbstractDynamicObject {
             if(body != null && sensorDown.size() == 0 ){
                 body.setGravityScale(10);
             }
+
+    }
+
+    private void checkContacts(){
+        Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
+
+        for(AbstractGameObject obj : sensorDown){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + obj.getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.8f > widthDist ||
+                    yDist * 0.8f  > heightDist
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        sensorDown.removeAll(objToDel);
+
+        objToDel.clear();
+        for(AbstractGameObject obj : sensorUp){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + obj.getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.8f > widthDist ||
+                    yDist * 0.8f  > heightDist
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        sensorUp.removeAll(objToDel);
+
+        objToDel.clear();
+        for(AbstractGameObject obj : sensorRight){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + obj.getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.8f > widthDist ||
+                    yDist * 0.8f  > heightDist
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        sensorRight.removeAll(objToDel);
+
+        objToDel.clear();
+        for(AbstractGameObject obj : sensorLeft){
+            float xDist = Math.abs(getBodyPosition().x - (obj.getX() + obj.getWidth()/2));
+            float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
+            float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
+
+            float widthDist = (getWidth() + obj.getWidth())/2 ;
+            float heightDist = (getHeight() + obj.getHeight())/2;
+            float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
+            if(xDist * 0.8f > widthDist ||
+                    yDist * 0.8f  > heightDist
+
+            ){
+                objToDel.add(obj);
+            }
+        }
+        sensorLeft.removeAll(objToDel);
 
     }
 
@@ -434,38 +511,7 @@ public class WaterElement extends AbstractDynamicObject {
             currentState = State.DISPOSE;
         }
 
-        private void checkContacts(){
-            List<AbstractGameObject> tmpList = new ArrayList<AbstractGameObject>();
-            tmpList.addAll(sensorRight);
-        for(AbstractGameObject obj : tmpList){
-            if(Math.abs(getX() - obj.getX()) -  getWidth() > 2){
-                sensorRight.remove(obj);
-            }
-        }
-        tmpList.clear();
-         tmpList.addAll(sensorLeft);
-        for(AbstractGameObject obj : tmpList){
-            if(Math.abs(obj.getX() - getX()) - obj.getWidth() > 2){
-                sensorLeft.remove(obj);
-            }
-        }
-        tmpList.clear();
-         tmpList.addAll(sensorDown);
-        for(AbstractGameObject obj : tmpList){
-            if(Math.abs(getY() - obj.getY() ) - obj.getHeight() > 2){
-                sensorDown.remove(obj);
-            }
-        }
-        tmpList.clear();
-         tmpList.addAll(sensorUp);
-        for(AbstractGameObject obj : tmpList){
-            if(Math.abs(obj.getY() - getY()) - getHeight() > 2){
-                sensorUp.remove(obj);
-            }
-        }
-        tmpList.clear();
 
-        }
     @Override
     public void render(SpriteBatch spriteBatch) {
             draw(spriteBatch);

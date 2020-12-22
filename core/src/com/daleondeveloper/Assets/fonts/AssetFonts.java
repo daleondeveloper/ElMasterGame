@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Disposable;
 public class AssetFonts implements Disposable {
     private static final String TAG = AssetFonts.class.getName();
 
-    private static final String FONT_FILE = "fonts/fonts.fnt";
+    private static final String FONT_FILE = "fonts/Chiller.fnt";
     private static final float FONT_SMALL = 0.4f;
     private static final float FONT_NORMAL = 0.6f;
     private static final float FONT_BIG = 1.0f;
