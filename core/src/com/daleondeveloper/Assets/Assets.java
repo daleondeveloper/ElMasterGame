@@ -61,12 +61,6 @@ public class Assets implements Disposable,AssetErrorListener {
     private static final String TEXTURE_ATLAS_GATES = "atlas/gates/gates.atlas";
     private static final String TEXTURE_ATLAS_BACKGROUND = "atlas/background/background.atlas";
 
-    private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
-    private static final String TEXTURE_ATLAS_NEWGAME = "atlas/newGame/newGame.atlas";
-    private static final String TEXTURE_ATLAS_GAME = "atlas/game/game.atlas";
-
-
-
 
     private static Assets instance;
     private AssetManager assetManager;
@@ -124,10 +118,6 @@ public class Assets implements Disposable,AssetErrorListener {
         TextureAtlas atlasGates = assetManager.get(TEXTURE_ATLAS_GATES);
         TextureAtlas atlasBackground = assetManager.get(TEXTURE_ATLAS_BACKGROUND);
 
-        TextureAtlas atlasGame = assetManager.get(TEXTURE_ATLAS_GAME);
-        TextureAtlas atlasHelp = assetManager.get(TEXTURE_ATLAS_HELP);
-        TextureAtlas atlasNewGame = assetManager.get(TEXTURE_ATLAS_NEWGAME);
-
         for(Texture texture : atlasGUI.getTextures()){
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
@@ -145,14 +135,6 @@ public class Assets implements Disposable,AssetErrorListener {
         }
 
 
-        for(Texture texture : atlasGame.getTextures()){
-            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        }
-        for(Texture texture : atlasNewGame.getTextures()){
-            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        }
-
-
         i18NElementMaster = new AssetI18NElementMaster(assetManager);
         assetGUI = new AssetGUI(atlasGUI);
         assetBlock = new AssetBlock(atlasBlock);
@@ -164,9 +146,6 @@ public class Assets implements Disposable,AssetErrorListener {
         assetMusic = new AssetMusic(assetManager);
         assetFonts = new AssetFonts();
 
-        assetGame = new AssetGame(atlasGame, atlasNewGame);
-        assetWaterElement = new AssetWaterElement(atlasGame,atlasNewGame);
-        assetHelp = new AssetHelp(atlasHelp);
     }
 
 
@@ -180,10 +159,6 @@ public class Assets implements Disposable,AssetErrorListener {
         assetManager.load(TEXTURE_ATLAS_HERO, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_GATES, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_BACKGROUND, TextureAtlas.class);
-
-        assetManager.load(TEXTURE_ATLAS_GAME, TextureAtlas.class);
-        assetManager.load(TEXTURE_ATLAS_HELP, TextureAtlas.class);
-        assetManager.load(TEXTURE_ATLAS_NEWGAME, TextureAtlas.class);
     }
 
     private void loadSounds(){
