@@ -13,6 +13,18 @@ public class AssetGates implements IAssetSprite {
 
     private TextureRegion staticMain;
     private TextureRegion closedGates;
+    private TextureRegion redDragonHead;
+    private TextureRegion redDragonLeftHandWithSphere;
+    private TextureRegion redDragonRightHandWithSphere;
+    private TextureRegion yellowDragonHead;
+    private TextureRegion yellowDragonLeftHandWithSphere;
+    private TextureRegion yellowDragonRightHandWithSphere;
+    private TextureRegion blueDragonHead;
+    private TextureRegion blueDragonLeftHandWithSphere;
+    private TextureRegion blueDragonRightHandWithSphere;
+    private TextureRegion blackDragonHead;
+    private TextureRegion blackDragonLeftHandWithSphere;
+    private TextureRegion blackDragonRightHandWithSphere;
 
     private Animation portal;
     private Animation leftFireBowl;
@@ -20,18 +32,6 @@ public class AssetGates implements IAssetSprite {
     private Animation mainDragonEyes;
     private Animation leftDragonEyes;
     private Animation rightDragonEyes;
-    private Animation redDragonHead;
-    private Animation redDragonLeftHandWithSphere;
-    private Animation redDragonRightHandWithSphere;
-    private Animation yellowDragonHead;
-    private Animation yellowDragonLeftHandWithSphere;
-    private Animation yellowDragonRightHandWithSphere;
-    private Animation blueDragonHead;
-    private Animation blueDragonLeftHandWithSphere;
-    private Animation blueDragonRightHandWithSphere;
-    private Animation blackDragonHead;
-    private Animation blackDragonLeftHandWithSphere;
-    private Animation blackDragonRightHandWithSphere;
     private Animation openGates;
     private Animation closeGates;
 
@@ -39,31 +39,31 @@ public class AssetGates implements IAssetSprite {
     public AssetGates(TextureAtlas atlasGates){
         Array<TextureAtlas.AtlasRegion> regions;
 
-        staticMain = atlasGates.findRegion("");
-        closedGates = atlasGates.findRegion("");
+        staticMain = atlasGates.findRegion("gates_stairs_colum&dragon");
+        closedGates = atlasGates.findRegion("open/gate_open",1);
 
         //animation
-        regions = atlasGates.findRegions("fire/destroy/destroy");
+        regions = atlasGates.findRegions("portal/portal");
         portal =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         //BOWL
-        regions = atlasGates.findRegions("fire/destroy/destroy");
+        regions = atlasGates.findRegions("bowl/left/left_bowl");
         leftFireBowl =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
-        regions = atlasGates.findRegions("fire/destroy/destroy");
+        regions = atlasGates.findRegions("bowl/right/right_bowl");
         rightFireBowl =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
 
         //gates
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        openGates =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions = atlasGates.findRegions("open/gate_open");
+        openGates =new Animation(0.5f/24.0f,regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        closeGates =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions = atlasGates.findRegions("open/gate_open");
+        closeGates =new Animation(0.5f/24.0f,regions, Animation.PlayMode.REVERSED);
         regions.clear();
 
         dragonEyes(atlasGates);
@@ -77,85 +77,38 @@ public class AssetGates implements IAssetSprite {
         Array<TextureAtlas.AtlasRegion> regions;
 
         //dragon
-        regions = atlasGates.findRegions("fire/destroy/destroy");
+        regions = atlasGates.findRegions("eyes_backlight/right/backlight_dragon_right");
         rightDragonEyes =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
-        regions = atlasGates.findRegions("fire/destroy/destroy");
+        regions = atlasGates.findRegions("eyes_backlight/left/backlight_dragon_left");
         leftDragonEyes =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
-        regions = atlasGates.findRegions("fire/destroy/destroy");
+        regions = atlasGates.findRegions("eyes_backlight/main/backlight_dragon_main");
         mainDragonEyes =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
     }
     private void redDragon(TextureAtlas atlasGates){
-        Array<TextureAtlas.AtlasRegion> regions;
-
-        //RED DRAGON
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        redDragonHead =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        redDragonLeftHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        redDragonRightHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
+        redDragonHead = atlasGates.findRegion("dragon/red/red_dragon_head");
+        redDragonLeftHandWithSphere = atlasGates.findRegion("dragon/red/red_dragon_left_hand_sphere");
+        redDragonRightHandWithSphere = atlasGates.findRegion("dragon/red/red_dragon_right_hand_sphere");
     }
     private void yellowDragon(TextureAtlas atlasGates){
-        Array<TextureAtlas.AtlasRegion> regions;
-
-        //YELLOW DRAGON
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        yellowDragonHead =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        yellowDragonLeftHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        yellowDragonRightHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
+        yellowDragonHead = atlasGates.findRegion("dragon/yellow/yellow_dragon_head");
+        yellowDragonLeftHandWithSphere = atlasGates.findRegion("dragon/yellow/yellow_dragon_left_hand_sphere");
+        yellowDragonRightHandWithSphere = atlasGates.findRegion("dragon/yellow/yellow_dragon_right_hand_sphere");
     }
     private void blueDragon(TextureAtlas atlasGates){
-        Array<TextureAtlas.AtlasRegion> regions;
-
-        //BLUE DRAGON
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        blueDragonHead =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        blueDragonLeftHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        blueDragonRightHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
+        blueDragonHead = atlasGates.findRegion("dragon/blue/blue_dragon_head");
+        blueDragonLeftHandWithSphere = atlasGates.findRegion("dragon/blue/blue_dragon_left_hand_sphere");
+        blueDragonRightHandWithSphere = atlasGates.findRegion("dragon/blue/blue_dragon_right_hand_sphere");
     }
     private void blackDragon(TextureAtlas atlasGates){
-        Array<TextureAtlas.AtlasRegion> regions;
-
-        //BLACK DRAGON
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        blackDragonHead =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        blackDragonLeftHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
-        regions = atlasGates.findRegions("fire/destroy/destroy");
-        blueDragonRightHandWithSphere =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
+        blackDragonHead = atlasGates.findRegion("dragon/black/black_dragon_head");
+        blackDragonLeftHandWithSphere = atlasGates.findRegion("dragon/black/black_dragon_left_hand_sphere");
+        blackDragonRightHandWithSphere = atlasGates.findRegion("dragon/black/black_dragon_right_hand_sphere");
     }
 
 
@@ -175,6 +128,54 @@ public class AssetGates implements IAssetSprite {
 
     public TextureRegion getClosedGates() {
         return closedGates;
+    }
+
+    public TextureRegion getRedDragonHead() {
+        return redDragonHead;
+    }
+
+    public TextureRegion getRedDragonLeftHandWithSphere() {
+        return redDragonLeftHandWithSphere;
+    }
+
+    public TextureRegion getRedDragonRightHandWithSphere() {
+        return redDragonRightHandWithSphere;
+    }
+
+    public TextureRegion getYellowDragonHead() {
+        return yellowDragonHead;
+    }
+
+    public TextureRegion getYellowDragonLeftHandWithSphere() {
+        return yellowDragonLeftHandWithSphere;
+    }
+
+    public TextureRegion getYellowDragonRightHandWithSphere() {
+        return yellowDragonRightHandWithSphere;
+    }
+
+    public TextureRegion getBlueDragonHead() {
+        return blueDragonHead;
+    }
+
+    public TextureRegion getBlueDragonLeftHandWithSphere() {
+        return blueDragonLeftHandWithSphere;
+    }
+
+    public TextureRegion getBlueDragonRightHandWithSphere() {
+        return blueDragonRightHandWithSphere;
+    }
+
+    public TextureRegion getBlackDragonHead() {
+        return blackDragonHead;
+    }
+
+    public TextureRegion getBlackDragonLeftHandWithSphere() {
+        return blackDragonLeftHandWithSphere;
+    }
+
+    public TextureRegion getBlackDragonRightHandWithSphere() {
+        return blackDragonRightHandWithSphere;
     }
 
     public Animation getPortal() {
@@ -199,54 +200,6 @@ public class AssetGates implements IAssetSprite {
 
     public Animation getRightDragonEyes() {
         return rightDragonEyes;
-    }
-
-    public Animation getRedDragonHead() {
-        return redDragonHead;
-    }
-
-    public Animation getRedDragonLeftHandWithSphere() {
-        return redDragonLeftHandWithSphere;
-    }
-
-    public Animation getRedDragonRightHandWithSphere() {
-        return redDragonRightHandWithSphere;
-    }
-
-    public Animation getYellowDragonHead() {
-        return yellowDragonHead;
-    }
-
-    public Animation getYellowDragonLeftHandWithSphere() {
-        return yellowDragonLeftHandWithSphere;
-    }
-
-    public Animation getYellowDragonRightHandWithSphere() {
-        return yellowDragonRightHandWithSphere;
-    }
-
-    public Animation getBlueDragonHead() {
-        return blueDragonHead;
-    }
-
-    public Animation getBlueDragonLeftHandWithSphere() {
-        return blueDragonLeftHandWithSphere;
-    }
-
-    public Animation getBlueDragonRightHandWithSphere() {
-        return blueDragonRightHandWithSphere;
-    }
-
-    public Animation getBlackDragonHead() {
-        return blackDragonHead;
-    }
-
-    public Animation getBlackDragonLeftHandWithSphere() {
-        return blackDragonLeftHandWithSphere;
-    }
-
-    public Animation getBlackDragonRightHandWithSphere() {
-        return blackDragonRightHandWithSphere;
     }
 
     public Animation getOpenGates() {
