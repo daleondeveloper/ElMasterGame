@@ -13,10 +13,8 @@ import com.badlogic.gdx.utils.I18NBundle;
 
 import com.daleondeveloper.Assets.game.AssetBackground;
 import com.daleondeveloper.Assets.game.AssetBlock;
-import com.daleondeveloper.Assets.game.AssetGame;
 import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Assets.game.AssetHero;
-import com.daleondeveloper.Assets.game.AssetWaterElement;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Assets.i18n.AssetI18NElementMaster;
@@ -75,9 +73,6 @@ public class Assets implements Disposable,AssetErrorListener {
     private AssetMusic assetMusic;
     private AssetSounds assetSounds;
 
-
-    private AssetGame assetGame;
-    private AssetWaterElement assetWaterElement;
     private AssetHelp assetHelp;
 
     private Assets(){
@@ -190,20 +185,12 @@ public class Assets implements Disposable,AssetErrorListener {
         assetManager.load(MUSIC_FILE_GAME, Music.class);
     }
 
-    public AssetWaterElement getAssetWaterElement() {
-        return assetWaterElement;
-    }
-
     public AssetBlock getAssetBlock() {
         return assetBlock;
     }
 
     public AssetManager getAssetManager() {
         return assetManager;
-    }
-
-    public AssetGame getAssetGame() {
-        return assetGame;
     }
 
     public AssetHero getAssetHero() {

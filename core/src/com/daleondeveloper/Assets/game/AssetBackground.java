@@ -10,12 +10,16 @@ public class AssetBackground implements IAssetSprite{
 
     private TextureRegion background;
     private TextureRegion fogDark;
-    private TextureRegion fog;
+    private TextureRegion fogLeft;
+    private TextureRegion fogCenter;
+    private TextureRegion fogRight;
 
     public AssetBackground(TextureAtlas atlasBackground){
         background = atlasBackground.findRegion("background_fon");
         fogDark = atlasBackground.findRegion("background_fog_down");
-        fog = atlasBackground.findRegion("background_fog",1);
+        fogLeft = atlasBackground.findRegion("background_fog",1);
+        fogCenter = atlasBackground.findRegion("background_fog",2);
+        fogRight = atlasBackground.findRegion("background_fog",3);
     }
 
     @Override
@@ -36,7 +40,15 @@ public class AssetBackground implements IAssetSprite{
         return fogDark;
     }
 
-    public TextureRegion getFog() {
-        return fog;
+    public TextureRegion getFogLeft() {
+        return fogLeft;
+    }
+
+    public TextureRegion getFogCenter() {
+        return fogCenter;
+    }
+
+    public TextureRegion getFogRight() {
+        return fogRight;
     }
 }

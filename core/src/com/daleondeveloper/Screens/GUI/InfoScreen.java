@@ -120,9 +120,9 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     }
 
     private Table getGameOverButtonsTable() {
-        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonRestart()));
+        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()));
 
-        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()));
+        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonLeft()));
         reload.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {

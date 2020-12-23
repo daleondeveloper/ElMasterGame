@@ -33,7 +33,7 @@ public class GameSensor extends AbstractDynamicObject {
         this.playScreen = playScreen;
 
         AssetBlock assetBlock = Assets.getInstance().getAssetBlock();
-        assetPlatform = assetBlock.getBlockBlue();
+        assetPlatform = assetBlock.getBlockLight();
 
         firstLineBlocks = new HashSet();
 

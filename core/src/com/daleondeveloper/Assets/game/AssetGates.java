@@ -5,14 +5,23 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.utils.Array;
+import com.daleondeveloper.Assets.Assets;
 
 public class AssetGates implements IAssetSprite {
     private static final String TAG = AssetGates.class.getName();
 
     private static final float SCALE = 0.7f;
 
+    private enum DragonName{
+        RED_DRAGON,BLUE_DRAGON,BLACK_DRAGON,YELLOW_DRAGON;
+    }
+    private DragonName dragonName;
+
     private TextureRegion staticMain;
     private TextureRegion closedGates;
+    private TextureRegion dragonHead;
+    private TextureRegion dragonLeftHandWithSphere;
+    private TextureRegion dragonRightHandWithSphere;
     private TextureRegion redDragonHead;
     private TextureRegion redDragonLeftHandWithSphere;
     private TextureRegion redDragonRightHandWithSphere;
@@ -39,21 +48,22 @@ public class AssetGates implements IAssetSprite {
     public AssetGates(TextureAtlas atlasGates){
         Array<TextureAtlas.AtlasRegion> regions;
 
+        dragonName = DragonName.BLACK_DRAGON;
         staticMain = atlasGates.findRegion("gates_stairs_colum&dragon");
         closedGates = atlasGates.findRegion("open/gate_open",1);
 
         //animation
         regions = atlasGates.findRegions("portal/portal");
-        portal =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        portal =new Animation(2.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         //BOWL
         regions = atlasGates.findRegions("bowl/left/left_bowl");
-        leftFireBowl =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        leftFireBowl =new Animation(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlasGates.findRegions("bowl/right/right_bowl");
-        rightFireBowl =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        rightFireBowl =new Animation(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
 
@@ -72,6 +82,30 @@ public class AssetGates implements IAssetSprite {
         blueDragon(atlasGates);
         blackDragon(atlasGates);
 
+        changeBlackDragon();
+
+    }
+    public void changeBlackDragon(){
+        dragonName = DragonName.BLACK_DRAGON;
+        dragonHead = blackDragonHead;
+        dragonLeftHandWithSphere = blackDragonLeftHandWithSphere;
+        dragonRightHandWithSphere = blackDragonRightHandWithSphere;
+    }
+    public void changeBlueDragon(){
+        dragonName = DragonName.BLUE_DRAGON;
+        dragonHead = blueDragonHead;
+        dragonLeftHandWithSphere = blueDragonLeftHandWithSphere;
+        dragonRightHandWithSphere = blueDragonRightHandWithSphere;
+    }public void changeYellowDragon(){
+        dragonName = DragonName.YELLOW_DRAGON;
+        dragonHead = yellowDragonHead;
+        dragonLeftHandWithSphere = yellowDragonLeftHandWithSphere;
+        dragonRightHandWithSphere = yellowDragonRightHandWithSphere;
+    }public void changeRedDragon(){
+        dragonName = DragonName.RED_DRAGON;
+        dragonHead = redDragonHead;
+        dragonLeftHandWithSphere = redDragonLeftHandWithSphere;
+        dragonRightHandWithSphere = redDragonRightHandWithSphere;
     }
     private void dragonEyes(TextureAtlas atlasGates){
         Array<TextureAtlas.AtlasRegion> regions;
@@ -130,52 +164,20 @@ public class AssetGates implements IAssetSprite {
         return closedGates;
     }
 
-    public TextureRegion getRedDragonHead() {
-        return redDragonHead;
+    public DragonName getDragonName() {
+        return dragonName;
     }
 
-    public TextureRegion getRedDragonLeftHandWithSphere() {
-        return redDragonLeftHandWithSphere;
+    public TextureRegion getDragonHead() {
+        return dragonHead;
     }
 
-    public TextureRegion getRedDragonRightHandWithSphere() {
-        return redDragonRightHandWithSphere;
+    public TextureRegion getDragonLeftHandWithSphere() {
+        return dragonLeftHandWithSphere;
     }
 
-    public TextureRegion getYellowDragonHead() {
-        return yellowDragonHead;
-    }
-
-    public TextureRegion getYellowDragonLeftHandWithSphere() {
-        return yellowDragonLeftHandWithSphere;
-    }
-
-    public TextureRegion getYellowDragonRightHandWithSphere() {
-        return yellowDragonRightHandWithSphere;
-    }
-
-    public TextureRegion getBlueDragonHead() {
-        return blueDragonHead;
-    }
-
-    public TextureRegion getBlueDragonLeftHandWithSphere() {
-        return blueDragonLeftHandWithSphere;
-    }
-
-    public TextureRegion getBlueDragonRightHandWithSphere() {
-        return blueDragonRightHandWithSphere;
-    }
-
-    public TextureRegion getBlackDragonHead() {
-        return blackDragonHead;
-    }
-
-    public TextureRegion getBlackDragonLeftHandWithSphere() {
-        return blackDragonLeftHandWithSphere;
-    }
-
-    public TextureRegion getBlackDragonRightHandWithSphere() {
-        return blackDragonRightHandWithSphere;
+    public TextureRegion getDragonRightHandWithSphere() {
+        return dragonRightHandWithSphere;
     }
 
     public Animation getPortal() {
@@ -209,4 +211,6 @@ public class AssetGates implements IAssetSprite {
     public Animation getCloseGates() {
         return closeGates;
     }
+
+
 }

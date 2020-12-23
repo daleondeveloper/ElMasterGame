@@ -96,22 +96,22 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     }
 
     private void defineButtons() {
-        resume = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonResume()),
-                new TextureRegionDrawable(assetGUI.getPauseButtonResume()));
+        resume = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
+                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
-        mainMenu = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()),
-                new TextureRegionDrawable(assetGUI.getPauseButtonMainMenu()));
+        mainMenu = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
+                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
         audio = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
                 new TextureRegionDrawable(assetGUI.getButtonHelp()),
                 new TextureRegionDrawable(assetGUI.getButtonHelp()));
         audio.setChecked(!prefs.isAudio());
 
-        settings = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonSettings()),
-                new TextureRegionDrawable(assetGUI.getPauseButtonSettings()));
+        settings = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
+                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
-        restart = new ImageButton(new TextureRegionDrawable(assetGUI.getPauseButtonRestart()),
-                new TextureRegionDrawable(assetGUI.getPauseButtonRestart()));
+        restart = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
+                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
         // Events
         resume.addListener(ListenerHelper.runnableListener(new Runnable() {

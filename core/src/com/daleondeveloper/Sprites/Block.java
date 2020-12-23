@@ -64,11 +64,10 @@ public class Block extends AbstractDynamicObject {
 
         assetBlocks = new Array<TextureRegion>();
         AssetBlock assets =  Assets.getInstance().getAssetBlock();
-        assetBlocks.add(assets.getBlockBlue());
-        assetBlocks.add(assets.getBlockGreen());
-        assetBlocks.add(assets.getBlockPurr());
-        assetBlocks.add(assets.getBlockRed());
-        assetBlocks.add(assets.getBlockYellow());
+        assetBlocks.add(assets.getBlockFire());
+        assetBlocks.add(assets.getBlockLight());
+        assetBlocks.add(assets.getBlockSnow());
+        assetBlocks.add(assets.getBlockWater());
 
         textureRegionBlock = assetBlocks.get(1);
 

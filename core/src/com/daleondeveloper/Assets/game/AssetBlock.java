@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.GameCamera;
 
 public class AssetBlock implements IAssetSprite {
@@ -23,7 +24,6 @@ public class AssetBlock implements IAssetSprite {
 
     public  AssetBlock(TextureAtlas atlas){
         Array<TextureAtlas.AtlasRegion> regions;
-
         blockFire = atlas.findRegion("fire/main");
         blockSnow = atlas.findRegion("snow/main");
         blockWater = atlas.findRegion("water/main");

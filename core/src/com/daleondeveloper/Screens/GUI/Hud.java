@@ -103,10 +103,10 @@ public class Hud extends GUIOverlayAbstractScreen {
     }
 
     private void defineButtons(){
-        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getGameButtonLeft()));
-        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getGameButtonRight()));
-        gameButtonJump = new Image(new TextureRegionDrawable(assetGUI.getGameButtonJump()));
-        gameButtonPush = new Image(new TextureRegionDrawable(assetGUI.getGameButtonPush()));
+        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
+        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
+        gameButtonJump = new Image(new TextureRegionDrawable(assetGUI.getButtonJump()));
+        gameButtonPush = new Image(new TextureRegionDrawable(assetGUI.getButtonPush()));
         ;
         gameButtonLeft.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override

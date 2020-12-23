@@ -2,6 +2,7 @@ package com.daleondeveloper.Assets.game;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
 public class AssetHero implements IAssetSprite {
@@ -9,6 +10,12 @@ public class AssetHero implements IAssetSprite {
 
     private static final float SCALE = 0.7f;
 
+    private enum HeroType{
+        WHITE,BLACK;
+    }
+    private HeroType heroType;
+
+    private TextureRegion heroStandStatic;
     private Animation whiteHeroStand;
     private Animation whiteHeroWalk;
     private Animation whiteHeroRun;
@@ -25,7 +32,44 @@ public class AssetHero implements IAssetSprite {
     private Animation blackHeroFall;
     private Animation blackHeroDeath;
 
+    private Animation heroStand;
+    private Animation heroWalk;
+    private Animation heroRun;
+    private Animation heroPush;
+    private Animation heroJump;
+    private Animation heroFall;
+    private Animation heroDeath;
+
     public AssetHero(TextureAtlas atlasHero){
+        whiteHeroGetTextureFromAtlas(atlasHero);
+        blackHeroGetTextureFromAtlas(atlasHero);
+        heroStandStatic = atlasHero.findRegion("white/stand/stand",1);
+        changeWhiteHero();
+
+    }
+    public void changeWhiteHero(){
+        heroType = HeroType.WHITE;
+          heroStand = whiteHeroStand;
+          heroWalk = whiteHeroWalk;
+          heroRun = whiteHeroRun;
+          heroPush = whiteHeroPush;
+          heroJump = whiteHeroJump;
+          heroFall = whiteHeroFall;
+          heroDeath = whiteHeroDeath;
+    }
+    public void changeBlackHero(){
+        heroType = HeroType.BLACK;
+          heroStand = blackHeroStand;
+          heroWalk = blackHeroWalk;
+          heroRun = blackHeroRun;
+          heroPush = blackHeroPush;
+          heroJump = blackHeroJump;
+          heroFall = blackHeroFall;
+          heroDeath = blackHeroDeath;
+    }
+
+
+    private void whiteHeroGetTextureFromAtlas(TextureAtlas atlasHero){
         Array<TextureAtlas.AtlasRegion> regions;
 
         //Animation White Hero
@@ -56,6 +100,9 @@ public class AssetHero implements IAssetSprite {
         regions = atlasHero.findRegions("white/death/death");
         whiteHeroDeath = new Animation(0.5f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
+    }
+    private void blackHeroGetTextureFromAtlas(TextureAtlas atlasHero){
+        Array<TextureAtlas.AtlasRegion> regions;
 
         //Animation Dark Hero
         regions = atlasHero.findRegions("black/stand/stand");
@@ -85,9 +132,6 @@ public class AssetHero implements IAssetSprite {
         regions = atlasHero.findRegions("black/death/death");
         blackHeroDeath = new Animation(0.5f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
-
-
-
     }
 
     @Override
@@ -100,59 +144,39 @@ public class AssetHero implements IAssetSprite {
         return 0;
     }
 
-    public Animation getWhiteHeroStand() {
-        return whiteHeroStand;
+    public HeroType getHeroType() {
+        return heroType;
     }
 
-    public Animation getWhiteHeroWalk() {
-        return whiteHeroWalk;
+    public TextureRegion getHeroStandStatic() {
+        return heroStandStatic;
     }
 
-    public Animation getWhiteHeroRun() {
-        return whiteHeroRun;
+    public Animation getHeroStand() {
+        return heroStand;
     }
 
-    public Animation getWhiteHeroPush() {
-        return whiteHeroPush;
+    public Animation getHeroWalk() {
+        return heroWalk;
     }
 
-    public Animation getWhiteHeroJump() {
-        return whiteHeroJump;
+    public Animation getHeroRun() {
+        return heroRun;
     }
 
-    public Animation getWhiteHeroFall() {
-        return whiteHeroFall;
+    public Animation getHeroPush() {
+        return heroPush;
     }
 
-    public Animation getWhiteHeroDeath() {
-        return whiteHeroDeath;
+    public Animation getHeroJump() {
+        return heroJump;
     }
 
-    public Animation getBlackHeroStand() {
-        return blackHeroStand;
+    public Animation getHeroFall() {
+        return heroFall;
     }
 
-    public Animation getBlackHeroWalk() {
-        return blackHeroWalk;
-    }
-
-    public Animation getBlackHeroRun() {
-        return blackHeroRun;
-    }
-
-    public Animation getBlackHeroPush() {
-        return blackHeroPush;
-    }
-
-    public Animation getBlackHeroJump() {
-        return blackHeroJump;
-    }
-
-    public Animation getBlackHeroFall() {
-        return blackHeroFall;
-    }
-
-    public Animation getBlackHeroDeath() {
-        return blackHeroDeath;
+    public Animation getHeroDeath() {
+        return heroDeath;
     }
 }

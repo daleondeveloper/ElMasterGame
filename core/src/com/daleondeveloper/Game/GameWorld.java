@@ -125,26 +125,26 @@ public class GameWorld {
         int backgroundid = prefs.getBackgroundId();
         prefs.setBackgroundId((backgroundid % 5)+1);
      //   prefs.save();
-        switch (backgroundid){
-            case 1:
-                assetBackground.getHelp_1();
-                break;
-            case 2:
-                assetBackground.getHelp_2();
-                break;
-            case 3:
-                assetBackground.getHelp_1();
-                break;
-            case 4:
-                assetBackground.getHelp_1();
-                break;
-            case 5:
-                assetBackground.getHelp_1();
-                break;
-            default:
-                assetBackground.getHelp_1();
-                break;
-        }
+//        switch (backgroundid){
+//            case 1:
+//                assetBackground.getHelp_1();
+//                break;
+//            case 2:
+//                assetBackground.getHelp_2();
+//                break;
+//            case 3:
+//                assetBackground.getHelp_1();
+//                break;
+//            case 4:
+//                assetBackground.getHelp_1();
+//                break;
+//            case 5:
+//                assetBackground.getHelp_1();
+//                break;
+//            default:
+//                assetBackground.getHelp_1();
+//                break;
+//        }
     }
 
     private void loadGames(){

@@ -37,7 +37,7 @@ public class Platform extends AbstractDynamicObject {
 
 
         AssetBlock assetBlock = Assets.getInstance().getAssetBlock();
-        assetPlatform = assetBlock.getBlockBlue();
+        assetPlatform = assetBlock.getBlockFire();
 
         setBounds(x,y,width,height);
         setRegion(assetPlatform);

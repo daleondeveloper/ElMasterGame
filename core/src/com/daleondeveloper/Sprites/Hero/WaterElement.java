@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 import com.daleondeveloper.Assets.Assets;
-import com.daleondeveloper.Assets.game.AssetWaterElement;
+import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Game.GameCamera;
@@ -77,14 +77,13 @@ public class WaterElement extends AbstractDynamicObject {
         this.playScreen = playScreen;
         this.gameWorld = gameWorld;
 
-        AssetWaterElement assetWaterElem = Assets.getInstance().getAssetWaterElement();
-        newHero = assetWaterElem.getNewHero();
-        elemStandAnim = assetWaterElem.getElementOfWaterStand();
-        elemWalkAnim = assetWaterElem.getElementOfWaterWalk();
-        elemPushAnim = assetWaterElem.getElementOfWaterPush();
-        elemJumpAnim = assetWaterElem.getElementOfWaterWalk();
-        elemDeathAnim = assetWaterElem.getElementOfWaterStand();
-        elemTexReg = assetWaterElem.getElementOfWater();
+        AssetHero assetWaterElem = Assets.getInstance().getAssetHero();
+        elemStandAnim = assetWaterElem.getHeroStand();
+        elemWalkAnim = assetWaterElem.getHeroRun();
+        elemPushAnim = assetWaterElem.getHeroPush();
+        elemJumpAnim = assetWaterElem.getHeroJump();
+        elemDeathAnim = assetWaterElem.getHeroDeath();
+        elemTexReg = assetWaterElem.getHeroStandStatic();
 
         setBounds(x,y, 8f,14f);
         setRegion(elemTexReg);

@@ -56,7 +56,7 @@ public class PlayScreen extends PlayAbstractScreen{
         hud.build();
         infoScreen.build();
         pauseScreen.build();
-        background = new Image(Assets.getInstance().getAssetGame().getGameFon());
+        background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
 
     }
 

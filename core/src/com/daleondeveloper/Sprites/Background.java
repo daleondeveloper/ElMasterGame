@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
+import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
@@ -33,8 +34,8 @@ public class Background extends AbstractDynamicObject {
         this.gameWorld = gameWorld;
 
 
-        AssetGUI assetBlock = Assets.getInstance().getAssetGUI();
-        assetPlatform = assetBlock.getBackground();
+        AssetGates assetBlock = Assets.getInstance().getAssetGates();
+        assetPlatform = assetBlock.getStaticMain();
 
         setBounds(x,y,width,height);
         setRegion(assetPlatform);
@@ -52,10 +53,10 @@ public class Background extends AbstractDynamicObject {
     }
 
     public void setRegionGates(){
-        setRegion(Assets.getInstance().getAssetGame().getGates());
+        setRegion(Assets.getInstance().getAssetGates().getStaticMain());
     }
     public void setRegionGameFon(){
-        setRegion(Assets.getInstance().getAssetGame().getGameFon());
+        setRegion(Assets.getInstance().getAssetBackground().getBackground());
     }
 
 
