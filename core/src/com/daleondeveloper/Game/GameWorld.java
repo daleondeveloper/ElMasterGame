@@ -104,9 +104,9 @@ public class GameWorld {
        // parallaxSB = new ParallaxSB(gameCamera);
         //background = new Image(Assets.getInstance().getAssetGame().getGameFon());
 //create background fon
-        background = new Background(this,0, 0,gameCamera.getWorldWidth(),gameCamera.getWorldHeight());
+        background = new Background(this,0, 0,0,0);
         gates = new Background(this,0,
-                0,gameCamera.getWorldWidth(),gameCamera.getWorldHeight());
+                0,0,0);
 //        gates = new Background(this,15,
 //                0,170,170 * 2);
         gates.setCenterY(gameCamera.getWorldHeight() / 2 + 3);

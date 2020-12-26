@@ -5,7 +5,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameCamera {
@@ -15,11 +17,16 @@ public class GameCamera {
 
     private OrthographicCamera camera;
     private Viewport viewPort;
+    private float width;
+    private float height;
 
     public GameCamera(){
 
         float width  = ElMaster.APPLICATION_WIDTH/PPM;
         float height = ElMaster.APPLICATION_HEIGHT/PPM;
+
+        this.width = width;
+        this.height = height;
 
         camera = new OrthographicCamera();
         viewPort = new FitViewport(width,height,camera);
@@ -28,9 +35,33 @@ public class GameCamera {
         int cameraHeight = Gdx.graphics.getHeight();
 
         viewPort.update(cameraWidth,cameraHeight,true);
+        viewPort.getLeftGutterWidth();
+
 
     }
 
+    public Viewport setFitViewPort(){
+        viewPort.setCamera(null);
+        viewPort = new FitViewport(width,height,camera);
+
+        int cameraWidth = Gdx.graphics.getWidth();
+        int cameraHeight = Gdx.graphics.getHeight();
+
+        viewPort.update(cameraWidth,cameraHeight,true);
+
+        return viewPort;
+
+    }
+    public Viewport setScreenViewport(){
+        viewPort.setCamera(null);
+        viewPort = new ScreenViewport(camera);
+
+        int cameraWidth = Gdx.graphics.getWidth();
+        int cameraHeight = Gdx.graphics.getHeight();
+
+        viewPort.update(cameraWidth,cameraHeight,true);
+        return viewPort;
+    }
     public void update(float deltaTime){
 
     }
@@ -49,7 +80,9 @@ public class GameCamera {
 //            viewPort.update(width,height,true);
 //
 //        }
-        viewPort.update(width, height, false);
+        this.width = width;
+        this.height = height;
+        viewPort.update(width, height, true);
     }
 
     public float getWorldWidth() {

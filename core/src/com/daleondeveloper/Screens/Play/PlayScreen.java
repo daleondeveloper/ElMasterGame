@@ -6,8 +6,11 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.*;
+import com.daleondeveloper.Screens.AbstractScreen;
+import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
 import com.daleondeveloper.Screens.GUI.PauseScreen;
@@ -25,6 +28,7 @@ public class PlayScreen extends PlayAbstractScreen{
     private Hud hud;
     private InfoScreen infoScreen;
     private PauseScreen pauseScreen;
+    private BackgroundScreen backgroundScreen;
     private Image background;
     private WorldController worldController;
     private GameWorld gameWorld;
@@ -39,6 +43,7 @@ public class PlayScreen extends PlayAbstractScreen{
         hud = new Hud(game,this);
         infoScreen = new InfoScreen(game,this);
         pauseScreen = new PauseScreen(game,this);
+        backgroundScreen = new BackgroundScreen(game,this);
 
 
         worldController = new WorldController(this);
@@ -53,6 +58,7 @@ public class PlayScreen extends PlayAbstractScreen{
 
     @Override
     public void show(){
+        backgroundScreen.build();
         hud.build();
         infoScreen.build();
         pauseScreen.build();
@@ -64,6 +70,7 @@ public class PlayScreen extends PlayAbstractScreen{
     @Override
     public void render(float deltaTime){
         //Update logic
+        backgroundScreen.update(deltaTime);
         pauseScreen.update(deltaTime);
         if(isPlayScreenStateRunning()){
             hud.update(deltaTime);
@@ -72,11 +79,16 @@ public class PlayScreen extends PlayAbstractScreen{
         }
 
         //Render logic
+        AbstractScreen.clearScr();
 
+       // gameWorld.getGameCamera().setScreenViewport();
+        backgroundScreen.render();
+//        Viewport viewport = gameWorld.getGameCamera().setFitViewPort();
         worldRenderer.render();
         hud.render();
         infoScreen.render();
         pauseScreen.render();
+//        viewport.update(viewport.getScreenWidth(),viewport.getScreenHeight());
 
         //Analys game result
         if(playScreenState == PlayScreenState.RUNNING){
@@ -118,7 +130,7 @@ public class PlayScreen extends PlayAbstractScreen{
                 }
 
                 // Game over
-                //gameWorld.getGameCamera().shake(SHAKE_DURATION, true);
+//                gameWorld.getGameCamera().shake(SHAKE_DURATION, true);
                 gameWorld.getWaterElement().onDead();
                 infoScreen.showGameOver();
                 endGame = true;
@@ -136,8 +148,9 @@ public class PlayScreen extends PlayAbstractScreen{
         // Place the menu background in the middle of the screen
         background.setX(0);
         background.setY(0);
-        background.setWidth(w);
-        background.setHeight(h);
+        background.setWidth(width);
+        background.setHeight(height);
+        backgroundScreen.resize(width,height);
         hud.resize(width, height);
         infoScreen.resize(width, height);
         pauseScreen.resize(width, height);
@@ -182,6 +195,7 @@ public class PlayScreen extends PlayAbstractScreen{
 
     @Override
     public void hide() {
+        backgroundScreen.dispose();
         hud.dispose();
         infoScreen.dispose();
         pauseScreen.dispose();
