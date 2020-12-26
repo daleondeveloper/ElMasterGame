@@ -105,14 +105,14 @@ public class GameWorld {
        // parallaxSB = new ParallaxSB(gameCamera);
         //background = new Image(Assets.getInstance().getAssetGame().getGameFon());
 //create background fon
-        background = new Background(this,0, 0,0,0);
-        gates = new Background(this,0,
-                0,0,0);
-//        gates = new Background(this,15,
-//                0,170,170 * 2);
-        gates.setCenterY(gameCamera.getWorldHeight() / 2 + 3);
+//        background = new Background(this,0, 0,0,0);
+//        gates = new Background(this,0,
+//                0,0,0);
+////        gates = new Background(this,15,
+////                0,170,170 * 2);
+//        gates.setCenterY(gameCamera.getWorldHeight() / 2 + 3);
 
-        gates.setRegionGates();
+//        gates.setRegionGates();
         backgroundGameFon = new Background(this,40,140,120,220);
         backgroundGameFon.setRegionGameFon();
         if (!DebugConstants.HIDE_BACKGROUND) {
@@ -151,28 +151,7 @@ public class GameWorld {
     private void loadGames(){
        waterElement.load();
        blockController.load();
-//       for(Block block : blockController.getArrayBlock()){
-//           if(Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*1.1f <= (block.getWidth() + waterElement.getWidth())/2 &&
-//           Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*0.95f <= (block.getHeight() + waterElement.getHeight())/2){
-//               if(block.getBodyPosition().x - waterElement.getBodyPosition().x >= 0){
-//                   block.getContactLeftBlockList().add(waterElement);
-//                   waterElement.getSensorRight().add(block);
-//               }else {
-//                   block.getContactRightBlockList().add(waterElement);
-//                   waterElement.getSensorLeft().add(block);
-//               }
-//           }
-//           if(Math.abs(block.getBodyPosition().y - waterElement.getBodyPosition().y)*1.1f <= (block.getHeight() + waterElement.getHeight())/2 &&
-//                   Math.abs(block.getBodyPosition().x - waterElement.getBodyPosition().x)*0.95f <= (block.getWidth() + waterElement.getWidth())/2){
-//               if(block.getBodyPosition().y - waterElement.getBodyPosition().y >= 0){
-//                   block.getContactDownList().add(waterElement);
-//                   waterElement.getSensorUp().add(block);
-//               }else{
-//                   block.getContactUpList().add(waterElement);
-//                   waterElement.getSensorDown().add(block);
-//               }
-//           }
-//       }
+
        for (Block blockA : blockController.getArrayBlock()){
            for(Block blockB : blockController.getArrayBlock()){
                if(blockA == blockB)continue;
@@ -222,8 +201,7 @@ public class GameWorld {
         regionLeft.update(deltaTime);
         regionRight.update(deltaTime);
         regionDown.update(deltaTime);
-        background.update(deltaTime);
-        gates.update(deltaTime);
+
         backgroundGameFon.update(deltaTime);
         updateBlock(deltaTime);
         updatePlatform(deltaTime);
@@ -278,7 +256,7 @@ private void updatePlatform(float deltaTime){
     public void render(SpriteBatch batch) {
         // This order is important.
         // This determines if a sprite has to be drawn in front or behind another sprite.
-        background.render(batch);
+     //   background.render(batch);
         backgroundGameFon.render(batch);
         waterElement.render(batch);
       //  regionLeft.render(batch);
@@ -286,7 +264,7 @@ private void updatePlatform(float deltaTime){
        // regionDown.render(batch);
         renderBlock(batch);
         renderPlatform(batch);
-        gates.render(batch);
+//        gates.render(batch);
       //  firstLineBlockChecker.render(batch);
 
     }

@@ -9,7 +9,7 @@ bowl/left/left_bowl
   size: 123, 196
   orig: 1260, 840
   offset: 394, 454
-  index: 7
+  index: 3
 bowl/left/left_bowl
   rotate: false
   xy: 501, 677
@@ -23,35 +23,35 @@ bowl/left/left_bowl
   size: 123, 233
   orig: 1260, 840
   offset: 394, 454
-  index: 3
+  index: 7
 bowl/right/right_bowl
   rotate: false
   xy: 185, 261
   size: 123, 189
   orig: 1260, 840
   offset: 728, 454
-  index: 4
+  index: 1
 bowl/right/right_bowl
   rotate: false
   xy: 126, 677
   size: 123, 219
   orig: 1260, 840
   offset: 728, 454
-  index: 6
+  index: 2
 bowl/right/right_bowl
   rotate: false
   xy: 310, 261
   size: 123, 194
   orig: 1260, 840
   offset: 728, 454
-  index: 1
+  index: 3
 bowl/right/right_bowl
   rotate: false
   xy: 376, 677
   size: 123, 224
   orig: 1260, 840
   offset: 728, 454
-  index: 3
+  index: 4
 bowl/right/right_bowl
   rotate: false
   xy: 1, 677
@@ -65,7 +65,7 @@ bowl/right/right_bowl
   size: 123, 223
   orig: 1260, 840
   offset: 728, 454
-  index: 2
+  index: 6
 bowl/right/right_bowl
   rotate: false
   xy: 626, 677
@@ -336,14 +336,14 @@ bowl/left/left_bowl
   size: 418, 224
   orig: 1260, 840
   offset: 394, 454
-  index: 5
+  index: 1
 bowl/left/left_bowl
   rotate: false
   xy: 421, 1
   size: 418, 224
   orig: 1260, 840
   offset: 394, 454
-  index: 1
+  index: 2
 bowl/left/left_bowl
   rotate: false
   xy: 1, 227
@@ -357,10 +357,10 @@ bowl/left/left_bowl
   size: 416, 224
   orig: 1260, 840
   offset: 394, 454
-  index: 2
+  index: 5
 
 gates-3.png
-size: 627, 739
+size: 984, 739
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -370,4 +370,11 @@ gates_stairs_colum&dragon
   size: 625, 737
   orig: 1260, 840
   offset: 317, 0
+  index: -1
+play_block_background
+  rotate: false
+  xy: 628, 1
+  size: 355, 650
+  orig: 355, 650
+  offset: 0, 0
   index: -1

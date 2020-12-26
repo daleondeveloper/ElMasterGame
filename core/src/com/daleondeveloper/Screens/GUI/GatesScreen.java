@@ -31,6 +31,7 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
     private Image portalImage;
     private Image gates;
     private Image menuBg;
+    private Image playBackground;
 
     private Animation rightBowl;
     private Animation leftBowl;
@@ -63,6 +64,10 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
 //        }
         menuBg.setHeight(h * 0.84f);
         menuBg.setY(0);
+        playBackground.setX(w * 14f);
+        playBackground.setY(h * 14f);
+        playBackground.setWidth(w * 0.85f);
+        playBackground.setHeight(h * 0.77f);
 
         gates.setY(menuBg.getY() + 310);
         gates.setX(menuBg.getX() + 185);
@@ -93,6 +98,10 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         image = new Image(assetGates.getStaticMain());
         image.setName("menuBg");
         menuBg = image;
+
+        image = new Image(assetGates.getPlay_background());
+        image.setName("playBackGround");
+        playBackground = image;
 
         //Dragon
         image = new Image(assetGates.getDragonHead());
@@ -135,6 +144,7 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
 
 
         // Buttons
+        stage.addActor(playBackground);
         stage.addActor(menuBg);
       //  stage.addActor(gates);
         stage.addActor(portalImage);
@@ -181,6 +191,7 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         portalImage.setHeight(h * portalImage.getHeight() / 840);
 
         stage.clear();
+        stage.addActor(playBackground);
         stage.addActor(menuBg);
       //  stage.addActor(gates);
         stage.addActor(portalImage);

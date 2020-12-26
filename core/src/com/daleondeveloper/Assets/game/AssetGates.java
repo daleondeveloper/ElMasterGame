@@ -18,6 +18,7 @@ public class AssetGates implements IAssetSprite {
     private DragonName dragonName;
 
     private TextureRegion staticMain;
+    private TextureRegion play_background;
     private TextureRegion closedGates;
     private TextureRegion dragonHead;
     private TextureRegion dragonLeftHandWithSphere;
@@ -51,6 +52,7 @@ public class AssetGates implements IAssetSprite {
         dragonName = DragonName.BLACK_DRAGON;
         staticMain = atlasGates.findRegion("gates_stairs_colum&dragon");
         closedGates = atlasGates.findRegion("open/gate_open",1);
+        play_background =atlasGates.findRegion("play_block_background");
 
         //animation
         regions = atlasGates.findRegions("portal/portal");
@@ -156,8 +158,13 @@ public class AssetGates implements IAssetSprite {
         return 0;
     }
 
+
     public TextureRegion getStaticMain() {
         return staticMain;
+    }
+
+    public TextureRegion getPlay_background() {
+        return play_background;
     }
 
     public TextureRegion getClosedGates() {

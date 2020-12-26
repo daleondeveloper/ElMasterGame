@@ -56,7 +56,7 @@ public class Background extends AbstractDynamicObject {
         setRegion(Assets.getInstance().getAssetGates().getStaticMain());
     }
     public void setRegionGameFon(){
-        setRegion(Assets.getInstance().getAssetBackground().getBackground());
+        setRegion(Assets.getInstance().getAssetGates().getPlay_background());
     }
 
 
