@@ -74,31 +74,31 @@ public class AssetHero implements IAssetSprite {
 
         //Animation White Hero
         regions = atlasHero.findRegions("white/stand/stand");
-        whiteHeroStand = new Animation(0.5f/24.0f, regions, Animation.PlayMode.LOOP);
+        whiteHeroStand = new Animation(3f/24.0f, regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlasHero.findRegions("white/walk/walk");
-        whiteHeroWalk = new Animation(0.5f/24.0f, regions, Animation.PlayMode.LOOP);
+        whiteHeroWalk = new Animation(2f/24.0f, regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlasHero.findRegions("white/run/run");
-        whiteHeroRun = new Animation(0.5f/24.0f, regions, Animation.PlayMode.LOOP);
+        whiteHeroRun = new Animation(1f/24.0f, regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlasHero.findRegions("white/push/push");
-        whiteHeroPush = new Animation(0.5f/24.0f, regions, Animation.PlayMode.LOOP);
+        whiteHeroPush = new Animation(2f/24.0f, regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlasHero.findRegions("white/jump/jump");
-        whiteHeroJump = new Animation(0.5f/24.0f, regions, Animation.PlayMode.NORMAL);
+        whiteHeroJump = new Animation(2f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
         regions = atlasHero.findRegions("white/fall/fall");
-        whiteHeroFall = new Animation(0.5f/24.0f, regions, Animation.PlayMode.NORMAL);
+        whiteHeroFall = new Animation(2f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
         regions = atlasHero.findRegions("white/death/death");
-        whiteHeroDeath = new Animation(0.5f/24.0f, regions, Animation.PlayMode.NORMAL);
+        whiteHeroDeath = new Animation(2f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
     }
     private void blackHeroGetTextureFromAtlas(TextureAtlas atlasHero){

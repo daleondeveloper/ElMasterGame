@@ -81,7 +81,7 @@ public class GameWorld {
         //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
-        firstLineBlockChecker = new GameSensor(playScreen,this,45,DOWN_REGION + 5,90,1);
+        firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 //        blockController.addBlock(5,30);
 //        blockController.addBlock(15,30);
 //        blockController.addBlock(25,30);
@@ -95,8 +95,8 @@ public class GameWorld {
 
         //Regions ( create regions around the playing zone for player and game element)
         regionDown = new Platform(this,0,DOWN_REGION - 10,gameCamera.getWorldWidth(),10);
-        regionLeft = new Platform(this,35,0,5,gameCamera.getWorldHeight());
-        regionRight = new Platform(this,160,0,5,gameCamera.getWorldHeight());
+        regionLeft = new Platform(this,45,0,5,gameCamera.getWorldHeight());
+        regionRight = new Platform(this,150,0,5,gameCamera.getWorldHeight());
         System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
 
 

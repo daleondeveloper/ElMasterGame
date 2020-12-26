@@ -246,6 +246,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
     }
     public void onDead(){
+        stateTime = 0;
         currentState = State.DEAD;
     }
 
@@ -394,7 +395,7 @@ public class WaterElement extends AbstractDynamicObject {
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
 //            setRegion(newHero);
-            if(!moveRight){setFlip(true,false);}
+            if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateJump(float deltaTime){
@@ -413,9 +414,9 @@ public class WaterElement extends AbstractDynamicObject {
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
             // Update this Sprite to correspond with the position of the Box2D body.
-            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
+            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false));
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        if(!moveRight){setFlip(true,false);}
+        if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateFall(float deltaTime){
@@ -441,9 +442,9 @@ public class WaterElement extends AbstractDynamicObject {
             }
             body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
 
-            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
+            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false));
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        if(!moveRight){setFlip(true,false);}
+        if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void statePush(float deltaTime){
@@ -478,9 +479,9 @@ public class WaterElement extends AbstractDynamicObject {
             }
 
             // Update this Sprite to correspond with the position of the Box2D body.
-            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, true));
+            setRegion((TextureRegion) elemPushAnim.getKeyFrame(stateTime, false));
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        if(!moveRight){setFlip(true,false);}
+        if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateWalk(float deltaTime){
@@ -501,14 +502,28 @@ public class WaterElement extends AbstractDynamicObject {
             // Update this Sprite to correspond with the position of the Box2D body.
             setRegion((TextureRegion) elemWalkAnim.getKeyFrame(stateTime, true));
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        if(!moveRight){setFlip(true,false);}
+        if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateDead(float deltaTime){
-            gameWorld.destroyBody(body);
-            body = null;
-            currentState = State.DISPOSE;
-        }
+            if(stateTime > elemDeathAnim.getAnimationDuration()) {
+                gameWorld.destroyBody(body);
+                body = null;
+                currentState = State.DISPOSE;
+            }else {
+                TextureRegion textureRegion = (TextureRegion) elemDeathAnim.getKeyFrame(stateTime, false);
+                //body.
+                setRegion(textureRegion);
+//                setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+                setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                        textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
+                if (moveRight) {
+                    setFlip(true, false);
+                }
+                stateTime += deltaTime;
+            }
+    }
+
 
 
     @Override

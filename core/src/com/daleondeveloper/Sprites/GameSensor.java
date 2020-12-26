@@ -76,7 +76,7 @@ public class GameSensor extends AbstractDynamicObject {
     @Override
     public void update(float deltaTime) {
 
-        if(firstLineBlocks.size() > 11){
+        if(firstLineBlocks.size() > 9){
             int blockCountInFirstLine = 0;
             for(Block block : firstLineBlocks){
                 if(block.isIdle()){
