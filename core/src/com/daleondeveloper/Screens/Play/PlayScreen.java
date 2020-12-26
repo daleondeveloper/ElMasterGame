@@ -11,6 +11,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.*;
 import com.daleondeveloper.Screens.AbstractScreen;
 import com.daleondeveloper.Screens.GUI.BackgroundScreen;
+import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
 import com.daleondeveloper.Screens.GUI.PauseScreen;
@@ -29,6 +30,8 @@ public class PlayScreen extends PlayAbstractScreen{
     private InfoScreen infoScreen;
     private PauseScreen pauseScreen;
     private BackgroundScreen backgroundScreen;
+    private GatesScreen gatesScreen;
+
     private Image background;
     private WorldController worldController;
     private GameWorld gameWorld;
@@ -44,6 +47,7 @@ public class PlayScreen extends PlayAbstractScreen{
         infoScreen = new InfoScreen(game,this);
         pauseScreen = new PauseScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
+        gatesScreen = new GatesScreen(game,this);
 
 
         worldController = new WorldController(this);
@@ -59,6 +63,7 @@ public class PlayScreen extends PlayAbstractScreen{
     @Override
     public void show(){
         backgroundScreen.build();
+        gatesScreen.build();
         hud.build();
         infoScreen.build();
         pauseScreen.build();
@@ -72,6 +77,7 @@ public class PlayScreen extends PlayAbstractScreen{
         //Update logic
         backgroundScreen.update(deltaTime);
         pauseScreen.update(deltaTime);
+        gatesScreen.update(deltaTime);
         if(isPlayScreenStateRunning()){
             hud.update(deltaTime);
             infoScreen.update(deltaTime);
@@ -85,6 +91,7 @@ public class PlayScreen extends PlayAbstractScreen{
         backgroundScreen.render();
 //        Viewport viewport = gameWorld.getGameCamera().setFitViewPort();
         worldRenderer.render();
+        gatesScreen.render();
         hud.render();
         infoScreen.render();
         pauseScreen.render();
@@ -151,6 +158,7 @@ public class PlayScreen extends PlayAbstractScreen{
         background.setWidth(width);
         background.setHeight(height);
         backgroundScreen.resize(width,height);
+        gatesScreen.resize(width,height);
         hud.resize(width, height);
         infoScreen.resize(width, height);
         pauseScreen.resize(width, height);
