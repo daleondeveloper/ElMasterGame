@@ -83,13 +83,13 @@ public class GameSensor extends AbstractDynamicObject {
                     blockCountInFirstLine++;
                 }
             }
-            if(blockCountInFirstLine > 11) {
+            if(blockCountInFirstLine > 9) {
                 for (Block block : firstLineBlocks) {
                     block.delete();
                 }
-
                 playScreen.getHud().addScore(10);
-                Block.setFall_velocity(-50 - playScreen.getHud().getScore()/4 );
+                Block.setFall_velocity(-100 - playScreen.getHud().getScore()/4 );
+                gameWorld.setTimeCreateBlock(101);
             }
         }
 

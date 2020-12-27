@@ -60,7 +60,7 @@ public class GameWorld {
         rightButtonPressed = false;
         leftButtonPressed = false;
 
-        timeCreateBlock = 0;
+        timeCreateBlock = 101;
         offSetY = 0;
 
         createSprites();
@@ -82,16 +82,7 @@ public class GameWorld {
         waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
 
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
-//        blockController.addBlock(5,30);
-//        blockController.addBlock(15,30);
-//        blockController.addBlock(25,30);
-//        blockController.addBlock(35,30);
-//        blockController.addBlock(45,30);
-//        blockController.addBlock(55,30);
-//        blockController.addBlock(65,30);
-//        blockController.addBlock(75,30);
-//        blockController.addBlock(85,30);
-//        blockController.addBlock(95,30);
+
 
         //Regions ( create regions around the playing zone for player and game element)
         regionDown = new Platform(this,0,DOWN_REGION - 10,gameCamera.getWorldWidth(),10);
@@ -102,17 +93,7 @@ public class GameWorld {
 
     }
     private void createBackground(){
-       // parallaxSB = new ParallaxSB(gameCamera);
-        //background = new Image(Assets.getInstance().getAssetGame().getGameFon());
-//create background fon
-//        background = new Background(this,0, 0,0,0);
-//        gates = new Background(this,0,
-//                0,0,0);
-////        gates = new Background(this,15,
-////                0,170,170 * 2);
-//        gates.setCenterY(gameCamera.getWorldHeight() / 2 + 3);
 
-//        gates.setRegionGates();
         backgroundGameFon = new Background(this,40,140,120,220);
         backgroundGameFon.setRegionGameFon();
         if (!DebugConstants.HIDE_BACKGROUND) {
@@ -208,6 +189,8 @@ public class GameWorld {
         centerCamera(deltaTime);
         firstLineBlockChecker.update(deltaTime);
 
+        blockController.update(deltaTime);
+
         checkPressedButtons();
         this.gameCamera.update(deltaTime);
 
@@ -223,7 +206,7 @@ public class GameWorld {
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 1){
+        if(timeCreateBlock > 100){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }
@@ -366,5 +349,13 @@ private void renderPlatform(SpriteBatch batch) {
 
     public GameSensor getFirstLineBlockChecker() {
         return firstLineBlockChecker;
+    }
+
+    public float getTimeCreateBlock() {
+        return timeCreateBlock;
+    }
+
+    public void setTimeCreateBlock(float timeCreateBlock) {
+        this.timeCreateBlock = timeCreateBlock;
     }
 }

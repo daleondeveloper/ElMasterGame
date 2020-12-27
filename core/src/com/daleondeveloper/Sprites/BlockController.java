@@ -18,6 +18,8 @@ public class BlockController {
     private List<Block> arrayBlock ;
     private GameWorld gameWorld;
     private PlayScreen playScreen;
+    private Random rnd;
+    private Block lastCreateBlock;
 
 
     public BlockController (PlayScreen playScreen, GameWorld gameWorld) {
@@ -26,12 +28,23 @@ public class BlockController {
 
         arrayBlock = new ArrayList<Block>(10);
 
+        rnd = new Random ();
+
     }
+    public void update(float deltaTime){
+        if(lastCreateBlock != null && lastCreateBlock.isIdle()){
+            if(lastCreateBlock.getY() > 300){
+                lastCreateBlock.delete();
+            }
+            gameWorld.setTimeCreateBlock(101);
+        }
+    }
+
     public boolean addBlock (){
-        Random rnd = new Random ();
-        Block block = new Block(gameWorld,(float)rnd.nextInt(10)*10+50,gameWorld.getGameCamera().getWorldHeight()-30,9.94f,9.94f);
-        arrayBlock.add(block);
-        block.fall();
+        lastCreateBlock = new Block(gameWorld,(float)rnd.nextInt(10)*10+50,gameWorld.getGameCamera().getWorldHeight()-30,9.94f,9.94f);
+        arrayBlock.add(lastCreateBlock);
+        lastCreateBlock.fall();
+
         return true;
     }
     public boolean addBlock(float x, float y){

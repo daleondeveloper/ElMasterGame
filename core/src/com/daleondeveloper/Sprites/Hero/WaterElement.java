@@ -266,12 +266,12 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        checkContacts();
         if(body != null) {
             body.setGravityScale(10);
         } else {
             return;
         }
+        checkContacts();
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);

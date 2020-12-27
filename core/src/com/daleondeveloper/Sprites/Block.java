@@ -19,13 +19,14 @@ import com.daleondeveloper.Sprites.Hero.WaterElement;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
 
-    private static float fall_velocity = -50;
+    private static float fall_velocity = -100;
 
     private enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
@@ -69,7 +70,8 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockSnow());
         assetBlocks.add(assets.getBlockWater());
 
-        textureRegionBlock = assetBlocks.get(1);
+
+        textureRegionBlock = assetBlocks.get(new Random().nextInt(4));
 
         // Sets initial values for position, width and height and initial frame as jumperStand.
         setBounds(x, y, width, height);
@@ -333,6 +335,10 @@ public class Block extends AbstractDynamicObject {
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.StaticBody);
 
+        if(getY() > 300){
+            delete();
+            return;
+        }
         //Check the correctness of the list of the lower sensor every 1 second
         if(stateTime > 1){
             stateTime = 0;
@@ -363,7 +369,7 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        textureRegionBlock = assetBlocks.get(1);
+//        textureRegionBlock = assetBlocks.get(1);
         setRegion(textureRegionBlock);
 
         stateTime += deltaTime;
@@ -402,7 +408,7 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        textureRegionBlock =assetBlocks.get(2);
+//        textureRegionBlock =assetBlocks.get(2);
         setRegion(textureRegionBlock);
 
         stateTime += deltaTime;
@@ -429,7 +435,7 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        textureRegionBlock = assetBlocks.get(3);
+//        textureRegionBlock = assetBlocks.get(3);
         setRegion(textureRegionBlock);
         stateTime += deltaTime;
     }
