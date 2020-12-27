@@ -9,10 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
+import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -42,15 +44,23 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     private Assets assets;
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
+    private Table mainTable;
+
     private Label.LabelStyle labelStyleBig;
+    private Label.LabelStyle labelStyleSmall;
     private Image screenPauseBg;
     private Image pauseWindow;
+    private Image resume;
+    private Image mainMenu;
+    private Image audio;
+    private Image settings;
+    private Image restart;
+
     private Label pauseLabel;
-    private ImageButton resume;
-    private ImageButton mainMenu;
-    private ImageButton audio;
-    private ImageButton settings;
-    private ImageButton restart;
+    private Label resumeLabel;
+    private Label restartLabel;
+    private Label mainMenuLabel;
+    private Label settingsLabel;
 
     public PauseScreen(ElMaster game, PlayScreen playScreen) {
         super(game);
@@ -63,10 +73,18 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         // Styles
         labelStyleBig = new Label.LabelStyle();
         labelStyleBig.font = assets.getAssetFonts().getBig();
+        labelStyleSmall = new Label.LabelStyle();
+        labelStyleSmall.font = assets.getAssetFonts().getSmall();
     }
 
     @Override
     public void build() {
+//        mainTable = new Table();
+//        mainTable.setDebug(DebugConstants.DEBUG_LINES);
+//        mainTable.center();
+//        mainTable.setFillParent(true);
+//        mainTable.add(getBottomTable()).height(stage.getHeight() * 0.1f);
+//        stage.addActor(mainTable);
         // Background
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         pixmap.setColor(255, 0, 0, DIM_ALPHA);
@@ -81,37 +99,40 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
 
         // Title
         pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleBig);
+        resumeLabel = new Label(i18NGameThreeBundle.format("pauseScreen.resume"), labelStyleSmall);
+        restartLabel = new Label(i18NGameThreeBundle.format("pauseScreen.restart"), labelStyleSmall);
+        mainMenuLabel = new Label(i18NGameThreeBundle.format("pauseScreen.mainMenu"), labelStyleSmall);
+        settingsLabel = new Label(i18NGameThreeBundle.format("pauseScreen.settings"), labelStyleSmall);
         //stage.addActor(pauseLabel);
 
         // Buttons
         defineButtons();
         stage.addActor(mainMenu);
-        stage.addActor(audio);
+//        stage.addActor(audio);
         stage.addActor(settings);
         stage.addActor(restart);
         stage.addActor(resume);
+        stage.addActor(pauseLabel);
+        stage.addActor(resumeLabel);
+        stage.addActor(restartLabel);
+        stage.addActor(mainMenuLabel);
+        stage.addActor(settingsLabel);
 
         // Initially hidden
         setVisible(false);
     }
 
     private void defineButtons() {
-        resume = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
-                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
+        resume = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
-        mainMenu = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
-                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
+        mainMenu = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
-        audio = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
-        audio.setChecked(!prefs.isAudio());
+        audio = new Image(new TextureRegionDrawable(assetGUI.getButtonStart()));
+        //audio.setChecked(!prefs.isAudio());
 
-        settings = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
-                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
+        settings = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
-        restart = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()),
-                new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
+        restart = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
         // Events
         resume.addListener(ListenerHelper.runnableListener(new Runnable() {
@@ -120,11 +141,19 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
                 playScreen.setGameStateRunning();
             }
         }));
-        mainMenu.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
+        resumeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                playScreen.setGameStateRunning();
+            }
+        }));
+
+        mainMenu.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
+        mainMenuLabel.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
         audio.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                prefs.setAudio(!audio.isChecked());
+              //  prefs.setAudio(!audio.isChecked());
                 prefs.save();
                 AudioManager.getInstance().onSettingsUpdated();
             }
@@ -135,20 +164,40 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
                 rateGame();
             }
         }));
+        settingsLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                rateGame();
+            }
+        }));
+
         restart.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
                 GameSettings.getInstance().deleteSave();
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }
         }));
+        restartLabel.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                GameSettings.getInstance().deleteSave();
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
+
+            }
+        }));
+
     }
 
     private void setVisible(boolean visible) {
         screenPauseBg.setVisible(visible);
         pauseWindow.setVisible(visible);
         pauseLabel.setVisible(visible);
+        resumeLabel.setVisible(visible);
+        restartLabel.setVisible(visible);
+        mainMenuLabel.setVisible(visible);
+        settingsLabel.setVisible(visible);
         resume.setVisible(visible);
         mainMenu.setVisible(visible);
         audio.setVisible(false);
@@ -167,8 +216,11 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         screenPauseBg.setSize(w, h);
 
         // Place the title
-        pauseLabel.setX((w - pauseLabel.getWidth()) / 2);
-        pauseLabel.setY((h - pauseLabel.getHeight()) / 2 + TITLE_OFFSET_Y);
+        pauseWindow.setWidth(w);
+        pauseWindow.setHeight(h * 0.425f);
+        pauseWindow.setX((w - pauseLabel.getWidth()) / 2);
+        pauseWindow.setY((h - pauseLabel.getHeight()) / 2 + TITLE_OFFSET_Y);
+
 
         // Place buttons
         placeButtons(w, h);
@@ -178,18 +230,58 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
             setButtonsAnimation();
         }
     }
+    private Table getBottomTable() {
+        // containerPerfectJump = getContainerPerfectJump();
+
+        Table table = new Table();
+        table.setDebug(DebugConstants.DEBUG_LINES);
+        table.center();
+        table.add(resume).row();
+        table.add(mainMenu).row();
+        table.add(settings).row();
+        table.add(restart).row();
+
+        return table;
+    }
 
     private void placeButtons(float width, float height) {
-        resume.setX((width - resume.getWidth()) / 2);
-        resume.setY((height - resume.getHeight()) / 2 - BUTTONS_OFFSET_Y);
+//        resume.setX((width - resume.getWidth()) / 2);
+//        resume.setY((height - resume.getHeight()) / 2 - BUTTONS_OFFSET_Y);
         float x = width / 2;
         float y = height / 2;
         pauseWindow.setPosition(x - pauseWindow.getWidth() / 2, y - pauseWindow.getHeight() / 2);
-        resume.setPosition(x - resume.getWidth() / 2, y + 75);
-        mainMenu.setPosition(x - resume.getWidth() / 2, y + 25);
+        resume.setWidth(pauseWindow.getWidth() * 0.6f);
+        resume.setHeight(pauseWindow.getHeight() / 8);
+        resume.setPosition(x - resume.getWidth() / 2, height * 0.55f);
+        resumeLabel.setFontScale(width / 750, height / 1500);
+        resumeLabel.setPosition(resume.getX() + resume.getWidth()/2 - resumeLabel.getPrefWidth() / 2 ,
+                resume.getY()  + resume.getHeight() * 0.8f - resumeLabel.getPrefHeight() / 2);
+
+        mainMenu.setWidth(pauseWindow.getWidth() * 0.6f);
+        mainMenu.setHeight(pauseWindow.getHeight() / 8);
+        mainMenu.setPosition(x - resume.getWidth() / 2, resume.getY() - mainMenu.getHeight() * 1.2f);
+        mainMenuLabel.setFontScale(width / 750, height / 1500);
+        mainMenuLabel.setPosition(mainMenu.getX() + mainMenu.getWidth()/2 - mainMenuLabel.getPrefWidth() / 2 ,
+                mainMenu.getY()  + mainMenu.getHeight() * 0.8f - mainMenuLabel.getPrefHeight() / 2);
+
         //audio.setPosition(x, y);
-        settings.setPosition(x - settings.getWidth() / 2, y - 25);
-        restart.setPosition(x - restart.getWidth() / 2, y - 75);
+        settings.setWidth(pauseWindow.getWidth() * 0.6f);
+        settings.setHeight(pauseWindow.getHeight() / 8);
+        settings.setPosition(x - settings.getWidth() / 2, mainMenu.getY() - settings.getHeight() * 1.2f);
+        settingsLabel.setFontScale(width / 750, height / 1500);
+        settingsLabel.setPosition(settings.getX() + settings.getWidth()/2 - settingsLabel.getPrefWidth() / 2 ,
+                settings.getY()  + settings.getHeight() * 0.8f - settingsLabel.getPrefHeight() / 2);
+
+        restart.setWidth(pauseWindow.getWidth() * 0.6f);
+        restart.setHeight(pauseWindow.getHeight() / 8);
+        restart.setPosition(x - restart.getWidth() / 2, settings.getY() - restart.getHeight() * 1.2f);
+        restartLabel.setFontScale(width / 750, height / 1500);
+        restartLabel.setPosition(restart.getX() + restart.getWidth()/2 - restartLabel.getPrefWidth() / 2 ,
+                restart.getY()  + restart.getHeight() * 0.8f - restartLabel.getPrefHeight() / 2);
+
+        pauseLabel.setFontScale(width / 500, height / 1000);
+        pauseLabel.setPosition(resume.getX() + resume.getWidth()/2 - pauseLabel.getPrefWidth() / 2 ,
+                resume.getY()  + resume.getHeight() * 1.9f  - pauseLabel.getPrefHeight() / 2);
     }
 
     public boolean isPauseScreenVisible() {

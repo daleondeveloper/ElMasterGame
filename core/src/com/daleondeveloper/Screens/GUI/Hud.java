@@ -99,12 +99,13 @@ public class Hud extends GUIOverlayAbstractScreen {
         stage.addActor(gameButtonPush);
         stage.addActor(gameButtonLeft);
         stage.addActor(gameButtonRight);
+        stage.addActor(scoreLabel);
 
     }
 
     private void defineButtons(){
-        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
-        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
+        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
+        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
         gameButtonJump = new Image(new TextureRegionDrawable(assetGUI.getButtonJump()));
         gameButtonPush = new Image(new TextureRegionDrawable(assetGUI.getButtonPush()));
         ;
@@ -160,33 +161,16 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
                 playScreen.getInputProcessor().keyUp(62);
             }
         }));
-
-
-
-//gameButtonJump.addListener(ListenerHelper.runnableListener(new Runnable() {
-//            @Override
-//            public void run() {
-//                if(gameButtonJump.getTouchable() == Touchable.enabled) {
-//                    playScreen.getInputProcessor().keyDown(62);
-//                }
-//                if(gameButtonJump.getTouchable() == Touchable.disabled){
-//                    playScreen.getInputProcessor().keyUp(62);
-//                }
-//            }
-//
-//        }));
-
-
     }
 
     private Table getTopTable() {
         scoreLabel = new Label(String.valueOf(score), labelStyleBig);
 
         Table table = new Table();
-        table.setDebug(DebugConstants.DEBUG_LINES);
-        table.top();
-        table.add(scoreLabel);
-        table.padTop(PAD_TOP);
+//        table.setDebug(DebugConstants.DEBUG_LINES);
+//        table.bottom();
+//        table.add(scoreLabel);
+//        table.padTop(PAD_TOP);
         return table;
     }
 
@@ -269,14 +253,15 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         gameWindow.setWidth(stage.getWidth());
         gameWindow.setHeight(stage.getHeight() / 3);
 
-        gameButtonPush.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.1f, gameWindow.getY()  + gameWindow.getHeight() * 0.42f);
+        gameButtonJump.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.1f , gameWindow.getY() + gameWindow.getHeight() * 0.1f);
+        gameButtonJump.setWidth(gameWindow.getWidth() *0.179f);
+        gameButtonJump.setHeight(gameWindow.getHeight() * 0.3125f);
+
+        gameButtonPush.setPosition(gameButtonJump.getX() + gameButtonJump.getWidth(), gameWindow.getY()  + gameWindow.getHeight() * 0.42f);
 
         gameButtonPush.setWidth(gameWindow.getWidth() *0.179f);
         gameButtonPush.setHeight(gameWindow.getHeight() * 0.3125f);
 
-        gameButtonJump.setPosition(gameButtonPush.getX() + gameButtonPush.getWidth() , gameWindow.getY() + gameWindow.getHeight() * 0.1f);
-        gameButtonJump.setWidth(gameWindow.getWidth() *0.179f);
-        gameButtonJump.setHeight(gameWindow.getHeight() * 0.3125f);
 
         gameButtonRight.setWidth(gameWindow.getWidth() * 0.179f);
         gameButtonRight.setHeight(gameWindow.getHeight() * 0.367f);
@@ -288,7 +273,10 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         gameButtonLeft.setPosition(gameButtonRight.getX() - gameButtonLeft.getWidth() * 1.1f,
                 gameWindow.getY() + gameWindow.getHeight() / 4);
 
-        scoreLabel.setFontScaleX(x * 0.005f);
+//        scoreLabel.setFontScaleX();
+        scoreLabel.setFontScaleX(x / 500);
+        scoreLabel.setFontScaleY(y / 1000);
+        scoreLabel.setPosition(x * 0.9f ,y * 0.48f);
        // fpsLabel.setFontScaleX();
 //        scoreLabel.setPosition(x - (scoreLabel.getWidth() / 2),stage.getHeight() * 0.8f);
        // fpsLabel.setPosition(x - (fpsLabel.getWidth() / 2),stage.getHeight() * 0.5f);
