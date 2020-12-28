@@ -10,6 +10,8 @@ import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
+import com.daleondeveloper.Screens.GUIAbstractScreen;
+
 
 public class SplashScreen extends GUIAbstractScreen {
     private static final String TAG = SplashScreen.class.getName();

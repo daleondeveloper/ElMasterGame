@@ -18,6 +18,7 @@ import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
+import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 
 /**
  * Created by AGMCORP on 10/14/2018.
@@ -94,7 +95,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 GameSettings.getInstance().save();
-                playScreen.setGameStatePaused();
+                playScreen.setStatePaused();
 
             }
         }));

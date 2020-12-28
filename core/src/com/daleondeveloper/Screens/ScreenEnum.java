@@ -1,7 +1,7 @@
 package com.daleondeveloper.Screens;
 
 import com.daleondeveloper.Game.ElMaster;
-import com.daleondeveloper.Screens.GUI.MainMenuScreen;
+import com.daleondeveloper.Screens.Play.MainMenuScreen;
 import com.daleondeveloper.Screens.GUI.SplashScreen;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 

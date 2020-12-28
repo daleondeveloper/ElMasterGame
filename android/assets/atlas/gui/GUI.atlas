@@ -1,4 +1,4 @@
-gui.png
+GUI.png
 size: 954, 1377
 format: RGBA8888
 filter: Linear,Linear
@@ -12,28 +12,28 @@ button/button_help
   index: -1
 button/button_highscore
   rotate: false
-  xy: 457, 153
+  xy: 305, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_jump
   rotate: false
-  xy: 305, 153
+  xy: 609, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_left
   rotate: false
-  xy: 571, 1
+  xy: 593, 1
   size: 126, 146
   orig: 126, 146
   offset: 0, 0
   index: -1
 button/button_pause
   rotate: false
-  xy: 609, 153
+  xy: 457, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
@@ -47,14 +47,14 @@ button/button_push
   index: -1
 button/button_right
   rotate: false
-  xy: 443, 1
+  xy: 465, 1
   size: 126, 146
   orig: 126, 146
   offset: 0, 0
   index: -1
 button/button_settings
   rotate: false
-  xy: 699, 1
+  xy: 721, 1
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
@@ -66,9 +66,16 @@ button/button_start
   orig: 258, 256
   offset: 0, 0
   index: -1
-panel/button_panel
+button/button_X
   rotate: false
   xy: 1, 1
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: -1
+panel/button_panel
+  rotate: false
+  xy: 23, 1
   size: 440, 100
   orig: 440, 100
   offset: 0, 0

@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI;
+package com.daleondeveloper.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.AbstractScreen;
+import com.daleondeveloper.Screens.Play.PlayAbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
 
 
@@ -16,10 +17,10 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
     private static final String TAG = GUIAbstractScreen.class.getName();
 
     // GUI state
-    private enum GUIScreenState {
+    protected enum GUIScreenState {
         PAUSED, RUNNING, STOPPED
     }
-    private GUIScreenState guiScreenState;
+    protected GUIScreenState guiScreenState;
 
     protected OrthographicCamera guiCamera;
     protected Viewport guiViewport;
@@ -34,6 +35,9 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
         /** Internally calls guiViewport.update() (see {@link uy.com.agm.gamefour.game.GameWorld} and
          * this.resize(int width, int height)) */
         stage = new Stage(guiViewport, game.getGuiBatch());
+    }
+    public boolean isPlayScreenStateRunning() {
+        return guiScreenState == GUIScreenState.RUNNING;
     }
 
     @Override
@@ -109,4 +113,11 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
     protected abstract void updateLogic(float deltaTime);
     protected abstract void renderLogic();
     protected abstract void goBack();
+
+    public void setStatePause(){
+        guiScreenState = GUIScreenState.PAUSED;
+    }
+    public void setStateRunning(){
+        guiScreenState = GUIScreenState.RUNNING;
+    }
 }

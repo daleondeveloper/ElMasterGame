@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI;
+package com.daleondeveloper.Screens;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;

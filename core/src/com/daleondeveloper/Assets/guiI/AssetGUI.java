@@ -20,6 +20,7 @@ public class AssetGUI {
     private TextureRegion buttonRight;
     private TextureRegion buttonJump;
     private TextureRegion buttonPush;
+    private TextureRegion buttonX;
     private TextureRegion gameWindow;
     private TextureRegion pauseWindow;
     private TextureRegion buttonForPauseWindow;
@@ -36,6 +37,7 @@ public class AssetGUI {
         buttonRight = atlasGUI.findRegion("button/button_right");
         buttonJump = atlasGUI.findRegion("button/button_jump");
         buttonPush = atlasGUI.findRegion("button/button_push");
+        buttonX = atlasGUI.findRegion("button/button_X");
         gameWindow = atlasGUI.findRegion("panel/game_panel");
         pauseWindow = atlasGUI.findRegion("panel/menu_panel");
         buttonForPauseWindow = atlasGUI.findRegion("panel/button_panel");
@@ -76,6 +78,10 @@ public class AssetGUI {
 
     public TextureRegion getButtonPush() {
         return buttonPush;
+    }
+
+    public TextureRegion getButtonX() {
+        return buttonX;
     }
 
     public TextureRegion getGameWindow() {

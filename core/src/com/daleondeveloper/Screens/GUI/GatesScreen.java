@@ -13,6 +13,8 @@ import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
+
 
 public class GatesScreen extends GUIOverlayAbstractScreen {
     private static final String TAG = GatesScreen.class.getName();

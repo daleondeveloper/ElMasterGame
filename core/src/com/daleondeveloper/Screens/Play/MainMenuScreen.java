@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI;
+package com.daleondeveloper.Screens.Play;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -19,6 +19,8 @@ import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameSettings;
+import com.daleondeveloper.Screens.GUIAbstractScreen;
+import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -41,6 +43,8 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private AssetBackground assetBackground;
     private I18NBundle i18NGameThreeBundle;
     private GameSettings prefs;
+    private MenuScreen menuScreen;
+
     private Label.LabelStyle labelStyleGameTitle;
     private Image menuBg;
     private Label gameTitle;
@@ -76,6 +80,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         assetBackground = assets.getAssetBackground();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         prefs = GameSettings.getInstance();
+        menuScreen = new MenuScreen(game,this);
 
         stateTime = 0;
         // Styles

@@ -14,21 +14,22 @@ import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
-import com.daleondeveloper.Screens.GUI.PauseScreen;
+import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
+import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
 
-public class PlayScreen extends PlayAbstractScreen{
+public class PlayScreen extends GUIAbstractScreen {
     private static final String TAG = PlayScreen.class.getName();
 
     private static final float SHAKE_DURATION = 2.0f;
 
     private Hud hud;
     private InfoScreen infoScreen;
-    private PauseScreen pauseScreen;
+    private MenuScreen menuScreen;
     private BackgroundScreen backgroundScreen;
     private GatesScreen gatesScreen;
 
@@ -45,7 +46,7 @@ public class PlayScreen extends PlayAbstractScreen{
 
         hud = new Hud(game,this);
         infoScreen = new InfoScreen(game,this);
-        pauseScreen = new PauseScreen(game,this);
+        menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
         gatesScreen = new GatesScreen(game,this);
 
@@ -60,15 +61,16 @@ public class PlayScreen extends PlayAbstractScreen{
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongGame());
     }
 
+
     @Override
     public void show(){
         backgroundScreen.build();
         gatesScreen.build();
         hud.build();
         infoScreen.build();
-        pauseScreen.build();
+        menuScreen.build();
         background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
-
+        setStateRunning();
     }
 
 
@@ -76,7 +78,7 @@ public class PlayScreen extends PlayAbstractScreen{
     public void render(float deltaTime){
         //Update logic
         backgroundScreen.update(deltaTime);
-        pauseScreen.update(deltaTime);
+        menuScreen.update(deltaTime);
         gatesScreen.update(deltaTime);
         if(isPlayScreenStateRunning()){
             hud.update(deltaTime);
@@ -85,7 +87,7 @@ public class PlayScreen extends PlayAbstractScreen{
         }
 
         //Render logic
-        AbstractScreen.clearScr();
+    //    AbstractScreen.clearScr();
 
        // gameWorld.getGameCamera().setScreenViewport();
         backgroundScreen.render();
@@ -94,11 +96,11 @@ public class PlayScreen extends PlayAbstractScreen{
         gatesScreen.render();
         hud.render();
         infoScreen.render();
-        pauseScreen.render();
+        menuScreen.render();
 //        viewport.update(viewport.getScreenWidth(),viewport.getScreenHeight());
 
         //Analys game result
-        if(playScreenState == PlayScreenState.RUNNING){
+        if(guiScreenState == GUIScreenState.RUNNING){
             gameResults();
         }
 
@@ -161,7 +163,7 @@ public class PlayScreen extends PlayAbstractScreen{
         gatesScreen.resize(width,height);
         hud.resize(width, height);
         infoScreen.resize(width, height);
-        pauseScreen.resize(width, height);
+        menuScreen.resize(width, height);
         gameWorld.getGameCamera().resize(width, height);
     }
 
@@ -184,18 +186,21 @@ public class PlayScreen extends PlayAbstractScreen{
         super.pause();
     }
 
-    public void setGameStatePaused() {
-        pauseScreen.showPauseScreen();
+    public void setStatePaused() {
+        menuScreen.showMenuScreen(MenuScreen.MenuState.PAUSE);
+       doPause();
     }
 
-    public void setGameStateRunning() {
-        pauseScreen.hidePauseScreen();
+    public void setStateRunning() {
+        menuScreen.hideMenuScreen();
+        Gdx.input.setInputProcessor(getInputProcessor());
+        resume();
     }
 
     @Override
     public void resume() {
         AudioManager.getInstance().resumeMusic();
-        if (!pauseScreen.isPauseScreenVisible()) {
+        if (!menuScreen.isMenuScreenVisible()) {
             showBannerAd();
             super.resume();
         }
@@ -206,8 +211,23 @@ public class PlayScreen extends PlayAbstractScreen{
         backgroundScreen.dispose();
         hud.dispose();
         infoScreen.dispose();
-        pauseScreen.dispose();
+        menuScreen.dispose();
         worldController.dispose();
+    }
+
+    @Override
+    protected void updateLogic(float deltaTime) {
+
+    }
+
+    @Override
+    protected void renderLogic() {
+
+    }
+
+    @Override
+    protected void goBack() {
+
     }
 
     @Override
@@ -219,7 +239,7 @@ public class PlayScreen extends PlayAbstractScreen{
     public void applyViewport() {
         hud.applyViewport();
         infoScreen.applyViewport();
-        pauseScreen.applyViewport();
+        menuScreen.applyViewport();
         gameWorld.getGameCamera().applyViewport();
     }
 
@@ -231,8 +251,8 @@ public class PlayScreen extends PlayAbstractScreen{
         return infoScreen;
     }
 
-    public PauseScreen getPauseScreen() {
-        return pauseScreen;
+    public MenuScreen getMenuScreen() {
+        return menuScreen;
     }
 
     public GameWorld getGameWorld() {

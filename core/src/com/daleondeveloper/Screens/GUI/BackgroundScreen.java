@@ -11,6 +11,8 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameCamera;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
+
 
 public class BackgroundScreen extends GUIOverlayAbstractScreen {
     public static final String TAG = BackgroundScreen.class.getName();
