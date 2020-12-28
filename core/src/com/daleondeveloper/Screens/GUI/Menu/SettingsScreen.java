@@ -14,6 +14,7 @@ import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
+import com.daleondeveloper.Screens.Play.MainMenuScreen;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 
 public class SettingsScreen extends GUIOverlayAbstractScreen {
@@ -60,6 +61,18 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
 //        settingsLabel.setFontScale(width / 500, height / 1000);
         settingsLabel.setPosition(menuWindow.getX() + menuWindow.getWidth()/2 - settingsLabel.getPrefWidth() / 2 ,
                 menuWindow.getY()  + menuWindow.getHeight() * 1.9f  - settingsLabel.getPrefHeight() / 2);
+        if(menuScreen.getGuiAbstractScreen() instanceof MainMenuScreen){
+            back.setHeight(24);
+            back.setWidth(24);
+            back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
+                    menuWindow.getY() + menuWindow.getHeight() - 40);
+        }else{
+            back.setWidth(menuWindow.getWidth() * 0.1f);
+            back.setHeight(menuWindow.getHeight() * 0.1f);
+            back.setPosition(menuWindow.getX() + menuWindow.getWidth() - back.getWidth() * 2f ,
+                    menuWindow.getY() + menuWindow.getHeight() - back.getHeight() * 1.6f);
+            back.setBounds(back.getX(),back.getY(),back.getWidth(),back.getHeight());
+        }
     }
 
     @Override
@@ -79,7 +92,7 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
         back.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                menuScreen.closeMenu();
+                menuScreen.hideMenuScreen();
             }
         }));
     }
@@ -88,9 +101,9 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
     public void update(float deltaTime) {
         stage.act();
         if(menuScreen.getMenuState() == MenuScreen.MenuState.SETTINGS){
-            show();
+            setVisible(true);
         }else{
-            hide();
+            setVisible(false);
         }
 
     }
@@ -100,12 +113,20 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
         stage.draw();
     }
 
-    private void show(){
-        settingsLabel.setVisible(true);
-        back.setVisible(true);
+    public boolean isHelpScreenVisible(){
+        return settingsLabel.isVisible();
     }
-    private void hide(){
-        settingsLabel.setVisible(false);
-        back.setVisible(false);
+    public void showSettingsScreen() {
+        if (!isHelpScreenVisible()) {
+            setVisible(true);
+
+            // Only PauseScreen responds to events
+            Gdx.input.setInputProcessor(stage);
+        }
+    }
+
+    private void setVisible(boolean  visible){
+        settingsLabel.setVisible(visible);
+        back.setVisible(visible);
     }
 }

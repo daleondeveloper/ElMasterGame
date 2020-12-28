@@ -48,6 +48,6 @@ public class AnimatedActor extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(tint);
-        batch.draw(textureRegion, getX(), getY(), getWidth(), getHeight());
+        batch.draw(textureRegion, getX(), getY(), textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
     }
 }

@@ -19,7 +19,6 @@ import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 public class GatesScreen extends GUIOverlayAbstractScreen {
     private static final String TAG = GatesScreen.class.getName();
 
-    private PlayScreen playScreen;
     private Assets assets;
     private AssetGates assetGates;
 
@@ -41,10 +40,9 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
     private Animation openGates;
     private Animation closeGates;
 
-    public GatesScreen(ElMaster game, PlayScreen playScreen){
+    public GatesScreen(ElMaster game){
         super(game);
 
-        this.playScreen = playScreen;
         assets = Assets.getInstance();
         assetGates = assets.getAssetGates();
 

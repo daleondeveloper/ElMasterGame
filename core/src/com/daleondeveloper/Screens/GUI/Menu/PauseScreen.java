@@ -118,13 +118,13 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         resume.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                menuScreen.getGuiAbstractScreen().setStateRunning();
+                menuScreen.hideMenuScreen();
             }
         }));
         resumeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                menuScreen.getGuiAbstractScreen().setStateRunning();
+                menuScreen.hideMenuScreen();
             }
         }));
 
@@ -134,14 +134,14 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         settings.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                rateGame();
+               menuScreen.setSettingsScreen();
             }
         }));
         settingsLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                rateGame();
-            }
+                menuScreen.setSettingsScreen();
+                            }
         }));
 
         restart.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {

@@ -114,7 +114,7 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
     protected abstract void renderLogic();
     protected abstract void goBack();
 
-    public void setStatePause(){
+    public void setStatePaused(){
         guiScreenState = GUIScreenState.PAUSED;
     }
     public void setStateRunning(){

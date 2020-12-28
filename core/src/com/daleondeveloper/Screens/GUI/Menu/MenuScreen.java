@@ -69,12 +69,18 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         // Resize background
         screenBg.setSize(w, h);
 
-        // Place the title
-        pauseWindow.setWidth(w);
-        pauseWindow.setHeight(h * 0.425f);
-        pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
-        pauseWindow.setY((h - pauseWindow.getHeight()) / 2 + TITLE_OFFSET_Y);
-
+        if(guiAbstractScreen instanceof  PlayScreen) {
+            // Place the title
+            pauseWindow.setWidth(w);
+            pauseWindow.setHeight(h * 0.425f);
+            pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
+            pauseWindow.setY((h - pauseWindow.getHeight()) / 2 + TITLE_OFFSET_Y);
+        }else {
+            pauseWindow.setWidth(400);
+            pauseWindow.setHeight(342);
+            pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
+            pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
+        }
         helpScreen.resize(width,height);
         highScoreScreen.resize(width,height);
         pauseScreen.resize(width,height);
@@ -165,6 +171,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         if(isMenuScreenVisible()){
             setVisible(false);
             menuState = MenuState.CLOSE;
+            guiAbstractScreen.setStateRunning();
 //            hideHelpScreen();
 //            hideHighScoreScreen();
 //            hidePauseScreen();
@@ -184,15 +191,20 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void closeMenu(){menuState = MenuState.CLOSE;}
     public void setHelpScreen(){
         menuState = MenuState.HELP;
+        helpScreen.showHelpScreen();
     }
     public void setHighScoreScreen(){
         menuState = MenuState.HIGH_SCORE;
+        highScoreScreen.showHighScoreScreen();
     }
     public void setPauseScreen(){
         menuState = MenuState.PAUSE;
         pauseScreen.showPauseScreen();
     }
-    public void setSettingsScreen(){menuState = MenuState.SETTINGS;}
+    public void setSettingsScreen(){
+        menuState = MenuState.SETTINGS;
+        settingsScreen.showSettingsScreen();
+    }
 
     public GUIAbstractScreen getGuiAbstractScreen() {
         return guiAbstractScreen;
@@ -205,4 +217,5 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public Image getPauseWindow() {
         return pauseWindow;
     }
+
 }

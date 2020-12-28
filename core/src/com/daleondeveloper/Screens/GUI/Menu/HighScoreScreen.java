@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.GUI.Menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -55,6 +56,10 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
 //        highScoreLabel.setFontScale(width / 500, height / 1000);
         highScoreLabel.setPosition(menuWindow.getX() + menuWindow.getWidth()/2 - highScoreLabel.getPrefWidth() / 2 ,
                 menuWindow.getY()  + menuWindow.getHeight() * 1.9f  - highScoreLabel.getPrefHeight() / 2);
+        back.setHeight(24);
+        back.setWidth(24);
+        back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
+                menuWindow.getY() + menuWindow.getHeight() - 40);
     }
 
     @Override
@@ -74,7 +79,7 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
         back.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                menuScreen.closeMenu();
+                menuScreen.hideMenuScreen();
             }
         }));
     }
@@ -83,9 +88,9 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     public void update(float deltaTime) {
         stage.act();
         if(menuScreen.getMenuState() == MenuScreen.MenuState.HIGH_SCORE){
-            show();
+            setVisible(true);
         }else{
-            hide();
+            setVisible(false);
         }
 
     }
@@ -95,12 +100,20 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
         stage.draw();
     }
 
-    private void show(){
-        highScoreLabel.setVisible(true);
-        back.setVisible(true);
+    public boolean isHelpScreenVisible(){
+        return highScoreLabel.isVisible();
     }
-    private void hide(){
-        highScoreLabel.setVisible(false);
-        back.setVisible(false);
+    public void showHighScoreScreen() {
+        if (!isHelpScreenVisible()) {
+            setVisible(true);
+
+            // Only PauseScreen responds to events
+            Gdx.input.setInputProcessor(stage);
+        }
+    }
+
+    private void setVisible(boolean  visible){
+        highScoreLabel.setVisible(visible);
+        back.setVisible(visible);
     }
 }

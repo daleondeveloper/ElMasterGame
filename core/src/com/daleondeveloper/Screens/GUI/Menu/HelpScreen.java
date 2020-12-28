@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.GUI.Menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -52,9 +53,15 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
         super.resize(width, height);
 
 
+
 //        helpLabel.setFontScale(width / 500, height / 1000);
         helpLabel.setPosition(menuWindow.getX() + menuWindow.getWidth()/2 - helpLabel.getPrefWidth() / 2 ,
                 menuWindow.getY()  + menuWindow.getHeight() * 1.9f  - helpLabel.getPrefHeight() / 2);
+        back.setHeight(24);
+        back.setWidth(24);
+        back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
+                menuWindow.getY() + menuWindow.getHeight() - 40);
+
     }
 
     @Override
@@ -75,7 +82,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
         back.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                menuScreen.closeMenu();
+                menuScreen.hideMenuScreen();
             }
         }));
     }
@@ -83,10 +90,10 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
     @Override
     public void update(float deltaTime) {
         stage.act();
-        if(menuScreen.getMenuState() == MenuScreen.MenuState.SETTINGS){
-            show();
+        if(menuScreen.getMenuState() == MenuScreen.MenuState.HELP){
+            setVisible(true);
         }else{
-            hide();
+            setVisible(false);
         }
 
     }
@@ -96,12 +103,20 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
         stage.draw();
     }
 
-    private void show(){
-        helpLabel.setVisible(true);
-        back.setVisible(true);
+    public boolean isHelpScreenVisible(){
+        return helpLabel.isVisible();
     }
-    private void hide(){
-        helpLabel.setVisible(false);
-        back.setVisible(false);
+    public void showHelpScreen() {
+        if (!isHelpScreenVisible()) {
+            setVisible(true);
+
+            // Only PauseScreen responds to events
+            Gdx.input.setInputProcessor(stage);
+        }
+    }
+
+    private void setVisible(boolean  visible){
+        helpLabel.setVisible(visible);
+        back.setVisible(visible);
     }
 }

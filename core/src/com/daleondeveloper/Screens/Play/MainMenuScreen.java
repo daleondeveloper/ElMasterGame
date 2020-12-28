@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -19,11 +21,13 @@ import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameSettings;
+import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
+import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
 
@@ -44,6 +48,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private I18NBundle i18NGameThreeBundle;
     private GameSettings prefs;
     private MenuScreen menuScreen;
+    private GatesScreen gatesScreen;
 
     private Label.LabelStyle labelStyleGameTitle;
     private Image menuBg;
@@ -72,6 +77,11 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private Animation portal;
     private Animation openGates;
 
+
+    private AnimatedActor leftBowlAnimatedActor;
+    private AnimatedActor rightBowlAnimatedActor;
+    private AnimatedActor portalAnimatedActor;
+
     public MainMenuScreen(ElMaster game) {
         super(game);
         assets = Assets.getInstance();
@@ -81,6 +91,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         prefs = GameSettings.getInstance();
         menuScreen = new MenuScreen(game,this);
+        gatesScreen = new GatesScreen(game);
 
         stateTime = 0;
         // Styles
@@ -92,25 +103,11 @@ public class MainMenuScreen extends GUIAbstractScreen {
     }
 
     @Override
-    protected void updateLogic(float deltaTime) {
+    public void render(float deltaTime) {
         stateTime += deltaTime;
         stage.act();
-        Image image;
-        image = new Image((TextureRegion)leftBowl.getKeyFrame(stateTime,true));
-        image.setName("leftBowl");
-        leftBowlImage = image;
-        leftBowlImage.setY(menuBg.getY() + 435);
-        leftBowlImage.setX(menuBg.getX() + 65);
-        image = new Image((TextureRegion)rightBowl.getKeyFrame(stateTime,true));
-        image.setName("rightBowl");
-        rightBowlImage = image;
-        rightBowlImage.setY(menuBg.getY() + 435);
-        rightBowlImage.setX(menuBg.getX() + 410);
-        image = new Image((TextureRegion)portal.getKeyFrame(stateTime,true));
-        image.setName("portal");
-        portalImage = image;
-        portalImage.setY(menuBg.getY() + 640);
-        portalImage.setX(menuBg.getX() + 145);
+
+
         if(fogCenter.getX() < 0 && fogCenter.getX() > -fogCenter.getWidth()){
             fogCenter.setX(fogCenter.getX() - 3);
             fogRight.setX(fogCenter.getX() + fogCenter.getWidth() - 3);
@@ -125,49 +122,43 @@ public class MainMenuScreen extends GUIAbstractScreen {
             fogRight.setX(fogCenter.getX() + fogCenter.getWidth() - 3);
         }
 
-        for(Actor actor : stage.getActors()){
-            System.out.println("deltaTime = " + deltaTime);
-           if(actor instanceof Image){
-               Image image1 = (Image)actor;
-               if(image1.getName() == null){
-                   continue;
-               }
-               if(image1.getName().equals("leftBowl")){
-                   ((Image) actor).setDrawable(new TextureRegionDrawable((TextureRegion) leftBowl.getKeyFrame(stateTime)));
-               }else  if(image1.getName().equals("rightBowl")){
-                   ((Image) actor).setDrawable(new TextureRegionDrawable((TextureRegion) rightBowl.getKeyFrame(stateTime)));
-               }else  if(image1.getName().equals("portal")){
-                   ((Image) actor).setDrawable(new TextureRegionDrawable((TextureRegion) portal.getKeyFrame(stateTime)));
-               }
-           }
-        }
+//        stage.clear();
+//        stage.addActor(background);
+//        stage.addActor(fogLeft);
+//        stage.addActor(fogCenter);
+//        stage.addActor(fogRight);
+//        stage.addActor(dark_fog);
+//        stage.addActor(gates);
+//        stage.addActor(portalImage);
+//        stage.addActor(menuBg);
+//        stage.addActor(dragonHead);
+//        stage.addActor(dragonLeftHand);
+//        stage.addActor(dragonRightHand);
+//        stage.addActor(gameTitle);
+//        stage.addActor(buttonHelp);
+//        stage.addActor(buttonSettings);
+//        stage.addActor(buttonHighScore);
+//        stage.addActor(buttonStart);
+//        stage.addActor(leftBowlImage);
+//        stage.addActor(rightBowlImage);
 
-        stage.clear();
-        stage.addActor(background);
-        stage.addActor(fogLeft);
-        stage.addActor(fogCenter);
-        stage.addActor(fogRight);
-        stage.addActor(dark_fog);
-        stage.addActor(gates);
-        stage.addActor(portalImage);
-        stage.addActor(menuBg);
-        stage.addActor(dragonHead);
-        stage.addActor(dragonLeftHand);
-        stage.addActor(dragonRightHand);
-        stage.addActor(gameTitle);
-        stage.addActor(buttonHelp);
-        stage.addActor(buttonSettings);
-        stage.addActor(buttonHighScore);
-        stage.addActor(buttonStart);
-        stage.addActor(leftBowlImage);
-        stage.addActor(rightBowlImage);
+        menuScreen.update(deltaTime);
+
+        //render
+        stage.draw();
+        menuScreen.render();
+    }
+
+    @Override
+    protected void updateLogic(float deltaTime) {
+
 
     }
 
     @Override
     protected void renderLogic() {
-        stage.draw();
-    }
+
+}
 
     @Override
     protected void goBack() {
@@ -177,6 +168,8 @@ public class MainMenuScreen extends GUIAbstractScreen {
     @Override
     public void show() {
         hideBannerAd();
+        menuScreen.build();
+
         Image image;
 
         // Background
@@ -217,14 +210,13 @@ public class MainMenuScreen extends GUIAbstractScreen {
         image = new Image((TextureRegion)leftBowl.getKeyFrame(stateTime,true));
         image.setName("leftBowl");
         leftBowlImage = image;
-        stage.addActor(leftBowlImage);
 
 
         rightBowl = assetGates.getRightFireBowl();
         image = new Image((TextureRegion)rightBowl.getKeyFrame(stateTime,true));
         image.setName("rightBowl");
         rightBowlImage = image;
-        stage.addActor(rightBowlImage);
+
 
 
         //Portal
@@ -243,7 +235,9 @@ public class MainMenuScreen extends GUIAbstractScreen {
         gameTitle = new Label(i18NGameThreeBundle.format("mainMenuScreen.gameTitle"), labelStyleGameTitle);
         leftBowlImage = new Image((TextureRegion)leftBowl.getKeyFrame(0,true));
 //        stage.addActor(leftBowlImage);
-
+        leftBowlAnimatedActor = new AnimatedActor(leftBowl);
+        rightBowlAnimatedActor = new AnimatedActor(rightBowl);
+        portalAnimatedActor = new AnimatedActor(portal);
         // Buttons
         defineButtons();
         stage.addActor(background);
@@ -252,18 +246,22 @@ public class MainMenuScreen extends GUIAbstractScreen {
         stage.addActor(fogRight);
         stage.addActor(dark_fog);
         stage.addActor(gates);
-        stage.addActor(portalImage);
+        stage.addActor(portalAnimatedActor);
         stage.addActor(menuBg);
         stage.addActor(dragonHead);
         stage.addActor(dragonLeftHand);
         stage.addActor(dragonRightHand);
+        stage.addActor(leftBowlAnimatedActor);
+        stage.addActor(rightBowlAnimatedActor);
         stage.addActor(gameTitle);
         stage.addActor(buttonHelp);
         stage.addActor(buttonSettings);
         stage.addActor(buttonHighScore);
         stage.addActor(buttonStart);
 
-     }
+        setStateRunning();
+
+    }
 
     private void defineButtons() {
         buttonStart = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
@@ -276,9 +274,42 @@ public class MainMenuScreen extends GUIAbstractScreen {
                 new TextureRegionDrawable(assetGUI.getButtonSettings()));
 
 
-        // Events
+//         Events
+//        buttonStart.addListener(new ClickListener()  {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                System.out.println("inButton");
+//                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
+//
+//            }
+//        });
+
         buttonStart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
-//        exit.addListener(ListenerHelper.runnableListener(new Runnable() {
+        buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                setStatePaused();
+                menuScreen.showMenuScreen(MenuScreen.MenuState.HELP);
+//                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
+
+            }
+        }));
+         buttonHighScore.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                setStatePaused();
+                menuScreen.showMenuScreen(MenuScreen.MenuState.HIGH_SCORE);
+            }
+        }));
+        buttonSettings.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                setStatePaused();
+                menuScreen.showMenuScreen(MenuScreen.MenuState.SETTINGS);
+            }
+        }));
+
+        //        exit.addListener(ListenerHelper.runnableListener(new Runnable() {
 //            @Override
 //            public void run() {
 //                signOut();
@@ -291,6 +322,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
     public void resize(int width, int height) {
         float offSetX = 0;
         super.resize(width, height);
+        menuScreen.resize(width,height);
 
         float w = stage.getWidth(); // Same as stage.getViewport().getWorldWidth()
         float h = stage.getHeight();
@@ -357,6 +389,37 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
         // Buttons Animations
         //setButtonsAnimation();
+        leftBowlAnimatedActor.setY(menuBg.getY() + 435);
+        leftBowlAnimatedActor.setX(menuBg.getX() + 65);
+
+        rightBowlAnimatedActor.setY(menuBg.getY() + 435);
+        rightBowlAnimatedActor.setX(menuBg.getX() + 410);
+
+        portalAnimatedActor.setY(menuBg.getY() + 640);
+        portalAnimatedActor.setX(menuBg.getX() + 145);
+
+    }
+    public void doPause() {
+        hideBannerAd();
+        super.pause();
+    }
+
+    public void setStatePaused() {
+        doPause();
+    }
+    public void setStateRunning() {
+        menuScreen.hideMenuScreen();
+        Gdx.input.setInputProcessor(getInputProcessor());
+        resume();
+    }
+
+    @Override
+    public void resume() {
+        AudioManager.getInstance().resumeMusic();
+        if (!menuScreen.isMenuScreenVisible()) {
+            showBannerAd();
+            super.resume();
+        }
     }
 
     private void setButtonsAnimation() {

@@ -48,7 +48,7 @@ public class PlayScreen extends GUIAbstractScreen {
         infoScreen = new InfoScreen(game,this);
         menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
-        gatesScreen = new GatesScreen(game,this);
+        gatesScreen = new GatesScreen(game);
 
 
         worldController = new WorldController(this);
