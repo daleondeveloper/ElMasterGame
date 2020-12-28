@@ -122,26 +122,6 @@ public class MainMenuScreen extends GUIAbstractScreen {
             fogRight.setX(fogCenter.getX() + fogCenter.getWidth() - 3);
         }
 
-//        stage.clear();
-//        stage.addActor(background);
-//        stage.addActor(fogLeft);
-//        stage.addActor(fogCenter);
-//        stage.addActor(fogRight);
-//        stage.addActor(dark_fog);
-//        stage.addActor(gates);
-//        stage.addActor(portalImage);
-//        stage.addActor(menuBg);
-//        stage.addActor(dragonHead);
-//        stage.addActor(dragonLeftHand);
-//        stage.addActor(dragonRightHand);
-//        stage.addActor(gameTitle);
-//        stage.addActor(buttonHelp);
-//        stage.addActor(buttonSettings);
-//        stage.addActor(buttonHighScore);
-//        stage.addActor(buttonStart);
-//        stage.addActor(leftBowlImage);
-//        stage.addActor(rightBowlImage);
-
         menuScreen.update(deltaTime);
 
         //render
@@ -175,60 +155,26 @@ public class MainMenuScreen extends GUIAbstractScreen {
         // Background
         background = new Image(assetBackground.getBackground());
         dark_fog = new Image(assetBackground.getFogDark());
+        fogLeft = new Image(assetBackground.getFogLeft());
+        fogCenter = new Image(assetBackground.getFogCenter());
+        fogRight = new Image(assetBackground.getFogRight());
 
-        image =  new Image(assetBackground.getFogLeft());
-        image.setName("fogLeft");
-        fogLeft = image;
-
-        image = new Image(assetBackground.getFogCenter());
-        image.setName("fogCenter");
-        fogCenter = image;
-
-        image = new Image(assetBackground.getFogRight());
-        image.setName("fogRight");
-        fogRight = image;
-
-        image = new Image(assetGates.getStaticMain());
-        image.setName("menuBg");
-        menuBg = image;
+        menuBg =new Image(assetGates.getStaticMain());
 
         //Dragon
-        image = new Image(assetGates.getDragonHead());
-        image.setName("dragonHead");
-        dragonHead = image;
-
-        image = new Image(assetGates.getDragonLeftHandWithSphere());
-        image.setName("dragonLeftHand");
-        dragonLeftHand = image;
-
-        image = new Image(assetGates.getDragonRightHandWithSphere());
-        image.setName("dragonRightHand");
-        dragonRightHand = image;
+;
+        dragonHead = new Image(assetGates.getDragonHead());
+        dragonLeftHand = new Image(assetGates.getDragonLeftHandWithSphere());
+        dragonRightHand = new Image(assetGates.getDragonRightHandWithSphere());
 
         //Bowl
         leftBowl = assetGates.getLeftFireBowl();
-        image = new Image((TextureRegion)leftBowl.getKeyFrame(stateTime,true));
-        image.setName("leftBowl");
-        leftBowlImage = image;
-
-
         rightBowl = assetGates.getRightFireBowl();
-        image = new Image((TextureRegion)rightBowl.getKeyFrame(stateTime,true));
-        image.setName("rightBowl");
-        rightBowlImage = image;
-
-
 
         //Portal
         portal = assetGates.getPortal();
-        image = new Image((TextureRegion)portal.getKeyFrame(stateTime,true));
-        image.setName("portal");
-        portalImage = image;
-
 
         //Gates
-        image = new Image(assetBackground.getFogRight());
-        image.setName("gates");
         gates = new Image(assetGates.getClosedGates());
 
         // Title
@@ -273,16 +219,6 @@ public class MainMenuScreen extends GUIAbstractScreen {
         buttonSettings = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSettings()),
                 new TextureRegionDrawable(assetGUI.getButtonSettings()));
 
-
-//         Events
-//        buttonStart.addListener(new ClickListener()  {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                System.out.println("inButton");
-//                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
-//
-//            }
-//        });
 
         buttonStart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
         buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
@@ -333,7 +269,6 @@ public class MainMenuScreen extends GUIAbstractScreen {
             offSetX = (w - 420)/2;
 //            w = height / 2;
         }
-
 
 
         // Place the menu background in the middle of the screen
