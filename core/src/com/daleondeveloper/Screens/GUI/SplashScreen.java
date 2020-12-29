@@ -25,7 +25,7 @@ import java.util.Random;
 public class SplashScreen extends GUIAbstractScreen {
     private static final String TAG = SplashScreen.class.getName();
 
-    private static final String TEXTURE_ATLAS_SPLASH_SCREEN = "atlas/loading/splash.atlas";
+    private static final String TEXTURE_ATLAS_SPLASH_SCREEN = "atlas/loading/Splash.atlas";
     private static final float LOGO_OFFSET_Y = 100.0f;
     private static final float START_X = 35.0f;
     private static final float PIVOT = 405.0f;
@@ -45,7 +45,6 @@ public class SplashScreen extends GUIAbstractScreen {
     private Label loadPercentLabel;
 
 
-    private float startX, endX;
     private float percent;
 
     public SplashScreen(ElMaster game) {
@@ -64,7 +63,8 @@ public class SplashScreen extends GUIAbstractScreen {
     @Override
     protected void updateLogic(float deltaTime) {
         splashTime += deltaTime;
-        if (assetManager.update() && splashTime >= MIN_SPLASH_TIME) { // Load some, will return true if done loading
+        if (assetManager.update() && splashTime >= MIN_SPLASH_TIME) {
+            // Load some, will return true if done loading
             Assets.getInstance().finishLoading();
             ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, null);
         } else {
@@ -140,9 +140,9 @@ public class SplashScreen extends GUIAbstractScreen {
         float h = stage.getHeight();
 
 
-        heroActor.setPosition(width/2 - heroActor.getWidth() / 2, height / 2 + heroActor.getHeight() * 0.5f);
-        heroBlock.setPosition(heroActor.getX() + heroActor.getWidth(), height / 2 + heroActor.getHeight() * 0.5f);
-        loadPercentLabel.setPosition(width / 2, height / 2);
+        heroActor.setPosition(w/2 - heroActor.getWidth() * 1.2f , h / 2 + heroActor.getHeight() * 0.5f);
+        heroBlock.setPosition(heroActor.getX() + heroActor.getWidth(), h / 2 + heroActor.getHeight() * 0.5f);
+        loadPercentLabel.setPosition(heroActor.getX() + heroActor.getWidth() * 0.4f, h / 2);
     }
 
     @Override

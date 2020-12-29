@@ -1,5 +1,5 @@
 Splash.png
-size: 245, 332
+size: 102, 790
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -12,42 +12,42 @@ fire
   index: -1
 light
   rotate: false
-  xy: 103, 1
+  xy: 1, 103
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 push
   rotate: false
-  xy: 1, 103
+  xy: 1, 205
   size: 79, 125
   orig: 79, 127
   offset: 0, 0
   index: 1
 push
   rotate: false
-  xy: 82, 103
+  xy: 1, 332
   size: 78, 126
   orig: 78, 126
   offset: 0, 0
   index: 2
 push
   rotate: false
-  xy: 162, 103
+  xy: 1, 460
   size: 82, 125
   orig: 82, 125
   offset: 0, 0
   index: 3
 snow
   rotate: false
-  xy: 1, 231
+  xy: 1, 587
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 water
   rotate: false
-  xy: 103, 231
+  xy: 1, 689
   size: 100, 100
   orig: 100, 100
   offset: 0, 0

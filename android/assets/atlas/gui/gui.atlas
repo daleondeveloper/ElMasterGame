@@ -1,67 +1,67 @@
-GUI.png
-size: 954, 1377
+GUI-0.png
+size: 864, 558
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 button/button_help
   rotate: false
-  xy: 153, 153
+  xy: 457, 149
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_highscore
   rotate: false
-  xy: 305, 153
+  xy: 1, 149
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_jump
   rotate: false
-  xy: 609, 153
+  xy: 305, 149
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_left
   rotate: false
-  xy: 597, 1
+  xy: 469, 1
   size: 126, 146
   orig: 126, 146
   offset: 0, 0
   index: -1
 button/button_pause
   rotate: false
-  xy: 457, 153
+  xy: 153, 149
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_push
   rotate: false
-  xy: 1, 153
+  xy: 609, 149
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_right
   rotate: false
-  xy: 469, 1
+  xy: 597, 1
   size: 126, 146
   orig: 126, 146
   offset: 0, 0
   index: -1
 button/button_settings
   rotate: false
-  xy: 725, 1
+  xy: 1, 301
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
 button/button_start
   rotate: false
-  xy: 453, 305
+  xy: 605, 301
   size: 258, 256
   orig: 258, 256
   offset: 0, 0
@@ -82,14 +82,20 @@ panel/button_panel
   index: -1
 panel/game_panel
   rotate: false
-  xy: 1, 305
+  xy: 153, 301
   size: 450, 254
   orig: 450, 260
   offset: 0, 6
   index: -1
+
+GUI-1.png
+size: 954, 815
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
 panel/menu_panel
   rotate: false
-  xy: 1, 563
+  xy: 1, 1
   size: 952, 813
   orig: 952, 813
   offset: 0, 0
