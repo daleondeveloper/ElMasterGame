@@ -4,7 +4,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.daleondeveloper.Assets.Assets;
+import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -26,11 +28,14 @@ public class SplashScreen extends GUIAbstractScreen {
     private static final float ALPHA = 0.1f;
 
     private AssetManager assetManager;
+    private AssetFonts assetFonts;
     private float splashTime;
+    private Label.LabelStyle labelStyleSmall;
 
     private Image heroBlock;
     private Image loadingBar;
-    private Image[] numbers;
+    private Label loadPercentLabel;
+
 
     private float startX, endX;
     private float percent;
@@ -40,8 +45,11 @@ public class SplashScreen extends GUIAbstractScreen {
 
         this.assetManager = new AssetManager();
         splashTime = 0;
+        assetFonts = new AssetFonts();
+        labelStyleSmall = new Label.LabelStyle();
+        labelStyleSmall.font = assetFonts.getSmall();
 
-        numbers = new Image[10];
+
     }
 
     @Override
@@ -58,6 +66,7 @@ public class SplashScreen extends GUIAbstractScreen {
             heroBlock.setPosition(loadingBar.getX() + ((loadingBar.getWidth()- heroBlock.getWidth()) * percent) ,loadingBar.getY() * 1.01f);
             int intPercent = (int)(percent*100);
             System.out.println(percent);
+            loadPercentLabel.setText(percent + "%");
 
 
             // Show the loading screen
@@ -89,9 +98,11 @@ public class SplashScreen extends GUIAbstractScreen {
         heroBlock = new Image(atlas.findRegion("hero_push_block"));
         loadingBar = new Image(atlas.findRegion("download_bar"));
 
+        loadPercentLabel = new Label(percent + "%",labelStyleSmall);
         // Add all the actors to the stage
         stage.addActor(heroBlock);
         stage.addActor(loadingBar);
+        stage.addActor(loadPercentLabel);
 
 //        atlas = assetManager.get(TEXTURE_ATLAS_NUMBERS, TextureAtlas.class);
 //        for(int i = 0; i < numbers.length; i++){
@@ -121,34 +132,7 @@ public class SplashScreen extends GUIAbstractScreen {
         float h = stage.getHeight();
         loadingBar.setWidth(w * 0.9f);
         loadingBar.setPosition(w / 2 - loadingBar.getWidth() / 2,410);
-//        // Make the background fill the screen
-//        screenBg.setSize(w, h);
-//
-//        // Place the logo in the middle of the screen and LOGO_OFFSET_Y px up
-//        logo.setX((w - logo.getWidth()) / 2);
-//        logo.setY((h - logo.getHeight()) / 2 + LOGO_OFFSET_Y);
-//
-//        // Place the loading frame in the middle of the screen
-//        loadingFrame.setX((w - loadingFrame.getWidth()) / 2);
-//        loadingFrame.setY((h - loadingFrame.getHeight()) / 2);
-//
-//        // Place the loading bar at the same spot as the frame
-//        loadingBar.setX(loadingFrame.getX());
-//        loadingBar.setY(loadingFrame.getY());
-//
-//        // The start position and how far to move the hidden loading bar
-//        startX = loadingBar.getX() + START_X;
-//        endX = PIVOT;
-//        percent = 0;
-//
-//        // Place the image that will hide the bar on top of the bar
-//        loadingBarHidden.setX(startX);
-//        loadingBarHidden.setY(loadingBar.getY());
-//
-//        // The rest of the hidden bar
-//        loadingFrameBg.setSize(PIVOT, LOADING_BACKGROUND_HEIGHT);
-//        loadingFrameBg.setX(loadingBarHidden.getX() + loadingBarHidden.getWidth());
-//        loadingFrameBg.setY(loadingBarHidden.getY());
+        loadPercentLabel.setPosition(width / 2, height / 2);
     }
 
     @Override
@@ -157,5 +141,11 @@ public class SplashScreen extends GUIAbstractScreen {
 
         // Dispose the loading assets as we no longer need them
         assetManager.unload(TEXTURE_ATLAS_SPLASH_SCREEN);
+    }
+
+    @Override
+    public void dispose() {
+        assetFonts.dispose();
+        assetFonts = null;
     }
 }
