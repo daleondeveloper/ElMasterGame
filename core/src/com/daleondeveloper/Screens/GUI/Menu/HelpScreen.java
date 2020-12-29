@@ -24,7 +24,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
 
-    private Label.LabelStyle labelStyleBig;
+    private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
 
     private Image menuWindow;
@@ -41,8 +41,8 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleBig = new Label.LabelStyle();
-        labelStyleBig.font = assets.getAssetFonts().getBig();
+        labelStyleMedium = new Label.LabelStyle();
+        labelStyleMedium.font = assets.getAssetFonts().getNormal();
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
@@ -55,8 +55,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
 
 
 //        helpLabel.setFontScale(width / 500, height / 1000);
-        helpLabel.setPosition(menuWindow.getX() + menuWindow.getWidth()/2 - helpLabel.getPrefWidth() / 2 ,
-                menuWindow.getY()  + menuWindow.getHeight() * 1.9f  - helpLabel.getPrefHeight() / 2);
+        helpLabel.setPosition(menuWindow.getX() + 170, menuWindow.getY() + 270);
         back.setHeight(24);
         back.setWidth(24);
         back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
@@ -69,7 +68,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
 
         menuWindow = menuScreen.getPauseWindow();
 
-        helpLabel = new Label(i18NGameThreeBundle.format("helpScreen.title"), labelStyleBig);
+        helpLabel = new Label(i18NGameThreeBundle.format("helpScreen.title"), labelStyleMedium);
 
         defineButtons();
 

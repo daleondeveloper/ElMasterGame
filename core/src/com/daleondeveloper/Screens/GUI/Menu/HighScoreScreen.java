@@ -25,12 +25,13 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     private I18NBundle i18NGameThreeBundle;
 
     private Label.LabelStyle labelStyleBig;
-    private Label.LabelStyle labelStyleSmall;
+    private Label.LabelStyle labelStyleMedium;
 
     private Image menuWindow;
     private Image back;
 
     private Label highScoreLabel;
+    private Label bestHighScoreLabel;
 
 
     public HighScoreScreen(ElMaster game, MenuScreen menuScreen){
@@ -43,8 +44,8 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
         // Styles
         labelStyleBig = new Label.LabelStyle();
         labelStyleBig.font = assets.getAssetFonts().getBig();
-        labelStyleSmall = new Label.LabelStyle();
-        labelStyleSmall.font = assets.getAssetFonts().getSmall();
+        labelStyleMedium = new Label.LabelStyle();
+        labelStyleMedium.font = assets.getAssetFonts().getNormal();
 
     }
 
@@ -54,8 +55,9 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
 
 
 //        highScoreLabel.setFontScale(width / 500, height / 1000);
-        highScoreLabel.setPosition(menuWindow.getX() + menuWindow.getWidth()/2 - highScoreLabel.getPrefWidth() / 2 ,
-                menuWindow.getY()  + menuWindow.getHeight() * 1.9f  - highScoreLabel.getPrefHeight() / 2);
+        highScoreLabel.setPosition(menuWindow.getX() + 120  ,
+                menuWindow.getY() + 270 );
+        bestHighScoreLabel.setPosition( 215 - bestHighScoreLabel.getPrefWidth() /2, 385);
         back.setHeight(24);
         back.setWidth(24);
         back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
@@ -66,10 +68,11 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     public void build() {
         menuWindow = menuScreen.getPauseWindow();
 
-        highScoreLabel = new Label(i18NGameThreeBundle.format("highScoreScreen.title"), labelStyleBig);
-
+        highScoreLabel = new Label(i18NGameThreeBundle.format("highScoreScreen.title"), labelStyleMedium);
+        bestHighScoreLabel = new Label(String.valueOf(prefs.getHighScore()), labelStyleBig);
         defineButtons();
 
+        stage.addActor(bestHighScoreLabel);
         stage.addActor(highScoreLabel);
         stage.addActor(back);
     }
@@ -113,6 +116,7 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     }
 
     private void setVisible(boolean  visible){
+        bestHighScoreLabel.setVisible(visible);
         highScoreLabel.setVisible(visible);
         back.setVisible(visible);
     }

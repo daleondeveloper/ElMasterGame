@@ -29,7 +29,7 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
 
-    private Label.LabelStyle labelStyleBig;
+    private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
 
     private Image menuWindow;
@@ -46,8 +46,8 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleBig = new Label.LabelStyle();
-        labelStyleBig.font = assets.getAssetFonts().getBig();
+        labelStyleMedium = new Label.LabelStyle();
+        labelStyleMedium.font = assets.getAssetFonts().getNormal();
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
@@ -59,8 +59,7 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
 
 
 //        settingsLabel.setFontScale(width / 500, height / 1000);
-        settingsLabel.setPosition(menuWindow.getX() + menuWindow.getWidth()/2 - settingsLabel.getPrefWidth() / 2 ,
-                menuWindow.getY()  + menuWindow.getHeight() * 1.9f  - settingsLabel.getPrefHeight() / 2);
+        settingsLabel.setPosition(menuWindow.getX() + 130,menuWindow.getY() + 265);
         if(menuScreen.getGuiAbstractScreen() instanceof MainMenuScreen){
             back.setHeight(24);
             back.setWidth(24);
@@ -79,7 +78,7 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
     public void build() {
         menuWindow = menuScreen.getPauseWindow();
 
-        settingsLabel = new Label(i18NGameThreeBundle.format("settingsScreen.title"), labelStyleBig);
+        settingsLabel = new Label(i18NGameThreeBundle.format("settingsScreen.title"), labelStyleMedium);
 
         defineButtons();
 
@@ -92,7 +91,11 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
         back.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
+                if(menuScreen.getGuiAbstractScreen() instanceof MainMenuScreen){
                 menuScreen.hideMenuScreen();
+                }else {
+                    menuScreen.setPauseScreen();
+                }
             }
         }));
     }
