@@ -1,7 +1,10 @@
 package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,17 +12,20 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameSettings;
+import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class SplashScreen extends GUIAbstractScreen {
     private static final String TAG = SplashScreen.class.getName();
 
-    private static final String TEXTURE_ATLAS_SPLASH_SCREEN = "atlas/loading/download_bar.atlas";
-    private static final String TEXTURE_ATLAS_NUMBERS = "atlas/loading/qweqwe.atlas";
+    private static final String TEXTURE_ATLAS_SPLASH_SCREEN = "atlas/loading/splash.atlas";
     private static final float LOGO_OFFSET_Y = 100.0f;
     private static final float START_X = 35.0f;
     private static final float PIVOT = 405.0f;
@@ -32,8 +38,10 @@ public class SplashScreen extends GUIAbstractScreen {
     private float splashTime;
     private Label.LabelStyle labelStyleSmall;
 
+    private Animation heroPush;
+    private AnimatedActor heroActor;
     private Image heroBlock;
-    private Image loadingBar;
+    private TextureRegion[] blocks;
     private Label loadPercentLabel;
 
 
@@ -49,6 +57,7 @@ public class SplashScreen extends GUIAbstractScreen {
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assetFonts.getSmall();
 
+        blocks = new TextureRegion[4];
 
     }
 
@@ -63,7 +72,6 @@ public class SplashScreen extends GUIAbstractScreen {
             percent = Interpolation.linear.apply(percent, assetManager.getProgress(), ALPHA);
 
             // Update positions (and size) to match the percentage
-            heroBlock.setPosition(loadingBar.getX() + ((loadingBar.getWidth()- heroBlock.getWidth()) * percent) ,loadingBar.getY() * 1.01f);
             int intPercent = (int)(percent*100);
             System.out.println(percent);
             loadPercentLabel.setText(percent + "%");
@@ -95,21 +103,21 @@ public class SplashScreen extends GUIAbstractScreen {
         TextureAtlas atlas = assetManager.get(TEXTURE_ATLAS_SPLASH_SCREEN, TextureAtlas.class);
 
         // Grab the regions from the atlas and create some images
-        heroBlock = new Image(atlas.findRegion("hero_push_block"));
-        loadingBar = new Image(atlas.findRegion("download_bar"));
+        heroPush = new Animation(3/24f,atlas.findRegions("push"), Animation.PlayMode.LOOP);
+        blocks[0] = atlas.findRegion("fire");
+        blocks[1] = atlas.findRegion("water");
+        blocks[2] = atlas.findRegion("snow");
+        blocks[3] = atlas.findRegion("light");
+        Random rnd = new Random();
+        heroBlock = new Image(blocks[rnd.nextInt(3)]);
+
+        heroActor = new AnimatedActor(heroPush);
 
         loadPercentLabel = new Label(percent + "%",labelStyleSmall);
         // Add all the actors to the stage
         stage.addActor(heroBlock);
-        stage.addActor(loadingBar);
+        stage.addActor(heroActor);
         stage.addActor(loadPercentLabel);
-
-//        atlas = assetManager.get(TEXTURE_ATLAS_NUMBERS, TextureAtlas.class);
-//        for(int i = 0; i < numbers.length; i++){
-//            numbers[i] = new Image(atlas.findRegion(String.valueOf(i)));
-//            stage.addActor(numbers[i]);
-//        }
-
 
 
         // Load the rest of assets asynchronously
@@ -130,8 +138,10 @@ public class SplashScreen extends GUIAbstractScreen {
 
         float w = stage.getWidth(); // Same as stage.getViewport().getWorldWidth()
         float h = stage.getHeight();
-        loadingBar.setWidth(w * 0.9f);
-        loadingBar.setPosition(w / 2 - loadingBar.getWidth() / 2,410);
+
+
+        heroActor.setPosition(width/2 - heroActor.getWidth() / 2, height / 2 + heroActor.getHeight() * 0.5f);
+        heroBlock.setPosition(heroActor.getX() + heroActor.getWidth(), height / 2 + heroActor.getHeight() * 0.5f);
         loadPercentLabel.setPosition(width / 2, height / 2);
     }
 

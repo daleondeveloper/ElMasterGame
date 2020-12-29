@@ -97,7 +97,7 @@ public class AssetHero implements IAssetSprite {
         whiteHeroFall = new Animation(2f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
-        regions = atlasHero.findRegions("white/death/death");
+        regions = atlasHero.findRegions("white/death/death" );
         whiteHeroDeath = new Animation(2f/24.0f, regions, Animation.PlayMode.NORMAL);
         regions.clear();
     }
