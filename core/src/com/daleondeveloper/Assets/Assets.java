@@ -58,6 +58,7 @@ public class Assets implements Disposable,AssetErrorListener {
     private static final String TEXTURE_ATLAS_HERO = "atlas/hero/hero.atlas";
     private static final String TEXTURE_ATLAS_GATES = "atlas/gates/gates.atlas";
     private static final String TEXTURE_ATLAS_BACKGROUND = "atlas/background/background.atlas";
+    private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
 
 
     private static Assets instance;
@@ -68,12 +69,11 @@ public class Assets implements Disposable,AssetErrorListener {
     private AssetHero assetHero;
     private AssetGates assetGates;
     private AssetBackground assetBackground;
+    private AssetHelp assetHelp;
 
     private AssetFonts assetFonts;
     private AssetMusic assetMusic;
     private AssetSounds assetSounds;
-
-    private AssetHelp assetHelp;
 
     private Assets(){
     }
@@ -112,6 +112,7 @@ public class Assets implements Disposable,AssetErrorListener {
         TextureAtlas atlasHero = assetManager.get(TEXTURE_ATLAS_HERO);
         TextureAtlas atlasGates = assetManager.get(TEXTURE_ATLAS_GATES);
         TextureAtlas atlasBackground = assetManager.get(TEXTURE_ATLAS_BACKGROUND);
+        TextureAtlas atlasHelp = assetManager.get(TEXTURE_ATLAS_HELP);
 
         for(Texture texture : atlasGUI.getTextures()){
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -128,6 +129,9 @@ public class Assets implements Disposable,AssetErrorListener {
         for(Texture texture : atlasBackground.getTextures()){
             texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
+        for(Texture texture : atlasHelp.getTextures()){
+            texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
 
 
         i18NElementMaster = new AssetI18NElementMaster(assetManager);
@@ -136,6 +140,7 @@ public class Assets implements Disposable,AssetErrorListener {
         assetHero = new AssetHero(atlasHero);
         assetGates = new AssetGates(atlasGates);
         assetBackground = new AssetBackground(atlasBackground);
+        assetHelp = new AssetHelp(atlasHelp);
 
         assetSounds = new AssetSounds(assetManager);
         assetMusic = new AssetMusic(assetManager);
@@ -154,6 +159,7 @@ public class Assets implements Disposable,AssetErrorListener {
         assetManager.load(TEXTURE_ATLAS_HERO, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_GATES, TextureAtlas.class);
         assetManager.load(TEXTURE_ATLAS_BACKGROUND, TextureAtlas.class);
+        assetManager.load(TEXTURE_ATLAS_HELP, TextureAtlas.class);
     }
 
     private void loadSounds(){

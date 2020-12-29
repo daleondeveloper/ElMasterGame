@@ -57,7 +57,8 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
 //        highScoreLabel.setFontScale(width / 500, height / 1000);
         highScoreLabel.setPosition(menuWindow.getX() + 120  ,
                 menuWindow.getY() + 270 );
-        bestHighScoreLabel.setPosition( 215 - bestHighScoreLabel.getPrefWidth() /2, 385);
+        bestHighScoreLabel.setPosition( menuWindow.getX() + 199 - bestHighScoreLabel.getPrefWidth() /2,
+                menuWindow.getY() + 125);
         back.setHeight(24);
         back.setWidth(24);
         back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,

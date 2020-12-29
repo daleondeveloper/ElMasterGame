@@ -26,7 +26,7 @@ button/button_jump
   index: -1
 button/button_left
   rotate: false
-  xy: 593, 1
+  xy: 597, 1
   size: 126, 146
   orig: 126, 146
   offset: 0, 0
@@ -47,14 +47,14 @@ button/button_push
   index: -1
 button/button_right
   rotate: false
-  xy: 465, 1
+  xy: 469, 1
   size: 126, 146
   orig: 126, 146
   offset: 0, 0
   index: -1
 button/button_settings
   rotate: false
-  xy: 721, 1
+  xy: 725, 1
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
@@ -69,13 +69,13 @@ button/button_start
 button/button_X
   rotate: false
   xy: 1, 1
-  size: 20, 24
-  orig: 20, 24
+  size: 24, 32
+  orig: 24, 32
   offset: 0, 0
   index: -1
 panel/button_panel
   rotate: false
-  xy: 23, 1
+  xy: 27, 1
   size: 440, 100
   orig: 440, 100
   offset: 0, 0

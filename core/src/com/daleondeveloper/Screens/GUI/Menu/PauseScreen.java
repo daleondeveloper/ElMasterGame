@@ -50,13 +50,12 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     private Label.LabelStyle labelStyleBig;
     private Label.LabelStyle labelStyleSmall;
     private Image menuWindow;
-    private Image resume;
+    private Image back;
     private Image mainMenu;
     private Image settings;
     private Image restart;
 
     private Label pauseLabel;
-    private Label resumeLabel;
     private Label restartLabel;
     private Label mainMenuLabel;
     private Label settingsLabel;
@@ -83,7 +82,6 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
 
         // Title
         pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleBig);
-        resumeLabel = new Label(i18NGameThreeBundle.format("pauseScreen.resume"), labelStyleSmall);
         restartLabel = new Label(i18NGameThreeBundle.format("pauseScreen.restart"), labelStyleSmall);
         mainMenuLabel = new Label(i18NGameThreeBundle.format("pauseScreen.mainMenu"), labelStyleSmall);
         settingsLabel = new Label(i18NGameThreeBundle.format("pauseScreen.settings"), labelStyleSmall);
@@ -94,9 +92,8 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         stage.addActor(mainMenu);
         stage.addActor(settings);
         stage.addActor(restart);
-        stage.addActor(resume);
+        stage.addActor(back);
         stage.addActor(pauseLabel);
-        stage.addActor(resumeLabel);
         stage.addActor(restartLabel);
         stage.addActor(mainMenuLabel);
         stage.addActor(settingsLabel);
@@ -106,7 +103,7 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     }
 
     private void defineButtons() {
-        resume = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
+        back = new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
 
         mainMenu = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
@@ -115,13 +112,7 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         restart = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
         // Events
-        resume.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                menuScreen.hideMenuScreen();
-            }
-        }));
-        resumeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+        back.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 menuScreen.hideMenuScreen();
@@ -165,11 +156,10 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
 
     private void setVisible(boolean visible) {
         pauseLabel.setVisible(visible);
-        resumeLabel.setVisible(visible);
         restartLabel.setVisible(visible);
         mainMenuLabel.setVisible(visible);
         settingsLabel.setVisible(visible);
-        resume.setVisible(visible);
+        back.setVisible(visible);
         mainMenu.setVisible(visible);
         settings.setVisible(visible);
         restart.setVisible(visible);
@@ -192,7 +182,7 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         Table table = new Table();
         table.setDebug(DebugConstants.DEBUG_LINES);
         table.center();
-        table.add(resume).row();
+        table.add(back).row();
         table.add(mainMenu).row();
         table.add(settings).row();
         table.add(restart).row();
@@ -205,16 +195,16 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         float x = width / 2;
         float y = height / 2;
         menuWindow.setPosition(x - menuWindow.getWidth() / 2, y - menuWindow.getHeight() / 2);
-        resume.setWidth(menuWindow.getWidth() * 0.6f);
-        resume.setHeight(menuWindow.getHeight() / 8);
-        resume.setPosition(x - resume.getWidth() / 2, height * 0.55f);
-        resumeLabel.setFontScale(width / 750, height / 1500);
-        resumeLabel.setPosition(resume.getX() + resume.getWidth()/2 - resumeLabel.getPrefWidth() / 2 ,
-                resume.getY()  + resume.getHeight() * 0.8f - resumeLabel.getPrefHeight() / 2);
+
+        back.setWidth(menuWindow.getWidth() * 0.1f);
+        back.setHeight(menuWindow.getHeight() * 0.1f);
+        back.setPosition(menuWindow.getX() + menuWindow.getWidth() - back.getWidth() * 2f ,
+                menuWindow.getY() + menuWindow.getHeight() - back.getHeight() * 1.6f);
 
         mainMenu.setWidth(menuWindow.getWidth() * 0.6f);
         mainMenu.setHeight(menuWindow.getHeight() / 8);
-        mainMenu.setPosition(x - resume.getWidth() / 2, resume.getY() - mainMenu.getHeight() * 1.2f);
+        mainMenu.setPosition(x - mainMenu.getWidth() / 2 ,
+                y * 1.1f - mainMenu.getHeight() / 2);
         mainMenuLabel.setFontScale(width / 750, height / 1500);
         mainMenuLabel.setPosition(mainMenu.getX() + mainMenu.getWidth()/2 - mainMenuLabel.getPrefWidth() / 2 ,
                 mainMenu.getY()  + mainMenu.getHeight() * 0.8f - mainMenuLabel.getPrefHeight() / 2);
@@ -235,13 +225,13 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
                 restart.getY()  + restart.getHeight() * 0.8f - restartLabel.getPrefHeight() / 2);
 
         pauseLabel.setFontScale(width / 500, height / 1000);
-        pauseLabel.setPosition(resume.getX() + resume.getWidth()/2 - pauseLabel.getPrefWidth() / 2 ,
-                resume.getY()  + resume.getHeight() * 1.9f  - pauseLabel.getPrefHeight() / 2);
+        pauseLabel.setPosition(mainMenu.getX() + mainMenu.getWidth()/2 - pauseLabel.getPrefWidth() / 2 ,
+                mainMenu.getY()  + mainMenu.getHeight() * 1.9f  - pauseLabel.getPrefHeight() / 2);
     }
 
     private void setButtonsAnimation() {
         // Disable events
-        resume.setTouchable(Touchable.disabled);
+        back.setTouchable(Touchable.disabled);
         mainMenu.setTouchable(Touchable.disabled);
         settings.setTouchable(Touchable.disabled);
         restart.setTouchable(Touchable.disabled);
@@ -250,15 +240,15 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     //    rateGame.setVisible(!(playServices instanceof DummyPlayServices));
 
         // Set actions
-        resume.clearActions();
+        back.clearActions();
         mainMenu.clearActions();
         settings.clearActions();
 
-        resume.addAction(
+        back.addAction(
                 run(new Runnable() {
                     public void run () {
                         // Enable events
-                        resume.setTouchable(Touchable.enabled);
+                        back.setTouchable(Touchable.enabled);
                         mainMenu.setTouchable(Touchable.enabled);
                         settings.setTouchable(Touchable.enabled);
                         restart.setTouchable(Touchable.enabled);
