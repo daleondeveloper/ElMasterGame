@@ -47,9 +47,14 @@ public class BackgroundScreen extends GUIOverlayAbstractScreen {
 
 
         background.setHeight(h);
+        fog_dark.setHeight(h);
+        fog_left.setHeight(h);
+        fog_center.setHeight(h);
+        fog_right.setHeight(h);
 //        background.setWidth(500);
         background.setPosition(w/2 - background.getWidth() /2, h/2 - background.getHeight()/2);
         fog_dark.setPosition(w/2 - background.getWidth() /2, h/2 - background.getHeight()/2);
+
 
 //        fog_left.setWidth(w * 4.87f);
 //        fog_left.setHeight(h);
@@ -101,12 +106,7 @@ public class BackgroundScreen extends GUIOverlayAbstractScreen {
 
     @Override
     public void render() {
-        SpriteBatch sp = new SpriteBatch();
-     //   stage.setViewport(playScreen.getGameWorld().getGameCamera().setScreenViewport());
-//        batch.setProjectionMatrix(camera.combined);
-//        batch.begin();
-//        batch.draw(assets.getAssetBackground().getFogLeft(),fog_left.getX(),fog_left.getY());
-//        batch.end();
+
         stage.draw();
     }
 }

@@ -212,12 +212,14 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
             fps = Gdx.graphics.getFramesPerSecond();
             fpsLabel.setText(String.valueOf(fps));
         //}
+
     }
 
     @Override
     public void update(float deltaTime) {
         stage.act();
         updateFPS();
+        System.out.println(fps);
     }
 
     @Override
