@@ -268,6 +268,9 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
+        if(getSensorUp().size() > 0 && !isJump() && !isFall()) {
+            onDead();
+        }
         if(body != null) {
             body.setGravityScale(10);
         } else {
@@ -508,7 +511,7 @@ public class WaterElement extends AbstractDynamicObject {
             stateTime += deltaTime;
         }
     private void stateDead(float deltaTime){
-            if(stateTime > elemDeathAnim.getAnimationDuration()) {
+            if(stateTime> elemDeathAnim.getAnimationDuration()) {
                 gameWorld.destroyBody(body);
                 body = null;
                 currentState = State.DISPOSE;
@@ -533,10 +536,7 @@ public class WaterElement extends AbstractDynamicObject {
             draw(spriteBatch);
     }
 
-    @Override
-    public boolean isDisposable() {
-        return false;
-    }
+
 
     public Set<AbstractGameObject> getSensorRight() {
         return sensorRight;
@@ -575,6 +575,10 @@ public class WaterElement extends AbstractDynamicObject {
     public boolean isJump(){return currentState == State.JUMP;}
     public boolean isPush(){return currentState == State.PUSH;}
     public boolean isFall(){return currentState == State.FALL;}
+    @Override
+    public boolean isDisposable() {
+        return currentState == State.DISPOSE;
+    }
 
     @Override
     public String toString() {

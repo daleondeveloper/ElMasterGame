@@ -159,7 +159,7 @@ public class PlayScreen extends GUIAbstractScreen {
 
                 // Game over
 //                gameWorld.getGameCamera().shake(SHAKE_DURATION, true);
-                gameWorld.getWaterElement().onDead();
+              //  gameWorld.getWaterElement().onDead();
                 infoScreen.showGameOver();
                 endGame = true;
             }
