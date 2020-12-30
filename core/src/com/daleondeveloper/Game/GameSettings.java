@@ -18,6 +18,7 @@ public class GameSettings {
     private static final int DEF_COUNT_AD = 3;
     private static final String SETTINGS = "powerJumpSettings";
     private static final String HIGH_SCORE = "highScore";
+    private static final String LAST_PLAY_SCORE = "lastPlayScore";
     private static final int DEFAULT_HIGH_SCORE = 0;
     private static final String BACKGROUND_ID = "backgroundId";
     private static final int INITIAL_BACKGROUND_ID = 1;
@@ -31,6 +32,7 @@ public class GameSettings {
     private boolean showHelp; // No need to persist it
     private Preferences prefs;
     private int highScore;
+    private int lastPlayScore;
     private int backgroundId;
     private boolean audio;
 
@@ -65,6 +67,7 @@ public class GameSettings {
         highScore = prefs.getInteger(HIGH_SCORE, DEFAULT_HIGH_SCORE);
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
+        lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
     }
     public void loadHero(){
         heroX = prefs.getFloat("HERO_POSITION_X");
@@ -87,6 +90,7 @@ public class GameSettings {
         prefs.clear();
         blockVector.clear();
         prefs.putInteger(HIGH_SCORE, highScore);
+        prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
         if(hero != null) {
@@ -148,6 +152,14 @@ public class GameSettings {
 
     public void setHighScore(int highScore) {
         this.highScore = highScore;
+    }
+
+    public int getLastPlayScore() {
+        return lastPlayScore;
+    }
+
+    public void setLastPlayScore(int lastPlayScore) {
+        this.lastPlayScore = lastPlayScore;
     }
 
     public int getBackgroundId() {

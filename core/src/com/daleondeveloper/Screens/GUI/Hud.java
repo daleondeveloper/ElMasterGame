@@ -19,6 +19,7 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameController;
+import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.GUI.widget.PowerBar;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
@@ -69,7 +70,7 @@ public class Hud extends GUIOverlayAbstractScreen {
 
         this.playScreen = playScreen;
         i18NGameThreeBundle = Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle();
-        score = 0;
+        score = GameSettings.getInstance().getLastPlayScore();
         fps = 0;
 
         assetGUI = Assets.getInstance().getAssetGUI();
@@ -263,6 +264,7 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         scoreLabel.setText(String.valueOf(score));
         scoreLabel.setPosition(gameWindow.getWidth() / 2 - scoreLabel.getPrefWidth() / 2,
                 gameWindow.getY() + 225 );
+        GameSettings.getInstance().setLastPlayScore(score);
     }
 
     public int getScore() {
