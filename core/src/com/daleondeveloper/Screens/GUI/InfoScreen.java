@@ -206,12 +206,13 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         if (currentScore > bestScore) {
             bestScore = currentScore;
             prefs.setHighScore(bestScore);
-            prefs.save();
 
             // Leaderboards
-         //   playServices.submitScore(bestScore);
+            //   playServices.submitScore(bestScore);
 
         }
+        prefs.setLastPlayScore(0);
+        prefs.save();
 
         if (hud.isScoreAboveAverage()) {
             gameOverLabel.setText(titleKeys.get(MathUtils.random(0, titleKeys.size - 1)));
@@ -248,6 +249,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         stage.addActor(scoreLabel);
         stage.addActor(highScoreLabel);
         playScreen.doPause();
+        prefs.deleteSave();
 
     }
 

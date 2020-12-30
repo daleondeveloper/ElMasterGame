@@ -93,7 +93,7 @@ public class GameSettings {
         prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
-        if(hero != null) {
+        if(hero != null && !hero.isDisposable()) {
             if(hero.getBodyPosition().x > 40) {
                 prefs.putFloat("HERO_POSITION_X", hero.getX());
             }else {
@@ -118,11 +118,13 @@ public class GameSettings {
     }
     public void deleteSave(){
         prefs.clear();
+        prefs.putInteger(HIGH_SCORE, highScore);
         blockVector.clear();
 //        prefs.putInteger("BLOCK_COUNT", 0);
 //
 //        prefs.putInteger("HERO_POSITION_X", 100);
 //        prefs.putInteger("HERO_POSITION_Y", 200);
+
         prefs.flush();
     }
 
