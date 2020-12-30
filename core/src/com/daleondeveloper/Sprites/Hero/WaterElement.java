@@ -346,7 +346,17 @@ public class WaterElement extends AbstractDynamicObject {
     }
 
     private void checkContacts(){
+        Block[][] blocksMass = gameWorld.getBlockController().getBlocksMas();
         Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
+        int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
+        int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+        if(posMasY > 0){
+            Block block;
+            block = (blocksMass[posMasX][posMasY]);
+            if(block != null)sensorDown.add(block);
+        }else{
+            sensorDown.add(gameWorld.getRegionDown());
+        }
 
         for(AbstractGameObject obj : sensorDown){
             float xDist = Math.abs(getBodyPosition().x - (obj.getX() + obj.getWidth()/2));

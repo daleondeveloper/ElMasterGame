@@ -354,4 +354,16 @@ private void renderPlatform(SpriteBatch batch) {
     public void setButtonPushPressed(boolean buttonPushPressed) {
         this.buttonPushPressed = buttonPushPressed;
     }
+
+    public Platform getRegionDown() {
+        return regionDown;
+    }
+
+    public Platform getRegionLeft() {
+        return regionLeft;
+    }
+
+    public Platform getRegionRight() {
+        return regionRight;
+    }
 }
