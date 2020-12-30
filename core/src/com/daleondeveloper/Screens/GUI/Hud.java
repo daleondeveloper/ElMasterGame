@@ -219,7 +219,6 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
     public void update(float deltaTime) {
         stage.act();
         updateFPS();
-        System.out.println(fps);
     }
 
     @Override

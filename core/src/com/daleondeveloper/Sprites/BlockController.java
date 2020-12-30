@@ -205,4 +205,8 @@ public Block checkLeftContact(Block block) {
     public List<Block> getArrayBlock() {
         return arrayBlock;
     }
+
+    public Block[][] getBlocksMas() {
+        return blocksMas;
+    }
 }

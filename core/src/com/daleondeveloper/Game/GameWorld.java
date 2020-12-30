@@ -45,6 +45,8 @@ public class GameWorld {
 
     private boolean rightButtonPressed;
     private boolean leftButtonPressed;
+    private boolean buttonPushPressed;
+
 
     private Array<AbstractGameObject> gameObjectToCreate;
 
@@ -59,6 +61,7 @@ public class GameWorld {
 
         rightButtonPressed = false;
         leftButtonPressed = false;
+        buttonPushPressed = false;
 
         timeCreateBlock = 101;
         offSetY = 0;
@@ -184,10 +187,13 @@ public class GameWorld {
         if(isRightButtonPressed()){
             waterElement.turn(20);
         }
+        if(isButtonPushPressed()){
+            waterElement.push(30f);
+        }
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 100){
+        if(timeCreateBlock > 100111){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }
@@ -339,5 +345,13 @@ private void renderPlatform(SpriteBatch batch) {
 
     public void setTimeCreateBlock(float timeCreateBlock) {
         this.timeCreateBlock = timeCreateBlock;
+    }
+
+    public boolean isButtonPushPressed() {
+        return buttonPushPressed;
+    }
+
+    public void setButtonPushPressed(boolean buttonPushPressed) {
+        this.buttonPushPressed = buttonPushPressed;
     }
 }

@@ -234,16 +234,46 @@ public class WaterElement extends AbstractDynamicObject {
     public void idle(){
         currentState = State.IDLE;
         stateTime = 0;
-        if(pushBlock != null){
-            pushBlock.idle();
-        }
+//        if(pushBlock != null){
+//            pushBlock.idle();
+//        }
     }
     public void push(float impulse){
-        if(isIdle() || isWalk() || isJump()){
-            currentState = State.PUSH;
-            turnImpulse = impulse;
-            stateTime = 0;
-        }
+        if(isIdle() || isWalk() || isJump() ||
+                (sensorDown.size() == 0 && sensorLeft.size() == 0 && sensorRight.size() == 0)){
+            int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
+            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+                if(moveRight && posMasX < gameWorld.getBlockController().getBlocksMas().length - 1){
+                    Block block = gameWorld.getBlockController().getBlocksMas()[posMasX + 1][posMasY];
+                    Block secondRightBlock = null;
+                    if(posMasX <= 7){
+                        secondRightBlock = (gameWorld.getBlockController().getBlocksMas()[posMasX +2][posMasY]);
+                    }
+                    if(block == null || secondRightBlock != null || !block.isIdle()){
+                        return;
+                    }else{
+                        pushBlock = block;
+                        currentState = State.PUSH;
+                        turnImpulse = impulse;
+                        stateTime = 0;
+                    }
+                }else if(posMasX > 0){
+                    Block block = gameWorld.getBlockController().getBlocksMas()[posMasX - 1][posMasY];
+                    Block secondLeftBlock = null;
+                    if(posMasX >= 2){
+                        secondLeftBlock = (gameWorld.getBlockController().getBlocksMas()[posMasX - 2][posMasY]);
+                    }
+                    if(block == null || secondLeftBlock != null || !block.isIdle()){
+                        return;
+                    }else{
+                        pushBlock = block;
+                        currentState = State.PUSH;
+                        turnImpulse = -impulse;
+                        stateTime = 0;
+                    }
+                }
+            }
+
     }
     public void onDead(){
         stateTime = 0;
@@ -276,7 +306,7 @@ public class WaterElement extends AbstractDynamicObject {
         } else {
             return;
         }
-        checkContacts();
+//        checkContacts();
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
@@ -397,18 +427,32 @@ public class WaterElement extends AbstractDynamicObject {
             body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
             //render
             // Update this Sprite to correspond with the position of the Box2D body.
-            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-            setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
+            TextureRegion textureRegion = (TextureRegion) elemStandAnim.getKeyFrame(stateTime, true);
+        setRegion(textureRegion);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
 //            setRegion(newHero);
             if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateJump(float deltaTime){
         float y = body.getPosition().y - 2;
-        int leftReg = 139,rightReg = 149;
+        int leftReg = 141,rightReg = 149;
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
-                returnCellsPositionY = leftReg + 1 ;
+                returnCellsPositionY = leftReg - 1 ;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
+        float x = body.getPosition().x;
+        leftReg = 53;
+        rightReg = 57;
+        for(int i = 0; i < 12; i++){
+            if(x >= leftReg && x < rightReg){
+                returnCellsPositionX = (rightReg + leftReg) >> 1;
                 break;
             }
             leftReg += 10;
@@ -419,17 +463,31 @@ public class WaterElement extends AbstractDynamicObject {
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
             // Update this Sprite to correspond with the position of the Box2D body.
-            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false));
+        TextureRegion textureRegion = (TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false);
+            setRegion(textureRegion);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
         if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateFall(float deltaTime){
         float y = body.getPosition().y - 2;
-        int leftReg = 139,rightReg = 149;
+        int leftReg = 141,rightReg = 149;
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
-                returnCellsPositionY = leftReg + 1 ;
+                returnCellsPositionY = leftReg -1 ;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
+        float x = body.getPosition().x;
+        leftReg = 53;
+        rightReg = 57;
+        for(int i = 0; i < 12; i++){
+            if(x >= leftReg && x < rightReg){
+                returnCellsPositionX = (rightReg + leftReg) >> 1;
                 break;
             }
             leftReg += 10;
@@ -447,45 +505,40 @@ public class WaterElement extends AbstractDynamicObject {
             }
             body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
 
-            setRegion((TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false));
+            TextureRegion textureRegion = (TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false);
+            setRegion(textureRegion);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
         if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void statePush(float deltaTime){
+        float x = body.getPosition().x;
+        int leftReg = 53,rightReg = 57;
+        for(int i = 0; i < 12; i++){
+            if(x >= leftReg && x < rightReg){
+                returnCellsPositionX = (rightReg + leftReg) >> 1;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
             if(turnImpulse == 0){
                 idle();
                 return;
             }
-            if(sensorDown.size() == 0 && sensorLeft.size() == 0 && sensorRight.size() == 0){
-                fall();
-            }
-        body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
 
-        if(moveRight && sensorRight.size() > 0){
-                for(AbstractGameObject f : sensorRight){
-                    if(f instanceof Block){
-                        Block block = (Block)f;
-                        block.push(turnImpulse);
-                        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
-                        pushBlock = block;
-                    }
-                }
-            }
-            if(!moveRight && sensorLeft.size() > 0){
-                for(AbstractGameObject f : sensorLeft){
-                    if(f instanceof Block){
-                        Block block = (Block)f;
-                        block.push(turnImpulse);
-                        body.setLinearVelocity(-turnImpulse,body.getLinearVelocity().y);
-                        pushBlock = block;
-                    }
-                }
-            }
+            body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
+            pushBlock.push(turnImpulse);
+            body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
 
             // Update this Sprite to correspond with the position of the Box2D body.
-            setRegion((TextureRegion) elemPushAnim.getKeyFrame(stateTime, false));
+        TextureRegion textureRegion = (TextureRegion) elemPushAnim.getKeyFrame(stateTime, false);
+        setRegion(textureRegion);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
         if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
@@ -494,6 +547,16 @@ public class WaterElement extends AbstractDynamicObject {
             if(activateElem){
                 activateElem = false;
             }
+         float x = body.getPosition().x;
+         int leftReg = 53,rightReg = 57;
+            for(int i = 0; i < 12; i++){
+            if(x >= leftReg && x < rightReg){
+                returnCellsPositionX = (rightReg + leftReg) >> 1;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
             body.setGravityScale(0);
             body.setLinearVelocity(new Vector2(turnImpulse*2,0));
         body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
@@ -505,8 +568,11 @@ public class WaterElement extends AbstractDynamicObject {
                 fall();
             }
             // Update this Sprite to correspond with the position of the Box2D body.
-            setRegion((TextureRegion) elemWalkAnim.getKeyFrame(stateTime, true));
+        TextureRegion textureRegion = (TextureRegion) elemWalkAnim.getKeyFrame(stateTime, true);
+            setRegion(textureRegion);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
         if(moveRight){setFlip(true,false);}
             stateTime += deltaTime;
         }

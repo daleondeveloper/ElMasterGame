@@ -93,7 +93,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 gameWorld.setLeftButtonPressed(true);
                 break;
             case Input.Keys.C:
-                waterElement.push(30f);
+                gameWorld.setButtonPushPressed(true);
                 break;
             case Input.Keys.Z:
                 gameWorld.getBlockController().addBlock();
@@ -148,8 +148,8 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 gameWorld.setRightButtonPressed(false);
                 break;
             case Input.Keys.C :
+                gameWorld.setButtonPushPressed(false);
                 waterElement.idle();
-
                 break;
         }
         return true;
@@ -189,7 +189,6 @@ public class GameController implements GestureDetector.GestureListener, InputPro
     public boolean scrolled(int amount) {
         return false;
     }
-
 
 }
 
