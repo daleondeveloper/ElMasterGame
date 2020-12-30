@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 
@@ -117,6 +118,9 @@ public class WorldController implements Disposable {
 
         if(hero.isDisposable()) {
             GameSettings.getInstance().deleteSave();
+            for(Block block :gameWorld.getBlockController().getArrayBlock()){
+                block.delete();
+            }
             return true;
         }
         return false;

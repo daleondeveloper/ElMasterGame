@@ -76,7 +76,7 @@ public class GameSettings {
             heroX = 100;
         }
         if(heroY < 140) {
-            heroY = 200;
+            heroY = 155;
         }
     }
     public void loadBlock(){

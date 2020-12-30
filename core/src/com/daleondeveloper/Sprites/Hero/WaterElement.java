@@ -436,7 +436,7 @@ public class WaterElement extends AbstractDynamicObject {
             rightReg += 10;
         }
         if(getY() < 0){
-            returnCellsPositionY = 200;
+            returnCellsPositionY = 160;
         }
             if(sensorDown.size() > 0){ idle(); }
             if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){

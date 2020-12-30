@@ -316,7 +316,6 @@ public class WorldContactListner implements ContactListener {
             fixture = fa;
         }
         if(block != null) {
-            block.setSensorDown(true);
             block.getContactDownList().add((AbstractGameObject)fixture.getUserData());
         }
         return block;
@@ -342,7 +341,6 @@ public class WorldContactListner implements ContactListener {
             fixture = fa;
         }
         if(block != null) {
-            block.setSensorUp(true);
             block.getContactUpList().add((AbstractGameObject)fixture.getUserData());
         }
         return block;
@@ -369,7 +367,7 @@ public class WorldContactListner implements ContactListener {
             block = (Block) objFb;
         }
         if (block != null) {
-            block.setSensorLeft(true);
+//            block.setSensorLeft(true);
         }
         return block;
     }
@@ -395,7 +393,7 @@ public class WorldContactListner implements ContactListener {
             block = (Block)objFb;
         }
         if(block != null) {
-            block.setSensorRight(true);
+//            block.setSensorRight(true);
         }
         return block;
     }
@@ -470,7 +468,7 @@ public class WorldContactListner implements ContactListener {
             fixture = fa;
         }
         if(block !=null) {
-            block.setSensorDown(false);
+//            block.setSensorDown(false);
             block.getContactDownList().remove((AbstractGameObject)fixture.getUserData());
         }
         return block;
@@ -496,7 +494,7 @@ public class WorldContactListner implements ContactListener {
             fixture = fa;
         }
         if(block != null) {
-            block.setSensorUp(false);
+//            block.setSensorUp(false);
             block.getContactUpList().remove((AbstractGameObject)fixture.getUserData());
         }
         return block;
@@ -519,7 +517,7 @@ public class WorldContactListner implements ContactListener {
             block = (Block)objFb;
         }
         if(block != null) {
-            block.setSensorLeft(false);
+//            block.setSensorLeft(false);
         }
         return block;
     }
@@ -541,7 +539,7 @@ public class WorldContactListner implements ContactListener {
             block = (Block)objFb;
         }
         if(block != null) {
-            block.setSensorRight(false);
+//            block.setSensorRight(false);
         }
         return block;
     }

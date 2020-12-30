@@ -79,7 +79,7 @@ public class GameWorld {
         platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,200);
+        waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,DOWN_REGION + 10);
 
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 
@@ -187,7 +187,7 @@ public class GameWorld {
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 100){
+        if(timeCreateBlock > 100000){
             timeCreateBlock = 0;
             getBlockController().addBlock();
         }
@@ -228,7 +228,6 @@ private void updatePlatform(float deltaTime){
        // regionDown.render(batch);
         renderBlock(batch);
         renderPlatform(batch);
-//        gates.render(batch);
       //  firstLineBlockChecker.render(batch);
 
     }
@@ -241,6 +240,7 @@ private void updatePlatform(float deltaTime){
 //            }
         }
     }
+
 private void renderPlatform(SpriteBatch batch) {
         for (Platform platform : platformController.getPlatforms()) {
              platform.render(batch);
@@ -256,6 +256,7 @@ private void renderPlatform(SpriteBatch batch) {
     public void renderBox2DDebug(Box2DDebugRenderer box2DDebugRenderer) {
         box2DDebugRenderer.render(box2DWorld, gameCamera.getCombined());
     }
+
 
     public GameCamera getGameCamera() {
         return gameCamera;
