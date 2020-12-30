@@ -268,7 +268,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        if(getSensorUp().size() > 0 && !isJump() && !isFall()) {
+        if(getSensorUp().size() > 0) {
             onDead();
         }
         if(body != null) {
