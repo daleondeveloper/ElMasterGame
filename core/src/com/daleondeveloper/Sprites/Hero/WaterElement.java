@@ -276,8 +276,10 @@ public class WaterElement extends AbstractDynamicObject {
 
     }
     public void onDead(){
-        stateTime = 0;
-        currentState = State.DEAD;
+        if(currentState != State.DEAD) {
+            stateTime = 0;
+            currentState = State.DEAD;
+        }
     }
 
     public boolean load(){
@@ -298,15 +300,13 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        if(getSensorUp().size() > 0) {
-            onDead();
-        }
+
         if(body != null) {
             body.setGravityScale(10);
         } else {
             return;
         }
-//        checkContacts();
+        checkContacts();
             if(currentState != debugState){
                 debugState = currentState;
                 System.out.println(debugState);
@@ -338,6 +338,10 @@ public class WaterElement extends AbstractDynamicObject {
             if(body != null && sensorDown.size() == 0 ){
                 body.setGravityScale(10);
             }
+        if(getSensorUp().size() > 0) {
+            onDead();
+            return;
+        }
 
     }
 

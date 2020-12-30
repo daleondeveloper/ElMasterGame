@@ -328,6 +328,7 @@ public class Block extends AbstractDynamicObject {
 
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.DynamicBody);
+        blockController.checkDownContact(this);
         if(contactDownList.size() > 0){stopFall();}
 
         //Change fall velocity

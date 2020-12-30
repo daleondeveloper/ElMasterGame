@@ -44,19 +44,16 @@ public class BlockController {
     }
 
     public boolean addBlock (){
-        float posCreateX = (float)rnd.nextInt(10)*10+50;
+        float posCreateX = (float)rnd.nextInt(blocksMas.length)*10+50;
         int posMasX = (int)(posCreateX / 10 ) - 5;
         if(posMasX >= blocksMas.length-1){posMasX = 0;}
         while (true) {
             if (blocksMas[posMasX][9] == null) {
                 posCreateX = (float)posMasX*10+50;
                 break;
+            }else{
+                posMasX = rnd.nextInt(blocksMas.length);
             }
-            if (posMasX >= blocksMas.length-1) {
-                        posMasX = 0;
-                    } else {
-                        posMasX++;
-                    }
 
             }
         lastCreateBlock = new Block(gameWorld,this,posCreateX,gameWorld.getGameCamera().getWorldHeight()-30,9.94f,9.94f);
@@ -113,7 +110,7 @@ public class BlockController {
                     block.getContactDownList().add(blocksMas[posMasX][posMasY]);
                 }
                 if(hero != null){
-                    block.getContactDownList().add(hero);
+                   // block.getContactDownList().add(hero);
                 }
             }
         }
