@@ -256,6 +256,8 @@ public class WaterElement extends AbstractDynamicObject {
         returnCellsPositionX = GameSettings.getInstance().getHeroX() + getWidth()/2;
         returnCellsPositionY = GameSettings.getInstance().getHeroY() + getHeight()/2;
         body.setTransform(returnCellsPositionX,returnCellsPositionY,0);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
         return true;
     }
 
