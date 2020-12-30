@@ -1,8 +1,10 @@
 package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.I18NBundle;
@@ -11,6 +13,7 @@ import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
+import com.daleondeveloper.Game.GameCamera;
 import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
@@ -28,7 +31,7 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     private static final String TAG = InfoScreen.class.getName();
 
     private static final float BUTTON_WIDTH = 180.0f;
-    private static final int MAX_TITLE_KEYS = 15;
+    private static final int MAX_TITLE_KEYS = 2;
 
 
     private Image background;
@@ -38,15 +41,23 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     private I18NBundle i18NGameThreeBundle;
     private AssetGUI assetGUI;
     private Array<String> titleKeys;
+
     private Label.LabelStyle labelStyleBig;
     private Label.LabelStyle labelStyleNormal;
     private Label.LabelStyle labelStyleSmall;
-    private Table gameOverTable;
-    private Table helpTable;
-    private Image pause;
+
     private Label gameOverLabel;
     private Label scoreLabel;
     private Label highScoreLabel;
+    private Label restartLabel;
+    private Label mainMenuLabel;
+
+    private Image start;
+    private Image pause;
+    private Image menuWindow;
+    private Image buttonRestart;
+    private Image buttonMainMenu;
+
 
     public InfoScreen(ElMaster game, PlayScreen playScreen) {
         super(game);
@@ -75,22 +86,9 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
 
     @Override
     public void build() {
-        gameOverTable = getGameOverTable();
-        //helpTable = getHelpTable();
-
-        Stack stack = new Stack();
-        stack.add(gameOverTable);
-        //stack.add(helpTable);
-
-        Table mainTable = new Table();
-        mainTable.setDebug(DebugConstants.DEBUG_LINES);
-        mainTable.center();
-        mainTable.setFillParent(true);
-        mainTable.add(stack);
-        stage.addActor(mainTable);
 
         // Pause button
-        pause = new Image(new TextureRegionDrawable(assetGUI.getButtonHelp()));
+        pause = new Image(assetGUI.getButtonPause());
         pause.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
@@ -99,89 +97,58 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
 
             }
         }));
-        stage.addActor(pause);
+        //PreStartImage
+        start = new Image(assetGUI.getButtonStart());
 
-
-    }
-
-    private Table getGameOverTable() {
-        gameOverLabel = new Label("GAME OVER", labelStyleBig);
-        scoreLabel = new Label("SCORE", labelStyleNormal);
+        //GameOver Image
+        menuWindow = new Image(assetGUI.getPauseWindow());
+        buttonMainMenu = new Image(assetGUI.getButtonForPauseWindow());
+        buttonRestart = new Image(assetGUI.getButtonForPauseWindow());
+        restartLabel = new Label(i18NGameThreeBundle.format("pauseScreen.restart"), labelStyleSmall);
+        mainMenuLabel = new Label(i18NGameThreeBundle.format("pauseScreen.mainMenu"), labelStyleSmall);
+        gameOverLabel = new Label("GAME OVER", labelStyleNormal);
+        scoreLabel = new Label("SCORE", labelStyleSmall);
         highScoreLabel = new Label("HIGH_SCORE", labelStyleSmall);
 
-        Table table = new Table();
-        table.setDebug(DebugConstants.DEBUG_LINES);
-        table.center();
-        table.add(gameOverLabel).row();
-        table.add(getGameOverButtonsTable()).row();
-        table.add(scoreLabel).row();
-        table.add(highScoreLabel);
-        table.setVisible(false);
-        return table;
+        defineButtons();
+
+        stage.addActor(pause);
+        stage.addActor(start);
+
+
+        Gdx.input.setInputProcessor(stage);
     }
+    private void defineButtons(){
+        buttonMainMenu.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
+        mainMenuLabel.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
 
-    private Table getGameOverButtonsTable() {
-        ImageButton reload = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()));
-
-        ImageButton home = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonLeft()));
-        reload.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+        buttonRestart.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+                GameSettings.getInstance().deleteSave();
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }
         }));
-        home.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.SLIDE_DOWN));
-
-        Table table = new Table();
-        table.setDebug(DebugConstants.DEBUG_LINES);
-        table.center();
-        table.add(reload).width(BUTTON_WIDTH);
-        table.add(home).width(BUTTON_WIDTH);
-        return table;
-    }
-
-    private Table getHelpTable() {
-        Table table = new Table();
-        table.setDebug(DebugConstants.DEBUG_LINES);
-        table.center();
-        table.add(new Image(assetGUI.getButtonHelp())).row();
-        table.add(getHelpButtonsTable());
-        table.setVisible(false);
-        return table;
-    }
-
-    private Table getHelpButtonsTable() {
-        ImageButton gotIt = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
-        gotIt.addListener(ListenerHelper.runnableListener(new Runnable() {
+        restartLabel.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                // Enable input for PlayScreen
-//                Gdx.input.setInputProcessor(playScreen.getInputProcessor());
-                startStageAnimation(true, new Runnable() {
-                    @Override
-                    public void run() {
-                        pause.setVisible(true);
-                        helpTable.setVisible(false);
-                        stage.getRoot().setY(0);
-                        playScreen.getHud().setVisible(true);
-                    }
-                });
+                GameSettings.getInstance().deleteSave();
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
+
             }
         }));
-
-        Table table = new Table();
-        table.setDebug(DebugConstants.DEBUG_LINES);
-        table.center();
-        table.add(gotIt).width(BUTTON_WIDTH);
-        return table;
+        start.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                playScreen.setStateRunning();
+                start.setVisible(false);
+            }
+        }));
     }
 
     @Override
-    public void update(float deltaTime) {
-        stage.act();
-    }
+    public void update(float deltaTime) { stage.act();}
 
     @Override
     public void render() {
@@ -192,13 +159,44 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        float x = stage.getWidth() ;
-        float y = stage.getHeight();
+        float w = stage.getWidth() ;
+        float h = stage.getHeight();
 
-        pause.setWidth(x * 0.179f);
-        pause.setHeight(y * 0.1f);
-        pause.setPosition(x - pause.getWidth() , y - pause.getHeight());
-        pause.setBounds(pause.getX(),pause.getY(),pause.getWidth(),pause.getHeight());
+        pause.setWidth(64);
+        pause.setHeight(64);
+        pause.setPosition(w - pause.getWidth() , h - pause.getHeight());
+
+        start.setWidth(96);
+        start.setHeight(96);
+        start.setPosition((w - start.getWidth()) / 2,h / 2);
+
+        menuWindow.setWidth(400);
+        menuWindow.setHeight(342);
+        menuWindow.setX((w - menuWindow.getWidth()) / 2);
+        menuWindow.setY((h - menuWindow.getHeight()) / 2);
+
+        buttonMainMenu.setWidth(menuWindow.getWidth() * 0.6f);
+        buttonMainMenu.setHeight(menuWindow.getHeight() / 8);
+        buttonMainMenu.setPosition((w - buttonMainMenu.getWidth()) / 2,
+                menuWindow.getY() + buttonMainMenu.getHeight() * 2.5f);
+        mainMenuLabel.setPosition(buttonMainMenu.getX() + buttonMainMenu.getWidth()/2 - mainMenuLabel.getPrefWidth() / 2 ,
+                buttonMainMenu.getY()  + buttonMainMenu.getHeight() * 0.6f - mainMenuLabel.getPrefHeight() / 2);
+
+
+        buttonRestart.setWidth(menuWindow.getWidth() * 0.6f);
+        buttonRestart.setHeight(menuWindow.getHeight() / 8);
+        buttonRestart.setPosition((w - buttonRestart.getWidth()) / 2, buttonMainMenu.getY() - buttonRestart.getHeight() * 1.2f);
+        restartLabel.setPosition(buttonRestart.getX() + buttonRestart.getWidth()/2 - restartLabel.getPrefWidth() / 2 ,
+                buttonRestart.getY()  + buttonRestart.getHeight() * 0.6f - restartLabel.getPrefHeight() / 2);
+
+        gameOverLabel.setPosition(menuWindow.getX() + menuWindow.getWidth() / 2 - gameOverLabel.getPrefWidth() / 2,
+                menuWindow.getY() + menuWindow.getHeight() - 5 - gameOverLabel.getPrefHeight());
+        scoreLabel.setPosition(menuWindow.getX() + menuWindow.getWidth() / 2  - scoreLabel.getPrefWidth() / 2,
+                gameOverLabel.getY() - scoreLabel.getPrefHeight() - 5);
+        highScoreLabel.setPosition(menuWindow.getX() + menuWindow.getWidth() / 2  - highScoreLabel.getPrefWidth() / 2,
+                scoreLabel.getY() - highScoreLabel.getPrefHeight() - 5);
+
+
     }
 
     public void showGameOver() {
@@ -213,8 +211,6 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
             // Leaderboards
          //   playServices.submitScore(bestScore);
 
-            // Audio effect
-            AudioManager.getInstance().playSound(assets.getAssetSounds().getNewAchievement());
         }
 
         if (hud.isScoreAboveAverage()) {
@@ -225,30 +221,34 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
         scoreLabel.setText(i18NGameThreeBundle.format("infoScreen.score", currentScore));
         highScoreLabel.setText(i18NGameThreeBundle.format("infoScreen.highScore", bestScore));
 
-        gameOverTable.setVisible(true);
-//        helpTable.setVisible(false);
         pause.setVisible(false);
         hud.setVisible(false);
-        startStageAnimation(false, new Runnable() {
-            @Override
-            public void run() {
-                // Only InfoScreen responds to events
-                Gdx.input.setInputProcessor(stage);
-            }
-        });
+//        startStageAnimation(false, new Runnable() {
+//            @Override
+//            public void run() {
+//                // Only InfoScreen responds to events
+//            }
+//        });
+        Gdx.input.setInputProcessor(stage);
+
+
+        gameOverLabel.setPosition(menuWindow.getX() + menuWindow.getWidth() / 2 - gameOverLabel.getPrefWidth() / 2,
+                menuWindow.getY() + menuWindow.getHeight() - 5 - gameOverLabel.getPrefHeight());
+        scoreLabel.setPosition(menuWindow.getX() + menuWindow.getWidth() / 2  - scoreLabel.getPrefWidth() / 2,
+                gameOverLabel.getY() - scoreLabel.getPrefHeight() - 5);
+        highScoreLabel.setPosition(menuWindow.getX() + menuWindow.getWidth() / 2  - highScoreLabel.getPrefWidth() / 2,
+                scoreLabel.getY() - highScoreLabel.getPrefHeight() - 5);
+
+        stage.addActor(menuWindow);
+        stage.addActor(buttonMainMenu);
+        stage.addActor(buttonRestart);
+        stage.addActor(restartLabel);
+        stage.addActor(mainMenuLabel);
+        stage.addActor(gameOverLabel);
+        stage.addActor(scoreLabel);
+        stage.addActor(highScoreLabel);
+        playScreen.doPause();
+
     }
 
-    public void showHelp() {
-        gameOverTable.setVisible(false);
-      //  helpTable.setVisible(true);
-        pause.setVisible(false);
-        playScreen.getHud().setVisible(false);
-        startStageAnimation(false, new Runnable() {
-            @Override
-            public void run() {
-                // Only InfoScreen responds to events
-                Gdx.input.setInputProcessor(stage);
-            }
-        });
-    }
 }

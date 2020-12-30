@@ -32,7 +32,7 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
         guiCamera = new OrthographicCamera();
         guiViewport = new ExtendViewport(ElMaster.APPLICATION_WIDTH, ElMaster.APPLICATION_HEIGHT, guiCamera);
 
-        /** Internally calls guiViewport.update() (see {@link uy.com.agm.gamefour.game.GameWorld} and
+        /** Internally calls guiViewport.update() (see {@link .game.GameWorld} and
          * this.resize(int width, int height)) */
         stage = new Stage(guiViewport, game.getGuiBatch());
     }

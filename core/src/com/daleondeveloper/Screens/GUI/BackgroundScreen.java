@@ -47,20 +47,18 @@ public class BackgroundScreen extends GUIOverlayAbstractScreen {
 
 
         background.setHeight(h);
-        background.setWidth(w*3);
+//        background.setWidth(500);
         background.setPosition(w/2 - background.getWidth() /2, h/2 - background.getHeight()/2);
-        fog_dark.setHeight(h * 0.87f);
-        fog_dark.setWidth(w * 3);
         fog_dark.setPosition(w/2 - background.getWidth() /2, h/2 - background.getHeight()/2);
 
-        fog_left.setWidth(w * 4.87f);
-        fog_left.setHeight(h);
-
-        fog_center.setWidth(w * 4.875f);
-        fog_center.setHeight(h);
-
-        fog_right.setWidth(w * 4.7f);
-        fog_right.setHeight(h);
+//        fog_left.setWidth(w * 4.87f);
+//        fog_left.setHeight(h);
+//
+//        fog_center.setWidth(w * 4.875f);
+//        fog_center.setHeight(h);
+//
+//        fog_right.setWidth(w * 4.7f);
+//        fog_right.setHeight(h);
     }
 
     @Override

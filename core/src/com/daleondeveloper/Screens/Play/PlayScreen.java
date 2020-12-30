@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Assets.Assets;
+import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Game.*;
 import com.daleondeveloper.Screens.AbstractScreen;
 import com.daleondeveloper.Screens.GUI.BackgroundScreen;
@@ -32,8 +33,10 @@ public class PlayScreen extends GUIAbstractScreen {
     private MenuScreen menuScreen;
     private BackgroundScreen backgroundScreen;
     private GatesScreen gatesScreen;
+    private boolean gameStart;
 
     private Image background;
+    private Image startButton;
     private WorldController worldController;
     private GameWorld gameWorld;
     private WorldRenderer worldRenderer;
@@ -49,6 +52,7 @@ public class PlayScreen extends GUIAbstractScreen {
         menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
         gatesScreen = new GatesScreen(game);
+        gameStart = false;
 
 
         worldController = new WorldController(this);
@@ -70,24 +74,36 @@ public class PlayScreen extends GUIAbstractScreen {
         infoScreen.build();
         menuScreen.build();
         background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
-        setStateRunning();
+        startButton = new Image(Assets.getInstance().getAssetGUI().getButtonStart());
+        //setStateRunning();
+        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                resume();
+            }
+        }));
+        //stage.addActor(startButton);
     }
 
 
     @Override
     public void render(float deltaTime){
         //Update logic
+        stage.act();
         backgroundScreen.update(deltaTime);
+
         menuScreen.update(deltaTime);
         gatesScreen.update(deltaTime);
+        hud.update(deltaTime);
+        infoScreen.update(deltaTime);
         if(isPlayScreenStateRunning()){
-            hud.update(deltaTime);
-            infoScreen.update(deltaTime);
             worldController.update(deltaTime);
         }
 
+
         //Render logic
     //    AbstractScreen.clearScr();
+
 
        // gameWorld.getGameCamera().setScreenViewport();
         backgroundScreen.render();
@@ -98,12 +114,15 @@ public class PlayScreen extends GUIAbstractScreen {
         infoScreen.render();
         menuScreen.render();
 //        viewport.update(viewport.getScreenWidth(),viewport.getScreenHeight());
-
+        stage.draw();
         //Analys game result
         if(guiScreenState == GUIScreenState.RUNNING){
             gameResults();
         }
 
+        if(!gameStart){
+            doPause();
+        }
 
     }
 
@@ -159,6 +178,7 @@ public class PlayScreen extends GUIAbstractScreen {
         background.setY(0);
         background.setWidth(width);
         background.setHeight(height);
+        startButton.setPosition(w / 2, h / 2);
         backgroundScreen.resize(width,height);
         gatesScreen.resize(width,height);
         hud.resize(width, height);
@@ -192,6 +212,7 @@ public class PlayScreen extends GUIAbstractScreen {
     }
 
     public void setStateRunning() {
+        gameStart = true;
         menuScreen.hideMenuScreen();
         Gdx.input.setInputProcessor(getInputProcessor());
         resume();

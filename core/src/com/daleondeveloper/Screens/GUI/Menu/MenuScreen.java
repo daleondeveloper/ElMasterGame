@@ -57,7 +57,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen = new PauseScreen(game,this);
         settingsScreen = new SettingsScreen(game,this);
 
-        menuState = MenuState.PAUSE;
+        menuState = MenuState.CLOSE;
     }
 
     @Override
@@ -70,18 +70,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         // Resize background
         screenBg.setSize(w, h);
 
-        if(guiAbstractScreen instanceof  PlayScreen) {
-            // Place the title
-            pauseWindow.setWidth(w);
-            pauseWindow.setHeight(h * 0.425f);
-            pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
-            pauseWindow.setY((h - pauseWindow.getHeight()) / 2 + TITLE_OFFSET_Y);
-        }else {
             pauseWindow.setWidth(400);
             pauseWindow.setHeight(342);
             pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
             pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
-        }
+
         helpScreen.resize(width,height);
         highScoreScreen.resize(width,height);
         pauseScreen.resize(width,height);
@@ -97,6 +90,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pixmap.dispose();
         screenBg = new Image(dim);
 
+
         pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));
 
         stage.addActor(screenBg);
@@ -111,6 +105,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     @Override
     public void update(float deltaTime) {
         stage.act();
+        if(menuState == MenuState.CLOSE){
+            setVisible(false);
+        }else{
+            setVisible(true);
+        }
 
         helpScreen.update(deltaTime);
         highScoreScreen.update(deltaTime);

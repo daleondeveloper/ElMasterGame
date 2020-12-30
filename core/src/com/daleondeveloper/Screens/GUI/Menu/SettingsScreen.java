@@ -58,20 +58,12 @@ public class SettingsScreen extends GUIOverlayAbstractScreen {
         super.resize(width, height);
 
 
-//        settingsLabel.setFontScale(width / 500, height / 1000);
         settingsLabel.setPosition(menuWindow.getX() + 130,menuWindow.getY() + 265);
-        if(menuScreen.getGuiAbstractScreen() instanceof MainMenuScreen){
             back.setHeight(24);
             back.setWidth(24);
             back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
                     menuWindow.getY() + menuWindow.getHeight() - 40);
-        }else{
-            back.setWidth(menuWindow.getWidth() * 0.1f);
-            back.setHeight(menuWindow.getHeight() * 0.1f);
-            back.setPosition(menuWindow.getX() + menuWindow.getWidth() - back.getWidth() * 2f ,
-                    menuWindow.getY() + menuWindow.getHeight() - back.getHeight() * 1.6f);
-            back.setBounds(back.getX(),back.getY(),back.getWidth(),back.getHeight());
-        }
+
     }
 
     @Override

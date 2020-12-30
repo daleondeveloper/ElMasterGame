@@ -51,6 +51,7 @@ public class Hud extends GUIOverlayAbstractScreen {
     private Label scoreLabel;
     private int fps;
     private Label.LabelStyle labelStyleBig;
+    private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
     private Label fpsLabel;
     private Container containerPerfectJump;
@@ -80,6 +81,9 @@ public class Hud extends GUIOverlayAbstractScreen {
 
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assetFonts.getSmall();
+
+        labelStyleMedium = new Label.LabelStyle();
+        labelStyleMedium.font = assetFonts.getNormal();
     }
 
     @Override
@@ -91,6 +95,8 @@ public class Hud extends GUIOverlayAbstractScreen {
         mainTable.add(getTopTable()).height(stage.getHeight() / 2).row();
         mainTable.add(getBottomTable()).height(stage.getHeight() / 2);
         stage.addActor(mainTable);
+
+        scoreLabel = new Label(String.valueOf(score), labelStyleMedium);
 
         gameWindow = new Image(new TextureRegionDrawable(assetGUI.getGameWindow()));
         stage.addActor(gameWindow);
@@ -166,7 +172,6 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
     }
 
     private Table getTopTable() {
-        scoreLabel = new Label(String.valueOf(score), labelStyleBig);
 
         Table table = new Table();
 //        table.setDebug(DebugConstants.DEBUG_LINES);
@@ -201,17 +206,6 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         return table;
     }
 
-//    private Container getContainerPerfectJump() {
-//        Label perfectJumpLabel = new Label(i18NGameThreeBundle.format("hud.perfectJump"), labelStyleSmall);
-//        containerPerfectJump = new Container<Label>(perfectJumpLabel);
-//        containerPerfectJump.setDebug(DebugConstants.DEBUG_LINES);
-//        containerPerfectJump.setTransform(true);   // for enabling scaling and rotation
-//        containerPerfectJump.setOrigin(perfectJumpLabel.getWidth() / 2, perfectJumpLabel.getHeight() / 2);
-//        containerPerfectJump.setScale(0.0f); // Tiny
-//        containerPerfectJump.getColor().a = 0; // Invisible
-//        return containerPerfectJump;
-//    }
-
     private void updateFPS() {
        // if (DebugConstants.SHOW_FPS) {
             fps = Gdx.graphics.getFramesPerSecond();
@@ -221,24 +215,6 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
 
     @Override
     public void update(float deltaTime) {
-
-//        if (swing || !powerBar.isEmpty()) {
-//            swingTime += deltaTime;
-//            if (swingTime > SWING_DELAY) {
-//                swingTime = 0;
-//                if (swing) {
-//                    if (powerBar.isFull()) {
-//                        powerBar.reset();
-//                    } else {
-//                        powerBar.increase();
-//                    }
-//                } else {
-//                    if (!powerBar.isEmpty()) {
-//                        powerBar.decrease();
-//                    }
-//                }
-//            }
-//        }
         stage.act();
         updateFPS();
     }
@@ -255,40 +231,38 @@ gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable
         gameWindow.setWidth(stage.getWidth());
         gameWindow.setHeight(stage.getHeight() / 3);
 
-        gameButtonJump.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.1f , gameWindow.getY() + gameWindow.getHeight() * 0.1f);
-        gameButtonJump.setWidth(gameWindow.getWidth() *0.179f);
-        gameButtonJump.setHeight(gameWindow.getHeight() * 0.3125f);
+        gameButtonPush.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.1f , gameWindow.getY() + gameWindow.getHeight() * 0.1f);
 
-        gameButtonPush.setPosition(gameButtonJump.getX() + gameButtonJump.getWidth(), gameWindow.getY()  + gameWindow.getHeight() * 0.42f);
+        gameButtonPush.setWidth(96);
+        gameButtonPush.setHeight(96);
 
-        gameButtonPush.setWidth(gameWindow.getWidth() *0.179f);
-        gameButtonPush.setHeight(gameWindow.getHeight() * 0.3125f);
+        gameButtonJump.setPosition(gameButtonPush.getX() + gameButtonPush.getWidth() - 16, gameWindow.getY()  + gameWindow.getHeight() * 0.42f);
+        gameButtonJump.setWidth(96);
+        gameButtonJump.setHeight(96);
 
 
-        gameButtonRight.setWidth(gameWindow.getWidth() * 0.179f);
-        gameButtonRight.setHeight(gameWindow.getHeight() * 0.367f);
-        gameButtonRight.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.9f - gameButtonRight.getWidth(),
+
+        gameButtonRight.setWidth(83);
+        gameButtonRight.setHeight(96);
+        gameButtonRight.setPosition(gameWindow.getX() + gameWindow.getWidth() * 0.95f - gameButtonRight.getWidth(),
                 gameWindow.getY() + gameWindow.getHeight() / 4);
 
-        gameButtonLeft.setWidth(gameWindow.getWidth() *0.179f);
-        gameButtonLeft.setHeight(gameWindow.getHeight() * 0.367f);
+        gameButtonLeft.setWidth(83);
+        gameButtonLeft.setHeight(96);
         gameButtonLeft.setPosition(gameButtonRight.getX() - gameButtonLeft.getWidth() * 1.1f,
                 gameWindow.getY() + gameWindow.getHeight() / 4);
 
-//        scoreLabel.setFontScaleX();
-        scoreLabel.setFontScaleX(x / 500);
-        scoreLabel.setFontScaleY(y / 1000);
-        scoreLabel.setPosition(x * 0.9f ,y * 0.48f);
-       // fpsLabel.setFontScaleX();
-//        scoreLabel.setPosition(x - (scoreLabel.getWidth() / 2),stage.getHeight() * 0.8f);
-       // fpsLabel.setPosition(x - (fpsLabel.getWidth() / 2),stage.getHeight() * 0.5f);
 
+        scoreLabel.setPosition(gameWindow.getWidth() / 2 - scoreLabel.getPrefWidth() / 2,
+                gameWindow.getY() + 225 );
 
     }
 
     public void addScore(int value) {
         score += value;
         scoreLabel.setText(String.valueOf(score));
+        scoreLabel.setPosition(gameWindow.getWidth() / 2 - scoreLabel.getPrefWidth() / 2,
+                gameWindow.getY() + 225 );
     }
 
     public int getScore() {

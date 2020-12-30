@@ -29,7 +29,7 @@ public class GameCamera {
         this.height = height;
 
         camera = new OrthographicCamera();
-        viewPort = new FitViewport(width,height,camera);
+        viewPort = new ExtendViewport(width,height,camera);
 
         int cameraWidth = Gdx.graphics.getWidth();
         int cameraHeight = Gdx.graphics.getHeight();
@@ -80,9 +80,12 @@ public class GameCamera {
 //            viewPort.update(width,height,true);
 //
 //        }
+
         this.width = width;
         this.height = height;
-        viewPort.update(width, height, true);
+        camera.position.set(100,200,0);
+
+        viewPort.update(width, height, false);
     }
 
     public float getWorldWidth() {
@@ -91,6 +94,10 @@ public class GameCamera {
 
     public float getWorldHeight() {
         return viewPort.getWorldHeight();
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 
     public Vector3 position() {

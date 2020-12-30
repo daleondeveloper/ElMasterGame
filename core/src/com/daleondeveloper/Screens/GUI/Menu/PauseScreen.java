@@ -47,7 +47,7 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
     private I18NBundle i18NGameThreeBundle;
     private Table mainTable;
 
-    private Label.LabelStyle labelStyleBig;
+    private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
     private Image menuWindow;
     private Image back;
@@ -69,8 +69,8 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleBig = new Label.LabelStyle();
-        labelStyleBig.font = assets.getAssetFonts().getBig();
+        labelStyleMedium = new Label.LabelStyle();
+        labelStyleMedium.font = assets.getAssetFonts().getNormal();
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
@@ -81,7 +81,7 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         menuWindow = menuScreen.getPauseWindow();
 
         // Title
-        pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleBig);
+        pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleMedium);
         restartLabel = new Label(i18NGameThreeBundle.format("pauseScreen.restart"), labelStyleSmall);
         mainMenuLabel = new Label(i18NGameThreeBundle.format("pauseScreen.mainMenu"), labelStyleSmall);
         settingsLabel = new Label(i18NGameThreeBundle.format("pauseScreen.settings"), labelStyleSmall);
@@ -205,28 +205,24 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         mainMenu.setHeight(menuWindow.getHeight() / 8);
         mainMenu.setPosition(x - mainMenu.getWidth() / 2 ,
                 y * 1.1f - mainMenu.getHeight() / 2);
-        mainMenuLabel.setFontScale(width / 750, height / 1500);
         mainMenuLabel.setPosition(mainMenu.getX() + mainMenu.getWidth()/2 - mainMenuLabel.getPrefWidth() / 2 ,
-                mainMenu.getY()  + mainMenu.getHeight() * 0.8f - mainMenuLabel.getPrefHeight() / 2);
+                mainMenu.getY()  + mainMenu.getHeight() * 0.6f - mainMenuLabel.getPrefHeight() / 2);
 
         //audio.setPosition(x, y);
         settings.setWidth(menuWindow.getWidth() * 0.6f);
         settings.setHeight(menuWindow.getHeight() / 8);
         settings.setPosition(x - settings.getWidth() / 2, mainMenu.getY() - settings.getHeight() * 1.2f);
-        settingsLabel.setFontScale(width / 750, height / 1500);
         settingsLabel.setPosition(settings.getX() + settings.getWidth()/2 - settingsLabel.getPrefWidth() / 2 ,
-                settings.getY()  + settings.getHeight() * 0.8f - settingsLabel.getPrefHeight() / 2);
+                settings.getY()  + settings.getHeight() * 0.6f - settingsLabel.getPrefHeight() / 2);
 
         restart.setWidth(menuWindow.getWidth() * 0.6f);
         restart.setHeight(menuWindow.getHeight() / 8);
         restart.setPosition(x - restart.getWidth() / 2, settings.getY() - restart.getHeight() * 1.2f);
-        restartLabel.setFontScale(width / 750, height / 1500);
         restartLabel.setPosition(restart.getX() + restart.getWidth()/2 - restartLabel.getPrefWidth() / 2 ,
-                restart.getY()  + restart.getHeight() * 0.8f - restartLabel.getPrefHeight() / 2);
+                restart.getY()  + restart.getHeight() * 0.6f - restartLabel.getPrefHeight() / 2);
 
-        pauseLabel.setFontScale(width / 500, height / 1000);
         pauseLabel.setPosition(mainMenu.getX() + mainMenu.getWidth()/2 - pauseLabel.getPrefWidth() / 2 ,
-                mainMenu.getY()  + mainMenu.getHeight() * 1.9f  - pauseLabel.getPrefHeight() / 2);
+                menuWindow.getY() + menuWindow.getHeight() - 5 - pauseLabel.getPrefHeight());
     }
 
     private void setButtonsAnimation() {
