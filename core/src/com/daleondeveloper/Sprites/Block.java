@@ -25,9 +25,6 @@ import java.util.Set;
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
-
-    private static float fall_velocity = -100;
-
     private enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
     }
@@ -116,7 +113,6 @@ public class Block extends AbstractDynamicObject {
         body =gameWorld.createBody(blockDef);
         body.setFixedRotation(true);
         body.setGravityScale(1);
-        body.setLinearVelocity(body.getLinearVelocity().x,fall_velocity);
 
         FixtureDef fixture = new FixtureDef();
         PolygonShape polygonShape = new PolygonShape();
@@ -332,7 +328,7 @@ public class Block extends AbstractDynamicObject {
         if(contactDownList.size() > 0){stopFall();}
 
         //Change fall velocity
-        body.setLinearVelocity(0,fall_velocity);
+        body.setLinearVelocity(0,blockController.getBlockFallVelocity());
 
         body.setTransform(returnCellsPosition,body.getPosition().y,0);
 
@@ -467,11 +463,4 @@ public class Block extends AbstractDynamicObject {
         return returnCellsPositionY;
     }
 
-    public static float getFall_velocity() {
-        return fall_velocity;
-    }
-
-    public static void setFall_velocity(float fall_velocity) {
-        Block.fall_velocity = fall_velocity;
-    }
 }

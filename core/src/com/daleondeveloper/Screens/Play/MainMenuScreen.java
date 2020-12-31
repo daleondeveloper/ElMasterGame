@@ -71,6 +71,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private ImageButton buttonHelp;
     private ImageButton buttonSettings;
     private ImageButton buttonHighScore;
+    private Image buttonCredit;
 
     private Animation rightBowl;
     private Animation leftBowl;
@@ -204,6 +205,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         stage.addActor(buttonSettings);
         stage.addActor(buttonHighScore);
         stage.addActor(buttonStart);
+        stage.addActor(buttonCredit);
 
         setStateRunning();
 
@@ -218,6 +220,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
                 new TextureRegionDrawable(assetGUI.getButtonHighScore()));
         buttonSettings = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSettings()),
                 new TextureRegionDrawable(assetGUI.getButtonSettings()));
+        buttonCredit = new Image(assetGUI.getButtonHelp());
 
 
         buttonStart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
@@ -242,6 +245,13 @@ public class MainMenuScreen extends GUIAbstractScreen {
             public void run() {
                 setStatePaused();
                 menuScreen.showMenuScreen(MenuScreen.MenuState.SETTINGS);
+            }
+        }));
+        buttonCredit.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                setStatePaused();
+                menuScreen.showMenuScreen(MenuScreen.MenuState.CREDIT);
             }
         }));
 
@@ -321,6 +331,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
         buttonHelp.setX(249 + offSetX);
         buttonHelp.setHeight(75);
         buttonHelp.setY(840 - 378 - 75);
+
+        buttonCredit.setWidth(64);
+        buttonCredit.setHeight(64);
+        buttonCredit.setPosition(w - buttonCredit.getWidth(),h - buttonCredit.getHeight());
 
         // Buttons Animations
         //setButtonsAnimation();

@@ -187,9 +187,9 @@ public class WaterElement extends AbstractDynamicObject {
     public void fall(){
         if(isWalk() || isIdle() || isPush() || isJump()) {
             if(isJump()){
-                body.setLinearVelocity(body.getLinearVelocity().x, IMPULSE_FALL - playScreen.getHud().getScore() / 5);
+                body.setLinearVelocity(turnImpulse, IMPULSE_FALL - playScreen.getHud().getScore() / 5);
             }  else {
-                body.setLinearVelocity(body.getLinearVelocity().x / 2, IMPULSE_FALL- playScreen.getHud().getScore() / 5);
+                body.setLinearVelocity(body.getLinearVelocity().x / (2 + playScreen.getHud().getScore()/50f), IMPULSE_FALL- playScreen.getHud().getScore() / 5);
             }
             stateTime = 0;
             currentState = State.FALL;
@@ -216,7 +216,7 @@ public class WaterElement extends AbstractDynamicObject {
                         (impulse < 0 && sensorLeft.size() > 0)) {
                     impulse = 0;
                 }
-                body.setLinearVelocity(impulse, body.getLinearVelocity().y);
+                body.setLinearVelocity(impulse , body.getLinearVelocity().y);
             }
             turnImpulse = impulse ;
         }
@@ -477,7 +477,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
             if(body.getLinearVelocity().y < 1){fall();return;}
             if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
-            if(sensorUp.size() > 0 || stateTime > (IMPULSE_Y  + 200 + (playScreen.getHud().getScore() / 5))/(playScreen.getHud().getScore() / 1.6f)){ fall(); return;}
+            if(sensorUp.size() > 0 || stateTime > ((IMPULSE_Y  + (playScreen.getHud().getScore() / 5f))/(playScreen.getHud().getScore() / 0.32f))){ fall(); return;}
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
             // Update this Sprite to correspond with the position of the Box2D body.
@@ -514,6 +514,9 @@ public class WaterElement extends AbstractDynamicObject {
         if(getY() < 0){
             returnCellsPositionY = 160;
         }
+        if(stateTime > 2) {
+            body.setTransform(returnCellsPositionX + getWidth() / 2, body.getPosition().y, 0);
+        }
             if(sensorDown.size() > 0){ idle(); }
             if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){
                 body.getLinearVelocity().x = 0;
@@ -522,6 +525,7 @@ public class WaterElement extends AbstractDynamicObject {
                 body.getLinearVelocity().x = 0;
             }
             body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
+
 
             TextureRegion textureRegion = (TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false);
             setRegion(textureRegion);

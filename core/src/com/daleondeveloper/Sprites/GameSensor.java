@@ -89,7 +89,6 @@ public class GameSensor extends AbstractDynamicObject {
                     block.delete();
                 }
                 playScreen.getHud().addScore(10);
-                Block.setFall_velocity(-100 - ((int) playScreen.getHud().getScore() >> 1));
                 gameWorld.setTimeCreateBlock(101);
             }
         }

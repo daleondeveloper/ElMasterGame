@@ -11,7 +11,7 @@ android {
         ignoreAssetsPattern '!raw'
     }
     buildToolsVersion '28.0.3'
-    compileSdkVersion 26
+    compileSdkVersion 29
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -30,7 +30,7 @@ android {
     defaultConfig {
         applicationId "com.daleondeveloper"
         minSdkVersion 22
-        targetSdkVersion 26
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }

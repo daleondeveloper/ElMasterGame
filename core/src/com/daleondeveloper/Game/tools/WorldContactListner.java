@@ -66,7 +66,7 @@ public class WorldContactListner implements ContactListener {
 
             }break;
             case CATEGORY_WATER_ELEM_SENSOR_UP_BIT | CATEGORY_REGION_BIT: {
-                WaterElement waterElement = heroStartContactUp(fa,fb);
+                //WaterElement waterElement = heroStartContactUp(fa,fb);
             }break;
             //Лівий сенсор
             case CATEGORY_WATER_ELEM_SENSOR_LEFT_BIT | CATEGORY_BLOCK_SENSOR_RIGHT_BIT:{

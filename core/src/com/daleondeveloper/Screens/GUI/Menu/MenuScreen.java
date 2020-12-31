@@ -23,7 +23,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private static final float TITLE_OFFSET_Y = 200.0f;
 
     public enum MenuState{
-        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP
+        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -38,6 +38,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private HighScoreScreen highScoreScreen;
     private PauseScreen pauseScreen;
     private SettingsScreen settingsScreen;
+    private CreditScreen creditScreen;
 
     private Image screenBg;
     private Image pauseWindow;
@@ -56,6 +57,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreScreen = new HighScoreScreen(game,this);
         pauseScreen = new PauseScreen(game,this);
         settingsScreen = new SettingsScreen(game,this);
+        creditScreen = new CreditScreen(game,this);
 
         menuState = MenuState.CLOSE;
     }
@@ -79,6 +81,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreScreen.resize(width,height);
         pauseScreen.resize(width,height);
         settingsScreen.resize(width,height);
+        creditScreen.resize(width,height);
     }
 
     @Override
@@ -100,6 +103,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreScreen.build();
         pauseScreen.build();
         settingsScreen.build();
+        creditScreen.build();
     }
 
     @Override
@@ -115,6 +119,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreScreen.update(deltaTime);
         pauseScreen.update(deltaTime);
         settingsScreen.update(deltaTime);
+        creditScreen.update(deltaTime);
     }
 
     @Override
@@ -125,6 +130,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreScreen.render();
         pauseScreen.render();
         settingsScreen.render();
+        creditScreen.render();
     }
 
     @Override
@@ -133,6 +139,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreScreen.dispose();
         pauseScreen.dispose();
         settingsScreen.dispose();
+        creditScreen.dispose();
     }
 
     public void showMenuScreen(MenuState menuState){
@@ -163,6 +170,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 //                    hideHelpScreen();
 //                   hidePauseScreen();
 //                    hideSettingsScreen();
+                    break;
+                case CREDIT:
+                    setCreditScreen();
                     break;
             }
         }
@@ -204,6 +214,10 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void setSettingsScreen(){
         menuState = MenuState.SETTINGS;
         settingsScreen.showSettingsScreen();
+    }
+    public void setCreditScreen(){
+        menuState = MenuState.CREDIT;
+        creditScreen.showCreditScreen();
     }
 
     public GUIAbstractScreen getGuiAbstractScreen() {

@@ -22,6 +22,7 @@ public class BlockController {
     private Random rnd;
     private Block lastCreateBlock;
     private Block[][] blocksMas;
+    private float blockFallVelocity;
 
 
     public BlockController (PlayScreen playScreen, GameWorld gameWorld) {
@@ -32,6 +33,7 @@ public class BlockController {
 
         blocksMas = new Block[10][20];
         rnd = new Random ();
+        blockFallVelocity = 0;
 
     }
     public void update(float deltaTime){
@@ -41,10 +43,12 @@ public class BlockController {
             }
             gameWorld.setTimeCreateBlock(101);
         }
+
+        blockFallVelocity = (-100 - ((int) playScreen.getHud().getScore() >> 1));
     }
 
     public boolean addBlock (){
-        float posCreateX = (float)rnd.nextInt(blocksMas.length)*10+50;
+        float posCreateX = (int)(rnd.nextInt(100)/10)*10+50;
         int posMasX = (int)(posCreateX / 10 ) - 5;
         if(posMasX >= blocksMas.length-1){posMasX = 0;}
         while (true) {
@@ -52,7 +56,7 @@ public class BlockController {
                 posCreateX = (float)posMasX*10+50;
                 break;
             }else{
-                posMasX = rnd.nextInt(blocksMas.length);
+                posMasX = (int)rnd.nextInt(100) / 10;
             }
 
             }
@@ -205,5 +209,9 @@ public Block checkLeftContact(Block block) {
 
     public Block[][] getBlocksMas() {
         return blocksMas;
+    }
+
+    public float getBlockFallVelocity() {
+        return blockFallVelocity;
     }
 }
