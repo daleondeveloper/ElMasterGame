@@ -182,10 +182,10 @@ public class GameWorld {
 
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
-            waterElement.turn(-20);
+            waterElement.turn(-20 -  playScreen.getHud().getScore() / 5);
         }
         if(isRightButtonPressed()){
-            waterElement.turn(20);
+            waterElement.turn(20 + playScreen.getHud().getScore() / 5);
         }
         if(isButtonPushPressed()){
             waterElement.push(30f);
