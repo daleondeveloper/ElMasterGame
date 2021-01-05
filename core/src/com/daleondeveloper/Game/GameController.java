@@ -14,11 +14,6 @@ import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
-
-/**
- * Created by AGMCORP on 19/9/2018.
- */
-
 public class GameController implements GestureDetector.GestureListener, InputProcessor {
     private static final String TAG = GameController.class.getName();
 

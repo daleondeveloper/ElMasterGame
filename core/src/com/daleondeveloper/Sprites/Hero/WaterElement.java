@@ -41,11 +41,11 @@ public class WaterElement extends AbstractDynamicObject {
     private GameWorld gameWorld;
     private TextureRegion elemTexReg;
     private TextureRegion newHero;
-    private Animation elemStandAnim;
-    private Animation elemWalkAnim;
-    private Animation elemPushAnim;
-    private Animation elemJumpAnim;
-    private Animation elemDeathAnim;
+    private Animation<TextureRegion> elemStandAnim;
+    private Animation<TextureRegion> elemWalkAnim;
+    private Animation<TextureRegion> elemPushAnim;
+    private Animation<TextureRegion> elemJumpAnim;
+    private Animation<TextureRegion> elemDeathAnim;
     private float stateTime;
     private Body body;
     private State currentState;

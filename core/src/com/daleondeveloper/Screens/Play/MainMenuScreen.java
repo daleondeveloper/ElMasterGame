@@ -73,10 +73,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private ImageButton buttonHighScore;
     private Image buttonCredit;
 
-    private Animation rightBowl;
-    private Animation leftBowl;
-    private Animation portal;
-    private Animation openGates;
+    private Animation<TextureRegion> rightBowl;
+    private Animation<TextureRegion> leftBowl;
+    private Animation<TextureRegion> portal;
+    private Animation<TextureRegion> openGates;
 
 
     private AnimatedActor leftBowlAnimatedActor;

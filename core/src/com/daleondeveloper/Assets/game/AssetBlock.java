@@ -17,10 +17,10 @@ public class AssetBlock implements IAssetSprite {
     private TextureRegion blockWater;
     private TextureRegion blockLight;
 
-    private Animation destroyFire;
-    private Animation destroySnow;
-    private Animation destroyWater;
-    private Animation destroyLight;
+    private Animation<TextureRegion> destroyFire;
+    private Animation<TextureRegion> destroySnow;
+    private Animation<TextureRegion> destroyWater;
+    private Animation<TextureRegion> destroyLight;
 
     public  AssetBlock(TextureAtlas atlas){
         Array<TextureAtlas.AtlasRegion> regions;
@@ -31,19 +31,19 @@ public class AssetBlock implements IAssetSprite {
 
         //animation
         regions = atlas.findRegions("fire/destroy/destroy");
-        destroyFire =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        destroyFire =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlas.findRegions("snow/destroy/snow");
-        destroySnow =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        destroySnow =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlas.findRegions("water/destroy/destroy");
-        destroyWater =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        destroyWater =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlas.findRegions("light/destroy/destroy");
-        destroyLight =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        destroyLight =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
     }
@@ -74,19 +74,19 @@ public class AssetBlock implements IAssetSprite {
         return blockLight;
     }
 
-    public Animation getDestroyFire() {
+    public Animation<TextureRegion> getDestroyFire() {
         return destroyFire;
     }
 
-    public Animation getDestroySnow() {
+    public Animation<TextureRegion> getDestroySnow() {
         return destroySnow;
     }
 
-    public Animation getDestroyWater() {
+    public Animation<TextureRegion> getDestroyWater() {
         return destroyWater;
     }
 
-    public Animation getDestroyLight() {
+    public Animation<TextureRegion> getDestroyLight() {
         return destroyLight;
     }
 }

@@ -19,9 +19,6 @@ public class DebugConstants {
     // Shows/hides FPS counter
     public static final boolean SHOW_FPS = true && TURN_ON_DEBUG;
 
-    // Enables cheat mode
-    public static final boolean POWER_JUMP_ENABLED = true && TURN_ON_DEBUG;
-
     // Test advertisements
     public static final boolean TEST_ADS = false && TURN_ON_DEBUG;
 }

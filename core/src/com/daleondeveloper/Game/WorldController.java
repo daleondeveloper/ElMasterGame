@@ -11,11 +11,6 @@ import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
-
-/**
- * Created by AGMCORP on 21/9/2018.
- */
-
 public class WorldController implements Disposable {
     private static final String TAG = WorldController.class.getName();
 

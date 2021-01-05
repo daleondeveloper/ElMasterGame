@@ -44,7 +44,7 @@ public class BlockController {
             gameWorld.setTimeCreateBlock(101);
         }
 
-        blockFallVelocity = (-100 - ((int) playScreen.getHud().getScore() >> 1));
+        blockFallVelocity = (-50 - ((int) playScreen.getHud().getScore() >> 1));
     }
 
     public boolean addBlock (){

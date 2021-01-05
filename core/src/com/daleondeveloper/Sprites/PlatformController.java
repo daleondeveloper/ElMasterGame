@@ -1,6 +1,5 @@
 package com.daleondeveloper.Sprites;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;

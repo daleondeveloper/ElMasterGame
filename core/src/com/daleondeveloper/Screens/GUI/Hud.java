@@ -29,10 +29,6 @@ import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-/**
- * Created by AGMCORP on 10/12/2018.
- */
-
 public class Hud extends GUIOverlayAbstractScreen {
     private static final String TAG = Hud.class.getName();
 

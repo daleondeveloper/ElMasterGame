@@ -32,11 +32,11 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
     private Image menuBg;
     private Image playBackground;
 
-    private Animation rightBowl;
-    private Animation leftBowl;
-    private Animation portal;
-    private Animation openGates;
-    private Animation closeGates;
+    private Animation<TextureRegion> rightBowl;
+    private Animation<TextureRegion> leftBowl;
+    private Animation<TextureRegion> portal;
+    private Animation<TextureRegion> openGates;
+    private Animation<TextureRegion> closeGates;
 
     private AnimatedActor leftBowlAnimatedActor;
     private AnimatedActor rightBowlAnimatedActor;

@@ -29,9 +29,6 @@ public class TypingLabel extends Label {
 	///////////////////////
 
 	// Collections
-// AGM 6/11/2018
-//	private final ObjectMap<String, String> variables = new ObjectMap<>();
-//	protected final Array<TokenEntry> tokenEntries = new Array<>();
 	private final ObjectMap<String, String> variables = new ObjectMap<String, String>();
 	protected final Array<TokenEntry> tokenEntries = new Array<TokenEntry>();
 
@@ -446,7 +443,6 @@ public class TypingLabel extends Label {
 					for (int i = 0; i < activeEffects.size; i++) {
 						Effect effect = activeEffects.get(i);
 						if (effect.indexEnd < 0) {
-							// AGM 6/11/2018 if (effectClass.isAssignableFrom(effect.getClass())) {
 							if (ClassReflection.isAssignableFrom(effectClass.getClass(), effect.getClass())) {
 								effect.indexEnd = glyphCharIndex - 1;
 							}

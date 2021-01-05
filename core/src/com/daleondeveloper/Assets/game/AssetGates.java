@@ -36,14 +36,14 @@ public class AssetGates implements IAssetSprite {
     private TextureRegion blackDragonLeftHandWithSphere;
     private TextureRegion blackDragonRightHandWithSphere;
 
-    private Animation portal;
-    private Animation leftFireBowl;
-    private Animation rightFireBowl;
-    private Animation mainDragonEyes;
-    private Animation leftDragonEyes;
-    private Animation rightDragonEyes;
-    private Animation openGates;
-    private Animation closeGates;
+    private Animation<TextureRegion> portal;
+    private Animation<TextureRegion> leftFireBowl;
+    private Animation<TextureRegion> rightFireBowl;
+    private Animation<TextureRegion> mainDragonEyes;
+    private Animation<TextureRegion> leftDragonEyes;
+    private Animation<TextureRegion> rightDragonEyes;
+    private Animation<TextureRegion> openGates;
+    private Animation<TextureRegion> closeGates;
 
 
     public AssetGates(TextureAtlas atlasGates){
@@ -56,26 +56,26 @@ public class AssetGates implements IAssetSprite {
 
         //animation
         regions = atlasGates.findRegions("portal/portal");
-        portal =new Animation(2.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        portal =new Animation<TextureRegion>(2.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         //BOWL
         regions = atlasGates.findRegions("bowl/left/left_bowl");
-        leftFireBowl =new Animation(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
+        leftFireBowl =new Animation<TextureRegion>(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
         regions = atlasGates.findRegions("bowl/right/right_bowl");
-        rightFireBowl =new Animation(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
+        rightFireBowl =new Animation<TextureRegion>(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
 
         //gates
         regions = atlasGates.findRegions("open/gate_open");
-        openGates =new Animation(0.5f/24.0f,regions, Animation.PlayMode.NORMAL);
+        openGates =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
         regions = atlasGates.findRegions("open/gate_open");
-        closeGates =new Animation(0.5f/24.0f,regions, Animation.PlayMode.REVERSED);
+        closeGates =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.REVERSED);
         regions.clear();
 
         dragonEyes(atlasGates);
@@ -187,35 +187,35 @@ public class AssetGates implements IAssetSprite {
         return dragonRightHandWithSphere;
     }
 
-    public Animation getPortal() {
+    public Animation<TextureRegion> getPortal() {
         return portal;
     }
 
-    public Animation getLeftFireBowl() {
+    public Animation<TextureRegion> getLeftFireBowl() {
         return leftFireBowl;
     }
 
-    public Animation getRightFireBowl() {
+    public Animation<TextureRegion> getRightFireBowl() {
         return rightFireBowl;
     }
 
-    public Animation getMainDragonEyes() {
+    public Animation<TextureRegion> getMainDragonEyes() {
         return mainDragonEyes;
     }
 
-    public Animation getLeftDragonEyes() {
+    public Animation<TextureRegion> getLeftDragonEyes() {
         return leftDragonEyes;
     }
 
-    public Animation getRightDragonEyes() {
+    public Animation<TextureRegion> getRightDragonEyes() {
         return rightDragonEyes;
     }
 
-    public Animation getOpenGates() {
+    public Animation<TextureRegion> getOpenGates() {
         return openGates;
     }
 
-    public Animation getCloseGates() {
+    public Animation<TextureRegion> getCloseGates() {
         return closeGates;
     }
 

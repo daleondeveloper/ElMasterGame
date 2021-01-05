@@ -1,12 +1,13 @@
 package com.daleondeveloper.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.daleondeveloper.Game.ElMaster;
-//import uy.com.agm.gamefour.admob.IAdsController;
-//import uy.com.agm.gamefour.playservices.IPlayServices;
+//import admob.IAdsController;
+//import playservices.IPlayServices;
 
 public abstract class AbstractScreen implements Screen {
     private static final String TAG = AbstractScreen.class.getName();
@@ -20,7 +21,7 @@ public abstract class AbstractScreen implements Screen {
 
         // Sets whether the BACK button on Android should be caught.
         // This will prevent the app from being paused. Will have no effect on the desktop/html.
-        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchKey(Input.Keys.BACK,true);
     }
 
     public static void clearScr() {

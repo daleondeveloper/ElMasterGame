@@ -10,28 +10,28 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class AnimatedActor extends Actor {
     private static final String TAG = AnimatedActor.class.getName();
 
-    private Animation animation;
+    private Animation<TextureRegion> animation;
     private TextureRegion textureRegion;
     private float stateTime;
     private Color tint;
 
-    public AnimatedActor(Animation animation) {
+    public AnimatedActor(Animation<TextureRegion> animation) {
         init(animation, false, 1.0f, Color.WHITE);
     }
 
-    public AnimatedActor(Animation animation, boolean randomStart) {
+    public AnimatedActor(Animation<TextureRegion> animation, boolean randomStart) {
         init(animation, randomStart, 1.0f, Color.WHITE);
     }
 
-    public AnimatedActor(Animation animation, boolean randomStart, float scale) {
+    public AnimatedActor(Animation<TextureRegion> animation, boolean randomStart, float scale) {
         init(animation, randomStart, scale, Color.WHITE);
     }
 
-    public AnimatedActor(Animation animation, boolean randomStart, float scale, Color tint) {
+    public AnimatedActor(Animation<TextureRegion> animation, boolean randomStart, float scale, Color tint) {
         init(animation, randomStart, scale, tint);
     }
 
-    private void init(Animation animation, boolean randomStart, float scale, Color tint) {
+    private void init(Animation<TextureRegion> animation, boolean randomStart, float scale, Color tint) {
         this.animation = animation;
         stateTime = randomStart ? MathUtils.random(0, animation.getAnimationDuration()) : 0;
         textureRegion = (TextureRegion) animation.getKeyFrame(0);

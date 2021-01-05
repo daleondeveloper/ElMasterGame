@@ -38,7 +38,7 @@ public class SplashScreen extends GUIAbstractScreen {
     private float splashTime;
     private Label.LabelStyle labelStyleSmall;
 
-    private Animation heroPush;
+    private Animation<TextureRegion> heroPush;
     private AnimatedActor heroActor;
     private Image heroBlock;
     private TextureRegion[] blocks;
@@ -103,7 +103,7 @@ public class SplashScreen extends GUIAbstractScreen {
         TextureAtlas atlas = assetManager.get(TEXTURE_ATLAS_SPLASH_SCREEN, TextureAtlas.class);
 
         // Grab the regions from the atlas and create some images
-        heroPush = new Animation(3/24f,atlas.findRegions("push"), Animation.PlayMode.LOOP);
+        heroPush = new Animation<TextureRegion>(3/24f,atlas.findRegions("push"), Animation.PlayMode.LOOP);
         blocks[0] = atlas.findRegion("fire");
         blocks[1] = atlas.findRegion("water");
         blocks[2] = atlas.findRegion("snow");
