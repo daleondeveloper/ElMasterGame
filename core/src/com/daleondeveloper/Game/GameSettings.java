@@ -93,7 +93,7 @@ public class GameSettings {
         prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
-        if(hero != null && !hero.isDisposable()) {
+        if(hero != null && !hero.isDisposable() && hero.getBodyPosition() != null) {
             if(hero.getBodyPosition().x > 40) {
                 prefs.putFloat("HERO_POSITION_X", hero.getX());
             }else {
