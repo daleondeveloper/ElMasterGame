@@ -23,6 +23,7 @@ public class BlockController {
     private Block lastCreateBlock;
     private Block[][] blocksMas;
     private float blockFallVelocity;
+    private float blockCreateTime;
 
 
     public BlockController (PlayScreen playScreen, GameWorld gameWorld) {
@@ -34,35 +35,58 @@ public class BlockController {
         blocksMas = new Block[10][20];
         rnd = new Random ();
         blockFallVelocity = 0;
-
+        blockCreateTime = 0;
     }
     public void update(float deltaTime){
-        if(lastCreateBlock != null && lastCreateBlock.isIdle()){
-            if(lastCreateBlock.getY() > 300){
-                lastCreateBlock.delete();
+       int score = playScreen.getHud().getScore();
+       float timeToCreateNewBlockRelativeScore = (4f - score / 125);
+       if(timeToCreateNewBlockRelativeScore < 1.5f){
+           timeToCreateNewBlockRelativeScore = 1.5f;
+       }
+        blockCreateTime += deltaTime;
+
+        if(blockCreateTime > timeToCreateNewBlockRelativeScore){
+            float s = (score/10) % 6;
+            if(s > 4){
+                addBlock();
+                addBlock();
+                addBlock();
+            }else if(s > 2){
+                addBlock();
+                addBlock();
+            }else{
+                addBlock();
             }
-            gameWorld.setTimeCreateBlock(101);
+            blockCreateTime = 0;
         }
 
-        blockFallVelocity = (-50 - ((int) playScreen.getHud().getScore() >> 1));
+        blockFallVelocity = (-50);
     }
 
     public boolean addBlock (){
-        float posCreateX = (int)(rnd.nextInt(100)/10)*10+50;
-        int posMasX = (int)(posCreateX / 10 ) - 5;
-        if(posMasX >= blocksMas.length-1){posMasX = 0;}
+        int countNextRandomNumbers = 0;
+        float posCreateX = 0;
+        int posMasX = rnd.nextInt(10);
+        //if(posMasX >= blocksMas.length-1){posMasX = 0;}
         while (true) {
-            if (blocksMas[posMasX][9] == null) {
-                posCreateX = (float)posMasX*10+50;
+            if (blocksMas[posMasX][15] == null &&
+                    blocksMas[posMasX][14] == null &&
+                    blocksMas[posMasX][13] == null &&
+                    blocksMas[posMasX][12] == null &&
+                    blocksMas[posMasX][11] == null &&
+                    blocksMas[posMasX][10] == null &&
+                    blocksMas[posMasX][9] == null) {
                 break;
             }else{
-                posMasX = (int)rnd.nextInt(100) / 10;
+                posMasX = (int)rnd.nextInt(10);
             }
-
+            countNextRandomNumbers++;
+            if(countNextRandomNumbers > 100)break;
             }
-        lastCreateBlock = new Block(gameWorld,this,posCreateX,gameWorld.getGameCamera().getWorldHeight()-30,9.94f,9.94f);
-        arrayBlock.add(lastCreateBlock);
-        lastCreateBlock.fall();
+        posCreateX = (float)posMasX*10+50;
+        blocksMas[posMasX][15] = new Block(gameWorld,this,posCreateX,300,9.94f,9.94f);
+        arrayBlock.add(blocksMas[posMasX][15]);
+        blocksMas[posMasX][15].fall();
 
         return true;
     }

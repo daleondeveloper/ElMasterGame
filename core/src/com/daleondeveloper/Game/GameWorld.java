@@ -82,7 +82,7 @@ public class GameWorld {
         platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
-        waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()/2,DOWN_REGION + 10);
+        waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()*2,DOWN_REGION + 10);
 
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 
@@ -195,7 +195,7 @@ public class GameWorld {
         timeCreateBlock += deltaTime;
         if(timeCreateBlock > 100){
             timeCreateBlock = 0;
-            getBlockController().addBlock();
+            //getBlockController().addBlock();
         }
         List<Block> arrayBlock = new ArrayList<Block>();
         for(Block block: blockController.getArrayBlock()){

@@ -50,15 +50,6 @@ public class GameSensor extends AbstractDynamicObject {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         body = gameWorld.createBody(bodyDef);
 
-//        FixtureDef fixtureDef = new FixtureDef();
-//        PolygonShape polygonShape = new PolygonShape();
-//        polygonShape.setAsBox(getWidth() / 2, getHeight() / 2);
-//        fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_REGION_BIT; // Depicts what this fixture is
-//        fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL; // Depicts what this Fixture can collide with (see WorldContactListener)
-//        fixtureDef.shape = polygonShape;
-//        fixtureDef.restitution = 0f;
-//        body.createFixture(fixtureDef).setUserData(this);
-
         PolygonShape polygonShape = new PolygonShape();
         polygonShape.setAsBox(115,2);
         FixtureDef sensorLeft = new FixtureDef();
@@ -89,7 +80,6 @@ public class GameSensor extends AbstractDynamicObject {
                     block.delete();
                 }
                 playScreen.getHud().addScore(10);
-                gameWorld.setTimeCreateBlock(101);
             }
         }
 
