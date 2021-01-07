@@ -58,6 +58,7 @@ public class GameWorld {
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
+        gameSettings = GameSettings.getInstance();
 
         rightButtonPressed = false;
         leftButtonPressed = false;
@@ -183,9 +184,20 @@ public class GameWorld {
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
             waterElement.turn(-20 -  playScreen.getHud().getScore() / 5);
+            if(!gameSettings.isPush_button_show()){
+                waterElement.push(30f);
+            }
         }
         if(isRightButtonPressed()){
             waterElement.turn(20 + playScreen.getHud().getScore() / 5);
+            if(!gameSettings.isPush_button_show()){
+                waterElement.push(30f);
+            }
+        }
+        if(!isLeftButtonPressed() && !isRightButtonPressed()){
+            if(!gameSettings.isPush_button_show()){
+               // waterElement.idle();
+            }
         }
         if(isButtonPushPressed()){
             waterElement.push(30f);

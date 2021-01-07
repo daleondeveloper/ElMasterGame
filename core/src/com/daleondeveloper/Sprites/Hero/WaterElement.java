@@ -303,7 +303,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        body.setTransform(0,0,0);
+      //  body.setTransform(0,0,0);
         if(body != null) {
             body.setGravityScale(10);
         } else {

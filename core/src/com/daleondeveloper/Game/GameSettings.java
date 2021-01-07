@@ -23,6 +23,7 @@ public class GameSettings {
     private static final String BACKGROUND_ID = "backgroundId";
     private static final int INITIAL_BACKGROUND_ID = 1;
     private static final String AUDIO = "audio";
+    private static final String PUSH_BUTTON_SHOW = "PUSH_BUTTON_SHOW";
 
     // Singleton: unique instance
     private static GameSettings instance;
@@ -35,6 +36,7 @@ public class GameSettings {
     private int lastPlayScore;
     private int backgroundId;
     private boolean audio;
+    private boolean push_button_show;
 
     private WaterElement hero;
     private float heroX;
@@ -51,6 +53,7 @@ public class GameSettings {
         blockController = new BlockController(null,null);
         heroX = 100;
         heroY = 170;
+        push_button_show = false;
         blockVector = new ArrayList<Vector2>();
 
     }
@@ -64,6 +67,7 @@ public class GameSettings {
     }
 
     public void load() {
+        push_button_show = false;
         highScore = prefs.getInteger(HIGH_SCORE, DEFAULT_HIGH_SCORE);
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
@@ -206,5 +210,13 @@ public class GameSettings {
 
     public List<Vector2> getBlockVector() {
         return blockVector;
+    }
+
+    public boolean isPush_button_show() {
+        return push_button_show;
+    }
+
+    public void setPush_button_show(boolean push_button_show) {
+        this.push_button_show = push_button_show;
     }
 }
