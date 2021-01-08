@@ -58,7 +58,7 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         float w = stage.getWidth(); // Same as stage.getViewport().getWorldWidth()
         float h = stage.getHeight();
 
-        menuBg.setWidth(600);
+        menuBg.setWidth(630);
         menuBg.setX(w/2 - menuBg.getWidth()/2);
 
         menuBg.setHeight(700);
@@ -67,11 +67,11 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         gates.setY(menuBg.getY() + 310);
         gates.setX(menuBg.getX() + 185);
 
-        dragonHead.setX(menuBg.getX() + 205);
-        dragonHead.setY(menuBg.getY() + 650);
-        dragonLeftHand.setX(menuBg.getX() + 100);
-        dragonLeftHand.setY(menuBg.getY() + 675);
-        dragonRightHand.setX(menuBg.getX() + 385);
+        dragonHead.setX(stage.getWidth() / 2 - dragonHead.getWidth() / 2);
+        dragonHead.setY(menuBg.getY() + 640);
+        dragonLeftHand.setX(menuBg.getX() + 110);
+        dragonLeftHand.setY(menuBg.getY() + 670);
+        dragonRightHand.setX(menuBg.getX() + 415);
         dragonRightHand.setY(menuBg.getY() + 675);
 
         // Buttons Animations
@@ -82,8 +82,8 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         rightBowlAnimatedActor.setY(menuBg.getY() + 435);
         rightBowlAnimatedActor.setX(menuBg.getX() + 410);
 
-        portalAnimatedActor.setY(menuBg.getY() + 640);
-        portalAnimatedActor.setX(menuBg.getX() + 145);
+        portalAnimatedActor.setY(menuBg.getY() + 630);
+        portalAnimatedActor.setX(stage.getWidth() / 2 - portalAnimatedActor.getWidth() / 2);
     }
 
     @Override
