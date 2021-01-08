@@ -47,11 +47,11 @@ public class BlockController {
 
         if(blockCreateTime > timeToCreateNewBlockRelativeScore){
             float s = (score/10) % 6;
-            if(s > 4){
+            if(s > 3){
                 addBlock();
                 addBlock();
                 addBlock();
-            }else if(s > 2){
+            }else if(s > 0){
                 addBlock();
                 addBlock();
             }else{

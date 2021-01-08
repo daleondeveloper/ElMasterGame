@@ -183,15 +183,15 @@ public class GameWorld {
 
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
-            waterElement.turn(-20 -  playScreen.getHud().getScore() / 5);
+            waterElement.turn(-30);
             if(!gameSettings.isPush_button_show()){
-                waterElement.push(30f);
+                //waterElement.push(30f);
             }
         }
         if(isRightButtonPressed()){
-            waterElement.turn(20 + playScreen.getHud().getScore() / 5);
+            waterElement.turn(30);
             if(!gameSettings.isPush_button_show()){
-                waterElement.push(30f);
+               //waterElement.push(30f);
             }
         }
         if(!isLeftButtonPressed() && !isRightButtonPressed()){
@@ -200,7 +200,7 @@ public class GameWorld {
             }
         }
         if(isButtonPushPressed()){
-            waterElement.push(30f);
+            waterElement.push(50f);
         }
     }
     private void updateBlock(float deltaTime){

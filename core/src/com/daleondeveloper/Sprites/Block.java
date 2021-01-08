@@ -191,8 +191,8 @@ public class Block extends AbstractDynamicObject {
         if(currentState == State.IDLE && contactUpList.isEmpty()) {
             currentState = State.PUSH;
             stateTime = 0;
-            pushImpulse = turnImpulse;
         }
+        pushImpulse = turnImpulse;
     }
     public void delete(){
         currentState = State.DESTROY;
@@ -277,7 +277,7 @@ public class Block extends AbstractDynamicObject {
 
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.DynamicBody);
-        if(currentState == State.FALL || getContactUpList().size() > 0){
+        if(currentState == State.FALL || getContactUpList().size() > 0 || !gameWorld.getWaterElement().isPush()){
             idle();
             gameWorld.getWaterElement().idle();
             return;
@@ -289,13 +289,14 @@ public class Block extends AbstractDynamicObject {
         }
 
         //Set push velocity
-        if(contactHero != null && Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15) {
+//        if(Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15) {
+            System.out.println("deltaTime = " + pushImpulse);
 //            if (contactHero.getX() - getX() > 1) {
                 body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
 //            } else if (contactHero.getX() - getX() < -1) {
 //                body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
 //            }
-        }else{ idle();return;}
+  //      }else{ idle();return;}
         //body.setLinearVelocity(1, body.getLinearVelocity().y);
 
         //Setting a fixed block position may cause the contacts to break

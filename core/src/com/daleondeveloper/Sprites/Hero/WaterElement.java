@@ -52,6 +52,7 @@ public class WaterElement extends AbstractDynamicObject {
     private boolean stopElem;
     private boolean activateElem;
     private boolean moveRight;
+    private boolean pushRight;
     private Platform currentPlatform;
     private float speakTime;
     private float timeToSpeak;
@@ -90,7 +91,7 @@ public class WaterElement extends AbstractDynamicObject {
         stateTime = 0;
 
         turnImpulse = 0f;
-        pushImpulse = 0f;
+        pushImpulse = 30f;
         defineWaterElem();
 
         currentState = State.IDLE;
@@ -181,28 +182,27 @@ public class WaterElement extends AbstractDynamicObject {
         if(isWalk() || isIdle()) {
             stateTime = 0;
             currentState = State.JUMP;
-            body.applyLinearImpulse(0, IMPULSE_Y +(playScreen.getHud().getScore() / 5),getWidth()/2,getHeight()/2,true);
+            body.applyLinearImpulse(0, IMPULSE_Y,getWidth()/2,getHeight()/2,true);
         }
     }
     public void fall(){
         if(isWalk() || isIdle() || isPush() || isJump()) {
-            if(isJump()){
-                body.setLinearVelocity(turnImpulse, IMPULSE_FALL - playScreen.getHud().getScore() / 5);
-            }  else {
-                body.setLinearVelocity(body.getLinearVelocity().x / (2 + playScreen.getHud().getScore()/50f), IMPULSE_FALL- playScreen.getHud().getScore() / 5);
-            }
+                body.applyLinearImpulse(0, IMPULSE_FALL,getWidth()/2,getHeight()/2,true);
+
             stateTime = 0;
             currentState = State.FALL;
         }
     }
     public void turn(float impulse){
-        if(currentState != State.PUSH) {
+
             if (impulse > 0) {
                 moveRight = true;
             } else {
                 moveRight = false;
             }
             if (isPush()) {
+                pushImpulse = impulse;
+                turnImpulse = impulse;
                 if ((moveRight && sensorRight.size() > 0) || (!moveRight && sensorLeft.size() > 0)) {
                     return;
                 }
@@ -211,7 +211,7 @@ public class WaterElement extends AbstractDynamicObject {
                 currentState = State.WALK;
                 stateTime = 0;
             }
-            if (isJump()) {
+            if (isJump() || isFall()) {
                 if ((impulse > 0 && sensorRight.size() > 0) ||
                         (impulse < 0 && sensorLeft.size() > 0)) {
                     impulse = 0;
@@ -219,7 +219,7 @@ public class WaterElement extends AbstractDynamicObject {
                 body.setLinearVelocity(impulse , body.getLinearVelocity().y);
             }
             turnImpulse = impulse ;
-        }
+
 
     }
 
@@ -239,39 +239,67 @@ public class WaterElement extends AbstractDynamicObject {
 //        }
     }
     public void push(float impulse){
-        if(isIdle() || isWalk() || isJump() ||
+
+        if(isIdle() || isWalk() || isJump() || isFall() ||
                 (sensorDown.size() == 0 && sensorLeft.size() == 0 && sensorRight.size() == 0)){
             int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
             int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+            boolean blockForPushRight = true;
+
+            if(pushRight && !moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
+                    && posMasX < gameWorld.getBlockController().getBlocksMas().length - 1 && gameWorld.getBlockController().getBlocksMas()[posMasX + 1][posMasY] != null){
+                fall();
+                return;
+            }
+            if(!pushRight && moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
+                    && posMasX > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX - 1][posMasY] != null){
+                fall();
+                return;
+            }
+
             Block[][] blocksMas = gameWorld.getBlockController().getBlocksMas();
-                if(moveRight && posMasX < blocksMas.length - 1){
+            if(sensorRight.size() > 0 && sensorLeft.size() > 0 &&
+            posMasX > 0 && posMasX < blocksMas.length - 1){
+                float lendthToLeftblock = Math.abs(blocksMas[posMasX - 1][posMasY].getBodyPosition().x - body.getPosition().x);
+                float lendthToRightblock = Math.abs(blocksMas[posMasX + 1][posMasY].getBodyPosition().x - body.getPosition().x);
+                if(lendthToLeftblock - lendthToRightblock < 0){
+                    blockForPushRight = false;
+                }
+            }
+                if( posMasX < blocksMas.length - 1 && sensorRight.size() > 0 && blockForPushRight){
                     Block block = blocksMas[posMasX + 1][posMasY];
                     Block secondRightBlock = null;
                     if(posMasX <= 7){
                         secondRightBlock = (blocksMas[posMasX +2][posMasY]);
                     }
-                    if(block == null || secondRightBlock != null || !block.isIdle() ||
+                    if(block == null || !block.isIdle() ||
                     blocksMas[posMasX+1][posMasY+1] != null){
                         return;
                     }else{
                         pushBlock = block;
                         currentState = State.PUSH;
-                        turnImpulse = impulse + playScreen.getHud().getScore() / 5;
+                        pushRight = true;
+                        pushImpulse = turnImpulse;
+                        //turnImpulse = impulse + playScreen.getHud().getScore() / 5;
                         stateTime = 0;
                     }
-                }else if(posMasX > 0){
+                    return;
+                }
+                if(posMasX > 0 ){
                     Block block = blocksMas[posMasX - 1][posMasY];
                     Block secondLeftBlock = null;
                     if(posMasX >= 2){
                         secondLeftBlock = (blocksMas[posMasX - 2][posMasY]);
                     }
-                    if(block == null || secondLeftBlock != null || !block.isIdle() ||
+                    if(block == null || !block.isIdle() ||
                     blocksMas[posMasX -1][posMasY + 1] != null){
                         return;
                     }else{
                         pushBlock = block;
                         currentState = State.PUSH;
-                        turnImpulse = -(impulse + playScreen.getHud().getScore() / 5);
+                        pushRight = false;
+                        pushImpulse = turnImpulse;
+                       // turnImpulse = -(impulse + playScreen.getHud().getScore() / 5);
                         stateTime = 0;
                     }
                 }
@@ -510,6 +538,7 @@ public class WaterElement extends AbstractDynamicObject {
         if(getY() < 0){
             returnCellsPositionY = 160;
         }
+
         if(stateTime > 2) {
             body.setTransform(returnCellsPositionX + getWidth() / 2, body.getPosition().y, 0);
         }
@@ -542,7 +571,19 @@ public class WaterElement extends AbstractDynamicObject {
             leftReg += 10;
             rightReg += 10;
         }
-            if(turnImpulse == 0){
+        int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
+        int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+        if(pushRight && !moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
+         && posMasX < gameWorld.getBlockController().getBlocksMas().length - 1 && gameWorld.getBlockController().getBlocksMas()[posMasX + 1][posMasY] != null){
+            fall();
+            return;
+        }
+        if(!pushRight && moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
+                && posMasX > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX - 1][posMasY] != null){
+            fall();
+            return;
+        }
+            if(sensorLeft.isEmpty() && sensorRight.isEmpty()){
                 idle();
                 return;
             }
@@ -557,7 +598,7 @@ public class WaterElement extends AbstractDynamicObject {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
                 textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-        if(moveRight){setFlip(true,false);}
+        if(pushRight){setFlip(true,false);}
             stateTime += deltaTime;
         }
     private void stateWalk(float deltaTime){
@@ -574,6 +615,12 @@ public class WaterElement extends AbstractDynamicObject {
             }
             leftReg += 10;
             rightReg += 10;
+        }
+        int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
+        int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+        if(posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null){
+            fall();
+            return;
         }
             body.setGravityScale(0);
             body.setLinearVelocity(new Vector2(turnImpulse*2,0));
