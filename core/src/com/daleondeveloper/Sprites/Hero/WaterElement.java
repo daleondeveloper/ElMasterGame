@@ -216,6 +216,7 @@ public class WaterElement extends AbstractDynamicObject {
                         (impulse < 0 && sensorLeft.size() > 0)) {
                     impulse = 0;
                 }
+                impulse *= 0.66f;
                 body.setLinearVelocity(impulse , body.getLinearVelocity().y);
             }
             turnImpulse = impulse ;
@@ -501,7 +502,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
             if(body.getLinearVelocity().y < 1){fall();return;}
             if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
-            if(sensorUp.size() > 0 || stateTime > ((IMPULSE_Y  + (playScreen.getHud().getScore() / 5f))/(playScreen.getHud().getScore() / 0.32f))){ fall(); return;}
+            if(sensorUp.size() > 0 || stateTime > 1){ fall(); return;}
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
             // Update this Sprite to correspond with the position of the Box2D body.

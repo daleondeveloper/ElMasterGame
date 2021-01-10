@@ -28,6 +28,9 @@ public class Block extends AbstractDynamicObject {
     private enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
     }
+    private enum BlockType{
+        WHITE,DARK,FIRE,WATER,LIGHT,SNOW;
+    }
 
     private GameWorld gameWorld;
     private Body body;
@@ -37,6 +40,7 @@ public class Block extends AbstractDynamicObject {
     private TextureRegion textureRegionBlock;
 
     private State currentState;
+    private BlockType blockType;
     private float stateTime;
     private boolean statePosition;
     private float checkTime;
@@ -67,8 +71,29 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockSnow());
         assetBlocks.add(assets.getBlockWater());
 
+        int blockTypeNumber = new Random().nextInt(4);
+        textureRegionBlock = assetBlocks.get(blockTypeNumber);
+        switch (blockTypeNumber){
+            case 0:
+                blockType = BlockType.FIRE;
+                break;
+                            case 1:
+                blockType = BlockType.WATER;
+                break;
+                            case 2:
+                blockType = BlockType.SNOW;
+                break;
+                            case 3:
+                blockType = BlockType.LIGHT;
+                break;
+                            case 4:
+                blockType = BlockType.DARK;
+                break;
+                            case 5:
+                blockType = BlockType.WHITE;
+                break;
 
-        textureRegionBlock = assetBlocks.get(new Random().nextInt(4));
+        }
 
         // Sets initial values for position, width and height and initial frame as jumperStand.
         setBounds(x, y, width, height);
