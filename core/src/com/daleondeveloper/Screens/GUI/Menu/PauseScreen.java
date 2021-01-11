@@ -201,22 +201,22 @@ public class PauseScreen extends GUIOverlayAbstractScreen {
         back.setPosition(menuWindow.getX() + menuWindow.getWidth() - back.getWidth() * 2f ,
                 menuWindow.getY() + menuWindow.getHeight() - back.getHeight() * 1.6f);
 
-        mainMenu.setWidth(menuWindow.getWidth() * 0.6f);
-        mainMenu.setHeight(menuWindow.getHeight() / 8);
+        mainMenu.setWidth(MenuScreen.BUTTON_WIDTH);
+        mainMenu.setHeight(MenuScreen.BUTTON_HEIGHT);
         mainMenu.setPosition(x - mainMenu.getWidth() / 2 ,
                 y * 1.1f - mainMenu.getHeight() / 2);
         mainMenuLabel.setPosition(mainMenu.getX() + mainMenu.getWidth()/2 - mainMenuLabel.getPrefWidth() / 2 ,
                 mainMenu.getY()  + mainMenu.getHeight() * 0.6f - mainMenuLabel.getPrefHeight() / 2);
 
         //audio.setPosition(x, y);
-        settings.setWidth(menuWindow.getWidth() * 0.6f);
-        settings.setHeight(menuWindow.getHeight() / 8);
+        settings.setWidth(MenuScreen.BUTTON_WIDTH);
+        settings.setHeight(MenuScreen.BUTTON_HEIGHT);
         settings.setPosition(x - settings.getWidth() / 2, mainMenu.getY() - settings.getHeight() * 1.2f);
         settingsLabel.setPosition(settings.getX() + settings.getWidth()/2 - settingsLabel.getPrefWidth() / 2 ,
                 settings.getY()  + settings.getHeight() * 0.6f - settingsLabel.getPrefHeight() / 2);
 
-        restart.setWidth(menuWindow.getWidth() * 0.6f);
-        restart.setHeight(menuWindow.getHeight() / 8);
+        restart.setWidth(MenuScreen.BUTTON_WIDTH);
+        restart.setHeight(MenuScreen.BUTTON_HEIGHT);
         restart.setPosition(x - restart.getWidth() / 2, settings.getY() - restart.getHeight() * 1.2f);
         restartLabel.setPosition(restart.getX() + restart.getWidth()/2 - restartLabel.getPrefWidth() / 2 ,
                 restart.getY()  + restart.getHeight() * 0.6f - restartLabel.getPrefHeight() / 2);

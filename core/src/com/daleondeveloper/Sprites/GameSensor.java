@@ -36,8 +36,7 @@ public class GameSensor extends AbstractDynamicObject {
         AssetBlock assetBlock = Assets.getInstance().getAssetBlock();
         assetPlatform = assetBlock.getBlockLight();
 
-        firstLineBlocks = new HashSet();
-
+        firstLineBlocks = new HashSet<Block>();
         setRegion(assetPlatform);
         setBounds(x,y,hx,hy);
 

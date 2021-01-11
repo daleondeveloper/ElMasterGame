@@ -223,7 +223,16 @@ public class MainMenuScreen extends GUIAbstractScreen {
         buttonCredit = new Image(assetGUI.getButtonHelp());
 
 
-        buttonStart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
+//        buttonStart.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE));
+        buttonStart.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                setStatePaused();
+                menuScreen.showMenuScreen(MenuScreen.MenuState.GAMEMODECHOOSE);
+//                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
+
+            }
+        }));
         buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {

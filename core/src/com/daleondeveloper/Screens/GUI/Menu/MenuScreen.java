@@ -21,9 +21,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private final static String TAG = MenuScreen.class.getName();
 
     private static final float TITLE_OFFSET_Y = 200.0f;
+    static final float BUTTON_WIDTH = 252f;
+    static final float BUTTON_HEIGHT = 43f;
+
 
     public enum MenuState{
-        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT
+        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -39,6 +42,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private PauseScreen pauseScreen;
     private SettingsScreen settingsScreen;
     private CreditScreen creditScreen;
+    private GameModeChangeScreen gameModeChangeScreen;
 
     private Image screenBg;
     private Image pauseWindow;
@@ -58,6 +62,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen = new PauseScreen(game,this);
         settingsScreen = new SettingsScreen(game,this);
         creditScreen = new CreditScreen(game,this);
+        gameModeChangeScreen = new GameModeChangeScreen(game,this);
 
         menuState = MenuState.CLOSE;
     }
@@ -82,6 +87,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen.resize(width,height);
         settingsScreen.resize(width,height);
         creditScreen.resize(width,height);
+        gameModeChangeScreen.resize(width,height);
     }
 
     @Override
@@ -104,6 +110,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen.build();
         settingsScreen.build();
         creditScreen.build();
+        gameModeChangeScreen.build();
     }
 
     @Override
@@ -120,6 +127,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen.update(deltaTime);
         settingsScreen.update(deltaTime);
         creditScreen.update(deltaTime);
+        gameModeChangeScreen.update(deltaTime);
     }
 
     @Override
@@ -131,6 +139,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen.render();
         settingsScreen.render();
         creditScreen.render();
+        gameModeChangeScreen.render();
     }
 
     @Override
@@ -140,6 +149,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseScreen.dispose();
         settingsScreen.dispose();
         creditScreen.dispose();
+        gameModeChangeScreen.dispose();
     }
 
     public void showMenuScreen(MenuState menuState){
@@ -173,6 +183,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
                     break;
                 case CREDIT:
                     setCreditScreen();
+                    break;
+                case GAMEMODECHOOSE:
+                    setGameModeChangeScreen();
                     break;
             }
         }
@@ -219,6 +232,10 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         menuState = MenuState.CREDIT;
         creditScreen.showCreditScreen();
     }
+    public void setGameModeChangeScreen(){
+        menuState = MenuState.GAMEMODECHOOSE;
+        gameModeChangeScreen.showGameModeChangeScreen();
+    }
 
     public GUIAbstractScreen getGuiAbstractScreen() {
         return guiAbstractScreen;
@@ -231,5 +248,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public Image getPauseWindow() {
         return pauseWindow;
     }
+
 
 }
