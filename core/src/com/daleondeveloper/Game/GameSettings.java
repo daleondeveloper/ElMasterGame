@@ -77,8 +77,11 @@ public class GameSettings {
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
+        loadGameWorldParameters();
     }
-    public void loadGameWorldParameters(){}
+    public void loadGameWorldParameters(){
+        gameModeDragon = prefs.getInteger(GAME_MODE_DRAGON,0);
+    }
     public void loadHero(){
         heroX = prefs.getFloat("HERO_POSITION_X");
         heroY = prefs.getFloat("HERO_POSITION_Y");
@@ -122,7 +125,9 @@ public class GameSettings {
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
     }
-    public void saveGameWorldParameters(){}
+    public void saveGameWorldParameters(){
+        prefs.putInteger(GAME_MODE_DRAGON,gameModeDragon);
+    }
     public void saveGameWorldObjects(){
         if(hero != null && !hero.isDisposable() && hero.getBodyPosition() != null) {
             if(hero.getBodyPosition().x > 40) {
@@ -233,5 +238,13 @@ public class GameSettings {
 
     public void setPush_button_show(boolean push_button_show) {
         this.push_button_show = push_button_show;
+    }
+
+    public int getGameModeDragon() {
+        return gameModeDragon;
+    }
+
+    public void setGameModeDragon(int gameModeDragon) {
+        this.gameModeDragon = gameModeDragon;
     }
 }

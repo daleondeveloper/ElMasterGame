@@ -166,38 +166,112 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         }));
 
 
-        back.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
-        lightModeLabel.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
+
+        classicModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(0);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+        classicModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(0);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
 
         lightModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-               menuScreen.setSettingsScreen();
+            prefs.setGameModeDragon(1);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+        lightModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(1);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+
+        snowModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(2);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
             }
         }));
         snowModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                menuScreen.setSettingsScreen();
-                            }
-        }));
-
-        snowModeImage.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
-            @Override
-            public void run() {
-                GameSettings.getInstance().deleteSave();
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
-
+            prefs.setGameModeDragon(2);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
             }
         }));
-        classicModeImage.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+
+        fireModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                GameSettings.getInstance().deleteSave();
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
-
+            prefs.setGameModeDragon(3);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
             }
         }));
+        fireModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(3);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+
+        waterModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(4);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+        waterModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(4);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+
+        darkModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(5);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+        darkModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(5);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+
+        specialModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(6);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+        specialModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+            prefs.setGameModeDragon(6);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+
 
     }
 

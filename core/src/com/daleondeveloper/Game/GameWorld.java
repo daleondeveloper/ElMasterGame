@@ -19,14 +19,21 @@ public class GameWorld {
     private static final float DOWN_REGION = 150;
     private static final float TIME_TO_SAVE = 30;
 
+    private enum GameMode{
+        CLASSIC, LIGHT_MODE, SNOW_MODE, FIRE_MODE, WATER_MODE, DARK_MODE, SPECIAL_MODE;
+    }
+
     private PlayScreen playScreen;
     private World box2DWorld;
     private GameSettings gameSettings;
     private int level;
     private GameCamera gameCamera;
+
     private  boolean moveCamera;
     private boolean pauseCamera;
     private boolean firstLauch;
+
+    private GameMode gameMode;
 
     private BlockController blockController;
     private PlatformController platformController;
@@ -61,6 +68,8 @@ public class GameWorld {
         firstLauch = true;
         gameSettings = GameSettings.getInstance();
 
+        gameMode = GameMode.CLASSIC;
+
         rightButtonPressed = false;
         leftButtonPressed = false;
         buttonPushPressed = false;
@@ -71,11 +80,38 @@ public class GameWorld {
 
         createSprites();
         createBackground();
+        loadParameters();
 
         gameObjectToCreate = new Array<AbstractGameObject>();
 
 
 
+    }
+
+    private void loadParameters(){
+        switch (gameSettings.getGameModeDragon()){
+            case 0:
+                gameMode = GameMode.CLASSIC;
+                break;
+                case 1:
+                gameMode = GameMode.LIGHT_MODE;
+                break;
+                case 2:
+                gameMode = GameMode.SNOW_MODE;
+                break;
+                case 3:
+                gameMode = GameMode.FIRE_MODE;
+                break;
+                case 4:
+                gameMode = GameMode.WATER_MODE;
+                break;
+                case 5:
+                gameMode = GameMode.DARK_MODE;
+                break;
+                case 6:
+                gameMode = GameMode.SPECIAL_MODE;
+                break;
+        }
     }
 
     private void createSprites(){
