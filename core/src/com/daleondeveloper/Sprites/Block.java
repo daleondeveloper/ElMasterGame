@@ -5,21 +5,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
-import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
+import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 public class Block extends AbstractDynamicObject {
@@ -34,7 +30,7 @@ public class Block extends AbstractDynamicObject {
 
     private GameWorld gameWorld;
     private Body body;
-    private BlockController blockController;
+    private com.daleondeveloper.Sprites.BlockControllers.BlockController blockController;
 
     private Array<TextureRegion> assetBlocks;
     private TextureRegion textureRegionBlock;
@@ -59,38 +55,41 @@ public class Block extends AbstractDynamicObject {
     private Set<AbstractGameObject> contactDownList ;
     private WaterElement contactHero;
 
-
-    public Block(GameWorld gameWorld, BlockController blockController, float x, float y, float width,float height){
+    public Block(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height){
+        new Block(gameWorld, blockController, 0, x, y, width, height);
+    }
+    public Block(GameWorld gameWorld, com.daleondeveloper.Sprites.BlockControllers.BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
         this.gameWorld = gameWorld;
         this.blockController = blockController;
 
         assetBlocks = new Array<TextureRegion>();
         AssetBlock assets =  Assets.getInstance().getAssetBlock();
         assetBlocks.add(assets.getBlockFire());
-        assetBlocks.add(assets.getBlockLight());
         assetBlocks.add(assets.getBlockSnow());
+        assetBlocks.add(assets.getBlockLight());
+        assetBlocks.add(assets.getBlockWater());
+        assetBlocks.add(assets.getBlockWater());
         assetBlocks.add(assets.getBlockWater());
 
-        int blockTypeNumber = new Random().nextInt(4);
         textureRegionBlock = assetBlocks.get(blockTypeNumber);
         switch (blockTypeNumber){
             case 0:
-                blockType = BlockType.FIRE;
+                blockType = BlockType.WHITE;
                 break;
-                            case 1:
-                blockType = BlockType.WATER;
-                break;
-                            case 2:
-                blockType = BlockType.SNOW;
-                break;
-                            case 3:
-                blockType = BlockType.LIGHT;
-                break;
-                            case 4:
+            case 1:
                 blockType = BlockType.DARK;
                 break;
-                            case 5:
-                blockType = BlockType.WHITE;
+            case 2:
+                blockType = BlockType.LIGHT;
+                break;
+            case 3:
+                blockType = BlockType.SNOW;
+                break;
+            case 4:
+                blockType = BlockType.FIRE;
+                break;
+            case 5:
+                blockType = BlockType.WATER;
                 break;
 
         }
@@ -452,6 +451,7 @@ public class Block extends AbstractDynamicObject {
     }
 
     // Getters and Setters
+    public boolean isBody(){return body != null;}
     @Override
     public Vector2 getBodyPosition() {
         return body.getPosition();

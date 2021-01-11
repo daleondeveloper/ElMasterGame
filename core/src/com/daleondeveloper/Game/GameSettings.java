@@ -4,8 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.Block;
-import com.daleondeveloper.Sprites.BlockController;
+import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 

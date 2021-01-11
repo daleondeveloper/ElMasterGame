@@ -1,4 +1,4 @@
-package com.daleondeveloper.Sprites;
+package com.daleondeveloper.Sprites.BlockControllers;
 
 
 import com.badlogic.gdx.math.Vector2;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.AbstractGameObject;
+import com.daleondeveloper.Sprites.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
@@ -16,14 +18,14 @@ public class BlockController {
     private static final String TAG = BlockController.class.getName();
 
 
-    private List<Block> arrayBlock ;
-    private GameWorld gameWorld;
-    private PlayScreen playScreen;
-    private Random rnd;
-    private Block lastCreateBlock;
-    private Block[][] blocksMas;
-    private float blockFallVelocity;
-    private float blockCreateTime;
+    protected List<Block> arrayBlock ;
+    protected GameWorld gameWorld;
+    protected PlayScreen playScreen;
+    protected Random rnd;
+    protected Block lastCreateBlock;
+    protected Block[][] blocksMas;
+    protected float blockFallVelocity;
+    protected float blockCreateTime;
 
 
     public BlockController (PlayScreen playScreen, GameWorld gameWorld) {
@@ -36,34 +38,36 @@ public class BlockController {
         rnd = new Random ();
         blockFallVelocity = 0;
         blockCreateTime = 0;
+        blockFallVelocity = (-50);
+
     }
     public void update(float deltaTime){
-       int score = playScreen.getHud().getScore();
-       float timeToCreateNewBlockRelativeScore = (4f - score / 125);
-       if(timeToCreateNewBlockRelativeScore < 1.5f){
-           timeToCreateNewBlockRelativeScore = 1.5f;
-       }
+
         blockCreateTime += deltaTime;
-
-        if(blockCreateTime > timeToCreateNewBlockRelativeScore){
-            float s = (score/10) % 6;
-            if(s > 3){
-                addBlock();
-                addBlock();
-                addBlock();
-            }else if(s > 0){
-                addBlock();
-                addBlock();
-            }else{
-                addBlock();
-            }
-            blockCreateTime = 0;
-        }
-
-        blockFallVelocity = (-50);
+        int score = playScreen.getHud().getScore();
+//       float timeToCreateNewBlockRelativeScore = (4f - score / 125);
+//       if(timeToCreateNewBlockRelativeScore < 1.5f){
+//           timeToCreateNewBlockRelativeScore = 1.5f;
+//       }
+//
+//        if(blockCreateTime > 4f){
+////            float s = (score/10) % 6;
+////            if(s > 3){
+////                addBlock();
+////                addBlock();
+////                addBlock();
+////            }else if(s > 0){
+////                addBlock();
+////                addBlock();
+////            }else{
+//                addBlock();
+////            }
+//            blockCreateTime = 0;
+//        }
+//
     }
 
-    public boolean addBlock (){
+    public Block addBlock (int blockType){
         int countNextRandomNumbers = 0;
         float posCreateX = 0;
         int posMasX = rnd.nextInt(10);
@@ -84,11 +88,11 @@ public class BlockController {
             if(countNextRandomNumbers > 100)break;
             }
         posCreateX = (float)posMasX*10+50;
-        blocksMas[posMasX][15] = new Block(gameWorld,this,posCreateX,300,9.94f,9.94f);
+        blocksMas[posMasX][15] = new Block(gameWorld,this,blockType,posCreateX,300,9.94f,9.94f);
         arrayBlock.add(blocksMas[posMasX][15]);
         blocksMas[posMasX][15].fall();
 
-        return true;
+        return blocksMas[posMasX][15];
     }
     public boolean addBlock(float x, float y){
         Block block = new Block(gameWorld,this,x,y,9.94f,9.94f);

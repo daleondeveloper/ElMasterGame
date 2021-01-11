@@ -92,7 +92,7 @@ public class GameController implements GestureDetector.GestureListener, InputPro
                 gameWorld.setButtonPushPressed(true);
                 break;
             case Input.Keys.Z:
-                gameWorld.getBlockController().addBlock();
+                gameWorld.getBlockController().addBlock(0);
 
                 break;
             case Input.Keys.D:

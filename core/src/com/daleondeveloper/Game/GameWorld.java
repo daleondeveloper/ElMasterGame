@@ -8,6 +8,14 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.*;
+import com.daleondeveloper.Sprites.BlockControllers.BlockController;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerDarkMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerFireMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerLightMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSnowMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSpecialMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerWaterMode;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
@@ -80,7 +88,6 @@ public class GameWorld {
 
         createSprites();
         createBackground();
-        loadParameters();
 
         gameObjectToCreate = new Array<AbstractGameObject>();
 
@@ -92,31 +99,41 @@ public class GameWorld {
         switch (gameSettings.getGameModeDragon()){
             case 0:
                 gameMode = GameMode.CLASSIC;
+                blockController = new BlockControllerClassicMode(playScreen,this);
                 break;
                 case 1:
                 gameMode = GameMode.LIGHT_MODE;
-                break;
+                    blockController = new BlockControllerLightMode(playScreen,this);
+                    break;
                 case 2:
                 gameMode = GameMode.SNOW_MODE;
-                break;
+                    blockController = new BlockControllerSnowMode(playScreen,this);
+                    break;
                 case 3:
                 gameMode = GameMode.FIRE_MODE;
-                break;
+                    blockController = new BlockControllerFireMode(playScreen,this);
+                    break;
                 case 4:
                 gameMode = GameMode.WATER_MODE;
-                break;
+                    blockController = new BlockControllerWaterMode(playScreen,this);
+                    break;
                 case 5:
                 gameMode = GameMode.DARK_MODE;
-                break;
+                    blockController = new BlockControllerDarkMode(playScreen,this);
+                    break;
                 case 6:
                 gameMode = GameMode.SPECIAL_MODE;
-                break;
+                    blockController = new BlockControllerSpecialMode(playScreen,this);
+                    break;
         }
     }
 
     private void createSprites(){
         //Block(create block factory  to create block)
-        blockController = new BlockController(playScreen,this);
+        blockController = new com.daleondeveloper.Sprites.BlockControllers.BlockController(playScreen,this);
+
+        loadParameters();
+
         GameSettings.getInstance().setBlockController(blockController);
         platformController = new PlatformController(playScreen,this);
 
@@ -255,7 +272,12 @@ public class GameWorld {
         }
         List<Block> arrayBlock = new ArrayList<Block>();
         for(Block block: blockController.getArrayBlock()){
-            block.update(deltaTime);
+            if(block.isBody()) {
+                block.update(deltaTime);
+            }else {
+                arrayBlock.add(block);
+                continue;
+            }
             if(block.isDisposable()){
                 arrayBlock.add(block);
             }
@@ -328,7 +350,7 @@ private void renderPlatform(SpriteBatch batch) {
         return playScreen;
     }
 
-    public BlockController getBlockController() {
+    public com.daleondeveloper.Sprites.BlockControllers.BlockController getBlockController() {
         return blockController;
     }
 
