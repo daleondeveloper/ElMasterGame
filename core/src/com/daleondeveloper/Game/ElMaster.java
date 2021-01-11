@@ -43,7 +43,7 @@ public class ElMaster extends DirectedGame {
 		}
 
 		//Load preferences and settings
-		GameSettings.getInstance().load();
+		GameSettings.getInstance().loadSettings();
 
 		//Set TypingConfig new line character interval multipler
 		TypingConfig.INTERVAL_MULTIPLIERS_BY_CHAR.put('\n',0);

@@ -23,7 +23,9 @@ public class GameSettings {
     private static final String BACKGROUND_ID = "backgroundId";
     private static final int INITIAL_BACKGROUND_ID = 1;
     private static final String AUDIO = "audio";
-    private static final String PUSH_BUTTON_SHOW = "PUSH_BUTTON_SHOW";
+    private static final String PUSH_BUTTON_SHOW = "pushButtonShow";
+
+    private static final String GAME_MODE_DRAGON = "gameModeDragon";
 
     // Singleton: unique instance
     private static GameSettings instance;
@@ -45,6 +47,8 @@ public class GameSettings {
     private BlockController blockController;
     private List<Vector2> blockVector;
 
+    private int gameModeDragon;
+
     // Singleton: prevent instantiation from other classes
     private GameSettings() {
         countdownAd = DEF_COUNT_AD;
@@ -55,6 +59,7 @@ public class GameSettings {
         heroY = 170;
         push_button_show = false;
         blockVector = new ArrayList<Vector2>();
+        gameModeDragon = 0;
 
     }
 
@@ -66,13 +71,14 @@ public class GameSettings {
         return instance;
     }
 
-    public void load() {
+    public void loadSettings() {
         push_button_show = false;
         highScore = prefs.getInteger(HIGH_SCORE, DEFAULT_HIGH_SCORE);
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
     }
+    public void loadGameWorldParameters(){}
     public void loadHero(){
         heroX = prefs.getFloat("HERO_POSITION_X");
         heroY = prefs.getFloat("HERO_POSITION_Y");
@@ -92,11 +98,32 @@ public class GameSettings {
 
     public void save() {
         prefs.clear();
+        saveSetting();
+        saveGameWorldParameters();
+        saveGameWorldObjects();
+        prefs.flush();
+    }
+    public void deleteSave(){
+        prefs.clear();
+        prefs.putInteger(HIGH_SCORE, highScore);
+        blockVector.clear();
+//        prefs.putInteger("BLOCK_COUNT", 0);
+//
+//        prefs.putInteger("HERO_POSITION_X", 100);
+//        prefs.putInteger("HERO_POSITION_Y", 200);
+
+        prefs.flush();
+    }
+
+    public void saveSetting(){
         blockVector.clear();
         prefs.putInteger(HIGH_SCORE, highScore);
         prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
+    }
+    public void saveGameWorldParameters(){}
+    public void saveGameWorldObjects(){
         if(hero != null && !hero.isDisposable() && hero.getBodyPosition() != null) {
             if(hero.getBodyPosition().x > 40) {
                 prefs.putFloat("HERO_POSITION_X", hero.getX());
@@ -118,18 +145,6 @@ public class GameSettings {
                 prefs.putFloat("BLOCK_" + i + "_POSITION_Y", blockController.getArrayBlock().get(i).getY());
             }
         }
-        prefs.flush();
-    }
-    public void deleteSave(){
-        prefs.clear();
-        prefs.putInteger(HIGH_SCORE, highScore);
-        blockVector.clear();
-//        prefs.putInteger("BLOCK_COUNT", 0);
-//
-//        prefs.putInteger("HERO_POSITION_X", 100);
-//        prefs.putInteger("HERO_POSITION_Y", 200);
-
-        prefs.flush();
     }
 
     public void decreaseCountdownAd() {

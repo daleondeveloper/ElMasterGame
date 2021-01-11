@@ -1,6 +1,5 @@
 package com.daleondeveloper.Game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.*;
@@ -12,13 +11,14 @@ import com.daleondeveloper.Sprites.*;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class GameWorld {
     private static final String TAG = GameWorld.class.getName();
 
     private static final float DOWN_REGION = 150;
+    private static final float TIME_TO_SAVE = 30;
+
     private PlayScreen playScreen;
     private World box2DWorld;
     private GameSettings gameSettings;
@@ -42,6 +42,7 @@ public class GameWorld {
 
     private float timeCreateBlock;
     private float offSetY;
+    private float timeToSave;
 
     private boolean rightButtonPressed;
     private boolean leftButtonPressed;
@@ -66,6 +67,7 @@ public class GameWorld {
 
         timeCreateBlock = 101;
         offSetY = 0;
+        timeToSave = TIME_TO_SAVE;
 
         createSprites();
         createBackground();
@@ -156,8 +158,10 @@ public class GameWorld {
     }
 
     public void update(float deltaTime){
+        timeToSave -= deltaTime;
+
         if(firstLauch){
-            GameSettings.getInstance().load();
+            GameSettings.getInstance().loadSettings();
             GameSettings.getInstance().setHero(waterElement);
             GameSettings.getInstance().setBlockController(blockController);
             loadGames();
@@ -178,6 +182,10 @@ public class GameWorld {
 
         checkPressedButtons();
         this.gameCamera.update(deltaTime);
+
+        if(timeToSave < 0){
+            gameSettings.save();
+        }
 
     }
 
