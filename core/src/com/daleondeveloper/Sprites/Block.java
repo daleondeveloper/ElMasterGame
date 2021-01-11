@@ -56,7 +56,7 @@ public class Block extends AbstractDynamicObject {
     private WaterElement contactHero;
 
     public Block(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height){
-        new Block(gameWorld, blockController, 0, x, y, width, height);
+        this(gameWorld, blockController, 0, x, y, width, height);
     }
     public Block(GameWorld gameWorld, com.daleondeveloper.Sprites.BlockControllers.BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
         this.gameWorld = gameWorld;
@@ -64,11 +64,11 @@ public class Block extends AbstractDynamicObject {
 
         assetBlocks = new Array<TextureRegion>();
         AssetBlock assets =  Assets.getInstance().getAssetBlock();
-        assetBlocks.add(assets.getBlockFire());
+        assetBlocks.add(assets.getBlockWater());
         assetBlocks.add(assets.getBlockSnow());
         assetBlocks.add(assets.getBlockLight());
         assetBlocks.add(assets.getBlockWater());
-        assetBlocks.add(assets.getBlockWater());
+        assetBlocks.add(assets.getBlockFire());
         assetBlocks.add(assets.getBlockWater());
 
         textureRegionBlock = assetBlocks.get(blockTypeNumber);
