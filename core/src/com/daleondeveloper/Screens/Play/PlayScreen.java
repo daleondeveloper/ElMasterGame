@@ -1,16 +1,11 @@
 package com.daleondeveloper.Screens.Play;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Assets.Assets;
-import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Game.*;
-import com.daleondeveloper.Screens.AbstractScreen;
+import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
@@ -18,9 +13,6 @@ import com.daleondeveloper.Screens.GUI.InfoScreen;
 import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
-import com.daleondeveloper.Screens.ScreenEnum;
-import com.daleondeveloper.Screens.ScreenManager;
-import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.tools.AudioManager;
 
 public class PlayScreen extends GUIAbstractScreen {
@@ -40,7 +32,7 @@ public class PlayScreen extends GUIAbstractScreen {
     private WorldController worldController;
     private GameWorld gameWorld;
     private WorldRenderer worldRenderer;
-    private GameSettings prefs;
+    private com.daleondeveloper.Game.Settings.GameSettings prefs;
     private boolean endGame;
     private boolean levelCompleted;
 

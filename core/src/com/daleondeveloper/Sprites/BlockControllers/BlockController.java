@@ -2,8 +2,8 @@ package com.daleondeveloper.Sprites.BlockControllers;
 
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.daleondeveloper.Game.GameSettings;
+import com.daleondeveloper.Game.Settings.BlockLoad;
+import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
@@ -96,6 +96,12 @@ public class BlockController {
     }
     public boolean addBlock(float x, float y){
         Block block = new Block(gameWorld,this,x,y,9.94f,9.94f);
+        arrayBlock.add(block);
+        block.fall();
+        return true;
+    }
+    public boolean addBlock(float x, float y, int blockTypeNumber){
+        Block block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
         arrayBlock.add(block);
         block.fall();
         return true;
@@ -226,8 +232,8 @@ public Block checkLeftContact(Block block) {
 
     public void load(){
         GameSettings.getInstance().loadBlock();
-        for(Vector2 vec : GameSettings.getInstance().getBlockVector()){
-            addBlock(vec.x,vec.y);
+        for(BlockLoad loadedBlock : GameSettings.getInstance().getBlockVector()){
+            addBlock(loadedBlock.getPosition().x, loadedBlock.getPosition().y,loadedBlock.getBlockType());
         }
     }
 

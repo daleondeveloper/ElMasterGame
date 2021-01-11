@@ -1,4 +1,4 @@
-package com.daleondeveloper.Game;
+package com.daleondeveloper.Game.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -44,7 +44,7 @@ public class GameSettings {
     private float heroY;
 
     private BlockController blockController;
-    private List<Vector2> blockVector;
+    private List<BlockLoad> blockVector;
 
     private int gameModeDragon;
 
@@ -57,7 +57,7 @@ public class GameSettings {
         heroX = 100;
         heroY = 170;
         push_button_show = false;
-        blockVector = new ArrayList<Vector2>();
+        blockVector = new ArrayList<BlockLoad>();
         gameModeDragon = 0;
 
     }
@@ -93,8 +93,9 @@ public class GameSettings {
     }
     public void loadBlock(){
         for(int i = 0; i < prefs.getInteger("BLOCK_COUNT"); i++){
-            blockVector.add(new Vector2(prefs.getFloat("BLOCK_" + i + "_POSITION_X"),
-                    prefs.getFloat("BLOCK_" + i + "_POSITION_Y")));
+            blockVector.add(new BlockLoad(prefs.getFloat("BLOCK_" + i + "_POSITION_X"),
+                    prefs.getFloat("BLOCK_" + i + "_POSITION_Y"),
+                    prefs.getInteger("BLOCK_" + i + "_TYPE")));
         }
     }
 
@@ -147,6 +148,7 @@ public class GameSettings {
             for (int i = 0; i < blockController.getArrayBlock().size(); i++) {
                 prefs.putFloat("BLOCK_" + i + "_POSITION_X", blockController.getArrayBlock().get(i).getX());
                 prefs.putFloat("BLOCK_" + i + "_POSITION_Y", blockController.getArrayBlock().get(i).getY());
+                prefs.putInteger("BLOCK_" + i + "_TYPE",blockController.getArrayBlock().get(i).getBlockTypeNumber());
             }
         }
     }
@@ -227,7 +229,7 @@ public class GameSettings {
         return heroY;
     }
 
-    public List<Vector2> getBlockVector() {
+    public List<BlockLoad> getBlockVector() {
         return blockVector;
     }
 

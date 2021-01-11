@@ -37,6 +37,7 @@ public class Block extends AbstractDynamicObject {
 
     private State currentState;
     private BlockType blockType;
+    private int blockTypeNumber;
     private float stateTime;
     private boolean statePosition;
     private float checkTime;
@@ -72,6 +73,7 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockWater());
 
         textureRegionBlock = assetBlocks.get(blockTypeNumber);
+        this.blockTypeNumber = blockTypeNumber;
         switch (blockTypeNumber){
             case 0:
                 blockType = BlockType.WHITE;
@@ -489,4 +491,11 @@ public class Block extends AbstractDynamicObject {
         return returnCellsPositionY;
     }
 
+    public int getBlockTypeNumber() {
+        return blockTypeNumber;
+    }
+
+    public void setBlockTypeNumber(int blockTypeNumber) {
+        this.blockTypeNumber = blockTypeNumber;
+    }
 }

@@ -4,21 +4,17 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.particles.influencers.RegionInfluencer;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Game.ElMaster;
-import com.daleondeveloper.Game.GameSettings;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
-import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 

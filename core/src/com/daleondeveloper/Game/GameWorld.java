@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.help.AssetHelp;
+import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.*;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
@@ -33,7 +34,7 @@ public class GameWorld {
 
     private PlayScreen playScreen;
     private World box2DWorld;
-    private GameSettings gameSettings;
+    private com.daleondeveloper.Game.Settings.GameSettings gameSettings;
     private int level;
     private GameCamera gameCamera;
 
@@ -74,7 +75,7 @@ public class GameWorld {
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
-        gameSettings = GameSettings.getInstance();
+        gameSettings = com.daleondeveloper.Game.Settings.GameSettings.getInstance();
 
         gameMode = GameMode.CLASSIC;
 
@@ -134,7 +135,7 @@ public class GameWorld {
 
         loadParameters();
 
-        GameSettings.getInstance().setBlockController(blockController);
+        com.daleondeveloper.Game.Settings.GameSettings.getInstance().setBlockController(blockController);
         platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
@@ -162,7 +163,7 @@ public class GameWorld {
 
     private void loadBackground(){
         AssetHelp assetBackground = Assets.getInstance().getAssetHelp();
-        GameSettings prefs = GameSettings.getInstance();
+        com.daleondeveloper.Game.Settings.GameSettings prefs = com.daleondeveloper.Game.Settings.GameSettings.getInstance();
         int backgroundid = prefs.getBackgroundId();
         prefs.setBackgroundId((backgroundid % 5)+1);
      //   prefs.save();
@@ -214,8 +215,8 @@ public class GameWorld {
         timeToSave -= deltaTime;
 
         if(firstLauch){
-            GameSettings.getInstance().loadSettings();
-            GameSettings.getInstance().setHero(waterElement);
+            com.daleondeveloper.Game.Settings.GameSettings.getInstance().loadSettings();
+            com.daleondeveloper.Game.Settings.GameSettings.getInstance().setHero(waterElement);
             GameSettings.getInstance().setBlockController(blockController);
             loadGames();
             firstLauch = false;
