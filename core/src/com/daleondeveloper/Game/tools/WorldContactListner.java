@@ -2,7 +2,7 @@ package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.daleondeveloper.Sprites.AbstractGameObject;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.Sprites.Platform;

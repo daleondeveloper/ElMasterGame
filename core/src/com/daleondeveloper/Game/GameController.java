@@ -4,14 +4,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.daleondeveloper.Screens.GUI.Hud;
-import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 public class GameController implements GestureDetector.GestureListener, InputProcessor {

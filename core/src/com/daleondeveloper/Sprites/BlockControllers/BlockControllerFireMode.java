@@ -2,7 +2,8 @@ package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
+import com.daleondeveloper.Sprites.Blocks.FireBlock;
 
 import java.util.Random;
 
@@ -32,33 +33,38 @@ public class BlockControllerFireMode extends BlockController {
             blockCreateTime = 0;
         }
 
-        if(timeToCreateSpecialBlock > TIME_TO_CRATE_SPECIAL_BLOCK && specialBlock == null){
-            specialBlock = addBlock(4);
+        if(timeToCreateSpecialBlock > TIME_TO_CRATE_SPECIAL_BLOCK){
+            specialBlock = addSpecialBlock(4);
             timeToCreateSpecialBlock = 0;
         }
+    }
 
-        if(specialBlock != null && specialBlock.isIdle()){
-            int posMasX = (int)(specialBlock.getReturnCellsPosition() / 10 ) - 5;
-            int posMasY = (int)(specialBlock.getReturnCellsPositionY() / 10 ) - 15;
 
-            int xStartPosInCycle = posMasX - 1;
-            int yStartPosInCycle = posMasY - 1;
-            if(xStartPosInCycle < 0){xStartPosInCycle = 0;}
-            if(yStartPosInCycle < 0){yStartPosInCycle = 0;}
-
-            int xEndPosInCycle = posMasX + 1;
-            int yEndPosInCycle = posMasY + 1;
-            if(xEndPosInCycle >= blocksMas.length){xEndPosInCycle = blocksMas.length - 1;}
-            if(yEndPosInCycle >= blocksMas[0].length){yEndPosInCycle = blocksMas[0].length - 1;}
-
-            for(int i = xStartPosInCycle; i <= xEndPosInCycle; i++){
-                for(int j = yStartPosInCycle; j <= yEndPosInCycle; j++) {
-                    if (blocksMas[i][j] != null) {
-                        blocksMas[i][j].delete();
-                    }
-                }
+    public Block addSpecialBlock(int blockType) {
+        int countNextRandomNumbers = 0;
+        float posCreateX = 0;
+        int posMasX = rnd.nextInt(10);
+        //if(posMasX >= blocksMas.length-1){posMasX = 0;}
+        while (true) {
+            if (blocksMas[posMasX][15] == null &&
+                    blocksMas[posMasX][14] == null &&
+                    blocksMas[posMasX][13] == null &&
+                    blocksMas[posMasX][12] == null &&
+                    blocksMas[posMasX][11] == null &&
+                    blocksMas[posMasX][10] == null &&
+                    blocksMas[posMasX][9] == null) {
+                break;
+            }else{
+                posMasX = (int)rnd.nextInt(10);
             }
-            specialBlock = null;
+            countNextRandomNumbers++;
+            if(countNextRandomNumbers > 100)break;
         }
+        posCreateX = (float)posMasX*10+50;
+        blocksMas[posMasX][15] = new FireBlock(gameWorld,this,blockType,posCreateX,300,9.94f,9.94f);
+        arrayBlock.add(blocksMas[posMasX][15]);
+        blocksMas[posMasX][15].fall();
+
+        return blocksMas[posMasX][15];
     }
 }

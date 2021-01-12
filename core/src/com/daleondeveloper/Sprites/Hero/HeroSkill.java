@@ -10,7 +10,7 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
 
 import java.util.ArrayList;
 

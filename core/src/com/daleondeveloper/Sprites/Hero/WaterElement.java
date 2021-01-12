@@ -16,7 +16,7 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Platform;
 
 import java.util.HashSet;
@@ -258,9 +258,19 @@ public class WaterElement extends AbstractDynamicObject {
             Block[][] blocksMas = gameWorld.getBlockController().getBlocksMas();
             if(sensorRight.size() > 0 && sensorLeft.size() > 0 &&
             posMasX > 0 && posMasX < blocksMas.length - 1){
-                float lendthToLeftblock = Math.abs(blocksMas[posMasX - 1][posMasY].getBodyPosition().x - body.getPosition().x);
-                float lendthToRightblock = Math.abs(blocksMas[posMasX + 1][posMasY].getBodyPosition().x - body.getPosition().x);
-                if(lendthToLeftblock - lendthToRightblock < 0){
+                float lendthToLeftblock = 0;
+                if(blocksMas[posMasX - 1][posMasY] != null){
+                    Math.abs(blocksMas[posMasX - 1][posMasY].getBodyPosition().x - body.getPosition().x);
+                }else{
+                    blockForPushRight = true;
+                }
+                float lendthToRightblock = 0;
+                if(blocksMas[posMasX + 1][posMasY] != null){
+                    Math.abs(blocksMas[posMasX + 1][posMasY].getBodyPosition().x - body.getPosition().x);
+                }else {
+                    blockForPushRight = false;
+                }
+                if(lendthToLeftblock != 0 && lendthToRightblock != 0 && lendthToLeftblock - lendthToRightblock < 0){
                     blockForPushRight = false;
                 }
             }

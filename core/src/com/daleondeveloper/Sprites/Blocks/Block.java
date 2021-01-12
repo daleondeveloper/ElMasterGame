@@ -1,4 +1,4 @@
-package com.daleondeveloper.Sprites;
+package com.daleondeveloper.Sprites.Blocks;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,7 +12,10 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
+import com.daleondeveloper.Sprites.AbstractDynamicObject;
+import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
+import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.HashSet;
@@ -24,37 +27,37 @@ public class Block extends AbstractDynamicObject {
     private enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
     }
-    private enum BlockType{
+    protected enum BlockType{
         WHITE,DARK,FIRE,WATER,LIGHT,SNOW;
     }
 
-    private GameWorld gameWorld;
-    private Body body;
-    private com.daleondeveloper.Sprites.BlockControllers.BlockController blockController;
+    protected GameWorld gameWorld;
+    protected Body body;
+    protected com.daleondeveloper.Sprites.BlockControllers.BlockController blockController;
 
-    private Array<TextureRegion> assetBlocks;
-    private TextureRegion textureRegionBlock;
+    protected Array<TextureRegion> assetBlocks;
+    protected TextureRegion textureRegionBlock;
 
-    private State currentState;
-    private BlockType blockType;
+    protected State currentState;
+    protected BlockType blockType;
     private int blockTypeNumber;
-    private float stateTime;
-    private boolean statePosition;
-    private float checkTime;
+    protected float stateTime;
+    protected boolean statePosition;
+    protected float checkTime;
 
-    private float pushImpulse;
-    private float returnCellsPosition;
-    private float returnCellsPositionY;
-    private float positionInBlocksMasX;
-    private float positionInBlocksMasY;
+    protected float pushImpulse;
+    protected float returnCellsPosition;
+    protected float returnCellsPositionY;
+    protected float positionInBlocksMasX;
+    protected float positionInBlocksMasY;
 
     //sensors contacted objects
         //Sets
-    private Set<AbstractGameObject> contactLeftBlockList ;
-    private Set<AbstractGameObject> contactRightBlockList ;
-    private Set<AbstractGameObject> contactUpList ;
-    private Set<AbstractGameObject> contactDownList ;
-    private WaterElement contactHero;
+    protected Set<AbstractGameObject> contactLeftBlockList ;
+    protected Set<AbstractGameObject> contactRightBlockList ;
+    protected Set<AbstractGameObject> contactUpList ;
+    protected Set<AbstractGameObject> contactDownList ;
+    protected WaterElement contactHero;
 
     public Block(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height){
         this(gameWorld, blockController, 0, x, y, width, height);
@@ -72,7 +75,7 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockFire());
         assetBlocks.add(assets.getBlockWater());
 
-        textureRegionBlock = assetBlocks.get(blockTypeNumber);
+        textureRegionBlock = assets.getBlockSnow();
         this.blockTypeNumber = blockTypeNumber;
         switch (blockTypeNumber){
             case 0:
@@ -95,6 +98,7 @@ public class Block extends AbstractDynamicObject {
                 break;
 
         }
+        blockType = BlockType.WHITE;
 
         // Sets initial values for position, width and height and initial frame as jumperStand.
         setBounds(x, y, width, height);
@@ -247,7 +251,7 @@ public class Block extends AbstractDynamicObject {
         }
 
     }
-    private void stateIdle(float deltaTime){
+    protected void stateIdle(float deltaTime){
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.StaticBody);
         blockController.checkDownContact(this);
@@ -286,7 +290,7 @@ public class Block extends AbstractDynamicObject {
 
         stateTime += deltaTime;
     }
-    private void statePush(float deltaTime){
+    protected void statePush(float deltaTime){
         blockController.checkDownContact(this);
         //Setting a fixed value for the X coordinate
         float x = body.getPosition().x;
@@ -335,7 +339,7 @@ public class Block extends AbstractDynamicObject {
 
         stateTime += deltaTime;
     }
-    private void stateFall(float deltaTime){
+    protected void stateFall(float deltaTime){
         //Setting a fixed value for the Y coordinate
         float y = body.getPosition().y;
         int leftReg = 153,rightReg = 157;
@@ -365,7 +369,7 @@ public class Block extends AbstractDynamicObject {
         setRegion(textureRegionBlock);
         stateTime += deltaTime;
     }
-    private void stateDestroy(float deltaTime){
+    protected void stateDestroy(float deltaTime){
         blockController.deleteBlockFormMass(this);
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.KinematicBody);
@@ -387,7 +391,7 @@ public class Block extends AbstractDynamicObject {
             body = null;
         currentState = State.DISPOSE;
     }
-    private void stateDead(float deltaTime){
+    protected void stateDead(float deltaTime){
 
     }
 

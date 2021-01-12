@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 

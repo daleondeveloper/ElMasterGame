@@ -17,6 +17,7 @@ import com.daleondeveloper.Sprites.BlockControllers.BlockControllerLightMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSnowMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSpecialMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerWaterMode;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
@@ -174,7 +175,7 @@ public class GameWorld {
        waterElement.load();
        blockController.load();
 
-       for (Block blockA : blockController.getArrayBlock()){
+       for (com.daleondeveloper.Sprites.Blocks.Block blockA : blockController.getArrayBlock()){
            for(Block blockB : blockController.getArrayBlock()){
                if(blockA == blockB)continue;
                if(Math.abs(blockA.getBodyPosition().x - blockB.getBodyPosition().x) * 1.1f <= (blockA.getWidth() + blockB.getWidth())/2 &&
@@ -271,8 +272,8 @@ public class GameWorld {
             timeCreateBlock = 0;
             //getBlockController().addBlock();
         }
-        List<Block> arrayBlock = new ArrayList<Block>();
-        for(Block block: blockController.getArrayBlock()){
+        List<com.daleondeveloper.Sprites.Blocks.Block> arrayBlock = new ArrayList<com.daleondeveloper.Sprites.Blocks.Block>();
+        for(com.daleondeveloper.Sprites.Blocks.Block block: blockController.getArrayBlock()){
             if(block.isBody()) {
                 block.update(deltaTime);
             }else {
@@ -318,7 +319,7 @@ private void updatePlatform(float deltaTime){
     }
 
     private void renderBlock(SpriteBatch batch) {
-        for (Block block : blockController.getArrayBlock()) {
+        for (com.daleondeveloper.Sprites.Blocks.Block block : blockController.getArrayBlock()) {
             block.render(batch);
 //            if(block.getUpPlatform() != null){
 //                block.getUpPlatform().render(batch);

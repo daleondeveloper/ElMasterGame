@@ -13,6 +13,7 @@ import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.Blocks.Block;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class GameSensor extends AbstractDynamicObject {
     private TextureRegion assetPlatform;
     private Body body;
 
-    private Set<Block> firstLineBlocks;
+    private Set<com.daleondeveloper.Sprites.Blocks.Block> firstLineBlocks;
 
     public GameSensor(PlayScreen playScreen, GameWorld gameWorld, float x, float y, float hx, float hy){
         this.gameWorld = gameWorld;
@@ -34,7 +35,7 @@ public class GameSensor extends AbstractDynamicObject {
         AssetBlock assetBlock = Assets.getInstance().getAssetBlock();
         assetPlatform = assetBlock.getBlockLight();
 
-        firstLineBlocks = new HashSet<Block>();
+        firstLineBlocks = new HashSet<com.daleondeveloper.Sprites.Blocks.Block>();
         setRegion(assetPlatform);
         setBounds(x,y,hx,hy);
 
@@ -67,7 +68,7 @@ public class GameSensor extends AbstractDynamicObject {
 
         if(firstLineBlocks.size() > 9){
             int blockCountInFirstLine = 0;
-            for(Block block : firstLineBlocks){
+            for(com.daleondeveloper.Sprites.Blocks.Block block : firstLineBlocks){
                 if(block.isIdle()){
                     blockCountInFirstLine++;
                 }
@@ -97,7 +98,7 @@ public class GameSensor extends AbstractDynamicObject {
         return body.getPosition();
     }
 
-    public Set<Block> getFirstLineBlocks() {
+    public Set<com.daleondeveloper.Sprites.Blocks.Block> getFirstLineBlocks() {
         return firstLineBlocks;
     }
 }

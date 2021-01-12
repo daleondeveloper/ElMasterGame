@@ -1,13 +1,12 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 
-import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.Settings.BlockLoad;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;

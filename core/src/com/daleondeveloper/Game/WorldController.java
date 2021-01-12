@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.Block;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 public class WorldController implements Disposable {
