@@ -60,6 +60,24 @@ public class PlayScreen extends GUIAbstractScreen {
 
     @Override
     public void show(){
+        switch (prefs.getGameModeDragon()){
+            case 1 :
+                Assets.getInstance().getAssetGates().changeYellowDragon();
+                break;
+            case 2 :
+                Assets.getInstance().getAssetGates().changeBlueDragon();
+                break;
+            case 3:
+                Assets.getInstance().getAssetGates().changeRedDragon();
+                break;
+            case 4:
+                Assets.getInstance().getAssetGates().changeBlackDragon();
+                break;
+            case 5:
+                Assets.getInstance().getAssetGates().changeBlueDragon();
+            default:
+                Assets.getInstance().getAssetGates().changeBlackDragon();
+        }
         backgroundScreen.build();
         gatesScreen.build();
         hud.build();
@@ -82,6 +100,7 @@ public class PlayScreen extends GUIAbstractScreen {
     public void render(float deltaTime){
         //Update logic
         stage.act();
+        updateLogic(deltaTime);
         backgroundScreen.update(deltaTime);
 
         menuScreen.update(deltaTime);
@@ -229,8 +248,11 @@ public class PlayScreen extends GUIAbstractScreen {
         worldController.dispose();
     }
 
+
     @Override
     protected void updateLogic(float deltaTime) {
+        System.out.println("deltaTime = " + deltaTime);
+
 
     }
 

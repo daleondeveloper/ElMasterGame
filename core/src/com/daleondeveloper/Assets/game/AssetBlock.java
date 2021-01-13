@@ -31,8 +31,8 @@ public class AssetBlock implements IAssetSprite {
         blockSnow = atlas.findRegion("snow/main");
         blockWater = atlas.findRegion("water/main");
         blockLight = atlas.findRegion("light/light_main");
-        blockDark = atlas.findRegion("white/main");
-        blockWhite = atlas.findRegion("dark/main");
+        blockDark = atlas.findRegion("dark/main");
+        blockWhite = atlas.findRegion("white/main");
         blockClassic = atlas.findRegion("main");
 
         //animation
