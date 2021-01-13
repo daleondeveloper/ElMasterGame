@@ -18,6 +18,7 @@ public class WaterBlock extends Block {
         textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockLight();
         blockType = BlockType.SNOW;
         freezingTime = 0;
+        this.setBlockTypeNumber(5);
     }
 
     @Override

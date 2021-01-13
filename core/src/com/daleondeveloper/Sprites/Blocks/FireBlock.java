@@ -13,6 +13,7 @@ public class FireBlock extends Block {
 
         textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockFire();
         blockType = BlockType.FIRE;
+        this.setBlockTypeNumber(2);
     }
 
     @Override

@@ -11,6 +11,7 @@ public class LightBlock extends Block {
 
         textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockLight();
         blockType = BlockType.LIGHT;
+        this.setBlockTypeNumber(3);
     }
 
     @Override

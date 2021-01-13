@@ -76,28 +76,7 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockWater());
 
         textureRegionBlock = assets.getBlockSnow();
-        this.blockTypeNumber = blockTypeNumber;
-        switch (blockTypeNumber){
-            case 0:
-                blockType = BlockType.WHITE;
-                break;
-            case 1:
-                blockType = BlockType.DARK;
-                break;
-            case 2:
-                blockType = BlockType.LIGHT;
-                break;
-            case 3:
-                blockType = BlockType.SNOW;
-                break;
-            case 4:
-                blockType = BlockType.FIRE;
-                break;
-            case 5:
-                blockType = BlockType.WATER;
-                break;
-
-        }
+        this.blockTypeNumber = 0;
         blockType = BlockType.WHITE;
 
         // Sets initial values for position, width and height and initial frame as jumperStand.

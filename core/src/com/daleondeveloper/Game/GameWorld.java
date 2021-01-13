@@ -175,7 +175,7 @@ public class GameWorld {
        waterElement.load();
        blockController.load();
 
-       for (com.daleondeveloper.Sprites.Blocks.Block blockA : blockController.getArrayBlock()){
+       for (Block blockA : blockController.getArrayBlock()){
            for(Block blockB : blockController.getArrayBlock()){
                if(blockA == blockB)continue;
                if(Math.abs(blockA.getBodyPosition().x - blockB.getBodyPosition().x) * 1.1f <= (blockA.getWidth() + blockB.getWidth())/2 &&
@@ -216,8 +216,8 @@ public class GameWorld {
         timeToSave -= deltaTime;
 
         if(firstLauch){
-            com.daleondeveloper.Game.Settings.GameSettings.getInstance().setHero(waterElement);
-            GameSettings.getInstance().setBlockController(blockController);
+           // GameSettings.getInstance().setHero(waterElement);
+//            GameSettings.getInstance().setBlockController(blockController);
             loadGames();
             firstLauch = false;
         }

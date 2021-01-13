@@ -7,6 +7,11 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
+import com.daleondeveloper.Sprites.Blocks.DarkBlock;
+import com.daleondeveloper.Sprites.Blocks.FireBlock;
+import com.daleondeveloper.Sprites.Blocks.LightBlock;
+import com.daleondeveloper.Sprites.Blocks.SnowBlock;
+import com.daleondeveloper.Sprites.Blocks.WaterBlock;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
@@ -100,7 +105,33 @@ public class BlockController {
         return true;
     }
     public boolean addBlock(float x, float y, int blockTypeNumber){
-        Block block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+        Block block = null;
+        switch (blockTypeNumber){
+            case 0 :
+                block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+            case 1 :
+                block = new DarkBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+
+            case 2 :
+                block = new FireBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+
+            case 3 :
+                block = new LightBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+
+            case 4 :
+                block = new SnowBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+            case 5 :
+                block = new WaterBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+
+            default:
+                block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+        }
         arrayBlock.add(block);
         block.fall();
         return true;
