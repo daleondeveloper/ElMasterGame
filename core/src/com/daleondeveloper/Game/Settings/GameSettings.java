@@ -15,7 +15,7 @@ public class GameSettings {
     private static final String TAG = GameSettings.class.getName();
 
     private static final int DEF_COUNT_AD = 3;
-    private static final String SETTINGS = "powerJumpSettings";
+    private static final String SETTINGS = "elMasterSettings";
     private static final String HIGH_SCORE = "highScore";
     private static final String LAST_PLAY_SCORE = "lastPlayScore";
     private static final int DEFAULT_HIGH_SCORE = 0;
@@ -38,6 +38,7 @@ public class GameSettings {
     private int backgroundId;
     private boolean audio;
     private boolean push_button_show;
+    private boolean gameSave;
 
     private WaterElement hero;
     private float heroX;
@@ -58,8 +59,6 @@ public class GameSettings {
         heroY = 170;
         push_button_show = false;
         blockVector = new ArrayList<BlockLoad>();
-        gameModeDragon = 0;
-
     }
 
     // Singleton: retrieve instance
@@ -76,7 +75,12 @@ public class GameSettings {
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
+        if(lastPlayScore > 0){
+            gameSave = true;
+        }
         loadGameWorldParameters();
+        loadHero();
+        loadBlock();
     }
     public void loadGameWorldParameters(){
         gameModeDragon = prefs.getInteger(GAME_MODE_DRAGON,0);
@@ -92,7 +96,9 @@ public class GameSettings {
         }
     }
     public void loadBlock(){
+        blockVector.clear();
         for(int i = 0; i < prefs.getInteger("BLOCK_COUNT"); i++){
+            gameSave = true;
             blockVector.add(new BlockLoad(prefs.getFloat("BLOCK_" + i + "_POSITION_X"),
                     prefs.getFloat("BLOCK_" + i + "_POSITION_Y"),
                     prefs.getInteger("BLOCK_" + i + "_TYPE")));
@@ -110,12 +116,9 @@ public class GameSettings {
         prefs.clear();
         prefs.putInteger(HIGH_SCORE, highScore);
         blockVector.clear();
-//        prefs.putInteger("BLOCK_COUNT", 0);
-//
-//        prefs.putInteger("HERO_POSITION_X", 100);
-//        prefs.putInteger("HERO_POSITION_Y", 200);
 
         prefs.flush();
+        gameSave = false;
     }
 
     public void saveSetting(){
@@ -144,6 +147,7 @@ public class GameSettings {
             }
         }
         if(blockController != null) {
+            gameSave = true;
             prefs.putInteger("BLOCK_COUNT", blockController.getArrayBlock().size());
             for (int i = 0; i < blockController.getArrayBlock().size(); i++) {
                 prefs.putFloat("BLOCK_" + i + "_POSITION_X", blockController.getArrayBlock().get(i).getX());
@@ -247,5 +251,9 @@ public class GameSettings {
 
     public void setGameModeDragon(int gameModeDragon) {
         this.gameModeDragon = gameModeDragon;
+    }
+
+    public boolean isGameSave() {
+        return gameSave;
     }
 }

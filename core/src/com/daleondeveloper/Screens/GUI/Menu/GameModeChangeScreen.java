@@ -15,6 +15,7 @@ import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
+import com.daleondeveloper.Screens.ScreenTransitionEnum;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
@@ -48,12 +49,19 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
     private Image nextModesImage;
     private Image previsionModeImage;
     private Image classicModeImage;
+
+    private Image continueGameImage;
+    private Image newGameImage;
+
     private Image fireModeImage;
     private Image lightModeImage;
     private Image snowModeImage;
     private Image waterModeImage;
     private Image darkModeImage;
     private Image specialModeImage;
+
+    private Label continueGameLabel;
+    private Label newGameLabel;
 
     private Label gameModeChangeTitleLabel;
     private Label classicModeLabel;
@@ -87,6 +95,10 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
 
         // Title
         gameModeChangeTitleLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.title"), labelStyleMedium);
+
+        continueGameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.continueGame"), labelStyleMedium);
+        newGameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.newGame"), labelStyleMedium);
+
         classicModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleSmall);
         lightModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.lightMode"), labelStyleSmall);
         snowModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.snowMode"), labelStyleSmall);
@@ -103,6 +115,10 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         stage.addActor(back);
         stage.addActor(previsionModeImage);
         stage.addActor(nextModesImage);
+
+        stage.addActor(continueGameImage);
+        stage.addActor(newGameImage);
+
         stage.addActor(lightModeImage);
         stage.addActor(snowModeImage);
         stage.addActor(classicModeImage);
@@ -112,6 +128,10 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         stage.addActor(specialModeImage);
 
         stage.addActor(gameModeChangeTitleLabel);
+
+        stage.addActor(continueGameLabel);
+        stage.addActor(newGameLabel);
+
         stage.addActor(classicModeLabel);
         stage.addActor(lightModeLabel);
         stage.addActor(snowModeLabel);
@@ -126,6 +146,9 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
 
     private void defineButtons() {
         back = new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
+
+        continueGameImage = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
+        newGameImage = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
 
         classicModeImage = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
         lightModeImage = new Image(new TextureRegionDrawable(assetGUI.getButtonForPauseWindow()));
@@ -161,6 +184,32 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
                     }else{
                         pageShow = LAST_CHANGE_MODE_PAGE;
                     }
+            }
+        }));
+
+        continueGameImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+        continueGameLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            }
+        }));
+
+        newGameImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                GameSettings.getInstance().deleteSave();
+            }
+        }));
+        newGameLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                GameSettings.getInstance().deleteSave();
             }
         }));
 
@@ -280,6 +329,11 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         nextModesImage.setVisible(false);
         previsionModeImage.setVisible(false);
 
+        continueGameImage.setVisible(false);
+        continueGameLabel.setVisible(false);
+        newGameImage.setVisible(false);
+        newGameLabel.setVisible(false);
+
         classicModeLabel.setVisible(false);
         lightModeLabel.setVisible(false);
         snowModeLabel.setVisible(false);
@@ -301,37 +355,44 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         }
     }
     private  void showPage(int page){
-        gameModeChangeTitleLabel.setVisible(true);
         back.setVisible(true);
-        switch (page){
-            case 0:
-                classicModeLabel.setVisible(true);
-                lightModeLabel.setVisible(true);
-                snowModeLabel.setVisible(true);
+        if(!prefs.isGameSave()) {
+            gameModeChangeTitleLabel.setVisible(true);
+            switch (page) {
+                case 0:
+                    classicModeLabel.setVisible(true);
+                    lightModeLabel.setVisible(true);
+                    snowModeLabel.setVisible(true);
 
-                classicModeImage.setVisible(true);
-                lightModeImage.setVisible(true);
-                snowModeImage.setVisible(true);
+                    classicModeImage.setVisible(true);
+                    lightModeImage.setVisible(true);
+                    snowModeImage.setVisible(true);
 
-                nextModesImage.setVisible(true);
-                break;
-            case 1:
-                fireModeLabel.setVisible(true);
-                waterModeLabel.setVisible(true);
-                darkModeLabel.setVisible(true);
+                    nextModesImage.setVisible(true);
+                    break;
+                case 1:
+                    fireModeLabel.setVisible(true);
+                    waterModeLabel.setVisible(true);
+                    darkModeLabel.setVisible(true);
 
-                fireModeImage.setVisible(true);
-                waterModeImage.setVisible(true);
-                darkModeImage.setVisible(true);
+                    fireModeImage.setVisible(true);
+                    waterModeImage.setVisible(true);
+                    darkModeImage.setVisible(true);
 
-                previsionModeImage.setVisible(true);
-                nextModesImage.setVisible(true);
-                break;
-            case 2:
-                specialModeImage.setVisible(true);
-                specialModeLabel.setVisible(true);
+                    previsionModeImage.setVisible(true);
+                    nextModesImage.setVisible(true);
+                    break;
+                case 2:
+                    specialModeImage.setVisible(true);
+                    specialModeLabel.setVisible(true);
 
-                previsionModeImage.setVisible(true);
+                    previsionModeImage.setVisible(true);
+            }
+        }else{
+            newGameImage.setVisible(true);
+            newGameLabel.setVisible(true);
+            continueGameImage.setVisible(true);
+            continueGameLabel.setVisible(true);
         }
     }
 
@@ -363,6 +424,23 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         back.setWidth(24);
         back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
                 menuWindow.getY() + menuWindow.getHeight() - 40);
+        //
+        //
+        //Сторінка поновлення гри
+        continueGameImage.setWidth(MenuScreen.BUTTON_WIDTH);
+        continueGameImage.setHeight(MenuScreen.BUTTON_HEIGHT);
+        continueGameImage.setPosition(x - continueGameImage.getWidth() / 2 ,
+                y * 1.05f - continueGameImage.getHeight() / 2);
+        continueGameLabel.setPosition(continueGameImage.getX() + continueGameImage.getWidth()/2 - continueGameLabel.getPrefWidth() / 2 ,
+                continueGameImage.getY()  + continueGameImage.getHeight() * 0.6f - continueGameLabel.getPrefHeight() / 2);
+
+        //audio.setPosition(x, y);
+        newGameImage.setWidth(MenuScreen.BUTTON_WIDTH);
+        newGameImage.setHeight(MenuScreen.BUTTON_HEIGHT);
+        newGameImage.setPosition(x - newGameImage.getWidth() / 2, continueGameImage.getY() - newGameImage.getHeight() * 1.2f);
+        newGameLabel.setPosition(newGameImage.getX() + newGameImage.getWidth()/2 - newGameLabel.getPrefWidth() / 2 ,
+                newGameImage.getY()  + newGameImage.getHeight() * 0.6f - newGameLabel.getPrefHeight() / 2);
+
         //
         //
         //перша сторінка кнопок
