@@ -1,5 +1,6 @@
 package com.daleondeveloper.Sprites.Blocks;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -37,6 +38,7 @@ public class Block extends AbstractDynamicObject {
 
     protected Array<TextureRegion> assetBlocks;
     protected TextureRegion textureRegionBlock;
+    protected Animation<TextureRegion> destroyAnimation;
 
     protected State currentState;
     protected BlockType blockType;
@@ -74,6 +76,8 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockWater());
         assetBlocks.add(assets.getBlockFire());
         assetBlocks.add(assets.getBlockWater());
+
+        destroyAnimation = assets.getDestroyWater();
 
         textureRegionBlock = assets.getBlockSnow();
         this.blockTypeNumber = 0;
@@ -205,6 +209,7 @@ public class Block extends AbstractDynamicObject {
     }
     public void delete(){
         currentState = State.DESTROY;
+        stateTime = 0;
     }
 
     //Update method, and update methods depending on the state of the object
@@ -349,26 +354,34 @@ public class Block extends AbstractDynamicObject {
         stateTime += deltaTime;
     }
     protected void stateDestroy(float deltaTime){
-        blockController.deleteBlockFormMass(this);
-        //Change body type and check the main allegations to change the state to another immediately
-        body.setType(BodyDef.BodyType.KinematicBody);
+        TextureRegion textureRegion = (TextureRegion) destroyAnimation.getKeyFrame(stateTime, true);
+        setRegion(textureRegion);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
+        stateTime += deltaTime;
+        if(stateTime > destroyAnimation.getAnimationDuration()) {
+            blockController.deleteBlockFormMass(this);
+            //Change body type and check the main allegations to change the state to another immediately
+            body.setType(BodyDef.BodyType.KinematicBody);
 
-        // Remove a block from the GameSensor object's contact list
-        GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
-        if(gameSensor.getFirstLineBlocks().contains(this)){
-            gameSensor.getFirstLineBlocks().remove(this);
-        }
+            // Remove a block from the GameSensor object's contact list
+            GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
+            if (gameSensor.getFirstLineBlocks().contains(this)) {
+                gameSensor.getFirstLineBlocks().remove(this);
+            }
 
-        // Remove a block from the contact list of all its contacts
-        Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
-        objToDelete.addAll(fixOnContact);
-        for(AbstractGameObject abstractGO : objToDelete){
-            removeFixOnContact(this,abstractGO);
-        }
+            // Remove a block from the contact list of all its contacts
+            Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
+            objToDelete.addAll(fixOnContact);
+            for (AbstractGameObject abstractGO : objToDelete) {
+                removeFixOnContact(this, abstractGO);
+            }
 
-        gameWorld.destroyBody(body);
+            gameWorld.destroyBody(body);
             body = null;
-        currentState = State.DISPOSE;
+            currentState = State.DISPOSE;
+        }
     }
     protected void stateDead(float deltaTime){
 
