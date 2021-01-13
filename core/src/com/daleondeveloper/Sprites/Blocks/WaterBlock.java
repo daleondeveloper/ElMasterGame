@@ -15,7 +15,7 @@ public class WaterBlock extends Block {
     public WaterBlock(GameWorld gameWorld, BlockController blockController, int blockTypeNumber, float x, float y, float width, float height) {
         super(gameWorld, blockController, blockTypeNumber, x, y, width, height);
 
-        textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockLight();
+        textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockWater();
         blockType = BlockType.SNOW;
         freezingTime = 0;
         this.setBlockTypeNumber(5);

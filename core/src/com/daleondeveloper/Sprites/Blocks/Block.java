@@ -79,7 +79,7 @@ public class Block extends AbstractDynamicObject {
 
         destroyAnimation = assets.getDestroyWater();
 
-        textureRegionBlock = assets.getBlockSnow();
+        textureRegionBlock = assets.getBlockClassic();
         this.blockTypeNumber = 0;
         blockType = BlockType.WHITE;
 

@@ -216,7 +216,7 @@ public class GameWorld {
         timeToSave -= deltaTime;
 
         if(firstLauch){
-           // GameSettings.getInstance().setHero(waterElement);
+            GameSettings.getInstance().setHero(waterElement);
 //            GameSettings.getInstance().setBlockController(blockController);
             loadGames();
             firstLauch = false;

@@ -16,6 +16,9 @@ public class AssetBlock implements IAssetSprite {
     private TextureRegion blockSnow;
     private TextureRegion blockWater;
     private TextureRegion blockLight;
+    private TextureRegion blockDark;
+    private TextureRegion blockWhite;
+    private TextureRegion blockClassic;
 
     private Animation<TextureRegion> destroyFire;
     private Animation<TextureRegion> destroySnow;
@@ -28,6 +31,9 @@ public class AssetBlock implements IAssetSprite {
         blockSnow = atlas.findRegion("snow/main");
         blockWater = atlas.findRegion("water/main");
         blockLight = atlas.findRegion("light/light_main");
+        blockDark = atlas.findRegion("white/main");
+        blockWhite = atlas.findRegion("dark/main");
+        blockClassic = atlas.findRegion("main");
 
         //animation
         regions = atlas.findRegions("fire/destroy/destroy");
@@ -72,6 +78,18 @@ public class AssetBlock implements IAssetSprite {
 
     public TextureRegion getBlockLight() {
         return blockLight;
+    }
+
+    public TextureRegion getBlockDark() {
+        return blockDark;
+    }
+
+    public TextureRegion getBlockWhite() {
+        return blockWhite;
+    }
+
+    public TextureRegion getBlockClassic() {
+        return blockClassic;
     }
 
     public Animation<TextureRegion> getDestroyFire() {
