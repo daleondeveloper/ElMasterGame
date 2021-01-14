@@ -16,7 +16,13 @@ public class GameSettings {
 
     private static final int DEF_COUNT_AD = 3;
     private static final String SETTINGS = "elMasterSettings";
-    private static final String HIGH_SCORE = "highScore";
+    private static final String HIGH_SCORE_CLASSIC = "highScoreClassic";
+    private static final String HIGH_SCORE_FIRE = "highScoreFire";
+    private static final String HIGH_SCORE_LIGHT = "highScoreLight";
+    private static final String HIGH_SCORE_SNOW = "highScoreSnow";
+    private static final String HIGH_SCORE_WATER = "highScoreWater";
+    private static final String HIGH_SCORE_DARK = "highScoreDark";
+    private static final String HIGH_SCORE_SPECIAL = "highScoreSpecial";
     private static final String LAST_PLAY_SCORE = "lastPlayScore";
     private static final int DEFAULT_HIGH_SCORE = 0;
     private static final String BACKGROUND_ID = "backgroundId";
@@ -33,7 +39,13 @@ public class GameSettings {
     private int countdownAd; // No need to persist it
     private boolean showHelp; // No need to persist it
     private Preferences prefs;
-    private int highScore;
+    private int highScoreClassic;
+    private int highScoreFire;
+    private int highScoreLight;
+    private int highScoreSnow;
+    private int highScoreWater;
+    private int highScoreDark;
+    private int highScoreSpecial;
     private int lastPlayScore;
     private int backgroundId;
     private boolean audio;
@@ -71,7 +83,13 @@ public class GameSettings {
 
     public void loadSettings() {
         push_button_show = false;
-        highScore = prefs.getInteger(HIGH_SCORE, DEFAULT_HIGH_SCORE);
+        highScoreClassic = prefs.getInteger(HIGH_SCORE_CLASSIC, DEFAULT_HIGH_SCORE);
+        highScoreFire = prefs.getInteger(HIGH_SCORE_FIRE, DEFAULT_HIGH_SCORE);
+        highScoreLight = prefs.getInteger(HIGH_SCORE_LIGHT, DEFAULT_HIGH_SCORE);
+        highScoreSnow = prefs.getInteger(HIGH_SCORE_SNOW, DEFAULT_HIGH_SCORE);
+        highScoreWater = prefs.getInteger(HIGH_SCORE_WATER, DEFAULT_HIGH_SCORE);
+        highScoreDark = prefs.getInteger(HIGH_SCORE_DARK, DEFAULT_HIGH_SCORE);
+        highScoreSpecial = prefs.getInteger(HIGH_SCORE_SPECIAL, DEFAULT_HIGH_SCORE);
         backgroundId = prefs.getInteger(BACKGROUND_ID, INITIAL_BACKGROUND_ID);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
@@ -114,7 +132,13 @@ public class GameSettings {
     }
     public void deleteSave(){
         prefs.clear();
-        prefs.putInteger(HIGH_SCORE, highScore);
+        prefs.putInteger(HIGH_SCORE_CLASSIC, highScoreClassic);
+        prefs.putInteger(HIGH_SCORE_FIRE, highScoreFire);
+        prefs.putInteger(HIGH_SCORE_LIGHT, highScoreLight);
+        prefs.putInteger(HIGH_SCORE_SNOW, highScoreSnow);
+        prefs.putInteger(HIGH_SCORE_WATER, highScoreWater);
+        prefs.putInteger(HIGH_SCORE_DARK, highScoreDark);
+        prefs.putInteger(HIGH_SCORE_SPECIAL, highScoreSpecial);
         blockVector.clear();
 
         prefs.flush();
@@ -123,7 +147,13 @@ public class GameSettings {
 
     public void saveSetting(){
         blockVector.clear();
-        prefs.putInteger(HIGH_SCORE, highScore);
+        prefs.putInteger(HIGH_SCORE_CLASSIC, highScoreClassic);
+        prefs.putInteger(HIGH_SCORE_FIRE, highScoreFire);
+        prefs.putInteger(HIGH_SCORE_LIGHT, highScoreLight);
+        prefs.putInteger(HIGH_SCORE_SNOW, highScoreSnow);
+        prefs.putInteger(HIGH_SCORE_WATER, highScoreWater);
+        prefs.putInteger(HIGH_SCORE_DARK, highScoreDark);
+        prefs.putInteger(HIGH_SCORE_SPECIAL, highScoreSpecial);
         prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
@@ -177,12 +207,60 @@ public class GameSettings {
         this.showHelp = showHelp;
     }
 
-    public int getHighScore() {
-        return highScore;
+    public int getHighScoreClassic() {
+        return highScoreClassic;
     }
 
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
+    public void setHighScoreClassic(int highScoreClassic) {
+        this.highScoreClassic = highScoreClassic;
+    }
+
+    public int getHighScoreFire() {
+        return highScoreFire;
+    }
+
+    public void setHighScoreFire(int highScoreFire) {
+        this.highScoreFire = highScoreFire;
+    }
+
+    public int getHighScoreLight() {
+        return highScoreLight;
+    }
+
+    public void setHighScoreLight(int highScoreLight) {
+        this.highScoreLight = highScoreLight;
+    }
+
+    public int getHighScoreSnow() {
+        return highScoreSnow;
+    }
+
+    public void setHighScoreSnow(int highScoreSnow) {
+        this.highScoreSnow = highScoreSnow;
+    }
+
+    public int getHighScoreWater() {
+        return highScoreWater;
+    }
+
+    public void setHighScoreWater(int highScoreWater) {
+        this.highScoreWater = highScoreWater;
+    }
+
+    public int getHighScoreDark() {
+        return highScoreDark;
+    }
+
+    public void setHighScoreDark(int highScoreDark) {
+        this.highScoreDark = highScoreDark;
+    }
+
+    public int getHighScoreSpecial() {
+        return highScoreSpecial;
+    }
+
+    public void setHighScoreSpecial(int highScoreSpecial) {
+        this.highScoreSpecial = highScoreSpecial;
     }
 
     public int getLastPlayScore() {

@@ -16,6 +16,7 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     private static final String TAG = SettingsScreen.class.getName();
 
     private static final float DIM_ALPHA = 0.8f;
+    private static final int LAST_SCORE_PAGE = 6;
 
 
     private MenuScreen menuScreen;
@@ -27,11 +28,16 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     private Label.LabelStyle labelStyleBig;
     private Label.LabelStyle labelStyleMedium;
 
+    private int pageShow;
+
     private Image menuWindow;
     private Image back;
+    private Image nextScoreImage;
+    private Image previsionScoreImage;
 
     private Label highScoreLabel;
     private Label bestHighScoreLabel;
+    private Label modeNameLabel;
 
 
     public HighScoreScreen(ElMaster game, MenuScreen menuScreen){
@@ -47,6 +53,8 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
         labelStyleMedium = new Label.LabelStyle();
         labelStyleMedium.font = assets.getAssetFonts().getNormal();
 
+
+        pageShow = 0;
     }
 
     @Override
@@ -57,12 +65,21 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
 //        highScoreLabel.setFontScale(width / 500, height / 1000);
         highScoreLabel.setPosition(menuWindow.getX() + 120  ,
                 menuWindow.getY() + 270 );
+        modeNameLabel.setPosition(menuWindow.getX() + 199 - bestHighScoreLabel.getPrefWidth() /2,
+                menuWindow.getY() + 220 );
         bestHighScoreLabel.setPosition( menuWindow.getX() + 199 - bestHighScoreLabel.getPrefWidth() /2,
                 menuWindow.getY() + 125);
         back.setHeight(24);
         back.setWidth(24);
         back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
                 menuWindow.getY() + menuWindow.getHeight() - 40);
+
+        nextScoreImage.setWidth(50);
+        nextScoreImage.setHeight(58);
+        nextScoreImage.setPosition(menuWindow.getX() + 300, menuWindow.getY() + 35);
+        previsionScoreImage.setWidth(50);
+        previsionScoreImage.setHeight(58);
+        previsionScoreImage.setPosition(menuWindow.getX() + 55 , menuWindow.getY() + 35);
     }
 
     @Override
@@ -70,20 +87,50 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
         menuWindow = menuScreen.getPauseWindow();
 
         highScoreLabel = new Label(i18NGameThreeBundle.format("highScoreScreen.title"), labelStyleMedium);
-        bestHighScoreLabel = new Label(String.valueOf(prefs.getHighScore()), labelStyleBig);
+        modeNameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleMedium);
+        bestHighScoreLabel = new Label(String.valueOf(prefs.getHighScoreClassic()), labelStyleBig);
         defineButtons();
 
         stage.addActor(bestHighScoreLabel);
         stage.addActor(highScoreLabel);
+        stage.addActor(modeNameLabel);
+
         stage.addActor(back);
+        stage.addActor(nextScoreImage);
+        stage.addActor(previsionScoreImage);
     }
     private void defineButtons(){
         back  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
+        nextScoreImage = new Image(assetGUI.getButtonLeft());
+        previsionScoreImage = new Image(assetGUI.getButtonRight());
 
         back.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 menuScreen.hideMenuScreen();
+            }
+        }));
+
+
+        nextScoreImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                if(pageShow < LAST_SCORE_PAGE){
+                    pageShow++;
+                }else{
+                    pageShow = 0;
+                }
+            }
+        }));
+
+        previsionScoreImage.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                if(pageShow > 0){
+                    pageShow--;
+                }else{
+                    pageShow = LAST_SCORE_PAGE;
+                }
             }
         }));
     }
@@ -95,6 +142,39 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
             setVisible(true);
         }else{
             setVisible(false);
+        }
+        switch (pageShow){
+            case 0:
+                modeNameLabel.setText("classic");
+                bestHighScoreLabel.setText(prefs.getHighScoreClassic());
+                break;
+            case 1:
+                modeNameLabel.setText("Light");
+                bestHighScoreLabel.setText(prefs.getHighScoreLight());
+                break;
+            case 2:
+                modeNameLabel.setText("Snow");
+                bestHighScoreLabel.setText(prefs.getHighScoreSnow());
+                break;
+            case 3:
+                modeNameLabel.setText("Fire");
+                bestHighScoreLabel.setText(prefs.getHighScoreFire());
+                break;
+            case 4:
+                modeNameLabel.setText("Water");
+                bestHighScoreLabel.setText(prefs.getHighScoreWater());
+                break;
+            case 5:
+                modeNameLabel.setText("Dark");
+                bestHighScoreLabel.setText(prefs.getHighScoreDark());
+                break;
+            case 6:
+                modeNameLabel.setText("Special");
+                bestHighScoreLabel.setText(prefs.getHighScoreSpecial());
+                break;
+            default:
+                modeNameLabel.setText("Mode");
+                bestHighScoreLabel.setText(prefs.getHighScoreClassic());
         }
 
     }
@@ -119,6 +199,10 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     private void setVisible(boolean  visible){
         bestHighScoreLabel.setVisible(visible);
         highScoreLabel.setVisible(visible);
+        modeNameLabel.setVisible(visible);
+
         back.setVisible(visible);
+        nextScoreImage.setVisible(visible);
+        previsionScoreImage.setVisible(visible);
     }
 }

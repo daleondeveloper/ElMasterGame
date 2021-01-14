@@ -202,10 +202,59 @@ public class InfoScreen extends GUIOverlayAbstractScreen {
     public void showGameOver() {
         Hud hud = playScreen.getHud();
         int currentScore = hud.getScore();
-        int bestScore = prefs.getHighScore();
+        int bestScore = 0;
+        switch (prefs.getGameModeDragon()){
+            case 0:
+                bestScore = prefs.getHighScoreClassic();
+                break;
+            case 1:
+                bestScore = prefs.getHighScoreLight();
+                break;
+            case 2:
+                bestScore = prefs.getHighScoreSnow();
+                break;
+            case 3:
+                bestScore = prefs.getHighScoreFire();
+                break;
+            case 4:
+                bestScore = prefs.getHighScoreWater();
+                break;
+            case 5:
+                bestScore = prefs.getHighScoreDark();
+                break;
+            case 6:
+                bestScore = prefs.getHighScoreSpecial();
+                break;
+            default:
+                bestScore = prefs.getHighScoreClassic();
+        }
         if (currentScore > bestScore) {
             bestScore = currentScore;
-            prefs.setHighScore(bestScore);
+            switch (prefs.getGameModeDragon()){
+                case 0:
+                    prefs.setHighScoreClassic(bestScore);
+                    break;
+                case 1:
+                    prefs.setHighScoreLight(bestScore);
+                    break;
+                case 2:
+                    prefs.setHighScoreSnow(bestScore);
+                    break;
+                case 3:
+                    prefs.setHighScoreFire(bestScore);
+                    break;
+                case 4:
+                    prefs.setHighScoreWater(bestScore);
+                    break;
+                case 5:
+                    prefs.setHighScoreDark(bestScore);
+                    break;
+                case 6:
+                    prefs.setHighScoreSpecial(bestScore);
+                    break;
+                default:
+                    prefs.setHighScoreClassic(bestScore);
+            };
 
             // Leaderboards
             //   playServices.submitScore(bestScore);

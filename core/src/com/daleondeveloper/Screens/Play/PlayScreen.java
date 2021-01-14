@@ -174,6 +174,7 @@ public class PlayScreen extends GUIAbstractScreen {
 
                 infoScreen.showGameOver();
                 endGame = true;
+                prefs.save();
             }
         }
     }
