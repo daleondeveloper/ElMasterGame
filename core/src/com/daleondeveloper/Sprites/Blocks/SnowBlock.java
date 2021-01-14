@@ -40,25 +40,28 @@ public class SnowBlock extends Block {
 
             if (posMasX > 0 && blocksMas[posMasX - 1][posMasY] != null) {
                 Block block = blocksMas[posMasX - 1][posMasY];
-                if (!block.isIFall()) {
+                if (block.isPush()) {
                     block.idle();
+                    block.stateIdle(0);
                 }
             }
             if (posMasX < blocksMas.length - 1 && blocksMas[posMasX + 1][posMasY] != null) {
                 Block block = blocksMas[posMasX + 1][posMasY];
-                if (!block.isIFall()) {
+                if (block.isPush()) {
                     block.idle();
+                    block.stateIdle(0);
+
                 }
             }
             if (posMasY > 0 && blocksMas[posMasX][posMasY - 1] != null) {
                 Block block = blocksMas[posMasX][posMasY - 1];
-                if (!block.isIFall()) {
+                if (block.isPush()) {
                     block.idle();
                 }
             }
             if (posMasY < blocksMas[0].length - 1 && blocksMas[posMasX][posMasY + 1] != null) {
                 Block block = blocksMas[posMasX][posMasY + 1];
-                if (!block.isIFall()) {
+                if (block.isPush()) {
                     block.idle();
                 }
             }
