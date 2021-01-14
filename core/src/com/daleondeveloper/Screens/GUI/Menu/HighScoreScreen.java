@@ -62,7 +62,6 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
         super.resize(width, height);
 
 
-//        highScoreLabel.setFontScale(width / 500, height / 1000);
         highScoreLabel.setPosition(menuWindow.getX() + 120  ,
                 menuWindow.getY() + 270 );
         modeNameLabel.setPosition(menuWindow.getX() + 199 - bestHighScoreLabel.getPrefWidth() /2,

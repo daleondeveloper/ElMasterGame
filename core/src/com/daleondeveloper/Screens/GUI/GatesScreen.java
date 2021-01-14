@@ -80,7 +80,7 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         leftBowlAnimatedActor.setX(menuBg.getX() + 65);
 
         rightBowlAnimatedActor.setY(menuBg.getY() + 435);
-        rightBowlAnimatedActor.setX(menuBg.getX() + 410);
+        rightBowlAnimatedActor.setX(menuBg.getX() + 430);
 
         portalAnimatedActor.setY(menuBg.getY() + 630);
         portalAnimatedActor.setX(stage.getWidth() / 2 - portalAnimatedActor.getWidth() / 2);

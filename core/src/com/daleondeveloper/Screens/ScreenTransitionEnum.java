@@ -7,7 +7,7 @@ import com.daleondeveloper.Screens.transitions.*;
 public enum ScreenTransitionEnum {
     COLOR_FADE_WHITE {
         public IScreenTransition getScreenTransition() {
-            return ColorFadeTransition.init(2.0f, Color.WHITE, Interpolation.sine);
+            return ColorFadeTransition.init(1.0f, Color.WHITE, Interpolation.sine);
         }
     },
 

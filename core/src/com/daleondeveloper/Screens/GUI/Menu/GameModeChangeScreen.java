@@ -190,13 +190,13 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
         continueGameImage.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         continueGameLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -219,14 +219,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(0);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         classicModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(0);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -234,14 +234,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(1);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         lightModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(1);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -249,14 +249,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(2);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         snowModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(2);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -264,14 +264,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(3);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         fireModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(3);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -279,14 +279,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(4);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         waterModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(4);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -294,14 +294,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(5);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         darkModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(5);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -309,14 +309,14 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
             prefs.setGameModeDragon(6);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
         specialModeLabel.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
             prefs.setGameModeDragon(6);
-            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,null);
+            ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
