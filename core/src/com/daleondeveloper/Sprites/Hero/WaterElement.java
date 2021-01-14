@@ -374,8 +374,15 @@ public class WaterElement extends AbstractDynamicObject {
                 body.setGravityScale(10);
             }
         if(getSensorUp().size() > 0) {
-            onDead();
-            return;
+            int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
+            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+            if(gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY + 1] != null ||
+                    gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY + 2] != null) {
+                onDead();
+                return;
+            }else{
+                body.setTransform(returnCellsPositionX,returnCellsPositionY,0);
+            }
         }
 
     }
