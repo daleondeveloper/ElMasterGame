@@ -51,6 +51,7 @@ public class GameSettings {
     private boolean audio;
     private boolean push_button_show;
     private boolean gameSave;
+    private boolean[] helpModeShow;
 
     private WaterElement hero;
     private float heroX;
@@ -71,6 +72,7 @@ public class GameSettings {
         heroY = 170;
         push_button_show = false;
         blockVector = new ArrayList<BlockLoad>();
+        helpModeShow = new boolean[6];
     }
 
     // Singleton: retrieve instance
@@ -95,6 +97,9 @@ public class GameSettings {
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
         if(lastPlayScore > 0){
             gameSave = true;
+        }
+        for(int i = 0; i < 6; i ++){
+            helpModeShow[i] = prefs.getBoolean("HELP_MODE_SHOW" + i,true);
         }
         loadGameWorldParameters();
         loadHero();
@@ -139,6 +144,9 @@ public class GameSettings {
         prefs.putInteger(HIGH_SCORE_WATER, highScoreWater);
         prefs.putInteger(HIGH_SCORE_DARK, highScoreDark);
         prefs.putInteger(HIGH_SCORE_SPECIAL, highScoreSpecial);
+        for(int i = 0; i < 6; i ++){
+            prefs.putBoolean("HELP_MODE_SHOW" + i,helpModeShow[i]);
+        }
         blockVector.clear();
 
         prefs.flush();
@@ -157,6 +165,9 @@ public class GameSettings {
         prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
+        for(int i = 0; i < 6; i ++){
+            prefs.putBoolean("HELP_MODE_SHOW" + i,helpModeShow[i]);
+        }
     }
     public void saveGameWorldParameters(){
         prefs.putInteger(GAME_MODE_DRAGON,gameModeDragon);
@@ -333,5 +344,9 @@ public class GameSettings {
 
     public boolean isGameSave() {
         return gameSave;
+    }
+
+    public boolean[] getHelpModeShow() {
+        return helpModeShow;
     }
 }

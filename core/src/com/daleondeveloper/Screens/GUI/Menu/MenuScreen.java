@@ -124,6 +124,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         settingsScreen.update(deltaTime);
         creditScreen.update(deltaTime);
         gameModeChangeScreen.update(deltaTime);
+        if(helpScreen.isHelpScreenVisible() && helpScreen.getHelpMenuShow() != -1){
+            pauseWindow.setY(800);
+        }
     }
 
     @Override
@@ -245,5 +248,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         return pauseWindow;
     }
 
-
+    public HelpScreen getHelpScreen() {
+        return helpScreen;
+    }
 }

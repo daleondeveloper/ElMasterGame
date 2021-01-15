@@ -32,6 +32,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
     private Label.LabelStyle labelStyleSmall;
 
     private int helpMenuShow;
+    private int helpModeShow;
 
     private Image menuWindow;
     private Image back;
@@ -58,7 +59,8 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
-        helpMenuShow = 0;
+        helpMenuShow = -1;
+        helpModeShow = -1;
 
     }
 
@@ -157,6 +159,33 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
                     nextHelp.setVisible(false);
                     previsionHelp.setVisible(true);
                     break;
+            }
+            switch (helpModeShow){
+                case 1 :
+                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_light_mode()));
+                    nextHelp.setVisible(true);
+                    previsionHelp.setVisible(false);
+                    break;
+                case 2 :
+                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_snow_mode()));
+                    nextHelp.setVisible(true);
+                    previsionHelp.setVisible(false);
+                    break;
+                case 3 :
+                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_fire_mode()));
+                    nextHelp.setVisible(true);
+                    previsionHelp.setVisible(false);
+                    break;
+                case 5 :
+                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_dark_mode()));
+                    nextHelp.setVisible(true);
+                    previsionHelp.setVisible(false);
+                    break;
+                case 6 :
+                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_special_mode()));
+                    nextHelp.setVisible(true);
+                    previsionHelp.setVisible(false);
+                    break;
 
 
             }
@@ -189,5 +218,21 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
         helpLabel.setVisible(visible);
         back.setVisible(visible);
         helpActor.setVisible(true);
+    }
+
+    public int getHelpMenuShow() {
+        return helpMenuShow;
+    }
+
+    public void setHelpMenuShow(int helpMenuShow) {
+        this.helpMenuShow = helpMenuShow;
+    }
+
+    public int getHelpModeShow() {
+        return helpModeShow;
+    }
+
+    public void setHelpModeShow(int helpModeShow) {
+        this.helpModeShow = helpModeShow;
     }
 }

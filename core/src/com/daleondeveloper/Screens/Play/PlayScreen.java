@@ -27,14 +27,17 @@ public class PlayScreen extends GUIAbstractScreen {
     private GatesScreen gatesScreen;
     private boolean gameStart;
 
+    private float stateTime;
+
     private Image background;
     private Image startButton;
     private WorldController worldController;
     private GameWorld gameWorld;
     private WorldRenderer worldRenderer;
-    private com.daleondeveloper.Game.Settings.GameSettings prefs;
+    private GameSettings prefs;
     private boolean endGame;
     private boolean levelCompleted;
+    private boolean showHelp;
 
     public PlayScreen(ElMaster game) {
         super(game);
@@ -46,6 +49,8 @@ public class PlayScreen extends GUIAbstractScreen {
         gatesScreen = new GatesScreen(game);
         gameStart = false;
 
+        stateTime = 0;
+
 
         worldController = new WorldController(this);
         gameWorld = worldController.getGameWorld();
@@ -53,6 +58,7 @@ public class PlayScreen extends GUIAbstractScreen {
         prefs = GameSettings.getInstance();
         endGame = false;
         levelCompleted = false;
+        showHelp = true;
 
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongGame());
     }
@@ -84,20 +90,23 @@ public class PlayScreen extends GUIAbstractScreen {
         infoScreen.build();
         menuScreen.build();
         background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
-        startButton = new Image(Assets.getInstance().getAssetGUI().getButtonStart());
-        //setStateRunning();
-        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                resume();
-            }
-        }));
-        //stage.addActor(startButton);
+        startButton = new Image(Assets.getInstance().getAssetGUI().getButtonHelp());
+//        //setStateRunning();
+//        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
+////            @Override
+////            public void run() {
+////                resume();
+////            }
+//        }));
+
+
+//        stage.addActor(startButton);
     }
 
 
     @Override
     public void render(float deltaTime){
+        stateTime += deltaTime;
         //Update logic
         stage.act();
         updateLogic(deltaTime);
@@ -111,7 +120,11 @@ public class PlayScreen extends GUIAbstractScreen {
             worldController.update(deltaTime);
         }
 
-
+        if(prefs.getHelpModeShow()[prefs.getGameModeDragon()] && stateTime > 1f) {
+            menuScreen.getHelpScreen().setHelpModeShow(prefs.getGameModeDragon());
+            menuScreen.setHelpScreen();
+            prefs.getHelpModeShow()[prefs.getGameModeDragon()] = false;
+        }
         //Render logic
     //    AbstractScreen.clearScr();
 
@@ -131,8 +144,10 @@ public class PlayScreen extends GUIAbstractScreen {
             gameResults();
         }
 
+
         if(!gameStart){
             doPause();
+
         }
 
     }
@@ -191,7 +206,7 @@ public class PlayScreen extends GUIAbstractScreen {
         background.setY(0);
         background.setWidth(width);
         background.setHeight(height);
-        startButton.setPosition(w / 2, h / 2);
+        startButton.setPosition(w / 4, h / 2);
         backgroundScreen.resize(width,height);
         gatesScreen.resize(width,height);
         hud.resize(width, height);
@@ -220,6 +235,8 @@ public class PlayScreen extends GUIAbstractScreen {
     }
 
     public void setStatePaused() {
+        menuScreen.getHelpScreen().setHelpModeShow(prefs.getGameModeDragon());
+            menuScreen.setHelpScreen();
         menuScreen.showMenuScreen(MenuScreen.MenuState.PAUSE);
        doPause();
     }

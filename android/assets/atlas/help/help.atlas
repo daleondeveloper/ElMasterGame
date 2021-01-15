@@ -1,26 +1,61 @@
 help.png
-size: 302, 881
+size: 886, 454
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+dark_mode_help_screen
+  rotate: false
+  xy: 609, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+fire_mode_help_screen
+  rotate: false
+  xy: 457, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
 help_block_fall
   rotate: false
-  xy: 1, 1
+  xy: 585, 153
   size: 300, 300
   orig: 300, 300
   offset: 0, 0
   index: -1
 help_block_push
   rotate: false
-  xy: 1, 303
+  xy: 1, 153
   size: 280, 275
   orig: 280, 275
   offset: 0, 0
   index: -1
 help_full_block_line
   rotate: false
-  xy: 1, 580
+  xy: 283, 153
   size: 300, 300
   orig: 300, 300
+  offset: 0, 0
+  index: -1
+light_mode_help_screen
+  rotate: false
+  xy: 153, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+snow_mode_help_screen
+  rotate: false
+  xy: 1, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+special_mode_help_screen
+  rotate: false
+  xy: 305, 1
+  size: 150, 150
+  orig: 150, 150
   offset: 0, 0
   index: -1
