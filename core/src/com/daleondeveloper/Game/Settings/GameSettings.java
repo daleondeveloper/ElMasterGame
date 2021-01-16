@@ -72,7 +72,7 @@ public class GameSettings {
         heroY = 170;
         push_button_show = false;
         blockVector = new ArrayList<BlockLoad>();
-        helpModeShow = new boolean[6];
+        helpModeShow = new boolean[7];
     }
 
     // Singleton: retrieve instance
@@ -98,7 +98,7 @@ public class GameSettings {
         if(lastPlayScore > 0){
             gameSave = true;
         }
-        for(int i = 0; i < 6; i ++){
+        for(int i = 0; i < 7; i ++){
             helpModeShow[i] = prefs.getBoolean("HELP_MODE_SHOW" + i,true);
         }
         loadGameWorldParameters();
@@ -144,7 +144,7 @@ public class GameSettings {
         prefs.putInteger(HIGH_SCORE_WATER, highScoreWater);
         prefs.putInteger(HIGH_SCORE_DARK, highScoreDark);
         prefs.putInteger(HIGH_SCORE_SPECIAL, highScoreSpecial);
-        for(int i = 0; i < 6; i ++){
+        for(int i = 0; i < 7; i ++){
             prefs.putBoolean("HELP_MODE_SHOW" + i,helpModeShow[i]);
         }
         blockVector.clear();
@@ -165,7 +165,7 @@ public class GameSettings {
         prefs.putInteger(LAST_PLAY_SCORE,lastPlayScore);
         prefs.putInteger(BACKGROUND_ID, backgroundId);
         prefs.putBoolean(AUDIO, audio);
-        for(int i = 0; i < 6; i ++){
+        for(int i = 0; i < 7; i ++){
             prefs.putBoolean("HELP_MODE_SHOW" + i,helpModeShow[i]);
         }
     }

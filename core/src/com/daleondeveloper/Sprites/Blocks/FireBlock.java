@@ -40,4 +40,8 @@ public class FireBlock extends Block {
             }
         }
     }
+    @Override
+    protected void statePush(float deltaTime) {
+        idle();
+    }
 }

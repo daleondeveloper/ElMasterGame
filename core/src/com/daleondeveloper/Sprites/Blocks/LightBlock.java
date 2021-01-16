@@ -25,4 +25,9 @@ public class LightBlock extends Block {
             }
         }
     }
+
+    @Override
+    protected void statePush(float deltaTime) {
+        idle();
+    }
 }

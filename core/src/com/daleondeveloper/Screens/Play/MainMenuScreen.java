@@ -224,6 +224,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
             @Override
             public void run() {
                 setStatePaused();
+                menuScreen.getHelpScreen().setHelpMenuShow(0);
                 menuScreen.showMenuScreen(MenuScreen.MenuState.HELP);
 //                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
 

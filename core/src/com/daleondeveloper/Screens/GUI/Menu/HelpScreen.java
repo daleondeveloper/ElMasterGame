@@ -163,28 +163,18 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
             switch (helpModeShow){
                 case 1 :
                     ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_light_mode()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(false);
                     break;
                 case 2 :
                     ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_snow_mode()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(false);
                     break;
                 case 3 :
                     ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_fire_mode()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(false);
                     break;
                 case 5 :
                     ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_dark_mode()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(false);
                     break;
                 case 6 :
                     ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_special_mode()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(false);
                     break;
 
 
@@ -226,6 +216,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
 
     public void setHelpMenuShow(int helpMenuShow) {
         this.helpMenuShow = helpMenuShow;
+        helpModeShow = -1;
     }
 
     public int getHelpModeShow() {
@@ -234,5 +225,6 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
 
     public void setHelpModeShow(int helpModeShow) {
         this.helpModeShow = helpModeShow;
+        helpMenuShow = -1;
     }
 }
