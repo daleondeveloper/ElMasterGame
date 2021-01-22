@@ -1,158 +1,116 @@
 gates-0.png
-size: 987, 911
+size: 901, 959
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-bowl/left/left_bowl
+bowl/left/left_bowl_back
   rotate: false
-  xy: 435, 261
-  size: 123, 196
+  xy: 1, 70
+  size: 123, 67
   orig: 1260, 840
   offset: 394, 454
-  index: 3
-bowl/left/left_bowl
+  index: -1
+bowl/left/left_bowl_up
   rotate: false
-  xy: 501, 677
-  size: 123, 227
+  xy: 593, 1
+  size: 123, 63
   orig: 1260, 840
   offset: 394, 454
-  index: 6
-bowl/left/left_bowl
+  index: -1
+bowl/right/right_bowl_back
   rotate: false
-  xy: 751, 677
-  size: 123, 233
-  orig: 1260, 840
-  offset: 394, 454
-  index: 7
-bowl/right/right_bowl
-  rotate: false
-  xy: 185, 261
-  size: 123, 189
+  xy: 718, 1
+  size: 123, 67
   orig: 1260, 840
   offset: 728, 454
-  index: 1
-bowl/right/right_bowl
+  index: -1
+bowl/right/right_bowl_up
   rotate: false
-  xy: 126, 677
-  size: 123, 219
+  xy: 468, 1
+  size: 123, 61
   orig: 1260, 840
   offset: 728, 454
-  index: 2
-bowl/right/right_bowl
-  rotate: false
-  xy: 310, 261
-  size: 123, 194
-  orig: 1260, 840
-  offset: 728, 454
-  index: 3
-bowl/right/right_bowl
-  rotate: false
-  xy: 376, 677
-  size: 123, 224
-  orig: 1260, 840
-  offset: 728, 454
-  index: 4
-bowl/right/right_bowl
-  rotate: false
-  xy: 1, 677
-  size: 123, 213
-  orig: 1260, 840
-  offset: 728, 454
-  index: 5
-bowl/right/right_bowl
-  rotate: false
-  xy: 251, 677
-  size: 123, 223
-  orig: 1260, 840
-  offset: 728, 454
-  index: 6
-bowl/right/right_bowl
-  rotate: false
-  xy: 626, 677
-  size: 123, 232
-  orig: 1260, 840
-  offset: 728, 454
-  index: 7
+  index: -1
 dragon/black/black_dragon_head
   rotate: false
-  xy: 1, 261
+  xy: 652, 160
   size: 182, 170
   orig: 1260, 840
   offset: 540, 658
   index: -1
 dragon/black/black_dragon_left_hand_sphere
   rotate: false
-  xy: 1, 89
+  xy: 646, 70
   size: 110, 87
   orig: 1260, 840
   offset: 416, 708
   index: -1
 dragon/black/black_dragon_right_hand_sphere
   rotate: false
-  xy: 468, 1
+  xy: 235, 70
   size: 93, 84
   orig: 1260, 840
   offset: 731, 712
   index: -1
 dragon/blue/blue_dragon_head
   rotate: false
-  xy: 330, 89
+  xy: 105, 160
   size: 177, 166
   orig: 1260, 840
   offset: 542, 660
   index: -1
 dragon/blue/blue_dragon_left_hand_sphere
   rotate: false
-  xy: 563, 1
+  xy: 126, 70
   size: 107, 84
   orig: 1260, 840
   offset: 414, 711
   index: -1
 dragon/blue/blue_dragon_right_hand_sphere
   rotate: false
-  xy: 672, 1
+  xy: 330, 70
   size: 96, 85
   orig: 1260, 840
   offset: 726, 711
   index: -1
 dragon/red/red_dragon_head
   rotate: false
-  xy: 693, 89
+  xy: 468, 160
   size: 182, 170
   orig: 1260, 840
   offset: 540, 658
   index: -1
 dragon/red/red_dragon_left_hand_sphere
   rotate: false
-  xy: 226, 89
+  xy: 1, 160
   size: 102, 89
   orig: 1260, 840
   offset: 424, 706
   index: -1
 dragon/red/red_dragon_right_hand_sphere
   rotate: false
-  xy: 770, 1
+  xy: 428, 70
   size: 104, 86
   orig: 1260, 840
   offset: 720, 710
   index: -1
 dragon/yellow/yellow_dragon_head
   rotate: false
-  xy: 509, 89
+  xy: 284, 160
   size: 182, 170
   orig: 1260, 840
   offset: 540, 658
   index: -1
 dragon/yellow/yellow_dragon_left_hand_sphere
   rotate: false
-  xy: 876, 1
+  xy: 534, 70
   size: 110, 86
   orig: 1260, 840
   offset: 414, 709
   index: -1
 dragon/yellow/yellow_dragon_right_hand_sphere
   rotate: false
-  xy: 113, 89
+  xy: 758, 70
   size: 111, 88
   orig: 1260, 840
   offset: 713, 708
@@ -166,14 +124,14 @@ eyes_backlight/left/backlight_dragon_left
   index: 1
 eyes_backlight/left/backlight_dragon_left
   rotate: false
-  xy: 93, 1
+  xy: 61, 1
   size: 30, 30
   orig: 1260, 840
   offset: 497, 626
   index: 2
 eyes_backlight/left/backlight_dragon_left
   rotate: false
-  xy: 1, 1
+  xy: 31, 1
   size: 28, 28
   orig: 1260, 840
   offset: 498, 627
@@ -208,49 +166,70 @@ eyes_backlight/right/backlight_dragon_right
   index: 1
 eyes_backlight/right/backlight_dragon_right
   rotate: false
-  xy: 61, 1
+  xy: 93, 1
   size: 30, 30
   orig: 1260, 840
   offset: 727, 626
   index: 2
 eyes_backlight/right/backlight_dragon_right
   rotate: false
-  xy: 31, 1
+  xy: 1, 1
   size: 28, 28
   orig: 1260, 840
   offset: 728, 627
   index: 3
 portal/portal
   rotate: false
-  xy: 560, 261
+  xy: 1, 332
   size: 297, 204
   orig: 1260, 840
   offset: 474, 537
   index: 1
 portal/portal
   rotate: false
-  xy: 599, 467
+  xy: 603, 540
   size: 297, 208
   orig: 1260, 840
   offset: 474, 533
   index: 2
 portal/portal
   rotate: false
-  xy: 300, 467
+  xy: 1, 750
   size: 297, 208
   orig: 1260, 840
   offset: 474, 533
   index: 3
 portal/portal
   rotate: false
-  xy: 1, 467
+  xy: 304, 540
   size: 297, 208
   orig: 1260, 840
   offset: 474, 533
   index: 4
+portal/portal
+  rotate: false
+  xy: 300, 750
+  size: 301, 208
+  orig: 1260, 840
+  offset: 474, 533
+  index: 5
+portal/portal
+  rotate: false
+  xy: 1, 540
+  size: 301, 206
+  orig: 1260, 840
+  offset: 474, 535
+  index: 6
+portal/portal
+  rotate: false
+  xy: 300, 332
+  size: 301, 206
+  orig: 1260, 840
+  offset: 475, 535
+  index: 7
 
 gates-1.png
-size: 924, 958
+size: 924, 748
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -303,63 +282,8 @@ open/gate_open
   orig: 1260, 840
   offset: 499, 316
   index: 7
-portal/portal
-  rotate: false
-  xy: 1, 749
-  size: 301, 208
-  orig: 1260, 840
-  offset: 474, 533
-  index: 5
-portal/portal
-  rotate: false
-  xy: 304, 749
-  size: 301, 206
-  orig: 1260, 840
-  offset: 474, 535
-  index: 6
-portal/portal
-  rotate: false
-  xy: 607, 749
-  size: 301, 206
-  orig: 1260, 840
-  offset: 475, 535
-  index: 7
 
 gates-2.png
-size: 840, 452
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-bowl/left/left_bowl
-  rotate: false
-  xy: 1, 1
-  size: 418, 224
-  orig: 1260, 840
-  offset: 394, 454
-  index: 1
-bowl/left/left_bowl
-  rotate: false
-  xy: 421, 1
-  size: 418, 224
-  orig: 1260, 840
-  offset: 394, 454
-  index: 2
-bowl/left/left_bowl
-  rotate: false
-  xy: 1, 227
-  size: 418, 224
-  orig: 1260, 840
-  offset: 394, 454
-  index: 4
-bowl/left/left_bowl
-  rotate: false
-  xy: 421, 227
-  size: 416, 224
-  orig: 1260, 840
-  offset: 394, 454
-  index: 5
-
-gates-3.png
 size: 984, 739
 format: RGBA8888
 filter: Linear,Linear

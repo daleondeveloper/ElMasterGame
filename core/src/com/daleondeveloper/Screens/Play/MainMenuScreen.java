@@ -2,6 +2,7 @@ package com.daleondeveloper.Screens.Play;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -12,12 +13,13 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBackground;
 import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
+import com.daleondeveloper.Effects.ParticleEffectActor;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
-import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
+import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.tools.AudioManager;
 
@@ -60,14 +62,19 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private ImageButton buttonHighScore;
     private Image buttonCredit;
 
-    private Animation<TextureRegion> rightBowl;
-    private Animation<TextureRegion> leftBowl;
+    private Image rightBowl;
+    private Image rightBowlUp;
+    private Image leftBowl;
+    private Image leftBowlUp;
     private Animation<TextureRegion> portal;
     private Animation<TextureRegion> openGates;
 
+    private ParticleEffectActor rightBowlFireActor;
+    private ParticleEffectActor leftBowlFireActor;
 
-    private AnimatedActor leftBowlAnimatedActor;
-    private AnimatedActor rightBowlAnimatedActor;
+    private ParticleEffect rightBowlFire;
+    private ParticleEffect leftBowlFire;
+
     private AnimatedActor portalAnimatedActor;
 
     public MainMenuScreen(ElMaster game) {
@@ -114,7 +121,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
         //render
         stage.draw();
+
         menuScreen.render();
+
+       // magicSpell.draw(stage.get,Gdx.graphics.getDeltaTime()); // draw it
     }
 
     @Override
@@ -156,8 +166,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
         dragonRightHand = new Image(assetGates.getDragonRightHandWithSphere());
 
         //Bowl
-        leftBowl = assetGates.getLeftFireBowl();
-        rightBowl = assetGates.getRightFireBowl();
+        leftBowl = new Image(assetGates.getLeftFireBowl());
+        leftBowlUp = new Image(assetGates.getLeftFireBowlUp());
+        rightBowl = new Image(assetGates.getRightFireBowl());
+        rightBowlUp = new Image(assetGates.getRightFireBowlUp());
 
         //Portal
         portal = assetGates.getPortal();
@@ -167,11 +179,22 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
         // Title
         gameTitle = new Label(i18NGameThreeBundle.format("mainMenuScreen.gameTitle"), labelStyleGameTitle);
-        leftBowlImage = new Image((TextureRegion)leftBowl.getKeyFrame(0,true));
+        //leftBowlImage = new Image((TextureRegion)leftBowl.getKeyFrame(0,true));
 //        stage.addActor(leftBowlImage);
-        leftBowlAnimatedActor = new AnimatedActor(leftBowl);
-        rightBowlAnimatedActor = new AnimatedActor(rightBowl);
+        //leftBowlAnimatedActor = new AnimatedActor(leftBowl);
+        //rightBowlAnimatedActor = new AnimatedActor(rightBowl);
         portalAnimatedActor = new AnimatedActor(portal);
+
+        rightBowlFire = assets.getAssetManager().get("effect/fire/fireeffect",ParticleEffect.class);
+        rightBowlFire.start();
+        rightBowlFireActor = new ParticleEffectActor(rightBowlFire);
+
+        leftBowlFire = assets.getAssetManager().get("effect/fire/fireeffectsecond",ParticleEffect.class);
+        leftBowlFire.start();
+        leftBowlFireActor = new ParticleEffectActor(leftBowlFire);
+
+
+
         // Buttons
         defineButtons();
         stage.addActor(background);
@@ -185,8 +208,12 @@ public class MainMenuScreen extends GUIAbstractScreen {
         stage.addActor(dragonHead);
         stage.addActor(dragonLeftHand);
         stage.addActor(dragonRightHand);
-        stage.addActor(leftBowlAnimatedActor);
-        stage.addActor(rightBowlAnimatedActor);
+        stage.addActor(leftBowl);
+        stage.addActor(leftBowlFireActor);
+        stage.addActor(leftBowlUp);
+        stage.addActor(rightBowl);
+        stage.addActor(rightBowlFireActor);
+        stage.addActor(rightBowlUp);
         stage.addActor(gameTitle);
         stage.addActor(buttonHelp);
         stage.addActor(buttonSettings);
@@ -194,7 +221,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
         stage.addActor(buttonStart);
         stage.addActor(buttonCredit);
 
+
+
         setStateRunning();
+
 
     }
 
@@ -335,11 +365,18 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
         // Buttons Animations
         //setButtonsAnimation();
-        leftBowlAnimatedActor.setY(menuBg.getY() + 435);
-        leftBowlAnimatedActor.setX(menuBg.getX() + 65);
+        leftBowl.setY(menuBg.getY() + 435);
+        leftBowl.setX(menuBg.getX() + 65);
+        leftBowlUp.setPosition(menuBg.getX() + 65,menuBg.getY() + 435);
+        leftBowlFire.setPosition(menuBg.getX() + 120, menuBg.getY() + 480);  // set the position
 
-        rightBowlAnimatedActor.setY(menuBg.getY() + 435);
-        rightBowlAnimatedActor.setX(menuBg.getX() + 410);
+
+        rightBowl.setY(menuBg.getY() + 435);
+        rightBowlUp.setY(menuBg.getY() + 435);
+        rightBowl.setX(menuBg.getX() + 410);
+        rightBowlUp.setX(menuBg.getX() + 410);
+        rightBowlFire.setPosition(menuBg.getX() + 480, menuBg.getY() + 480);  // set the position
+
 
         portalAnimatedActor.setY(menuBg.getY() + 640);
         portalAnimatedActor.setX(menuBg.getX() + 145);

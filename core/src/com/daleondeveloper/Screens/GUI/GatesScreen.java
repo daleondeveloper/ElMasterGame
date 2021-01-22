@@ -2,18 +2,11 @@ package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.daleondeveloper.Assets.Assets;
-import com.daleondeveloper.Assets.game.AssetBackground;
 import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Game.ElMaster;
-import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 
 
@@ -32,8 +25,10 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
     private Image menuBg;
     private Image playBackground;
 
-    private Animation<TextureRegion> rightBowl;
-    private Animation<TextureRegion> leftBowl;
+    private Image rightBowl;
+    private Image rightBowlUp;
+    private Image leftBowl;
+    private Image leftBowlUp;
     private Animation<TextureRegion> portal;
     private Animation<TextureRegion> openGates;
     private Animation<TextureRegion> closeGates;
@@ -104,10 +99,11 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         dragonRightHand = new Image(assetGates.getDragonRightHandWithSphere());
 
         //Bowl
-        leftBowl = assetGates.getLeftFireBowl();
-        rightBowl = assetGates.getRightFireBowl();
-        leftBowlAnimatedActor = new AnimatedActor(leftBowl);
-        rightBowlAnimatedActor = new AnimatedActor(rightBowl);
+        leftBowl = new Image(assetGates.getLeftFireBowl());
+        leftBowlUp = new Image(assetGates.getLeftFireBowlUp());
+        rightBowl = new Image(assetGates.getRightFireBowl());
+        rightBowlUp = new Image(assetGates.getRightFireBowlUp());
+
 
         //Portal
         portal = assetGates.getPortal();
@@ -127,8 +123,10 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         stage.addActor(dragonHead);
         stage.addActor(dragonLeftHand);
         stage.addActor(dragonRightHand);
-        stage.addActor(leftBowlAnimatedActor);
-        stage.addActor(rightBowlAnimatedActor);
+        stage.addActor(leftBowl);
+        stage.addActor(leftBowlUp);
+        stage.addActor(rightBowl);
+        stage.addActor(rightBowlUp);
     }
 
     @Override

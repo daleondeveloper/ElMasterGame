@@ -3,9 +3,7 @@ package com.daleondeveloper.Assets.game;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.utils.Array;
-import com.daleondeveloper.Assets.Assets;
 
 public class AssetGates implements IAssetSprite {
     private static final String TAG = AssetGates.class.getName();
@@ -37,8 +35,10 @@ public class AssetGates implements IAssetSprite {
     private TextureRegion blackDragonRightHandWithSphere;
 
     private Animation<TextureRegion> portal;
-    private Animation<TextureRegion> leftFireBowl;
-    private Animation<TextureRegion> rightFireBowl;
+    private TextureRegion leftFireBowl;
+    private TextureRegion leftFireBowlUp;
+    private TextureRegion rightFireBowl;
+    private TextureRegion rightFireBowlUp;
     private Animation<TextureRegion> mainDragonEyes;
     private Animation<TextureRegion> leftDragonEyes;
     private Animation<TextureRegion> rightDragonEyes;
@@ -60,14 +60,11 @@ public class AssetGates implements IAssetSprite {
         regions.clear();
 
         //BOWL
-        regions = atlasGates.findRegions("bowl/left/left_bowl");
-        leftFireBowl =new Animation<TextureRegion>(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
+        leftFireBowl = atlasGates.findRegion("bowl/left/left_bowl_back");
+        leftFireBowlUp = atlasGates.findRegion("bowl/left/left_bowl_up");
 
-        regions = atlasGates.findRegions("bowl/right/right_bowl");
-        rightFireBowl =new Animation<TextureRegion>(3.0f/24.0f,regions, Animation.PlayMode.LOOP);
-        regions.clear();
-
+        rightFireBowl = atlasGates.findRegion("bowl/right/right_bowl_back");
+        rightFireBowlUp = atlasGates.findRegion("bowl/right/right_bowl_up");
 
         //gates
         regions = atlasGates.findRegions("open/gate_open");
@@ -191,12 +188,20 @@ public class AssetGates implements IAssetSprite {
         return portal;
     }
 
-    public Animation<TextureRegion> getLeftFireBowl() {
+    public TextureRegion getLeftFireBowl() {
         return leftFireBowl;
     }
 
-    public Animation<TextureRegion> getRightFireBowl() {
+    public TextureRegion getLeftFireBowlUp() {
+        return leftFireBowlUp;
+    }
+
+    public TextureRegion getRightFireBowl() {
         return rightFireBowl;
+    }
+
+    public TextureRegion getRightFireBowlUp() {
+        return rightFireBowlUp;
     }
 
     public Animation<TextureRegion> getMainDragonEyes() {

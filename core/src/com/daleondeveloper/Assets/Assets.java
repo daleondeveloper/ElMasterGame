@@ -4,13 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.I18NBundle;
-
+import com.daleondeveloper.Assets.Audio.music.AssetMusic;
+import com.daleondeveloper.Assets.Audio.sound.AssetSounds;
+import com.daleondeveloper.Assets.fonts.AssetFonts;
 import com.daleondeveloper.Assets.game.AssetBackground;
 import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Assets.game.AssetGates;
@@ -18,9 +22,6 @@ import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Assets.i18n.AssetI18NElementMaster;
-import com.daleondeveloper.Assets.Audio.music.AssetMusic;
-import com.daleondeveloper.Assets.Audio.sound.AssetSounds;
-import com.daleondeveloper.Assets.fonts.AssetFonts;
 
 public class Assets implements Disposable,AssetErrorListener {
     private static final String TAG = Assets.class.getName();
@@ -60,6 +61,9 @@ public class Assets implements Disposable,AssetErrorListener {
     private static final String TEXTURE_ATLAS_BACKGROUND = "atlas/background/background.atlas";
     private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
 
+    private static final String EFFECT_FIRE = "effect/fire/fireeffect";
+    private static final String EFFECT_FIRE_SECOND = "effect/fire/fireeffectsecond";
+
 
     private static Assets instance;
     private AssetManager assetManager;
@@ -93,6 +97,9 @@ public class Assets implements Disposable,AssetErrorListener {
         loadI18NElementMaster();
 
         loadTextureAtlas();
+
+        loadParticleEffects();
+
 
         //loadSounds();
 
@@ -162,6 +169,15 @@ public class Assets implements Disposable,AssetErrorListener {
         assetManager.load(TEXTURE_ATLAS_HELP, TextureAtlas.class);
     }
 
+    private void loadParticleEffects(){
+        ParticleEffectLoader.ParticleEffectParameter pep = new ParticleEffectLoader.ParticleEffectParameter();
+
+        pep.atlasFile = "effect/fire/particle.png";
+
+        assetManager.load(EFFECT_FIRE, ParticleEffect.class);
+
+        assetManager.load(EFFECT_FIRE_SECOND, ParticleEffect.class);
+    }
     private void loadSounds(){
         assetManager.load(FX_FILE_JUMP_A, Sound.class);
         assetManager.load(FX_FILE_JUMP_B, Sound.class);
