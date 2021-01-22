@@ -1,10 +1,12 @@
 package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetGates;
+import com.daleondeveloper.Effects.ParticleEffectActor;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
@@ -33,8 +35,10 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
     private Animation<TextureRegion> openGates;
     private Animation<TextureRegion> closeGates;
 
-    private AnimatedActor leftBowlAnimatedActor;
-    private AnimatedActor rightBowlAnimatedActor;
+    private ParticleEffect leftBowlFireEffect;
+    private ParticleEffect rightBowlFireEffect;
+    private ParticleEffectActor leftBowlFireActor;
+    private ParticleEffectActor rightBowlFireActor;
     private AnimatedActor portalAnimatedActor;
 
     public GatesScreen(ElMaster game){
@@ -71,11 +75,13 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
 
         // Buttons Animations
         //setButtonsAnimation();
-        leftBowlAnimatedActor.setY(menuBg.getY() + 435);
-        leftBowlAnimatedActor.setX(menuBg.getX() + 65);
+        leftBowl.setPosition(menuBg.getX() + 65,menuBg.getY() + 435);
+        leftBowlUp.setPosition(menuBg.getX() + 65,menuBg.getY() + 435);
+        leftBowlFireEffect.setPosition(menuBg.getX() + 120, menuBg.getY() + 490);  // set the position
 
-        rightBowlAnimatedActor.setY(menuBg.getY() + 435);
-        rightBowlAnimatedActor.setX(menuBg.getX() + 430);
+        rightBowl.setPosition(menuBg.getX() + 430,menuBg.getY() + 435);
+        rightBowlUp.setPosition(menuBg.getX() + 430,menuBg.getY() + 435);
+        rightBowlFireEffect.setPosition(menuBg.getX() + 500, menuBg.getY() + 490);
 
         portalAnimatedActor.setY(menuBg.getY() + 630);
         portalAnimatedActor.setX(stage.getWidth() / 2 - portalAnimatedActor.getWidth() / 2);
@@ -114,6 +120,14 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         image.setName("gates");
         gates = image;
 
+        rightBowlFireEffect = assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class);
+        rightBowlFireEffect.start();
+        rightBowlFireActor = new ParticleEffectActor(rightBowlFireEffect);
+
+        leftBowlFireEffect = assets.getAssetManager().get("effect/fire/fireeffectsecond",ParticleEffect.class);
+        leftBowlFireEffect.start();
+        leftBowlFireActor = new ParticleEffectActor(leftBowlFireEffect);
+
 
 
         // Buttons
@@ -124,8 +138,10 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         stage.addActor(dragonLeftHand);
         stage.addActor(dragonRightHand);
         stage.addActor(leftBowl);
+        stage.addActor(leftBowlFireActor);
         stage.addActor(leftBowlUp);
         stage.addActor(rightBowl);
+        stage.addActor(rightBowlFireActor);
         stage.addActor(rightBowlUp);
     }
 

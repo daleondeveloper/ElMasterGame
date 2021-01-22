@@ -185,7 +185,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         //rightBowlAnimatedActor = new AnimatedActor(rightBowl);
         portalAnimatedActor = new AnimatedActor(portal);
 
-        rightBowlFire = assets.getAssetManager().get("effect/fire/fireeffect",ParticleEffect.class);
+        rightBowlFire = assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class);
         rightBowlFire.start();
         rightBowlFireActor = new ParticleEffectActor(rightBowlFire);
 
