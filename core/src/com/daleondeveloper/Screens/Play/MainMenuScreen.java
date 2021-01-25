@@ -14,6 +14,7 @@ import com.daleondeveloper.Assets.game.AssetBackground;
 import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Effects.ParticleEffectActor;
+import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
@@ -69,6 +70,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private Animation<TextureRegion> portal;
     private Animation<TextureRegion> openGates;
 
+    private ParticleEffectManager pef;
     private ParticleEffectActor rightBowlFireActor;
     private ParticleEffectActor leftBowlFireActor;
 
@@ -87,6 +89,8 @@ public class MainMenuScreen extends GUIAbstractScreen {
         prefs = GameSettings.getInstance();
         menuScreen = new MenuScreen(game,this);
         gatesScreen = new GatesScreen(game);
+
+        pef = new ParticleEffectManager();
 
         stateTime = 0;
         // Styles
@@ -148,6 +152,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         hideBannerAd();
         menuScreen.build();
 
+        pef.addParticleEffect(ParticleEffectManager.FIRE,assets.getAssetManager().get("effect/fire/fireeffectsecond",ParticleEffect.class));
         Image image;
 
         // Background
@@ -185,12 +190,22 @@ public class MainMenuScreen extends GUIAbstractScreen {
         //rightBowlAnimatedActor = new AnimatedActor(rightBowl);
         portalAnimatedActor = new AnimatedActor(portal);
 
-        rightBowlFire = assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class);
+        rightBowlFire = pef.getPoolParticleEffect(ParticleEffectManager.FIRE);
         rightBowlFire.start();
+        float[] f = new float[3];
+        f[0] = 0.047058824f;
+        f[1] = 0.06666667f;
+        f[2] = 1f;
+        rightBowlFire.getEmitters().get(0).getTint().setColors(f);
         rightBowlFireActor = new ParticleEffectActor(rightBowlFire);
 
-        leftBowlFire = assets.getAssetManager().get("effect/fire/fireeffectsecond",ParticleEffect.class);
+        leftBowlFire = pef.getPoolParticleEffect(ParticleEffectManager.FIRE);
         leftBowlFire.start();
+         f = new float[3];
+        f[0] = 0.047058824f;
+        f[1] = 0.4f;
+        f[2] = 1f;
+        leftBowlFire.getEmitters().get(0).getTint().setColors(f);
         leftBowlFireActor = new ParticleEffectActor(leftBowlFire);
 
 
