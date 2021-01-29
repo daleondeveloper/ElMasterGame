@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
+import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
@@ -43,6 +45,8 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private Image screenBg;
     private Image pauseWindow;
     private Image back;
+    private Table mainTable;
+    private Table windowTable;
 
     public MenuScreen (ElMaster game, GUIAbstractScreen guiAbstractScreen){
         super(game);
@@ -64,6 +68,37 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     }
 
     @Override
+    public void build() {
+        mainTable = new Table();
+        if(DebugConstants.DEBUG_GUI){
+            mainTable.debug();
+        }
+        mainTable.setFillParent(true);
+        windowTable = new Table();
+        mainTable.add(windowTable).center().width(400).height(342);
+        windowTable.setBackground(new TextureRegionDrawable(assetGUI.getPauseWindow()));
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        pixmap.setColor(255, 0, 0, DIM_ALPHA);
+        pixmap.fill();
+        TextureRegion dim = new TextureRegion(new Texture(pixmap));
+        pixmap.dispose();
+        screenBg = new Image(dim);
+
+
+        pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));
+
+        stage.addActor(screenBg);
+        stage.addActor(mainTable);
+//        stage.addActor(pauseWindow);
+
+        helpScreen.build();
+        highScoreScreen.build();
+        settingsScreen.build();
+        creditScreen.build();
+        gameModeChangeScreen.build();
+    }
+
+    @Override
     public void resize(int width, int height) {
         super.resize(width, height);
 
@@ -80,33 +115,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen.resize(width,height);
         highScoreScreen.resize(width,height);
-        pauseScreen.resize(width,height);
         settingsScreen.resize(width,height);
         creditScreen.resize(width,height);
         gameModeChangeScreen.resize(width,height);
-    }
-
-    @Override
-    public void build() {
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
-        pixmap.setColor(255, 0, 0, DIM_ALPHA);
-        pixmap.fill();
-        TextureRegion dim = new TextureRegion(new Texture(pixmap));
-        pixmap.dispose();
-        screenBg = new Image(dim);
-
-
-        pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));
-
-        stage.addActor(screenBg);
-        stage.addActor(pauseWindow);
-
-        helpScreen.build();
-        highScoreScreen.build();
-        pauseScreen.build();
-        settingsScreen.build();
-        creditScreen.build();
-        gameModeChangeScreen.build();
     }
 
     @Override
@@ -120,7 +131,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen.update(deltaTime);
         highScoreScreen.update(deltaTime);
-        pauseScreen.update(deltaTime);
         settingsScreen.update(deltaTime);
         creditScreen.update(deltaTime);
         gameModeChangeScreen.update(deltaTime);
@@ -133,7 +143,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen.render();
         highScoreScreen.render();
-        pauseScreen.render();
         settingsScreen.render();
         creditScreen.render();
         gameModeChangeScreen.render();
@@ -143,7 +152,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void dispose() {
         helpScreen.dispose();
         highScoreScreen.dispose();
-        pauseScreen.dispose();
         settingsScreen.dispose();
         creditScreen.dispose();
         gameModeChangeScreen.dispose();
@@ -192,6 +200,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             setVisible(false);
             menuState = MenuState.CLOSE;
             guiAbstractScreen.setStateRunning();
+            windowTable.clearChildren();
 //            hideHelpScreen();
 //            hideHighScoreScreen();
 //            hidePauseScreen();
@@ -202,6 +211,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private void setVisible(boolean visible){
         screenBg.setVisible(visible);
         pauseWindow.setVisible(visible);
+        mainTable.setVisible(visible);
 
     }
     public boolean isMenuScreenVisible(){
@@ -219,7 +229,10 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     }
     public void setPauseScreen(){
         menuState = MenuState.PAUSE;
-        pauseScreen.showPauseScreen();
+        pauseScreen.build();
+
+         Gdx.input.setInputProcessor(stage);
+
     }
     public void setSettingsScreen(){
         menuState = MenuState.SETTINGS;
@@ -248,5 +261,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
     public HelpScreen getHelpScreen() {
         return helpScreen;
+    }
+
+    public Table getWindowTable() {
+        return windowTable;
     }
 }

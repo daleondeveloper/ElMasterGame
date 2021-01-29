@@ -1,6 +1,7 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.Settings.BlockLoad;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
@@ -32,7 +33,7 @@ public class BlockController {
     protected float blockCreateTime;
 
 
-    public BlockController (PlayScreen playScreen, GameWorld gameWorld) {
+    public BlockController (PlayScreen playScreen, GameWorld gameWorld)  {
         this.gameWorld = gameWorld;
         this.playScreen = playScreen;
 
@@ -70,7 +71,14 @@ public class BlockController {
 //        }
 //
     }
-
+    public void render(SpriteBatch spriteBatch){
+        for(Block block : arrayBlock){
+            block.renderEffect(spriteBatch);
+        }
+        for(Block block : arrayBlock){
+            block.render(spriteBatch);
+        }
+    }
     public Block addBlock (int blockType){
         int countNextRandomNumbers = 0;
         float posCreateX = 0;

@@ -2,17 +2,25 @@ package com.daleondeveloper.Screens.Play;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
-import com.daleondeveloper.Game.*;
+import com.daleondeveloper.Effects.ParticleEffectManager;
+import com.daleondeveloper.Game.ElMaster;
+import com.daleondeveloper.Game.GameController;
+import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.WorldController;
+import com.daleondeveloper.Game.WorldRenderer;
 import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
 import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
-import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.tools.AudioManager;
 
 public class PlayScreen extends GUIAbstractScreen {
@@ -26,9 +34,11 @@ public class PlayScreen extends GUIAbstractScreen {
     private BackgroundScreen backgroundScreen;
     private GatesScreen gatesScreen;
     private boolean gameStart;
+    private ParticleEffectManager pef;
 
     private float stateTime;
 
+    private Array<ParticleEffectPool.PooledEffect> pooledEffects = new Array<ParticleEffectPool.PooledEffect>();
     private Image background;
     private Image startButton;
     private WorldController worldController;
@@ -48,6 +58,7 @@ public class PlayScreen extends GUIAbstractScreen {
         backgroundScreen = new BackgroundScreen(game,this);
         gatesScreen = new GatesScreen(game);
         gameStart = false;
+        pef = new ParticleEffectManager();
 
         stateTime = 0;
 
@@ -59,6 +70,11 @@ public class PlayScreen extends GUIAbstractScreen {
         endGame = false;
         levelCompleted = false;
         showHelp = true;
+        pef.addParticleEffect(ParticleEffectManager.FIRE,Assets.getInstance().getAssetManager().get("effect/fire/fireeffect.p", ParticleEffect.class));
+        ParticleEffect pooledEffect = Assets.getInstance().getAssetManager().get("effect/fire/cold_effect_under_block", ParticleEffect.class);
+        pooledEffect.reset();
+        pooledEffect.scaleEffect(0.1f);
+        pef.addParticleEffect(ParticleEffectManager.COLD_BLOCK_EFFECT,pooledEffect);
 
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongGame());
     }
@@ -66,6 +82,7 @@ public class PlayScreen extends GUIAbstractScreen {
 
     @Override
     public void show(){
+
         switch (prefs.getGameModeDragon()){
             case 1 :
                 Assets.getInstance().getAssetGates().changeYellowDragon();
@@ -101,6 +118,10 @@ public class PlayScreen extends GUIAbstractScreen {
 
 
 //        stage.addActor(startButton);
+
+        ParticleEffectPool.PooledEffect pe = pef.getPoolParticleEffect(1);
+        pe.setPosition(200,200);
+        pooledEffects.add(pe);
     }
 
 
@@ -139,6 +160,7 @@ public class PlayScreen extends GUIAbstractScreen {
         menuScreen.render();
 //        viewport.update(viewport.getScreenWidth(),viewport.getScreenHeight());
         stage.draw();
+        effectsRender(deltaTime);
         //Analys game result
         if(guiScreenState == GUIScreenState.RUNNING){
             gameResults();
@@ -150,6 +172,16 @@ public class PlayScreen extends GUIAbstractScreen {
 
         }
 
+    }
+
+    private void effectsRender(float deltaTime){
+        SpriteBatch sp = game.getGameBatch();
+        sp.begin();
+        for(ParticleEffectPool.PooledEffect pe : pooledEffects){
+            pe.update(deltaTime);
+            pe.draw(game.getGameBatch());
+        }
+        sp.end();
     }
 
     private void gameResults(){
@@ -264,6 +296,7 @@ public class PlayScreen extends GUIAbstractScreen {
         infoScreen.dispose();
         menuScreen.dispose();
         worldController.dispose();
+
     }
 
 
@@ -319,5 +352,9 @@ public class PlayScreen extends GUIAbstractScreen {
 
     public void setLevelIsCompleted() {
         levelCompleted = true;
+    }
+
+    public ParticleEffectManager getPef() {
+        return pef;
     }
 }

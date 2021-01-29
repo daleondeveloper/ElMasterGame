@@ -1,6 +1,7 @@
 package com.daleondeveloper.Sprites.Blocks;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -53,6 +54,8 @@ public class Block extends AbstractDynamicObject {
     protected float positionInBlocksMasX;
     protected float positionInBlocksMasY;
 
+    ParticleEffectPool.PooledEffect po;
+
     //sensors contacted objects
         //Sets
     protected Set<AbstractGameObject> contactLeftBlockList ;
@@ -76,6 +79,8 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockWater());
         assetBlocks.add(assets.getBlockFire());
         assetBlocks.add(assets.getBlockWater());
+
+        po = gameWorld.getPlayScreen().getPef().getPoolParticleEffect(1);
 
         destroyAnimation = assets.getDestroyWater();
 
@@ -216,6 +221,7 @@ public class Block extends AbstractDynamicObject {
     @Override
     public void update(float deltaTime) {
         checkTime += deltaTime;
+        po.update(deltaTime);
 
         switch (currentState){
             case IDLE:
@@ -269,6 +275,7 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        po.setPosition(body.getPosition().x, body.getPosition().y);
 //        textureRegionBlock = assetBlocks.get(1);
         setRegion(textureRegionBlock);
 
@@ -390,6 +397,9 @@ public class Block extends AbstractDynamicObject {
     @Override
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
+    }
+    public void renderEffect(SpriteBatch spriteBatch){
+        po.draw(spriteBatch);
     }
 
     //Methods of checking the state of the object

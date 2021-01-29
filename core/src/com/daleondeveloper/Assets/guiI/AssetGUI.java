@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import javax.xml.soap.Text;
-
 public class AssetGUI {
     private static final String TAG = AssetGUI.class.getName();
 

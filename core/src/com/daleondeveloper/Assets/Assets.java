@@ -62,7 +62,7 @@ public class Assets implements Disposable,AssetErrorListener {
     private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
 
     private static final String EFFECT_FIRE = "effect/fire/fireeffect.p";
-    private static final String EFFECT_FIRE_SECOND = "effect/fire/fireeffectsecond";
+    private static final String EFFECT_FIRE_SECOND = "effect/fire/cold_effect_under_block";
 
 
     private static Assets instance;

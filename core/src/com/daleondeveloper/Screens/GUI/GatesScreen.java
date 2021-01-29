@@ -124,7 +124,7 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         rightBowlFireEffect.start();
         rightBowlFireActor = new ParticleEffectActor(rightBowlFireEffect);
 
-        leftBowlFireEffect = assets.getAssetManager().get("effect/fire/fireeffectsecond",ParticleEffect.class);
+        leftBowlFireEffect = assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class);
         leftBowlFireEffect.start();
         leftBowlFireActor = new ParticleEffectActor(leftBowlFireEffect);
 

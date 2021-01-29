@@ -2,7 +2,7 @@ package com.daleondeveloper.Game;
 
 public class DebugConstants {
     // Master variable: turns debug mode on or off
-    public static final boolean TURN_ON_DEBUG = false;
+    public static final boolean TURN_ON_DEBUG = true;
 
     // Sets the log level to debug
     public static final boolean DEBUG_MODE = true && TURN_ON_DEBUG;
@@ -15,6 +15,9 @@ public class DebugConstants {
 
     // Shows/hides background image
     public static final boolean HIDE_BACKGROUND = false && TURN_ON_DEBUG;
+
+    // Shows/hides background image
+    public static final boolean DEBUG_GUI = true && TURN_ON_DEBUG;
 
     // Shows/hides FPS counter
     public static final boolean SHOW_FPS = true && TURN_ON_DEBUG;

@@ -2,13 +2,15 @@ package com.daleondeveloper.Game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.daleondeveloper.Assets.Assets;
-import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.*;
+import com.daleondeveloper.Sprites.AbstractGameObject;
+import com.daleondeveloper.Sprites.Background;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerDarkMode;
@@ -18,7 +20,10 @@ import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSnowMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSpecialMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerWaterMode;
 import com.daleondeveloper.Sprites.Blocks.Block;
+import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
+import com.daleondeveloper.Sprites.Platform;
+import com.daleondeveloper.Sprites.PlatformController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,11 +137,11 @@ public class GameWorld {
 
     private void createSprites(){
         //Block(create block factory  to create block)
-        blockController = new com.daleondeveloper.Sprites.BlockControllers.BlockController(playScreen,this);
+        blockController = new BlockController(playScreen,this);
 
         loadParameters();
 
-        com.daleondeveloper.Game.Settings.GameSettings.getInstance().setBlockController(blockController);
+        GameSettings.getInstance().setBlockController(blockController);
         platformController = new PlatformController(playScreen,this);
 
         //WaterHero(create player controller hero wich created in center of screen)
@@ -157,19 +162,9 @@ public class GameWorld {
 
         backgroundGameFon = new Background(this,40,140,120,220);
         backgroundGameFon.setRegionGameFon();
-        if (!DebugConstants.HIDE_BACKGROUND) {
-            loadBackground();
-        }
     }
 
-    private void loadBackground(){
-        AssetHelp assetBackground = Assets.getInstance().getAssetHelp();
-        com.daleondeveloper.Game.Settings.GameSettings prefs = com.daleondeveloper.Game.Settings.GameSettings.getInstance();
-        int backgroundid = prefs.getBackgroundId();
-        prefs.setBackgroundId((backgroundid % 5)+1);
-     //   prefs.save();
 
-    }
 
     private void loadGames(){
        waterElement.load();
@@ -305,31 +300,9 @@ private void updatePlatform(float deltaTime){
     public void render(SpriteBatch batch) {
         // This order is important.
         // This determines if a sprite has to be drawn in front or behind another sprite.
-     //   background.render(batch);
         backgroundGameFon.render(batch);
         waterElement.render(batch);
-      //  regionLeft.render(batch);
-      //  regionRight.render(batch);
-       // regionDown.render(batch);
-        renderBlock(batch);
-        renderPlatform(batch);
-      //  firstLineBlockChecker.render(batch);
-
-    }
-
-    private void renderBlock(SpriteBatch batch) {
-        for (com.daleondeveloper.Sprites.Blocks.Block block : blockController.getArrayBlock()) {
-            block.render(batch);
-//            if(block.getUpPlatform() != null){
-//                block.getUpPlatform().render(batch);
-//            }
-        }
-    }
-
-private void renderPlatform(SpriteBatch batch) {
-        for (Platform platform : platformController.getPlatforms()) {
-             platform.render(batch);
-        }
+        blockController.render(batch);
     }
 
 

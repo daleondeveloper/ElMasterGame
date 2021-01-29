@@ -8,6 +8,7 @@ public class ParticleEffectManager {
     private static final String TAG = ParticleEffectManager.class.getName();
 
     public static final int FIRE = 0;
+    public static final int COLD_BLOCK_EFFECT = 1;
 
     private IntMap<ParticleEffect> particleEffectIntMap;
     private IntMap<ParticleEffectPool> particleEffectPoolIntMap;

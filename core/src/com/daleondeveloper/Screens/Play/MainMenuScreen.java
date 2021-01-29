@@ -152,7 +152,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         hideBannerAd();
         menuScreen.build();
 
-        pef.addParticleEffect(ParticleEffectManager.FIRE,assets.getAssetManager().get("effect/fire/fireeffectsecond",ParticleEffect.class));
+        pef.addParticleEffect(ParticleEffectManager.FIRE,assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class));
         Image image;
 
         // Background
