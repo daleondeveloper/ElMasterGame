@@ -60,7 +60,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen = new HelpScreen(game,this);
         highScoreScreen = new HighScoreScreen(game,this);
-        pauseScreen = new PauseScreen(game,this);
+        pauseScreen = new PauseScreen(this);
         settingsScreen = new SettingsScreen(game,this);
         creditScreen = new CreditScreen(game,this);
         gameModeChangeScreen = new GameModeChangeScreen(game,this);
@@ -88,7 +88,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 hideMenuScreen();
-                System.out.println("111");
             }
         }));
 

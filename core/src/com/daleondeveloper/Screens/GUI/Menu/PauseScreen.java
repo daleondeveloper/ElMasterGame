@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
-import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -20,7 +19,7 @@ import com.daleondeveloper.Screens.ScreenTransitionEnum;
  * Created by AGM on 11/1/2018.
  */
 
-public class PauseScreen {
+public class PauseScreen extends MenuFiller{
     private static final String TAG = PauseScreen.class.getName();
 
     private MenuScreen menuScreen;
@@ -39,8 +38,7 @@ public class PauseScreen {
     private Label pauseLabel;
 
 
-    public PauseScreen(ElMaster game, MenuScreen menuScreen) {
-
+    public PauseScreen(MenuScreen menuScreen) {
 
         this.menuScreen = menuScreen;
         assets = Assets.getInstance();
@@ -56,14 +54,36 @@ public class PauseScreen {
 
     public void build() {
         mainTable = menuScreen.getWindowTable();
-        // Title
-        pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleMedium);
 
-        defineButtons();
+        defineElements();
         addAction();
         addToTable();
     }
-    private void addAction(){
+    @Override
+    protected void defineElements() {
+        // Title
+        pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleMedium);
+        TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
+        restartButton = new ImageTextButton("Restart",new ImageTextButton.ImageTextButtonStyle(
+                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+        ));
+        mainMenuButton = new ImageTextButton("MainMenu",new ImageTextButton.ImageTextButtonStyle(
+                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+        ));
+//        textureRegion.setRegionHeight(50);
+        settingsButton = new ImageTextButton("Settings",new ImageTextButton.ImageTextButtonStyle(
+                textureRegion,textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+        ));
+        backButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonX()));
+
+        // Events
+
+
+
+
+    }
+    @Override
+    protected void addAction(){
         mainMenuButton.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
 
         settingsButton.addListener(ListenerHelper.runnableListener(new Runnable() {
@@ -88,7 +108,8 @@ public class PauseScreen {
             }
         }));
     }
-    private void addToTable(){
+    @Override
+    protected void addToTable(){
         mainTable.clearChildren();
         if(DebugConstants.DEBUG_GUI){
             mainTable.debug();
@@ -111,26 +132,6 @@ public class PauseScreen {
         buttonTable.row();
         buttonTable.add(settingsButton);
         mainTable.row();
-    }
-    private void defineButtons() {
-        TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
-        restartButton = new ImageTextButton("Restart",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-        ));
-        mainMenuButton = new ImageTextButton("MainMenu",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-        ));
-//        textureRegion.setRegionHeight(50);
-        settingsButton = new ImageTextButton("Settings",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion,textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-        ));
-        backButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonX()));
-
-        // Events
-
-
-
-
     }
 
 }
