@@ -14,6 +14,7 @@ import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
+import com.daleondeveloper.Screens.ListenerHelper;
 
 public class MenuScreen extends GUIOverlayAbstractScreen {
     private final static String TAG = MenuScreen.class.getName();
@@ -83,6 +84,13 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         TextureRegion dim = new TextureRegion(new Texture(pixmap));
         pixmap.dispose();
         screenBg = new Image(dim);
+        screenBg.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                hideMenuScreen();
+                System.out.println("111");
+            }
+        }));
 
 
         pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));
