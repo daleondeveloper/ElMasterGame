@@ -15,8 +15,8 @@ import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 
-public class HelpScreen extends GUIOverlayAbstractScreen {
-    private static final String TAG = SettingsScreen.class.getName();
+public class HelpMenuFiller extends GUIOverlayAbstractScreen {
+    private static final String TAG = SettingsMenuFiller.class.getName();
 
     private static final float DIM_ALPHA = 0.8f;
 
@@ -45,7 +45,7 @@ public class HelpScreen extends GUIOverlayAbstractScreen {
     private Label helpLabel;
 
 
-    public HelpScreen(ElMaster game, MenuScreen menuScreen){
+    public HelpMenuFiller(ElMaster game, MenuScreen menuScreen){
         super(game);
         this.menuScreen = menuScreen;
         prefs = GameSettings.getInstance();

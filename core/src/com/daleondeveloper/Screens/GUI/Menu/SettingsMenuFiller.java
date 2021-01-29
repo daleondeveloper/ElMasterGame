@@ -11,8 +11,8 @@ import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.MainMenuScreen;
 
-public class SettingsScreen extends MenuFiller{
-    private static final String TAG = SettingsScreen.class.getName();
+public class SettingsMenuFiller extends MenuFiller{
+    private static final String TAG = SettingsMenuFiller.class.getName();
 
     private MenuScreen menuScreen;
     private Assets assets;
@@ -27,7 +27,7 @@ public class SettingsScreen extends MenuFiller{
 
     private Label settingsLabel;
 
-    public SettingsScreen(MenuScreen menuScreen){
+    public SettingsMenuFiller(MenuScreen menuScreen){
         this.menuScreen = menuScreen;
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();

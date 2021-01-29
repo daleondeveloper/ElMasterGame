@@ -23,8 +23,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
  * Created by AGM on 11/1/2018.
  */
 
-public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
-    private static final String TAG = GameModeChangeScreen.class.getName();
+public class GameModeChangeMenuFiller extends GUIOverlayAbstractScreen {
+    private static final String TAG = GameModeChangeMenuFiller.class.getName();
 
     private static final float TITLE_OFFSET_Y = 200.0f;
     private static final float BUTTONS_OFFSET_Y = 120.0f;
@@ -72,7 +72,7 @@ public class GameModeChangeScreen extends GUIOverlayAbstractScreen {
     private Label darkModeLabel;
     private Label specialModeLabel;
 
-    public GameModeChangeScreen(ElMaster game, MenuScreen menuScreen) {
+    public GameModeChangeMenuFiller(ElMaster game, MenuScreen menuScreen) {
         super(game);
 
         this.menuScreen = menuScreen;

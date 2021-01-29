@@ -19,8 +19,8 @@ import com.daleondeveloper.Screens.ScreenTransitionEnum;
  * Created by AGM on 11/1/2018.
  */
 
-public class PauseScreen extends MenuFiller{
-    private static final String TAG = PauseScreen.class.getName();
+public class PauseMenuFiller extends MenuFiller{
+    private static final String TAG = PauseMenuFiller.class.getName();
 
     private MenuScreen menuScreen;
     private Assets assets;
@@ -38,7 +38,7 @@ public class PauseScreen extends MenuFiller{
     private Label pauseLabel;
 
 
-    public PauseScreen(MenuScreen menuScreen) {
+    public PauseMenuFiller(MenuScreen menuScreen) {
 
         this.menuScreen = menuScreen;
         assets = Assets.getInstance();

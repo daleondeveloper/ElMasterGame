@@ -12,8 +12,8 @@ import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 
-public class HighScoreScreen extends GUIOverlayAbstractScreen {
-    private static final String TAG = SettingsScreen.class.getName();
+public class HighScoreMenuFiller extends GUIOverlayAbstractScreen {
+    private static final String TAG = SettingsMenuFiller.class.getName();
 
     private static final float DIM_ALPHA = 0.8f;
     private static final int LAST_SCORE_PAGE = 6;
@@ -40,7 +40,7 @@ public class HighScoreScreen extends GUIOverlayAbstractScreen {
     private Label modeNameLabel;
 
 
-    public HighScoreScreen(ElMaster game, MenuScreen menuScreen){
+    public HighScoreMenuFiller(ElMaster game, MenuScreen menuScreen){
         super(game);
         this.menuScreen = menuScreen;
         prefs = GameSettings.getInstance();

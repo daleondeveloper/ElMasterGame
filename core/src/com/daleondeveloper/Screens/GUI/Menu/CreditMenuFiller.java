@@ -9,8 +9,8 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Screens.ListenerHelper;
 
-public class CreditScreen extends MenuFiller {
-    private static final String TAG = CreditScreen.class.getName();
+public class CreditMenuFiller extends MenuFiller {
+    private static final String TAG = CreditMenuFiller.class.getName();
 
     private MenuScreen menuScreen;
     private Assets assets;
@@ -26,7 +26,7 @@ public class CreditScreen extends MenuFiller {
 
     private Image backButton;
 
-    public CreditScreen( MenuScreen menuScreen){
+    public CreditMenuFiller(MenuScreen menuScreen){
         this.menuScreen = menuScreen;
 
         assets = Assets.getInstance();

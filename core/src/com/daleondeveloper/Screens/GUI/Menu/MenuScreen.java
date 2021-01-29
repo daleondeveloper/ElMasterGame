@@ -36,12 +36,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private AssetGUI assetGUI;
     private MenuState menuState;
 
-    private HelpScreen helpScreen;
-    private HighScoreScreen highScoreScreen;
-    private PauseScreen pauseScreen;
-    private SettingsScreen settingsScreen;
-    private CreditScreen creditScreen;
-    private GameModeChangeScreen gameModeChangeScreen;
+    private HelpMenuFiller helpMenuFiller;
+    private HighScoreMenuFiller highScoreMenuFiller;
+    private PauseMenuFiller pauseMenuFiller;
+    private SettingsMenuFiller settingsMenuFiller;
+    private CreditMenuFiller creditMenuFiller;
+    private GameModeChangeMenuFiller gameModeChangeMenuFiller;
 
     private Image screenBg;
     private Image pauseWindow;
@@ -58,12 +58,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
 
-        helpScreen = new HelpScreen(game,this);
-        highScoreScreen = new HighScoreScreen(game,this);
-        pauseScreen = new PauseScreen(this);
-        settingsScreen = new SettingsScreen(this);
-        creditScreen = new CreditScreen(this);
-        gameModeChangeScreen = new GameModeChangeScreen(game,this);
+        helpMenuFiller = new HelpMenuFiller(game,this);
+        highScoreMenuFiller = new HighScoreMenuFiller(game,this);
+        pauseMenuFiller = new PauseMenuFiller(this);
+        settingsMenuFiller = new SettingsMenuFiller(this);
+        creditMenuFiller = new CreditMenuFiller(this);
+        gameModeChangeMenuFiller = new GameModeChangeMenuFiller(game,this);
 
         menuState = MenuState.CLOSE;
     }
@@ -98,11 +98,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         stage.addActor(mainTable);
 //        stage.addActor(pauseWindow);
 
-        helpScreen.build();
-        highScoreScreen.build();
-        settingsScreen.build();
-        creditScreen.build();
-        gameModeChangeScreen.build();
+        helpMenuFiller.build();
+        highScoreMenuFiller.build();
+        settingsMenuFiller.build();
+        creditMenuFiller.build();
+        gameModeChangeMenuFiller.build();
     }
 
     @Override
@@ -120,9 +120,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
             pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
 
-        helpScreen.resize(width,height);
-        highScoreScreen.resize(width,height);
-        gameModeChangeScreen.resize(width,height);
+        helpMenuFiller.resize(width,height);
+        highScoreMenuFiller.resize(width,height);
+        gameModeChangeMenuFiller.resize(width,height);
     }
 
     @Override
@@ -134,9 +134,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             setVisible(true);
         }
 
-        helpScreen.update(deltaTime);
-        highScoreScreen.update(deltaTime);
-        gameModeChangeScreen.update(deltaTime);
+        helpMenuFiller.update(deltaTime);
+        highScoreMenuFiller.update(deltaTime);
+        gameModeChangeMenuFiller.update(deltaTime);
 
     }
 
@@ -144,16 +144,16 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void render() {
         stage.draw();
 
-        helpScreen.render();
-        highScoreScreen.render();
-        gameModeChangeScreen.render();
+        helpMenuFiller.render();
+        highScoreMenuFiller.render();
+        gameModeChangeMenuFiller.render();
     }
 
     @Override
     public void dispose() {
-        helpScreen.dispose();
-        highScoreScreen.dispose();
-        gameModeChangeScreen.dispose();
+        helpMenuFiller.dispose();
+        highScoreMenuFiller.dispose();
+        gameModeChangeMenuFiller.dispose();
     }
 
     public void showMenuScreen(MenuState menuState){
@@ -220,30 +220,34 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void closeMenu(){menuState = MenuState.CLOSE;}
     public void setHelpScreen(){
         menuState = MenuState.HELP;
-        helpScreen.showHelpScreen();
+        helpMenuFiller.showHelpScreen();
     }
     public void setHighScoreScreen(){
         menuState = MenuState.HIGH_SCORE;
-        highScoreScreen.showHighScoreScreen();
+        highScoreMenuFiller.showHighScoreScreen();
     }
     public void setPauseScreen(){
         menuState = MenuState.PAUSE;
-        pauseScreen.build();
+        pauseMenuFiller.build();
 
          Gdx.input.setInputProcessor(stage);
 
     }
     public void setSettingsScreen(){
         menuState = MenuState.SETTINGS;
-        settingsScreen.build();
+        settingsMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+
     }
     public void setCreditScreen(){
         menuState = MenuState.CREDIT;
-        creditScreen.build();
+        creditMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+
     }
     public void setGameModeChangeScreen(){
         menuState = MenuState.GAMEMODECHOOSE;
-        gameModeChangeScreen.showGameModeChangeScreen();
+        gameModeChangeMenuFiller.showGameModeChangeScreen();
     }
 
     public GUIAbstractScreen getGuiAbstractScreen() {
@@ -258,8 +262,8 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         return pauseWindow;
     }
 
-    public HelpScreen getHelpScreen() {
-        return helpScreen;
+    public HelpMenuFiller getHelpScreen() {
+        return helpMenuFiller;
     }
 
     public Table getWindowTable() {
