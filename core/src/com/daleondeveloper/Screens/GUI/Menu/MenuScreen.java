@@ -61,8 +61,8 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         helpScreen = new HelpScreen(game,this);
         highScoreScreen = new HighScoreScreen(game,this);
         pauseScreen = new PauseScreen(this);
-        settingsScreen = new SettingsScreen(game,this);
-        creditScreen = new CreditScreen(game,this);
+        settingsScreen = new SettingsScreen(this);
+        creditScreen = new CreditScreen(this);
         gameModeChangeScreen = new GameModeChangeScreen(game,this);
 
         menuState = MenuState.CLOSE;
@@ -122,8 +122,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen.resize(width,height);
         highScoreScreen.resize(width,height);
-        settingsScreen.resize(width,height);
-        creditScreen.resize(width,height);
         gameModeChangeScreen.resize(width,height);
     }
 
@@ -138,8 +136,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen.update(deltaTime);
         highScoreScreen.update(deltaTime);
-        settingsScreen.update(deltaTime);
-        creditScreen.update(deltaTime);
         gameModeChangeScreen.update(deltaTime);
 
     }
@@ -150,8 +146,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         helpScreen.render();
         highScoreScreen.render();
-        settingsScreen.render();
-        creditScreen.render();
         gameModeChangeScreen.render();
     }
 
@@ -159,8 +153,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void dispose() {
         helpScreen.dispose();
         highScoreScreen.dispose();
-        settingsScreen.dispose();
-        creditScreen.dispose();
         gameModeChangeScreen.dispose();
     }
 
@@ -243,11 +235,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     }
     public void setSettingsScreen(){
         menuState = MenuState.SETTINGS;
-        settingsScreen.showSettingsScreen();
+        settingsScreen.build();
     }
     public void setCreditScreen(){
         menuState = MenuState.CREDIT;
-        creditScreen.showCreditScreen();
+        creditScreen.build();
     }
     public void setGameModeChangeScreen(){
         menuState = MenuState.GAMEMODECHOOSE;

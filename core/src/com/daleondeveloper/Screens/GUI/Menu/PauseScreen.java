@@ -54,10 +54,7 @@ public class PauseScreen extends MenuFiller{
 
     public void build() {
         mainTable = menuScreen.getWindowTable();
-
-        defineElements();
-        addAction();
-        addToTable();
+        super.build();
     }
     @Override
     protected void defineElements() {
