@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI.filler;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -10,6 +10,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Game.DebugConstants;
+import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 
 public class HelpMenuFiller extends MenuFiller {
@@ -25,7 +26,7 @@ public class HelpMenuFiller extends MenuFiller {
         GAME_MODE_SPECIAL_INFO,
     }
 
-    private MenuScreen menuScreen;
+    private com.daleondeveloper.Screens.GUI.MenuScreen menuScreen;
     private Assets assets;
     private AssetGUI assetGUI;
     private AssetHelp assetHelp;
@@ -47,7 +48,7 @@ public class HelpMenuFiller extends MenuFiller {
     private Label helpLabel;
 
 
-    public HelpMenuFiller(MenuScreen menuScreen){
+    public HelpMenuFiller(com.daleondeveloper.Screens.GUI.MenuScreen menuScreen){
         this(menuScreen,HELP_TYPE_SHOW.GAME_PLAYING);
     }
     public HelpMenuFiller(MenuScreen menuScreen, HELP_TYPE_SHOW help_type_show){

@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -12,6 +12,12 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUI.filler.CreditMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.GameModeChangeMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.SettingsMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -20,8 +26,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private final static String TAG = MenuScreen.class.getName();
 
     private static final float TITLE_OFFSET_Y = 200.0f;
-    static final float BUTTON_WIDTH = 252f;
-    static final float BUTTON_HEIGHT = 43f;
+
 
 
     public enum MenuState{
@@ -63,7 +68,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseMenuFiller = new PauseMenuFiller(this);
         settingsMenuFiller = new SettingsMenuFiller(this);
         creditMenuFiller = new CreditMenuFiller(this);
-        gameModeChangeMenuFiller = new GameModeChangeMenuFiller(game,this);
+        gameModeChangeMenuFiller = new GameModeChangeMenuFiller(this);
 
         menuState = MenuState.CLOSE;
     }
@@ -120,7 +125,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
             pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
 
-        gameModeChangeMenuFiller.resize(width,height);
     }
 
     @Override
@@ -142,12 +146,10 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void render() {
         stage.draw();
 
-        gameModeChangeMenuFiller.render();
     }
 
     @Override
     public void dispose() {
-        gameModeChangeMenuFiller.dispose();
     }
 
     public void showMenuScreen(MenuState menuState){
@@ -220,7 +222,9 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     }
     public void setGameModeChangeScreen(){
         menuState = MenuState.GAMEMODECHOOSE;
-        gameModeChangeMenuFiller.showGameModeChangeScreen();
+        gameModeChangeMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+
     }
 
     public GUIAbstractScreen getGuiAbstractScreen() {

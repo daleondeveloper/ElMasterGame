@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI.filler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
@@ -14,15 +14,16 @@ import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
+import com.daleondeveloper.tools.GameConstants;
 
 /**
  * Created by AGM on 11/1/2018.
  */
 
-public class PauseMenuFiller extends MenuFiller{
+public class PauseMenuFiller extends MenuFiller {
     private static final String TAG = PauseMenuFiller.class.getName();
 
-    private MenuScreen menuScreen;
+    private com.daleondeveloper.Screens.GUI.MenuScreen menuScreen;
     private Assets assets;
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
@@ -38,7 +39,7 @@ public class PauseMenuFiller extends MenuFiller{
     private Label pauseLabel;
 
 
-    public PauseMenuFiller(MenuScreen menuScreen) {
+    public PauseMenuFiller(com.daleondeveloper.Screens.GUI.MenuScreen menuScreen) {
 
         this.menuScreen = menuScreen;
         assets = Assets.getInstance();
@@ -122,7 +123,7 @@ public class PauseMenuFiller extends MenuFiller{
         mainTable.row();
         Table buttonTable = new Table();
         mainTable.add(buttonTable).grow();
-        buttonTable.defaults().pad(10).width(MenuScreen.BUTTON_WIDTH).height(MenuScreen.BUTTON_HEIGHT).center();
+        buttonTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
         buttonTable.add(mainMenuButton);
         buttonTable.row();
         buttonTable.add(restartButton);

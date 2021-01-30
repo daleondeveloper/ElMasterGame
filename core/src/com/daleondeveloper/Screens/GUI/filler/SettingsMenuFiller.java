@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI.filler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -8,13 +8,14 @@ import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
+import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.MainMenuScreen;
 
 public class SettingsMenuFiller extends MenuFiller{
     private static final String TAG = SettingsMenuFiller.class.getName();
 
-    private MenuScreen menuScreen;
+    private com.daleondeveloper.Screens.GUI.MenuScreen menuScreen;
     private Assets assets;
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;

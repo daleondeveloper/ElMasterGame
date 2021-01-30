@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI.filler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -9,6 +9,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 
 public class HighScoreMenuFiller extends MenuFiller  {
@@ -17,7 +18,7 @@ public class HighScoreMenuFiller extends MenuFiller  {
     private static final int LAST_SCORE_PAGE = 6;
 
 
-    private MenuScreen menuScreen;
+    private com.daleondeveloper.Screens.GUI.MenuScreen menuScreen;
     private GameSettings prefs;
     private Assets assets;
     private AssetGUI assetGUI;

@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI.filler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -7,12 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.DebugConstants;
+import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 
 public class CreditMenuFiller extends MenuFiller {
     private static final String TAG = CreditMenuFiller.class.getName();
 
-    private MenuScreen menuScreen;
+    private com.daleondeveloper.Screens.GUI.MenuScreen menuScreen;
     private Assets assets;
     private I18NBundle i18NGameThreeBundle;
     private Table mainTable;

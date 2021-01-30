@@ -1,4 +1,4 @@
-package com.daleondeveloper.Screens.GUI.Menu;
+package com.daleondeveloper.Screens.GUI.filler;
 
 //Абстрактний клас наслідники якого заповнюватимуть
 //таблицю меню
