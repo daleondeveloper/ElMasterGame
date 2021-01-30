@@ -29,7 +29,6 @@ public class HighScoreMenuFiller extends MenuFiller  {
 
     private int pageShow;
 
-    private Image menuWindow;
     private Image backButton;
     private Image nextScoreImage;
     private Image previsionScoreImage;

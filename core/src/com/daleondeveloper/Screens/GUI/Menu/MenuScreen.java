@@ -58,7 +58,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
 
-        helpMenuFiller = new HelpMenuFiller(game,this);
+        helpMenuFiller = new HelpMenuFiller(this);
         highScoreMenuFiller = new HighScoreMenuFiller(this);
         pauseMenuFiller = new PauseMenuFiller(this);
         settingsMenuFiller = new SettingsMenuFiller(this);
@@ -120,7 +120,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
             pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
 
-        helpMenuFiller.resize(width,height);
         gameModeChangeMenuFiller.resize(width,height);
     }
 
@@ -143,13 +142,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void render() {
         stage.draw();
 
-        helpMenuFiller.render();
         gameModeChangeMenuFiller.render();
     }
 
     @Override
     public void dispose() {
-        helpMenuFiller.dispose();
         gameModeChangeMenuFiller.dispose();
     }
 
@@ -158,36 +155,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             setVisible(true);
             this.menuState = menuState;
             switch (menuState){
-                case SETTINGS:
-                    setSettingsScreen();
-//                    hideHelpScreen();
-//                  hideHighScoreScreen();
-//                 hidePauseScreen();
-                    break;
-                case HELP:
-                    setHelpScreen();
-//                   hideHighScoreScreen();
-//                   hidePauseScreen();
-//                    hideSettingsScreen();
-                    break;
-                case PAUSE:
-                    setPauseScreen();
-//                    hideHelpScreen();
-//                    hideHighScoreScreen();
-//                  hideSettingsScreen();
-                    break;
-                case HIGH_SCORE:
-                    setHighScoreScreen();
-//                    hideHelpScreen();
-//                   hidePauseScreen();
-//                    hideSettingsScreen();
-                    break;
-                case CREDIT:
-                    setCreditScreen();
-                    break;
-                case GAMEMODECHOOSE:
-                    setGameModeChangeScreen();
-                    break;
+                case SETTINGS: setSettingsScreen();break;
+                case HELP:setHelpScreen();break;
+                case PAUSE: setPauseScreen(); break;
+                case HIGH_SCORE:setHighScoreScreen();break;
+                case CREDIT:setCreditScreen();break;
+                case GAMEMODECHOOSE:setGameModeChangeScreen();break;
             }
         }
     }
@@ -197,10 +170,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             menuState = MenuState.CLOSE;
             guiAbstractScreen.setStateRunning();
             windowTable.clearChildren();
-//            hideHelpScreen();
-//            hideHighScoreScreen();
-//            hidePauseScreen();
-//            hideSettingsScreen();
         }
     }
 
@@ -215,9 +184,15 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     }
 
     public void closeMenu(){menuState = MenuState.CLOSE;}
+    public void setHelpScreen(HelpMenuFiller.HELP_TYPE_SHOW help_type_show){
+        helpMenuFiller.setHelp_type_show(help_type_show);
+        setHelpScreen();
+
+    }
     public void setHelpScreen(){
         menuState = MenuState.HELP;
-        helpMenuFiller.showHelpScreen();
+        helpMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
     }
     public void setHighScoreScreen(){
         menuState = MenuState.HIGH_SCORE;

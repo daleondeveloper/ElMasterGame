@@ -18,6 +18,7 @@ import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
+import com.daleondeveloper.Screens.GUI.Menu.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
@@ -260,18 +261,14 @@ public class MainMenuScreen extends GUIAbstractScreen {
             @Override
             public void run() {
                 setStatePaused();
-                menuScreen.showMenuScreen(MenuScreen.MenuState.GAMEMODECHOOSE);
-//                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
-
+                menuScreen.setGameModeChangeScreen();
             }
         }));
         buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 setStatePaused();
-                menuScreen.getHelpScreen().setHelpMenuShow(0);
-                menuScreen.showMenuScreen(MenuScreen.MenuState.HELP);
-//                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
+                menuScreen.setHelpScreen(HelpMenuFiller.HELP_TYPE_SHOW.GAME_PLAYING);
 
             }
         }));
@@ -279,21 +276,21 @@ public class MainMenuScreen extends GUIAbstractScreen {
             @Override
             public void run() {
                 setStatePaused();
-                menuScreen.showMenuScreen(MenuScreen.MenuState.HIGH_SCORE);
+                menuScreen.setHighScoreScreen();
             }
         }));
         buttonSettings.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
                 setStatePaused();
-                menuScreen.showMenuScreen(MenuScreen.MenuState.SETTINGS);
+                menuScreen.setSettingsScreen();
             }
         }));
         buttonCredit.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
                 setStatePaused();
-                menuScreen.showMenuScreen(MenuScreen.MenuState.CREDIT);
+                menuScreen.setCreditScreen();
             }
         }));
 

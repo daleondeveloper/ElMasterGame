@@ -1,54 +1,57 @@
 package com.daleondeveloper.Screens.GUI.Menu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
-import com.daleondeveloper.Game.ElMaster;
-import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
+import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Screens.ListenerHelper;
 
-public class HelpMenuFiller extends GUIOverlayAbstractScreen {
+public class HelpMenuFiller extends MenuFiller {
     private static final String TAG = SettingsMenuFiller.class.getName();
 
-    private static final float DIM_ALPHA = 0.8f;
-
+    public static enum HELP_TYPE_SHOW{
+        GAME_PLAYING,
+        GAME_MODE_FIRE_INFO,
+        GAME_MODE_SNOW_INFO,
+        GAME_MODE_LIGHT_INFO,
+        GAME_MODE_WATER_INFO,
+        GAME_MODE_DARK_INFO,
+        GAME_MODE_SPECIAL_INFO,
+    }
 
     private MenuScreen menuScreen;
-    private GameSettings prefs;
     private Assets assets;
     private AssetGUI assetGUI;
     private AssetHelp assetHelp;
     private I18NBundle i18NGameThreeBundle;
+    private Table mainTable;
 
     private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
 
+    private HELP_TYPE_SHOW help_type_show;
     private int helpMenuShow;
-    private int helpModeShow;
 
     private Image menuWindow;
-    private Image back;
+    private Image backButton;
     private Image help;
     private Image nextHelp;
     private Image previsionHelp;
 
-    private Actor helpActor;
-
     private Label helpLabel;
 
 
-    public HelpMenuFiller(ElMaster game, MenuScreen menuScreen){
-        super(game);
+    public HelpMenuFiller(MenuScreen menuScreen){
+        this(menuScreen,HELP_TYPE_SHOW.GAME_PLAYING);
+    }
+    public HelpMenuFiller(MenuScreen menuScreen, HELP_TYPE_SHOW help_type_show){
         this.menuScreen = menuScreen;
-        prefs = GameSettings.getInstance();
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
         assetHelp = assets.getAssetHelp();
@@ -59,61 +62,33 @@ public class HelpMenuFiller extends GUIOverlayAbstractScreen {
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
-        helpMenuShow = -1;
-        helpModeShow = -1;
+        this.help_type_show = help_type_show;
+        helpMenuShow = 0;
 
     }
-
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-
-
-
-//        helpLabel.setFontScale(width / 500, height / 1000);
-        helpLabel.setPosition(menuWindow.getX() + 170, menuWindow.getY() + 270);
-        back.setHeight(24);
-        back.setWidth(24);
-        back.setPosition(menuWindow.getX() + menuWindow.getWidth() - 60 ,
-                menuWindow.getY() + menuWindow.getHeight() - 40);
-
-        nextHelp.setWidth(50);
-        nextHelp.setHeight(58);
-        nextHelp.setPosition(menuWindow.getX() + 300, menuWindow.getY() + 35);
-        previsionHelp.setWidth(50);
-        previsionHelp.setHeight(58);
-        previsionHelp.setPosition(menuWindow.getX() + 55 , menuWindow.getY() + 35);
-
-        help.setWidth(200);
-        help.setHeight(200);
-        help.setPosition(menuWindow.getX() + 105, menuWindow.getY() + 75);
-
-    }
-
     @Override
     public void build() {
+        mainTable = menuScreen.getWindowTable();
+        super.build();
 
-        menuWindow = menuScreen.getPauseWindow();
+    }
 
+    @Override
+    protected void defineElements() {
         helpLabel = new Label(i18NGameThreeBundle.format("helpScreen.title"), labelStyleMedium);
+
+        backButton  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
 
         help = new Image(assetHelp.getHelp_block_fall());
         nextHelp = new Image(assetGUI.getButtonLeft());
         previsionHelp = new Image(assetGUI.getButtonRight());
-        defineButtons();
-
-        helpActor = help;
-
-        stage.addActor(helpActor);
-        stage.addActor(nextHelp);
-        stage.addActor(previsionHelp);
-        stage.addActor(helpLabel);
-        stage.addActor(back);
+        changeHelpImage();
     }
-    private void defineButtons(){
-        back  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
 
-        back.addListener(ListenerHelper.runnableListener(new Runnable() {
+    @Override
+    protected void addAction() {
+
+        backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 menuScreen.hideMenuScreen();
@@ -123,108 +98,100 @@ public class HelpMenuFiller extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 if(helpMenuShow < 2)helpMenuShow++;
+                changeHelpImage();
             }
         }));
         previsionHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
                 if(helpMenuShow > 0)helpMenuShow--;
+                changeHelpImage();
             }
         }));
 
     }
 
     @Override
-    public void update(float deltaTime) {
-        stage.act();
-        if(menuScreen.getMenuState() == MenuScreen.MenuState.HELP){
-            setVisible(true);
-        }else{
-            setVisible(false);
+    protected void addToTable() {
+        mainTable.clearChildren();
+        if(DebugConstants.DEBUG_GUI){
+            mainTable.debug();
         }
-        if(isHelpScreenVisible()) {
+        mainTable.top();
+        mainTable.add(backButton).height(15).width(15).right().padRight(30);
+        mainTable.row();
+        Table labelTable = new Table();
+        mainTable.add(labelTable).growX();
+        labelTable.add().growX();
+        labelTable.add(helpLabel);
+        labelTable.add().growX();
+        mainTable.row();
+        //Таблиця з зображенням
+        Table imageTable = new Table();
+        mainTable.add(imageTable).grow();
+        imageTable.add(help);
+        mainTable.row();
+        //Таблиця з кнопками управлінням зображеннями допомоги
+        if(help_type_show == HELP_TYPE_SHOW.GAME_PLAYING){
+            Table moveArrowTable = new Table();
+            mainTable.add(moveArrowTable).padBottom(30).padRight(50).padLeft(50).growX();
+            moveArrowTable.add(previsionHelp).width(50).height(58).left();
+            moveArrowTable.add().growX();
+            moveArrowTable.add(nextHelp).width(50).height(58).right();
+        }
+    }
+
+    public void changeHelpImage() {
+
+        if(help_type_show == HELP_TYPE_SHOW.GAME_PLAYING) {
             switch (helpMenuShow) {
                 case 0:
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_block_fall()));
+                    ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_block_fall()));
                     nextHelp.setVisible(true);
                     previsionHelp.setVisible(false);
                     break;
                 case 1:
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_block_push()));
+                    ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_block_push()));
                     nextHelp.setVisible(true);
                     previsionHelp.setVisible(true);
                     break;
                 case 2:
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_create_block_line()));
+                    ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_create_block_line()));
                     nextHelp.setVisible(false);
                     previsionHelp.setVisible(true);
                     break;
             }
-            switch (helpModeShow){
-                case 1 :
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_light_mode()));
-                    break;
-                case 2 :
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_snow_mode()));
-                    break;
-                case 3 :
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_fire_mode()));
-                    break;
-                case 5 :
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_dark_mode()));
-                    break;
-                case 6 :
-                    ((Image) helpActor).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_special_mode()));
-                    break;
+            return;
+        }
 
-
-            }
-        }else{
-            helpActor.setVisible(false);
-            nextHelp.setVisible(false);
-            previsionHelp.setVisible(false);
+        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_LIGHT_INFO) {
+            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_light_mode()));
+            return;
+        }
+        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_SNOW_INFO) {
+            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_snow_mode()));
+            return;
+        }
+        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_FIRE_INFO) {
+            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_fire_mode()));
+            return;
+        }
+        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_DARK_INFO) {
+            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_dark_mode()));
+            return;
+        }
+        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_SPECIAL_INFO) {
+            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_special_mode()));
+            return;
         }
 
     }
 
-    @Override
-    public void render() {
-        stage.draw();
+    public HELP_TYPE_SHOW getHelp_type_show() {
+        return help_type_show;
     }
 
-    public boolean isHelpScreenVisible(){
-        return helpLabel.isVisible();
-    }
-    public void showHelpScreen() {
-        if (!isHelpScreenVisible()) {
-            setVisible(true);
-
-            // Only PauseScreen responds to events
-            Gdx.input.setInputProcessor(stage);
-        }
-    }
-
-    private void setVisible(boolean  visible){
-        helpLabel.setVisible(visible);
-        back.setVisible(visible);
-        helpActor.setVisible(true);
-    }
-
-    public int getHelpMenuShow() {
-        return helpMenuShow;
-    }
-
-    public void setHelpMenuShow(int helpMenuShow) {
-        this.helpMenuShow = helpMenuShow;
-        helpModeShow = -1;
-    }
-
-    public int getHelpModeShow() {
-        return helpModeShow;
-    }
-
-    public void setHelpModeShow(int helpModeShow) {
-        this.helpModeShow = helpModeShow;
-        helpMenuShow = -1;
+    public void setHelp_type_show(HELP_TYPE_SHOW help_type_show) {
+        this.help_type_show = help_type_show;
     }
 }

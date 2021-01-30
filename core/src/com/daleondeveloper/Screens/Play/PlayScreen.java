@@ -19,9 +19,11 @@ import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
+import com.daleondeveloper.Screens.GUI.Menu.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.Menu.MenuScreen;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
+import com.daleondeveloper.tools.GameConstants;
 
 public class PlayScreen extends GUIAbstractScreen {
     private static final String TAG = PlayScreen.class.getName();
@@ -142,7 +144,6 @@ public class PlayScreen extends GUIAbstractScreen {
         }
 
         if(prefs.getHelpModeShow()[prefs.getGameModeDragon()] && stateTime > 1f) {
-            menuScreen.getHelpScreen().setHelpModeShow(prefs.getGameModeDragon());
             menuScreen.setHelpScreen();
             prefs.getHelpModeShow()[prefs.getGameModeDragon()] = false;
         }
@@ -267,8 +268,31 @@ public class PlayScreen extends GUIAbstractScreen {
     }
 
     public void setStatePaused() {
-        menuScreen.getHelpScreen().setHelpModeShow(prefs.getGameModeDragon());
-            menuScreen.setHelpScreen();
+        HelpMenuFiller.HELP_TYPE_SHOW help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_PLAYING;
+        switch (prefs.getGameModeDragon()){
+            case GameConstants.GAME_MODE_CLASSIC :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_PLAYING;
+                break;
+            case GameConstants.GAME_MODE_LIGHT :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_MODE_LIGHT_INFO;
+                break;
+            case GameConstants.GAME_MODE_SNOW :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_MODE_SNOW_INFO;
+                break;
+            case GameConstants.GAME_MODE_FIRE :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_MODE_FIRE_INFO;
+                break;
+            case GameConstants.GAME_MODE_WATER :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_MODE_WATER_INFO;
+                break;
+            case GameConstants.GAME_MODE_DARK :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_MODE_DARK_INFO;
+                break;
+            case GameConstants.GAME_MODE_SPECIAL :
+                help_type_show = HelpMenuFiller.HELP_TYPE_SHOW.GAME_MODE_SPECIAL_INFO;
+                break;
+        }
+            menuScreen.setHelpScreen(help_type_show);
         menuScreen.showMenuScreen(MenuScreen.MenuState.PAUSE);
        doPause();
     }
