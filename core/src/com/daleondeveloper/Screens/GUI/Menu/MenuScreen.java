@@ -59,7 +59,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         assetGUI = assets.getAssetGUI();
 
         helpMenuFiller = new HelpMenuFiller(game,this);
-        highScoreMenuFiller = new HighScoreMenuFiller(game,this);
+        highScoreMenuFiller = new HighScoreMenuFiller(this);
         pauseMenuFiller = new PauseMenuFiller(this);
         settingsMenuFiller = new SettingsMenuFiller(this);
         creditMenuFiller = new CreditMenuFiller(this);
@@ -121,7 +121,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
             pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
 
         helpMenuFiller.resize(width,height);
-        highScoreMenuFiller.resize(width,height);
         gameModeChangeMenuFiller.resize(width,height);
     }
 
@@ -145,14 +144,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         stage.draw();
 
         helpMenuFiller.render();
-        highScoreMenuFiller.render();
         gameModeChangeMenuFiller.render();
     }
 
     @Override
     public void dispose() {
         helpMenuFiller.dispose();
-        highScoreMenuFiller.dispose();
         gameModeChangeMenuFiller.dispose();
     }
 
@@ -224,7 +221,8 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     }
     public void setHighScoreScreen(){
         menuState = MenuState.HIGH_SCORE;
-        highScoreMenuFiller.showHighScoreScreen();
+        highScoreMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
     }
     public void setPauseScreen(){
         menuState = MenuState.PAUSE;

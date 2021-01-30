@@ -12,4 +12,5 @@ public abstract  class MenuFiller {
     protected abstract void defineElements();
     protected abstract void addAction();
     protected abstract void addToTable();
+    public void update(float deltaTime){};
 }
