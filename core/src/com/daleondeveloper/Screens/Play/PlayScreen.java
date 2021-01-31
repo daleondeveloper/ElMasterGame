@@ -2,7 +2,6 @@ package com.daleondeveloper.Screens.Play;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -19,8 +18,8 @@ import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.InfoScreen;
-import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
+import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
 import com.daleondeveloper.tools.GameConstants;
@@ -72,11 +71,6 @@ public class PlayScreen extends GUIAbstractScreen {
         endGame = false;
         levelCompleted = false;
         showHelp = true;
-        pef.addParticleEffect(ParticleEffectManager.FIRE,Assets.getInstance().getAssetManager().get("effect/fire/fireeffect.p", ParticleEffect.class));
-        ParticleEffect pooledEffect = Assets.getInstance().getAssetManager().get("effect/fire/cold_effect_under_block", ParticleEffect.class);
-        pooledEffect.reset();
-        pooledEffect.scaleEffect(0.1f);
-        pef.addParticleEffect(ParticleEffectManager.COLD_BLOCK_EFFECT,pooledEffect);
 
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongGame());
     }
@@ -121,9 +115,6 @@ public class PlayScreen extends GUIAbstractScreen {
 
 //        stage.addActor(startButton);
 
-        ParticleEffectPool.PooledEffect pe = pef.getPoolParticleEffect(1);
-        pe.setPosition(200,200);
-        pooledEffects.add(pe);
     }
 
 
