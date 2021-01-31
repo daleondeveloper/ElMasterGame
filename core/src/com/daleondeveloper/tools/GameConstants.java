@@ -15,5 +15,7 @@ public class GameConstants {
     //константи розмірів GUI елементі
     public static final float BUTTON_WIDTH = 252f;
     public static final float BUTTON_HEIGHT = 43f;
+    public static final float BUTTON_ARROW_WIDTH = 50f;
+    public static final float BUTTON_ARROW_HEIGHT = 58f;
 
 }

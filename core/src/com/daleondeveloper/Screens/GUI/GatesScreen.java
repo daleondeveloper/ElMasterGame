@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetGates;
 import com.daleondeveloper.Effects.ParticleEffectActor;
+import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
@@ -120,11 +121,11 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         image.setName("gates");
         gates = image;
 
-        rightBowlFireEffect = assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class);
+        rightBowlFireEffect = ParticleEffectManager.getInstance().getPoolParticleEffect(ParticleEffectManager.FIRE);
         rightBowlFireEffect.start();
         rightBowlFireActor = new ParticleEffectActor(rightBowlFireEffect);
 
-        leftBowlFireEffect = assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class);
+        leftBowlFireEffect = ParticleEffectManager.getInstance().getPoolParticleEffect(ParticleEffectManager.FIRE);
         leftBowlFireEffect.start();
         leftBowlFireActor = new ParticleEffectActor(leftBowlFireEffect);
 

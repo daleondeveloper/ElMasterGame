@@ -60,7 +60,7 @@ public class PlayScreen extends GUIAbstractScreen {
         backgroundScreen = new BackgroundScreen(game,this);
         gatesScreen = new GatesScreen(game);
         gameStart = false;
-        pef = new ParticleEffectManager();
+        pef = ParticleEffectManager.getInstance();
 
         stateTime = 0;
 

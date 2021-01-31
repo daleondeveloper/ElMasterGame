@@ -91,7 +91,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         menuScreen = new MenuScreen(game,this);
         gatesScreen = new GatesScreen(game);
 
-        pef = new ParticleEffectManager();
+        pef = ParticleEffectManager.getInstance();
 
         stateTime = 0;
         // Styles
@@ -153,7 +153,6 @@ public class MainMenuScreen extends GUIAbstractScreen {
         hideBannerAd();
         menuScreen.build();
 
-        pef.addParticleEffect(ParticleEffectManager.FIRE,assets.getAssetManager().get("effect/fire/fireeffect.p",ParticleEffect.class));
         Image image;
 
         // Background
@@ -193,20 +192,20 @@ public class MainMenuScreen extends GUIAbstractScreen {
 
         rightBowlFire = pef.getPoolParticleEffect(ParticleEffectManager.FIRE);
         rightBowlFire.start();
-        float[] f = new float[3];
-        f[0] = 0.047058824f;
-        f[1] = 0.06666667f;
-        f[2] = 1f;
-        rightBowlFire.getEmitters().get(0).getTint().setColors(f);
+//        float[] f = new float[3];
+////        f[0] = 0.047058824f;
+////        f[1] = 0.06666667f;
+////        f[2] = 1f;
+//        rightBowlFire.getEmitters().get(0).getTint().setColors(f);
         rightBowlFireActor = new ParticleEffectActor(rightBowlFire);
 
         leftBowlFire = pef.getPoolParticleEffect(ParticleEffectManager.FIRE);
         leftBowlFire.start();
-         f = new float[3];
-        f[0] = 0.047058824f;
-        f[1] = 0.4f;
-        f[2] = 1f;
-        leftBowlFire.getEmitters().get(0).getTint().setColors(f);
+//         f = new float[3];
+//        f[0] = 0.047058824f;
+//        f[1] = 0.4f;
+//        f[2] = 1f;
+//        leftBowlFire.getEmitters().get(0).getTint().setColors(f);
         leftBowlFireActor = new ParticleEffectActor(leftBowlFire);
 
 

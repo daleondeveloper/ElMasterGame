@@ -288,10 +288,10 @@ public class GameModeChangeMenuFiller extends MenuFiller {
         mainTable.row();
         //Таблиця з кнопками навішації по режимам гри
         Table moveArrowTable = new Table();
-        mainTable.add(moveArrowTable).padBottom(30).padRight(50).padLeft(50).growX();
-        moveArrowTable.add(previsionModeImage).width(50).height(58).left();
+        mainTable.add(moveArrowTable).padBottom(20).padRight(50).padLeft(50).growX();
+        moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left();
         moveArrowTable.add().growX();
-        moveArrowTable.add(nextModesImage).width(50).height(58).right();
+        moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right();
     }
     private void continueGamePanel(){
         Table continueGameTable = new Table();

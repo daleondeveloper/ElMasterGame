@@ -122,7 +122,7 @@ public class PauseMenuFiller extends MenuFiller {
         labelTable.add().grow();
         mainTable.row();
         Table buttonTable = new Table();
-        mainTable.add(buttonTable).grow();
+        mainTable.add(buttonTable).grow().padBottom(30);
         buttonTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
         buttonTable.add(mainMenuButton);
         buttonTable.row();

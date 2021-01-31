@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
+import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
@@ -26,7 +27,7 @@ import java.util.Set;
 public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
-    private enum State{
+    protected enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE;
     }
     protected enum BlockType{
@@ -54,7 +55,8 @@ public class Block extends AbstractDynamicObject {
     protected float positionInBlocksMasX;
     protected float positionInBlocksMasY;
 
-    ParticleEffectPool.PooledEffect po;
+    protected ParticleEffectPool.PooledEffect effect;
+    protected ParticleEffectManager effectManager;
 
     //sensors contacted objects
         //Sets
@@ -70,6 +72,7 @@ public class Block extends AbstractDynamicObject {
     public Block(GameWorld gameWorld, com.daleondeveloper.Sprites.BlockControllers.BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
         this.gameWorld = gameWorld;
         this.blockController = blockController;
+        effectManager = gameWorld.getPlayScreen().getPef();
 
         assetBlocks = new Array<TextureRegion>();
         AssetBlock assets =  Assets.getInstance().getAssetBlock();
@@ -79,8 +82,6 @@ public class Block extends AbstractDynamicObject {
         assetBlocks.add(assets.getBlockWater());
         assetBlocks.add(assets.getBlockFire());
         assetBlocks.add(assets.getBlockWater());
-
-        po = gameWorld.getPlayScreen().getPef().getPoolParticleEffect(1);
 
         destroyAnimation = assets.getDestroyWater();
 
@@ -221,7 +222,9 @@ public class Block extends AbstractDynamicObject {
     @Override
     public void update(float deltaTime) {
         checkTime += deltaTime;
-        po.update(deltaTime);
+        if(effect != null) {
+            effect.update(deltaTime);
+        }
 
         switch (currentState){
             case IDLE:
@@ -232,12 +235,19 @@ public class Block extends AbstractDynamicObject {
                 break;
             case FALL:
                 stateFall(deltaTime);
+                if(effect == null){
+                    effect = effectManager.getPoolParticleEffect(ParticleEffectManager.FALL_EFFECT);
+                }
+                effect.setPosition(getX(), getBodyPosition().y);
                 break;
             case DESTROY:
                 stateDestroy(deltaTime);
                 break;
             case DISPOSE:
                 break;
+        }
+        if(currentState != State.FALL){
+            effect =null;
         }
 
     }
@@ -275,7 +285,6 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        po.setPosition(body.getPosition().x, body.getPosition().y);
 //        textureRegionBlock = assetBlocks.get(1);
         setRegion(textureRegionBlock);
 
@@ -398,8 +407,10 @@ public class Block extends AbstractDynamicObject {
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
     }
-    public void renderEffect(SpriteBatch spriteBatch){
-        po.draw(spriteBatch);
+    public void renderEffect(SpriteBatch spriteBatch) {
+        if (effect != null) {
+            effect.draw(spriteBatch);
+        }
     }
 
     //Methods of checking the state of the object

@@ -2,11 +2,9 @@ package com.daleondeveloper.Game.Settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +148,8 @@ public class GameSettings {
         blockVector.clear();
 
         prefs.flush();
+        lastPlayScore = 0;
+
         gameSave = false;
     }
 

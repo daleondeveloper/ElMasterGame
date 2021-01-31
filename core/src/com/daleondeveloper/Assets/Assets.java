@@ -62,6 +62,7 @@ public class Assets implements Disposable,AssetErrorListener {
     private static final String TEXTURE_ATLAS_HELP = "atlas/help/help.atlas";
 
     private static final String EFFECT_FIRE = "effect/fire/fireeffect.p";
+    private static final String EFFECT_FALL = "effect/fire/fall_effect";
     private static final String EFFECT_FIRE_SECOND = "effect/fire/cold_effect_under_block";
 
 
@@ -177,6 +178,8 @@ public class Assets implements Disposable,AssetErrorListener {
         assetManager.load(EFFECT_FIRE, ParticleEffect.class);
 
         assetManager.load(EFFECT_FIRE_SECOND, ParticleEffect.class);
+
+        assetManager.load(EFFECT_FALL, ParticleEffect.class);
     }
     private void loadSounds(){
         assetManager.load(FX_FILE_JUMP_A, Sound.class);

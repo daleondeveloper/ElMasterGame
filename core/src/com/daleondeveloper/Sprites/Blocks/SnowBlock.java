@@ -1,6 +1,7 @@
 package com.daleondeveloper.Sprites.Blocks;
 
 import com.daleondeveloper.Assets.Assets;
+import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 
@@ -19,6 +20,7 @@ public class SnowBlock extends Block {
         blockType = BlockType.SNOW;
         freezingTime = 0;
         this.setBlockTypeNumber(4);
+
     }
 
     @Override
@@ -27,6 +29,20 @@ public class SnowBlock extends Block {
         if(!isIdle()){
             freezingTime = 0;
         }
+//        if(currentState != State.IDLE){
+//            if(effect != null) {
+//                effect.reset();
+//            }
+//            effect = null;
+//        }else if(effect == null){
+//            addColdEffect();
+//        }
+
+    }
+    private void addColdEffect(){
+        effect =effectManager.getPoolParticleEffect(ParticleEffectManager.COLD_BLOCK_EFFECT);
+        effect.setPosition(this.getBodyPosition().x,this.getBodyPosition().y);
+        effect.start();
     }
 
     @Override
