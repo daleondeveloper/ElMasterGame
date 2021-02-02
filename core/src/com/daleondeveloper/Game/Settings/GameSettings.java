@@ -127,14 +127,20 @@ public class GameSettings {
     }
 
     public void save() {
-        prefs.clear();
+        //prefs.clear();
         saveSetting();
         saveGameWorldParameters();
         saveGameWorldObjects();
         prefs.flush();
     }
     public void deleteSave(){
-        prefs.clear();
+      // prefs.clear();
+        for(int i = 0; i < prefs.getInteger("BLOCK_COUNT"); i++){
+            prefs.remove("BLOCK_" + i + "_POSITION_X");
+            prefs.remove("BLOCK_" + i + "_POSITION_Y");
+            prefs.remove("BLOCK_" + i + "_TYPE");
+        }
+        prefs.putInteger("BLOCK_COUNT", 0);
         prefs.putInteger(HIGH_SCORE_CLASSIC, highScoreClassic);
         prefs.putInteger(HIGH_SCORE_FIRE, highScoreFire);
         prefs.putInteger(HIGH_SCORE_LIGHT, highScoreLight);

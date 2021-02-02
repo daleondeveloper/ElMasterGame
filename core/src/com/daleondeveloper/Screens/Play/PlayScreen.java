@@ -3,7 +3,6 @@ package com.daleondeveloper.Screens.Play;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
@@ -17,7 +16,6 @@ import com.daleondeveloper.Game.WorldRenderer;
 import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
-import com.daleondeveloper.Screens.GUI.InfoScreen;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
@@ -30,7 +28,6 @@ public class PlayScreen extends GUIAbstractScreen {
     private static final float SHAKE_DURATION = 2.0f;
 
     private Hud hud;
-    private InfoScreen infoScreen;
     private MenuScreen menuScreen;
     private BackgroundScreen backgroundScreen;
     private GatesScreen gatesScreen;
@@ -41,7 +38,6 @@ public class PlayScreen extends GUIAbstractScreen {
 
     private Array<ParticleEffectPool.PooledEffect> pooledEffects = new Array<ParticleEffectPool.PooledEffect>();
     private Image background;
-    private Image startButton;
     private WorldController worldController;
     private GameWorld gameWorld;
     private WorldRenderer worldRenderer;
@@ -54,7 +50,6 @@ public class PlayScreen extends GUIAbstractScreen {
         super(game);
 
         hud = new Hud(game,this);
-        infoScreen = new InfoScreen(game,this);
         menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
         gatesScreen = new GatesScreen(game);
@@ -100,21 +95,8 @@ public class PlayScreen extends GUIAbstractScreen {
         backgroundScreen.build();
         gatesScreen.build();
         hud.build();
-        infoScreen.build();
         menuScreen.build();
         background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
-        startButton = new Image(Assets.getInstance().getAssetGUI().getButtonHelp());
-//        //setStateRunning();
-//        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-////            @Override
-////            public void run() {
-////                resume();
-////            }
-//        }));
-
-
-//        stage.addActor(startButton);
-
     }
 
 
@@ -129,7 +111,6 @@ public class PlayScreen extends GUIAbstractScreen {
         menuScreen.update(deltaTime);
         gatesScreen.update(deltaTime);
         hud.update(deltaTime);
-        infoScreen.update(deltaTime);
         if(isPlayScreenStateRunning()){
             worldController.update(deltaTime);
         }
@@ -162,7 +143,6 @@ public class PlayScreen extends GUIAbstractScreen {
             }
             menuScreen.setHelpScreen(help_type_show);
             prefs.getHelpModeShow()[prefs.getGameModeDragon()] = false;
-            pause();
         }
         //Render logic
     //    AbstractScreen.clearScr();
@@ -174,11 +154,9 @@ public class PlayScreen extends GUIAbstractScreen {
         worldRenderer.render();
         gatesScreen.render();
         hud.render();
-        infoScreen.render();
         menuScreen.render();
 //        viewport.update(viewport.getScreenWidth(),viewport.getScreenHeight());
         stage.draw();
-        effectsRender(deltaTime);
         //Analys game result
         if(guiScreenState == GUIScreenState.RUNNING){
             gameResults();
@@ -190,16 +168,6 @@ public class PlayScreen extends GUIAbstractScreen {
 
         }
 
-    }
-
-    private void effectsRender(float deltaTime){
-        SpriteBatch sp = game.getGameBatch();
-        sp.begin();
-        for(ParticleEffectPool.PooledEffect pe : pooledEffects){
-            pe.update(deltaTime);
-            pe.draw(game.getGameBatch());
-        }
-        sp.end();
     }
 
     private void gameResults(){
@@ -235,9 +203,10 @@ public class PlayScreen extends GUIAbstractScreen {
 
                 // Game over
 //                gameWorld.getGameCamera().shake(SHAKE_DURATION, true);
-              //  gameWorld.getWaterElement().onDead();
+              //  gameWorld.getWaterElement().fonDead();
 
-                infoScreen.showGameOver();
+//                infoScreen.showGameOver();
+                menuScreen.setGameOverScreen();
                 endGame = true;
                 prefs.save();
             }
@@ -256,11 +225,9 @@ public class PlayScreen extends GUIAbstractScreen {
         background.setY(0);
         background.setWidth(width);
         background.setHeight(height);
-        startButton.setPosition(w / 4, h / 2);
         backgroundScreen.resize(width,height);
         gatesScreen.resize(width,height);
         hud.resize(width, height);
-        infoScreen.resize(width, height);
         menuScreen.resize(width, height);
         gameWorld.getGameCamera().resize(width, height);
     }
@@ -276,7 +243,7 @@ public class PlayScreen extends GUIAbstractScreen {
         doPause();
         prefs.setHero(gameWorld.getWaterElement());
         prefs.setBlockController(gameWorld.getBlockController());
-     //   prefs.save();
+//        prefs.save();
     }
 
     public void doPause() {
@@ -310,7 +277,6 @@ public class PlayScreen extends GUIAbstractScreen {
     public void hide() {
         backgroundScreen.dispose();
         hud.dispose();
-        infoScreen.dispose();
         menuScreen.dispose();
         worldController.dispose();
 
@@ -319,7 +285,6 @@ public class PlayScreen extends GUIAbstractScreen {
 
     @Override
     protected void updateLogic(float deltaTime) {
-        System.out.println("deltaTime = " + deltaTime);
 
 
     }
@@ -342,17 +307,12 @@ public class PlayScreen extends GUIAbstractScreen {
     @Override
     public void applyViewport() {
         hud.applyViewport();
-        infoScreen.applyViewport();
         menuScreen.applyViewport();
         gameWorld.getGameCamera().applyViewport();
     }
 
     public Hud getHud() {
         return hud;
-    }
-
-    public InfoScreen getInfoScreen() {
-        return infoScreen;
     }
 
     public MenuScreen getMenuScreen() {

@@ -17,7 +17,7 @@ import com.daleondeveloper.Screens.GUIAbstractScreen;
 
 import java.util.Random;
 
-
+//Екран загрузки
 public class SplashScreen extends GUIAbstractScreen {
     private static final String TAG = SplashScreen.class.getName();
 

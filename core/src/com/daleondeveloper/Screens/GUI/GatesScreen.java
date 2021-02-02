@@ -12,7 +12,7 @@ import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 
-
+//Екран відповідає за відображення Воріт Драконів і вогнів
 public class GatesScreen extends GUIOverlayAbstractScreen {
     private static final String TAG = GatesScreen.class.getName();
 
@@ -151,10 +151,6 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
         stage.act();
 
         stateTime += deltaTime;
-
-        float w = stage.getWidth();
-        float h = stage.getHeight();
-
     }
 
     @Override

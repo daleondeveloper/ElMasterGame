@@ -2,18 +2,16 @@ package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.ElMaster;
-import com.daleondeveloper.Game.GameCamera;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
+import com.daleondeveloper.Screens.Play.PlayScreen;
 
-
+//Відоюражає задній фон туман
 public class BackgroundScreen extends GUIOverlayAbstractScreen {
     public static final String TAG = BackgroundScreen.class.getName();
 

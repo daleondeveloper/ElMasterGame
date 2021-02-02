@@ -14,6 +14,7 @@ import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.filler.CreditMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.GameModeChangeMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.GameOverFiller;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
@@ -22,6 +23,8 @@ import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 
+//Екран відображає меню
+//За допомогою MenuFiller класів наповнення меню можна змінити
 public class MenuScreen extends GUIOverlayAbstractScreen {
     private final static String TAG = MenuScreen.class.getName();
 
@@ -30,7 +33,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
 
     public enum MenuState{
-        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE
+        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE, GAME_OVER;
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -47,6 +50,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private SettingsMenuFiller settingsMenuFiller;
     private CreditMenuFiller creditMenuFiller;
     private GameModeChangeMenuFiller gameModeChangeMenuFiller;
+    private GameOverFiller gameOverFiller;
 
     private Image screenBg;
     private Image pauseWindow;
@@ -69,6 +73,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         settingsMenuFiller = new SettingsMenuFiller(this);
         creditMenuFiller = new CreditMenuFiller(this);
         gameModeChangeMenuFiller = new GameModeChangeMenuFiller(this);
+        gameOverFiller = new GameOverFiller(this);
 
         menuState = MenuState.CLOSE;
     }
@@ -95,19 +100,10 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
                 hideMenuScreen();
             }
         }));
-
-
         pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));
 
         stage.addActor(screenBg);
         stage.addActor(mainTable);
-//        stage.addActor(pauseWindow);
-
-        helpMenuFiller.build();
-        highScoreMenuFiller.build();
-        settingsMenuFiller.build();
-        creditMenuFiller.build();
-        gameModeChangeMenuFiller.build();
     }
 
     @Override
@@ -119,12 +115,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
         // Resize background
         screenBg.setSize(w, h);
-
-            pauseWindow.setWidth(400);
-            pauseWindow.setHeight(342);
-            pauseWindow.setX((w - pauseWindow.getWidth()) / 2);
-            pauseWindow.setY((h - pauseWindow.getHeight()) / 2);
-
     }
 
     @Override
@@ -135,17 +125,16 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         }else{
             setVisible(true);
         }
-
-        helpMenuFiller.update(deltaTime);
-        highScoreMenuFiller.update(deltaTime);
-        gameModeChangeMenuFiller.update(deltaTime);
+//
+//        helpMenuFiller.update(deltaTime);
+//        highScoreMenuFiller.update(deltaTime);
+//        gameModeChangeMenuFiller.update(deltaTime);
 
     }
 
     @Override
     public void render() {
         stage.draw();
-
     }
 
     @Override
@@ -163,6 +152,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
                 case HIGH_SCORE:setHighScoreScreen();break;
                 case CREDIT:setCreditScreen();break;
                 case GAMEMODECHOOSE:setGameModeChangeScreen();break;
+                case GAME_OVER:setGameOverScreen();break;
             }
         }
     }
@@ -227,6 +217,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
     }
 
+    public void setGameOverScreen(){
+        menuState = MenuState.GAME_OVER;
+        gameOverFiller.build();
+        Gdx.input.setInputProcessor(stage);
+    }
     public GUIAbstractScreen getGuiAbstractScreen() {
         return guiAbstractScreen;
     }
