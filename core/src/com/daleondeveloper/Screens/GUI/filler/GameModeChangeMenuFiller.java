@@ -258,6 +258,7 @@ public class GameModeChangeMenuFiller extends MenuFiller {
 
     }
     private void chooseModePanel(){
+        GameSettings.getInstance().deleteSave();
         // Таблиця вибору режиму гри
         Table gameModeTable = new Table();
         scrollPane = new ScrollPane(gameModeTable);

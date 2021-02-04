@@ -100,8 +100,6 @@ public class GameSettings {
             helpModeShow[i] = prefs.getBoolean("HELP_MODE_SHOW" + i,true);
         }
         loadGameWorldParameters();
-        loadHero();
-        loadBlock();
     }
     public void loadGameWorldParameters(){
         gameModeDragon = prefs.getInteger(GAME_MODE_DRAGON,0);
@@ -129,8 +127,8 @@ public class GameSettings {
     public void save() {
         //prefs.clear();
         saveSetting();
-        saveGameWorldParameters();
         saveGameWorldObjects();
+        saveGameWorldParameters();
         prefs.flush();
     }
     public void deleteSave(){
@@ -141,17 +139,10 @@ public class GameSettings {
             prefs.remove("BLOCK_" + i + "_TYPE");
         }
         prefs.putInteger("BLOCK_COUNT", 0);
-        prefs.putInteger(HIGH_SCORE_CLASSIC, highScoreClassic);
-        prefs.putInteger(HIGH_SCORE_FIRE, highScoreFire);
-        prefs.putInteger(HIGH_SCORE_LIGHT, highScoreLight);
-        prefs.putInteger(HIGH_SCORE_SNOW, highScoreSnow);
-        prefs.putInteger(HIGH_SCORE_WATER, highScoreWater);
-        prefs.putInteger(HIGH_SCORE_DARK, highScoreDark);
-        prefs.putInteger(HIGH_SCORE_SPECIAL, highScoreSpecial);
-        for(int i = 0; i < 7; i ++){
-            prefs.putBoolean("HELP_MODE_SHOW" + i,helpModeShow[i]);
-        }
+
         blockVector.clear();
+
+        prefs.putInteger(LAST_PLAY_SCORE,0);
 
         prefs.flush();
         lastPlayScore = 0;

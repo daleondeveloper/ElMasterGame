@@ -66,7 +66,7 @@ public class GameOverFiller extends MenuFiller{
     @Override
     protected void defineElements() {
         updateScore();
-        gameOverLabel = new Label(i18NGameThreeBundle.format("settingsScreen.title"), labelStyleMedium);
+        gameOverLabel = new Label("GAME OVER", labelStyleMedium);
             bestScoreLabel = new Label("Best Score : " + bestScore, labelStyleMedium);
         playerScoreLabel = new Label("Score : " + playerScore,labelStyleMedium);
 
@@ -83,7 +83,14 @@ public class GameOverFiller extends MenuFiller{
 
     @Override
     protected void addAction() {
-        mainMenuButton.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
+        mainMenuButton.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                prefs.deleteSave();
+                ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
+
+            }
+        }));
 
         restartButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override

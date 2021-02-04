@@ -81,7 +81,7 @@ public class GameWorld {
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
-        gameSettings = com.daleondeveloper.Game.Settings.GameSettings.getInstance();
+        gameSettings = GameSettings.getInstance();
 
         gameMode = GameMode.CLASSIC;
 
@@ -103,6 +103,7 @@ public class GameWorld {
     }
 
     private void loadParameters(){
+        gameSettings.loadGameWorldParameters();
         switch (gameSettings.getGameModeDragon()){
             case 0:
                 gameMode = GameMode.CLASSIC;
@@ -167,7 +168,9 @@ public class GameWorld {
 
 
     private void loadGames(){
+       gameSettings.loadHero();
        waterElement.load();
+       gameSettings.loadBlock();
        blockController.load();
 
        for (Block blockA : blockController.getArrayBlock()){
