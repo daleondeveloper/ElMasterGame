@@ -264,7 +264,7 @@ public class GameModeChangeMenuFiller extends MenuFiller {
         scrollPane = new ScrollPane(gameModeTable);
         scrollPane.setScrollingDisabled(true,false);
         mainTable.add(scrollPane);
-        gameModeTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
+        gameModeTable.defaults().pad(10).padLeft(200).padRight(200).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
         gameModeTable.add(classicModeImage);
         gameModeTable.row();
 
@@ -290,9 +290,11 @@ public class GameModeChangeMenuFiller extends MenuFiller {
         //Таблиця з кнопками навішації по режимам гри
         Table moveArrowTable = new Table();
         mainTable.add(moveArrowTable).padBottom(20).padRight(50).padLeft(50).growX();
-        moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left();
+        moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
+        .padRight(50);
         moveArrowTable.add().growX();
-        moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right();
+        moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
+        .padLeft(50);
     }
     private void continueGamePanel(){
         Table continueGameTable = new Table();

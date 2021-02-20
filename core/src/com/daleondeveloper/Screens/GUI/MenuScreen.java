@@ -88,6 +88,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         windowTable = new Table();
         mainTable.add(windowTable).center().width(400).height(342);
         windowTable.setBackground(new TextureRegionDrawable(assetGUI.getPauseWindow()));
+        windowTable.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }));
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         pixmap.setColor(255, 0, 0, DIM_ALPHA);
         pixmap.fill();

@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Game.Settings.GameSettings;
@@ -46,7 +47,6 @@ public class WaterElement extends AbstractDynamicObject {
     private float stateTime;
     private Body body;
     private State currentState;
-    private boolean stopElem;
     private boolean activateElem;
     private boolean moveRight;
     private boolean pushRight;
@@ -56,8 +56,11 @@ public class WaterElement extends AbstractDynamicObject {
     private boolean turn;
     private float turnImpulse;
     private float pushImpulse;
-    private float returnCellsPositionY;
-    private float returnCellsPositionX;
+
+    private Vector2 returnPosition;
+
+    private Vector2 positionInGameGrid;
+
     private FixtureDef fixtureSkill;
     private CircleShape circleShapeSkillFixture;
 
@@ -95,10 +98,11 @@ public class WaterElement extends AbstractDynamicObject {
         debugState = currentState;
         moveRight = true;
         turn = false;
-        stopElem = false;
         activateElem = true;
         currentPlatform = null;
         pushBlock = null;
+        returnPosition = new Vector2();
+        positionInGameGrid = new Vector2();
 
         sensorDown = new HashSet<AbstractGameObject>();
         sensorLeft = new HashSet<AbstractGameObject>();
@@ -240,8 +244,8 @@ public class WaterElement extends AbstractDynamicObject {
 
         if(isIdle() || isWalk() || isJump() || isFall() ||
                 (sensorDown.size() == 0 && sensorLeft.size() == 0 && sensorRight.size() == 0)){
-            int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
-            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+            int posMasX = (int) (returnPosition.x / 10) - 5;
+            int posMasY = (int) (returnPosition.y / 10) - 15;
             boolean blockForPushRight = true;
 
             if(pushRight && !moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
@@ -324,11 +328,10 @@ public class WaterElement extends AbstractDynamicObject {
     public boolean load(){
         GameSettings.getInstance().loadHero();
         body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
-        returnCellsPositionX = GameSettings.getInstance().getHeroX() + getWidth()/2;
-        returnCellsPositionY = GameSettings.getInstance().getHeroY() + getHeight()/2;
-        body.setTransform(returnCellsPositionX,returnCellsPositionY,0);
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setRegion((TextureRegion) elemStandAnim.getKeyFrame(stateTime, true));
+        returnPosition.x = GameSettings.getInstance().getHeroX() + getWidth()/2;
+        returnPosition.y = GameSettings.getInstance().getHeroY() + getHeight()/2;
+        setReturnPosition();
+        updateSpritePosition(elemStandAnim.getKeyFrame(stateTime),true);
         return true;
     }
 
@@ -339,15 +342,14 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-      //  body.setTransform(0,0,0);
         if(body != null) {
             body.setGravityScale(10);
         } else {
             return;
         }
         checkContacts();
+        updatePositionInCells();
 
-          // checkContacts();
         switch (currentState){
             case IDLE:
                 stateIdle(deltaTime);
@@ -370,28 +372,23 @@ public class WaterElement extends AbstractDynamicObject {
             case DISPOSE:
                 break;
         }
-            if(body != null && sensorDown.size() == 0 ){
-                body.setGravityScale(10);
-            }
-        if(getSensorUp().size() > 0) {
-            int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
-            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
-            if(gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY + 1] != null ||
-                    gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY + 2] != null) {
+        stateTime += deltaTime;
+
+        if(getSensorUp().size() > 0 ||
+                gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 1] != null ||
+                    gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 2] != null) {
                 onDead();
                 return;
             }else{
-                body.setTransform(returnCellsPositionX,returnCellsPositionY,0);
+                setReturnPosition();
             }
-        }
-
     }
 
     private void checkContacts(){
         Block[][] blocksMass = gameWorld.getBlockController().getBlocksMas();
         Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
-        int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
-        int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+        int posMasX = (int) (returnPosition.x / 10) - 5;
+        int posMasY = (int) (returnPosition.y / 10) - 15;
         if(posMasY > 0){
             Block block;
             block = (blocksMass[posMasX][posMasY]);
@@ -474,88 +471,28 @@ public class WaterElement extends AbstractDynamicObject {
     }
 
     private void stateIdle(float deltaTime){
-        //Logic
-            if(stopElem){stopElem = false; }
-            if(sensorDown.size() == 0 ){ fall(); return;}
-
-           // body.setGravityScale(1);
+            //Logic
+            if(checkHeroIsFall()){return;}
             body.setLinearVelocity(0,0);
-            body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
-            //render
-            // Update this Sprite to correspond with the position of the Box2D body.
-            TextureRegion textureRegion = (TextureRegion) elemStandAnim.getKeyFrame(stateTime, true);
-        setRegion(textureRegion);
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
-                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-//            setRegion(newHero);
-            if(moveRight){setFlip(true,false);}
-            stateTime += deltaTime;
+            setReturnPositionY();
+            //Render
+            updateSpritePosition(elemStandAnim.getKeyFrame(stateTime,true),moveRight);
         }
+
+
     private void stateJump(float deltaTime){
-        float y = body.getPosition().y - 2;
-        int leftReg = 141,rightReg = 149;
-        for(int i = 0; i < 20; i++){
-            if(y > leftReg && y < rightReg){
-                returnCellsPositionY = leftReg - 1 ;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-        float x = body.getPosition().x;
-        leftReg = 53;
-        rightReg = 57;
-        for(int i = 0; i < 12; i++){
-            if(x >= leftReg && x < rightReg){
-                returnCellsPositionX = (rightReg + leftReg) >> 1;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-            if(body.getLinearVelocity().y < 1){fall();return;}
-            if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
-            if(sensorUp.size() > 0 || stateTime > 1){ fall(); return;}
+
+        if(body.getLinearVelocity().y < 1){fall();return;}
+
+        if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
             if(sensorLeft.size() > 0 || sensorRight.size() > 0){ body.getLinearVelocity().x = 0; }
 
-            // Update this Sprite to correspond with the position of the Box2D body.
-        TextureRegion textureRegion = (TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false);
-            setRegion(textureRegion);
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
-                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-        if(moveRight){setFlip(true,false);}
-            stateTime += deltaTime;
+            updateSpritePosition(elemJumpAnim.getKeyFrame(stateTime,false),moveRight);
         }
     private void stateFall(float deltaTime){
-        float y = body.getPosition().y - 2;
-        int leftReg = 141,rightReg = 149;
-        for(int i = 0; i < 20; i++){
-            if(y > leftReg && y < rightReg){
-                returnCellsPositionY = leftReg -1 ;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-        float x = body.getPosition().x;
-        leftReg = 53;
-        rightReg = 57;
-        for(int i = 0; i < 12; i++){
-            if(x >= leftReg && x < rightReg){
-                returnCellsPositionX = (rightReg + leftReg) >> 1;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-        if(getY() < 0){
-            returnCellsPositionY = 160;
-        }
 
         if(stateTime > 2) {
-            body.setTransform(returnCellsPositionX + getWidth() / 2, body.getPosition().y, 0);
+            setReturnPositionX();
         }
             if(sensorDown.size() > 0){ idle(); }
             if(sensorLeft.size() > 0 && body.getLinearVelocity().x < 0){
@@ -566,35 +503,16 @@ public class WaterElement extends AbstractDynamicObject {
             }
             body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
 
-
-            TextureRegion textureRegion = (TextureRegion) elemJumpAnim.getKeyFrame(stateTime, false);
-            setRegion(textureRegion);
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
-                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-        if(moveRight){setFlip(true,false);}
-            stateTime += deltaTime;
+            updateSpritePosition(elemJumpAnim.getKeyFrame(stateTime,false),moveRight);
         }
     private void statePush(float deltaTime){
-        float x = body.getPosition().x;
-        int leftReg = 53,rightReg = 57;
-        for(int i = 0; i < 12; i++){
-            if(x >= leftReg && x < rightReg){
-                returnCellsPositionX = (rightReg + leftReg) >> 1;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-        int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
-        int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
-        if(pushRight && !moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
-         && posMasX < gameWorld.getBlockController().getBlocksMas().length - 1 && gameWorld.getBlockController().getBlocksMas()[posMasX + 1][posMasY] != null){
+        if(pushRight && !moveRight && (int)positionInGameGrid.x > 0 && gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null
+         && (int)positionInGameGrid.x < gameWorld.getBlockController().getBlocksMas().length - 1 && gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x + 1][(int)positionInGameGrid.y] != null){
             fall();
             return;
         }
-        if(!pushRight && moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
-                && posMasX > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX - 1][posMasY] != null){
+        if(!pushRight && moveRight && (int)positionInGameGrid.y > 0 && gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null
+                && (int)positionInGameGrid.x > 0 && gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x - 1][(int)positionInGameGrid.y] != null){
             fall();
             return;
         }
@@ -603,58 +521,21 @@ public class WaterElement extends AbstractDynamicObject {
                 return;
             }
 
-            body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
+            setReturnPositionY();
             pushBlock.push(turnImpulse);
             body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
 
             // Update this Sprite to correspond with the position of the Box2D body.
-        TextureRegion textureRegion = (TextureRegion) elemPushAnim.getKeyFrame(stateTime, false);
-        setRegion(textureRegion);
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
-                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-        if(pushRight){setFlip(true,false);}
-            stateTime += deltaTime;
+            updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
-
-            if(activateElem){
-                activateElem = false;
-            }
-         float x = body.getPosition().x;
-         int leftReg = 53,rightReg = 57;
-            for(int i = 0; i < 12; i++){
-            if(x >= leftReg && x < rightReg){
-                returnCellsPositionX = (rightReg + leftReg) >> 1;
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-        int posMasX = (int) (getReturnCellsPositionX() / 10) - 5;
-        int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
-        if(posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null){
-            fall();
-            return;
-        }
+        if(checkHeroIsFall()){return;}
             body.setGravityScale(0);
             body.setLinearVelocity(new Vector2(turnImpulse*2,0));
-        body.setTransform(body.getPosition().x,returnCellsPositionY + getHeight()/2 + 0.5f,0);
+            setReturnPositionY();
 
-        if(sensorDown.size() < 1){
-                fall();
-            }
-            if(!gameWorld.isRightButtonPressed() && !gameWorld.isLeftButtonPressed()){
-                fall();
-            }
             // Update this Sprite to correspond with the position of the Box2D body.
-        TextureRegion textureRegion = (TextureRegion) elemWalkAnim.getKeyFrame(stateTime, true);
-            setRegion(textureRegion);
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
-                textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-        if(moveRight){setFlip(true,false);}
-            stateTime += deltaTime;
+            updateSpritePosition(elemWalkAnim.getKeyFrame(stateTime,true),moveRight);
         }
     private void stateDead(float deltaTime){
             if(stateTime> elemDeathAnim.getAnimationDuration()) {
@@ -662,40 +543,87 @@ public class WaterElement extends AbstractDynamicObject {
                 body = null;
                 currentState = State.DISPOSE;
             }else {
-                TextureRegion textureRegion = (TextureRegion) elemDeathAnim.getKeyFrame(stateTime, false);
-                //body.
-                setRegion(textureRegion);
-//                setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-                setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
-                        textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
-                if (moveRight) {
-                    setFlip(true, false);
-                }
-                stateTime += deltaTime;
+                updateSpritePosition(elemDeathAnim.getKeyFrame(stateTime,false),moveRight);
             }
     }
 
+    private boolean checkHeroIsFall(){
+        if(sensorDown.size() != 0 || sensorUp.size() > 0 ||
+                ((int)positionInGameGrid.y > 0 &&
+                        gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null)){
+            return false;
+        }
+        fall();
+        return true;
+    }
 
+    // Update this Sprite to correspond with the position of the Box2D body.
+    private void updateSpritePosition(TextureRegion spriteTexture, boolean turnSpriteRight){
+        setRegion(spriteTexture);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+        setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
+                spriteTexture.getRegionWidth() * 0.12f,spriteTexture.getRegionHeight() * 0.12f);
+        if(turnSpriteRight){setFlip(true,false);}
+    }
+    private void updatePositionInCells(){
+        updateReturnPositionX();
+        updateReturnPositionY();
+        updatePositionInGrid();
+    }
+    private void updatePositionInGrid(){
+        positionInGameGrid.set((returnPosition.x / 10) - 5, (returnPosition.y / 10) - 15);
+    }
+    private void updateReturnPositionX(){
+        float x = body.getPosition().x;
+        int leftReg = 53, rightReg = 57;
+        for(int i = 0; i < 12; i++){
+            if(x >= leftReg && x < rightReg){
+                returnPosition.x = (rightReg + leftReg) >> 1;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
+    }
+    private void updateReturnPositionY(){
+        float y = body.getPosition().y - 2;
+        int leftReg = 141,rightReg = 149;
+        for(int i = 0; i < 20; i++){
+            if(y > leftReg && y < rightReg){
+                returnPosition.y = leftReg - 1 ;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
+        if(getY() < 0){
+            returnPosition.y = 160;
+        }
+    }
+    private void setReturnPosition(){
+        setReturnPositionX();
+        setReturnPositionY();
+    }
+    private void setReturnPositionX(){
+        body.setTransform(returnPosition.x + getWidth() / 2, body.getPosition().y, 0);
+    }
+    private void setReturnPositionY(){
+        body.setTransform(body.getPosition().x,returnPosition.y + getHeight()/2 + 0.5f,0);
+    }
 
     @Override
     public void render(SpriteBatch spriteBatch) {
             draw(spriteBatch);
     }
-
-
-
     public Set<AbstractGameObject> getSensorRight() {
         return sensorRight;
     }
-
     public Set<AbstractGameObject> getSensorLeft() {
         return sensorLeft;
     }
-
     public Set<AbstractGameObject> getSensorUp() {
         return sensorUp;
     }
-
     public Set<AbstractGameObject> getSensorDown() {
         return sensorDown;
     }
@@ -707,13 +635,8 @@ public class WaterElement extends AbstractDynamicObject {
     public Vector2 getVelocity(){
         return body.getLinearVelocity();
     }
-
-    public float getReturnCellsPositionY() {
-        return returnCellsPositionY;
-    }
-
-    public float getReturnCellsPositionX() {
-        return returnCellsPositionX;
+    public Vector2 getReturnPosition() {
+        return returnPosition;
     }
 
     public boolean isIdle(){return currentState == State.IDLE;}
@@ -731,8 +654,8 @@ public class WaterElement extends AbstractDynamicObject {
         return "WaterElement{" +
                 ", currentState=" + currentState +
                 ", moveRight=" + moveRight +
-                ", returnCellsPositionY=" + returnCellsPositionY +
-                ", returnCellsPositionX=" + returnCellsPositionX +
+                ", returnCellsPositionY=" + returnPosition.y +
+                ", returnCellsPositionX=" + returnPosition.x +
                 '}';
     }
 }

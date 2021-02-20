@@ -135,9 +135,11 @@ public class HighScoreMenuFiller extends MenuFiller  {
         //Додавання кнопок переміщення знизу
         Table moveArrowTable = new Table();
         mainTable.add(moveArrowTable).padBottom(30).padRight(50).padLeft(50).growX();
-        moveArrowTable.add(previsionScoreImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left();
+        moveArrowTable.add(previsionScoreImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
+        .padLeft(50).padRight(100);
         moveArrowTable.add().growX();
-        moveArrowTable.add(nextScoreImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right();
+        moveArrowTable.add(nextScoreImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
+        .padRight(50).padLeft(100);
     }
 
     private void changeScore() {
