@@ -139,7 +139,7 @@ public class Block extends AbstractDynamicObject {
         fixture.filter.categoryBits = WorldContactListner.CATEGORY_BLOCK_BIT;
         fixture.filter.maskBits = WorldContactListner.MASK_ALL;
         fixture.shape = polygonShape;
-        fixture.density = 0f;
+        fixture.density = 1f;
         fixture.friction = 0f;
         fixture.restitution = 0f;
         fixture.isSensor = false;
