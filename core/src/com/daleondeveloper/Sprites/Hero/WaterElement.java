@@ -178,21 +178,7 @@ public class WaterElement extends AbstractDynamicObject {
     }
 
 
-    public void jump(){
-        if(isWalk() || isIdle()) {
-            stateTime = 0;
-            currentState = State.JUMP;
-            body.applyLinearImpulse(0, IMPULSE_Y,getWidth()/2,getHeight()/2,true);
-        }
-    }
-    public void fall(){
-        if(isWalk() || isIdle() || isPush() || isJump()) {
-                body.applyLinearImpulse(0, IMPULSE_FALL,getWidth()/2,getHeight()/2,true);
 
-            stateTime = 0;
-            currentState = State.FALL;
-        }
-    }
     public void turn(float impulse){
 
             if (impulse > 0) {
@@ -226,19 +212,11 @@ public class WaterElement extends AbstractDynamicObject {
 
     public void stopWalk(){
         if(currentState == State.WALK){
-            currentState = State.IDLE;
-            stateTime = 0;
+            idle();
             body.setLinearVelocity(0,body.getLinearVelocity().y);
         }
+    }
 
-    }
-    public void idle(){
-        currentState = State.IDLE;
-        stateTime = 0;
-//        if(pushBlock != null){
-//            pushBlock.idle();
-//        }
-    }
     public void push(float impulse){
 
         if(isIdle() || isWalk() || isJump() || isFall() ||
@@ -246,6 +224,7 @@ public class WaterElement extends AbstractDynamicObject {
             int posMasX = (int) (returnPosition.x / 10) - 5;
             int posMasY = (int) (returnPosition.y / 10) - 15;
             boolean blockForPushRight = true;
+
 
             if(pushRight && !moveRight && posMasY > 0 && gameWorld.getBlockController().getBlocksMas()[posMasX][posMasY - 1] == null
                     && posMasX < gameWorld.getBlockController().getBlocksMas().length - 1 && gameWorld.getBlockController().getBlocksMas()[posMasX + 1][posMasY] != null){
@@ -317,18 +296,11 @@ public class WaterElement extends AbstractDynamicObject {
             }
 
     }
-    public void onDead(){
-        if(currentState != State.DEAD) {
-            stateTime = 0;
-            currentState = State.DEAD;
-        }
-    }
+
 
     public boolean load(){
         GameSettings.getInstance().loadHero();
-        body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
-        returnPosition.x = GameSettings.getInstance().getHeroX() + getWidth()/2;
-        returnPosition.y = GameSettings.getInstance().getHeroY() + getHeight()/2;
+        setLoadParameters();
         setReturnPosition();
         updateSpritePosition(elemStandAnim.getKeyFrame(stateTime),true);
         return true;
@@ -346,7 +318,7 @@ public class WaterElement extends AbstractDynamicObject {
         checkContacts();
         updatePositionInCells();
         updateByState(deltaTime);
-        if(isBlockUnderHero() && !isHeroIsFall()){onDead();return;}
+        if(isBlockUnderHero() && !isHeroIsFall()){ dead();return;}
     }
 
     private void checkContacts(){
@@ -489,9 +461,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
     private void stateDead(float deltaTime){
             if(stateTime> elemDeathAnim.getAnimationDuration()) {
-                gameWorld.destroyBody(body);
-                body = null;
-                currentState = State.DISPOSE;
+                setStateDisposeAndDestroyBody();
             }else {
                 updateSpritePosition(elemDeathAnim.getKeyFrame(stateTime,false),moveRight);
             }
@@ -499,7 +469,8 @@ public class WaterElement extends AbstractDynamicObject {
 
     private boolean isBlockUnderHero(){
         if(getSensorUp().size() > 0 &&
-                gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 1] != null) {
+                (gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 1] != null ||
+                gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 2] != null)) {
             return true;
         }
         return false;
@@ -533,6 +504,42 @@ public class WaterElement extends AbstractDynamicObject {
             return true;
         }
         return false;
+    }
+
+    public void idle(){
+        currentState = State.IDLE;
+        stateTime = 0;
+    }
+    public void jump(){
+        if(isWalk() || isIdle()) {
+            stateTime = 0;
+            currentState = State.JUMP;
+            body.applyLinearImpulse(0, IMPULSE_Y,getWidth()/2,getHeight()/2,true);
+        }
+    }
+    public void fall(){
+        if(isWalk() || isIdle() || isPush() || isJump()) {
+            stateTime = 0;
+            currentState = State.FALL;
+            body.applyLinearImpulse(0, IMPULSE_FALL,getWidth()/2,getHeight()/2,true);
+        }
+    }
+    public void dead(){
+        if(currentState != State.DEAD) {
+            stateTime = 0;
+            currentState = State.DEAD;
+        }
+    }
+    private void setStateDisposeAndDestroyBody(){
+        gameWorld.destroyBody(body);
+        body = null;
+        currentState = State.DISPOSE;
+    }
+
+    private void setLoadParameters(){
+        body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
+        returnPosition.x = GameSettings.getInstance().getHeroX() + getWidth()/2;
+        returnPosition.y = GameSettings.getInstance().getHeroY() + getHeight()/2;
     }
 
     private void setIdleVelocity(){
