@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Game.Settings.GameSettings;
@@ -342,46 +341,12 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public void update(float deltaTime) {
-        if(body != null) {
-            body.setGravityScale(10);
-        } else {
-            return;
-        }
+        stateTime += deltaTime;
+        if(body == null) { return; }
         checkContacts();
         updatePositionInCells();
-
-        switch (currentState){
-            case IDLE:
-                stateIdle(deltaTime);
-                break;
-            case JUMP:
-                stateJump(deltaTime);
-                break;
-            case FALL:
-                stateFall(deltaTime);
-                break;
-            case PUSH:
-                statePush(deltaTime);
-                break;
-            case WALK:
-                stateWalk(deltaTime);
-                break;
-            case DEAD:
-                stateDead(deltaTime);
-                break;
-            case DISPOSE:
-                break;
-        }
-        stateTime += deltaTime;
-
-        if(getSensorUp().size() > 0 ||
-                gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 1] != null ||
-                    gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 2] != null) {
-                onDead();
-                return;
-            }else{
-               // setReturnPosition();
-            }
+        updateByState(deltaTime);
+        if(isBlockUnderHero() && !isHeroIsFall()){onDead();return;}
     }
 
     private void checkContacts(){
@@ -470,34 +435,55 @@ public class WaterElement extends AbstractDynamicObject {
 
     }
 
+    private void updateByState(float deltaTime){
+        switch (currentState){
+            case IDLE:
+                stateIdle(deltaTime);
+                break;
+            case JUMP:
+                stateJump(deltaTime);
+                break;
+            case FALL:
+                stateFall(deltaTime);
+                break;
+            case PUSH:
+                statePush(deltaTime);
+                break;
+            case WALK:
+                stateWalk(deltaTime);
+                break;
+            case DEAD:
+                stateDead(deltaTime);
+                break;
+            case DISPOSE:
+                break;
+        }
+    }
     private void stateIdle(float deltaTime){
-            if(checkHeroIsFall()){return;}
-            body.setLinearVelocity(0,0);
+            if(isHeroIsFall()){fall();return;}
+            setIdleVelocity();
             setReturnPositionY();
             updateSpritePosition(elemStandAnim.getKeyFrame(stateTime,true),moveRight);
         }
     private void stateJump(float deltaTime){
-            if(body.getLinearVelocity().y < 1){fall();return;}
-            if(sensorDown.size() > 0 && stateTime > 1f){ idle(); return; }
+            if(!isHeroIsFall() && stateTime > 1f){ idle(); return; }
             updateSpritePosition(elemJumpAnim.getKeyFrame(stateTime,false),moveRight);
         }
     private void stateFall(float deltaTime){
-            if(sensorDown.size() > 0){ idle(); }
-            body.setLinearVelocity(body.getLinearVelocity().x,IMPULSE_FALL);
+            if(!isHeroIsFall()){idle();return;}
             updateSpritePosition(elemJumpAnim.getKeyFrame(stateTime,false),moveRight);
         }
     private void statePush(float deltaTime){
-            if(checkPossibilityToPushBack()){return;}
-            if(checkPushBlockNearHero()){return;}
+            if(isPossibilityToPushBack()){fall();return;}
+            if(isPushedBlockNearHero()){idle();return;}
             setReturnPositionY();
             pushBlock.push(turnImpulse);
-            body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+            setPushVelocity();
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
-            if(checkHeroIsFall()){return;}
-            body.setGravityScale(0);
-            body.setLinearVelocity(new Vector2(turnImpulse*2,0));
+            if(isHeroIsFall()){fall();return;}
+            setWalkVelocity();
             setReturnPositionY();
             updateSpritePosition(elemWalkAnim.getKeyFrame(stateTime,true),moveRight);
         }
@@ -511,41 +497,53 @@ public class WaterElement extends AbstractDynamicObject {
             }
     }
 
-    private boolean checkHeroIsFall(){
-        if(sensorDown.size() == 0 ||
-                sensorUp.size() != 0 ||
-                ((int)positionInGameGrid.y > 0 &&
-                        gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null)){
-            fall();
+    private boolean isBlockUnderHero(){
+        if(getSensorUp().size() > 0 &&
+                gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y + 1] != null) {
             return true;
         }
         return false;
     }
-    private boolean checkPossibilityToPushBack(){
+    private boolean isHeroIsFall(){
+        if(sensorDown.size() == 0 &&
+                (((int)positionInGameGrid.y > 0 &&
+                        gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null) ||
+                        (positionInGameGrid.y == 0)) ){
+            return true;
+        }
+        return false;
+    }
+    private boolean isPossibilityToPushBack(){
         if(pushRight && !moveRight && (int)positionInGameGrid.x > 0 &&
                 gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null
                 && (int)positionInGameGrid.x < gameWorld.getBlockController().getBlocksMas().length - 1 &&
                 gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x + 1][(int)positionInGameGrid.y] != null){
-            fall();
             return true;
         }
         if(!pushRight && moveRight && (int)positionInGameGrid.y > 0 &&
                 gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x][(int)positionInGameGrid.y - 1] == null
                 && (int)positionInGameGrid.x > 0 &&
                 gameWorld.getBlockController().getBlocksMas()[(int)positionInGameGrid.x - 1][(int)positionInGameGrid.y] != null){
-            fall();
             return true;
         }
         return  false;
     }
-    private boolean checkPushBlockNearHero(){
+    private boolean isPushedBlockNearHero(){
         if(sensorLeft.isEmpty() && sensorRight.isEmpty()){
-            idle();
             return true;
         }
         return false;
     }
 
+    private void setIdleVelocity(){
+        body.setLinearVelocity(0,0);
+    }
+    private void setPushVelocity(){
+        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
+    }
+    private void setWalkVelocity(){
+        body.setLinearVelocity(new Vector2(turnImpulse*2,0));
+    }
     // Update this Sprite to correspond with the position of the Box2D body.
     private void updateSpritePosition(TextureRegion spriteTexture, boolean turnSpriteRight){
         setRegion(spriteTexture);
