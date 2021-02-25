@@ -16,12 +16,11 @@ public class LightBlock extends Block {
 
     @Override
     protected void stateIdle(float deltaTime) {
-        Block[][] blocksMas = blockController.getBlocksMas();
         int posMasX = (int)(getReturnCellsPosition() / 10 ) - 5;
 
-        for(int i = 0; i < blocksMas[posMasX].length; i++){
-            if(blocksMas[posMasX][i] != null){
-                blocksMas[posMasX][i].delete();
+        for(int i = 0; i < blockController.getLengthBlockGridY(); i++){
+            if(blockController.getBlockFromGridByCoordinate(posMasX,i) != null){
+                blockController.getBlockFromGridByCoordinate(posMasX,i).delete();
             }
         }
     }

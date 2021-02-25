@@ -34,30 +34,29 @@ public class WaterBlock extends Block {
         super.stateIdle(deltaTime);
         freezingTime += deltaTime;
         if(freezingTime < FREEZING_TIME) {
-            Block[][] blocksMas = blockController.getBlocksMas();
-            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
-            int posMasX = (int) (getReturnCellsPosition() / 10) - 5;
+//            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
+//            int posMasX = (int) (getReturnCellsPosition() / 10) - 5;
 
-            if (posMasX > 0 && blocksMas[posMasX - 1][posMasY] != null) {
-                Block block = blocksMas[posMasX - 1][posMasY];
+            if (blockController.getLeftBlock(this) != null) {
+                Block block = blockController.getLeftBlock(this);
                 if (!block.isIFall()) {
                     block.idle();
                 }
             }
-            if (posMasX < blocksMas.length - 1 && blocksMas[posMasX + 1][posMasY] != null) {
-                Block block = blocksMas[posMasX + 1][posMasY];
+            if ( blockController.getRightBlock(this) != null) {
+                Block block = blockController.getRightBlock(this);
                 if (!block.isIFall()) {
                     block.idle();
                 }
             }
-            if (posMasY > 0 && blocksMas[posMasX][posMasY - 1] != null) {
-                Block block = blocksMas[posMasX][posMasY - 1];
+            if (blockController.getDownBlock(this) != null) {
+                Block block = blockController.getDownBlock(this);
                 if (!block.isIFall()) {
                     block.idle();
                 }
             }
-            if (posMasY < blocksMas[0].length - 1 && blocksMas[posMasX][posMasY + 1] != null) {
-                Block block = blocksMas[posMasX][posMasY + 1];
+            if (blockController.getUpBlock(this) != null) {
+                Block block = blockController.getUpBlock(this);
                 if (!block.isIFall()) {
                     block.idle();
                 }
