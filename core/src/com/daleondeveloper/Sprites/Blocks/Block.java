@@ -95,6 +95,7 @@ public class Block extends AbstractDynamicObject {
         stateTime = 0;
         checkTime = 0;
         statePosition = false;
+        positionInGameGrid = new Vector2();
 
         pushImpulse = 10;
         returnCellsPosition = x;
@@ -249,7 +250,7 @@ public class Block extends AbstractDynamicObject {
         if(currentState != State.FALL){
             effect =null;
         }
-
+        updatePositionInGrid();
     }
     protected void stateIdle(float deltaTime){
         //Change body type and check the main allegations to change the state to another immediately
@@ -439,6 +440,11 @@ public class Block extends AbstractDynamicObject {
         if(currentState == State.DISPOSE){
             return true;
         }else return false;
+    }
+
+    @Override
+    protected void updatePositionInGrid() {
+        positionInGameGrid.set(positionInBlocksMasX,positionInBlocksMasY);
     }
 
     //вНЕСТИ ОПИС МЕТОДА

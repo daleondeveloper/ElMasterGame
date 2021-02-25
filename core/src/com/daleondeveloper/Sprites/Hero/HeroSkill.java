@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
@@ -119,5 +118,10 @@ public class HeroSkill extends AbstractDynamicObject {
         if(blockInUsesSkill != null) {
 //            blockInUsesSkill.skill1End();
         }
+    }
+
+    @Override
+    protected void updatePositionInGrid() {
+
     }
 }
