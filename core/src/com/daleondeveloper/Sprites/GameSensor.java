@@ -3,7 +3,6 @@ package com.daleondeveloper.Sprites;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -18,7 +17,7 @@ import com.daleondeveloper.Sprites.Blocks.Block;
 import java.util.HashSet;
 import java.util.Set;
 
-public class GameSensor extends AbstractDynamicObject {
+public class GameSensor extends AbstractGameObject {
     private static final String TAG = Platform.class.getName();
 
     private GameWorld gameWorld;
@@ -93,10 +92,6 @@ public class GameSensor extends AbstractDynamicObject {
         return false;
     }
 
-    @Override
-    public Vector2 getBodyPosition() {
-        return body.getPosition();
-    }
 
     public Set<com.daleondeveloper.Sprites.Blocks.Block> getFirstLineBlocks() {
         return firstLineBlocks;

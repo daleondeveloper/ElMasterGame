@@ -2,22 +2,20 @@ package com.daleondeveloper.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
-import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.WorldContactListner;
+import com.daleondeveloper.Sprites.Blocks.Block;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class Platform extends AbstractDynamicObject {
+public class Platform extends AbstractGameObject {
     private static final String TAG = Platform.class.getName();
 
     private static final float SCALE = 0.4f;
@@ -77,10 +75,7 @@ public class Platform extends AbstractDynamicObject {
         currentState = State.DELETE;
     }
 
-    @Override
-    public Vector2 getBodyPosition() {
-        return null;
-    }
+
 
     @Override
     public void update(float deltaTime) {
