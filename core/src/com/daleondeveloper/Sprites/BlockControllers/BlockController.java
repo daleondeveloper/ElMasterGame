@@ -7,6 +7,7 @@ import com.daleondeveloper.Game.Settings.BlockLoad;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
@@ -23,6 +24,7 @@ import java.util.Random;
 public class BlockController {
     private static final String TAG = BlockController.class.getName();
 
+    private static BlockController instance;
 
     protected List<Block> arrayBlock ;
     protected GameWorld gameWorld;
@@ -47,6 +49,7 @@ public class BlockController {
         blockFallVelocity = (-50);
 
     }
+
     public void update(float deltaTime){
 
         blockCreateTime += deltaTime;
@@ -275,38 +278,53 @@ public Block checkLeftContact(Block block) {
             addBlock(loadedBlock.getPosition().x, loadedBlock.getPosition().y,loadedBlock.getBlockType());
         }
     }
-    public Block getRightBlock(Vector2 objectPositionInWorldCells){
+    public Block getBlockFromGridByCoordinate(int x, int y){
+        if(x > 0 && x < getLengthBlockGridX() - 1 &&
+        y > 0 && y < getLengthBlockGridY() - 1){
+            return blocksMas[x][y];
+        }else{
+            return null;
+        }
+    }
+    public Block getRightBlock(AbstractDynamicObject object){
+        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
         if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 0 &&
                 (int)objectPositionInWorldCells.x < blocksMas.length - 1 && (int)objectPositionInWorldCells.y < blocksMas[0].length){
             return blocksMas[(int)objectPositionInWorldCells.x + 1][(int)objectPositionInWorldCells.y];
         }
         return null;
-    }public Block getLeftBlock(Vector2 objectPositionInWorldCells){
+    }public Block getLeftBlock(AbstractDynamicObject object){
+        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
         if(objectPositionInWorldCells.x > 1 && objectPositionInWorldCells.y >= 0 &&
                 (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length){
             return blocksMas[(int)objectPositionInWorldCells.x - 1][(int)objectPositionInWorldCells.y];
         }
         return null;
-    }public Block getUpBlock(Vector2 objectPositionInWorldCells){
+    }public Block getUpBlock(AbstractDynamicObject object){
+        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
         if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 0 &&
                 (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length - 1){
             return blocksMas[(int)objectPositionInWorldCells.x][(int)objectPositionInWorldCells.y + 1];
         }
         return null;
     }
-    public Block getDownBlock(Vector2 objectPositionInWorldCells){
+    public Block getDownBlock(AbstractDynamicObject object){
+        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
         if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y > 1 &&
                 (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length){
             return blocksMas[(int)objectPositionInWorldCells.x][(int)objectPositionInWorldCells.y - 1];
         }
         return null;
     }
-    public List<Block> getArrayBlock() {
-        return arrayBlock;
+    public int getLengthBlockGridX(){
+        return blocksMas.length;
+    }
+    public int getLengthBlockGridY(){
+        return blocksMas[0].length;
     }
 
-    public Block[][] getBlocksMas() {
-        return blocksMas;
+    public List<Block> getArrayBlock() {
+        return arrayBlock;
     }
 
     public float getBlockFallVelocity() {
