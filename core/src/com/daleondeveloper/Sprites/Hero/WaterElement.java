@@ -32,6 +32,11 @@ public class WaterElement extends AbstractDynamicObject {
     private static float IMPULSE_FALL = -30f;
     private static final float MIN_SPEAK_TIME = 7.0f;
     private static final float MAX_SPEAK_TIME = 10.0f;
+    private static final float SPEED_MULTIPIER_IDLE = 0f;
+    private static final float SPEED_MULTIPIER_WALK = 2f;
+    private static final float SPEED_MULTIPIER_PUSH = 1f;
+    private static final float SPEED_MULTIPIER_IN_AIR = 0.66f;
+
 
     private enum State{
         IDLE,WALK,JUMP,FALL,PUSH,DEAD,DISPOSE
@@ -185,55 +190,49 @@ public class WaterElement extends AbstractDynamicObject {
     }
 
 
-
+    public void turnLeft(){
+        moveRight = true;
+    }
+    public void turnRight(){
+        moveRight = false;
+    }
     public void turn(float impulse){
-
-            if (impulse > 0) {
-                moveRight = true;
-            } else {
-                moveRight = false;
-            }
-            if (isPush()) {
-                pushImpulse = impulse;
-                turnImpulse = impulse;
-                if ((moveRight && sensorRight.size() > 0) || (!moveRight && sensorLeft.size() > 0)) {
-                    return;
-                }
-            }
             if (isIdle()) {
-                currentState = State.WALK;
-                stateTime = 0;
+                setStateWalk();
+                turnImpulse = impulse;
+                return;
             }
             if (isJump() || isFall()) {
-                if ((impulse > 0 && sensorRight.size() > 0) ||
-                        (impulse < 0 && sensorLeft.size() > 0)) {
-                    impulse = 0;
+                if (isBlockInTurnDirection()) {
+                    turnImpulse = 0;
                 }
-                impulse *= 0.66f;
-                body.setLinearVelocity(impulse , body.getLinearVelocity().y);
+                setTurnVelocityByMultiplier(SPEED_MULTIPIER_IN_AIR);
             }
-            turnImpulse = impulse ;
-
-
     }
-
+    private boolean isBlockInTurnDirection(){
+        if ((turnImpulse > 0 && sensorRight.size() > 0) ||
+                (turnImpulse < 0 && sensorLeft.size() > 0)) {
+            return true;
+        }
+        return false;
+    }
     public void stopWalk(){
         if(currentState == State.WALK){
             idle();
-            body.setLinearVelocity(0,body.getLinearVelocity().y);
         }
     }
     private boolean isPossibleToPush(){
-        if(pushRight && !moveRight && positionInGameGrid.x > 0 && blockController.getDownBlock(this) == null
+        if(!moveRight && positionInGameGrid.x > 0 && blockController.getDownBlock(this) == null
                 && blockInRightSide != null){
             return false;
         }
-        if(!pushRight && moveRight && positionInGameGrid.y > 0 && blockController.getDownBlock(this) == null
+        if(moveRight && positionInGameGrid.y > 0 && blockController.getDownBlock(this) == null
                 && blockInLeftSide != null){
             return false;
         }
         return true;
     }
+
     private Block choiceBlockForPush(){
         if(blockInRightSide != null && moveRight && sensorRight.size() > 0 &&
         isPossibleToPushBlock(blockInRightSide)){
@@ -261,8 +260,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
     }
     public void push(float impulse){
-        if(isIdle() || isWalk() || isJump() || isFall() ||
-                (sensorDown.size() == 0 && sensorLeft.size() == 0 && sensorRight.size() == 0)) {
+        if(isIdle() || isWalk() || isJump() || isFall()) {
             blockInRightSide = blockController.getRightBlock(this);
             blockInLeftSide = blockController.getLeftBlock(this);
             if (!isPossibleToPush()) {
@@ -409,7 +407,7 @@ public class WaterElement extends AbstractDynamicObject {
     }
     private void stateIdle(float deltaTime){
             if(isHeroIsFall()){fall();return;}
-            setIdleVelocity();
+            setTurnVelocityByMultiplier(SPEED_MULTIPIER_IDLE);
             setReturnPositionY();
             updateSpritePosition(elemStandAnim.getKeyFrame(stateTime,true),moveRight);
         }
@@ -426,12 +424,12 @@ public class WaterElement extends AbstractDynamicObject {
             if(isPushedBlockNearHero()){idle();return;}
             setReturnPositionY();
             pushBlock.push(turnImpulse);
-            setPushVelocity();
+            setTurnVelocityByMultiplier(SPEED_MULTIPIER_PUSH);
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
             if(isHeroIsFall()){fall();return;}
-            setWalkVelocity();
+            setTurnVelocityByMultiplier(SPEED_MULTIPIER_WALK);
             setReturnPositionY();
             updateSpritePosition(elemWalkAnim.getKeyFrame(stateTime,true),moveRight);
         }
@@ -483,6 +481,10 @@ public class WaterElement extends AbstractDynamicObject {
         currentState = State.IDLE;
         stateTime = 0;
     }
+    public void setStateWalk(){
+        currentState = State.WALK;
+        stateTime = 0;
+    }
     public void jump(){
         if(isWalk() || isIdle()) {
             stateTime = 0;
@@ -515,14 +517,10 @@ public class WaterElement extends AbstractDynamicObject {
         returnPosition.y = GameSettings.getInstance().getHeroY() + getHeight()/2;
     }
 
-    private void setIdleVelocity(){
-        body.setLinearVelocity(0,0);
-    }
-    private void setPushVelocity(){
-        body.setLinearVelocity(turnImpulse,body.getLinearVelocity().y);
-    }
-    private void setWalkVelocity(){
-        body.setLinearVelocity(new Vector2(turnImpulse*2,0));
+    private void setTurnVelocityByMultiplier(float multiplier){
+        int movedSideMultipier = 1;
+        if(!moveRight){movedSideMultipier = -1;}
+        body.setLinearVelocity(new Vector2(movedSideMultipier* turnImpulse * multiplier,body.getLinearVelocity().y));
     }
     // Update this Sprite to correspond with the position of the Box2D body.
     private void updateSpritePosition(TextureRegion spriteTexture, boolean turnSpriteRight){

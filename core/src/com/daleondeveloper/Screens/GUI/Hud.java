@@ -1,6 +1,7 @@
 package com.daleondeveloper.Screens.GUI;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -111,8 +112,8 @@ public class Hud extends GUIOverlayAbstractScreen {
         pauseButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonPause()));
         startButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()));
 
-        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
-        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
+        gameButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
+        gameButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
         gameButtonJump = new Image(new TextureRegionDrawable(assetGUI.getButtonJump()));
         gameButtonPush = new Image(new TextureRegionDrawable(assetGUI.getButtonPush()));
 
@@ -135,27 +136,27 @@ public class Hud extends GUIOverlayAbstractScreen {
         gameButtonLeft.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                playScreen.getInputProcessor().keyDown(21);
+                playScreen.getInputProcessor().keyDown(Input.Keys.LEFT);
             }
 
         }));
         gameButtonLeft.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                playScreen.getInputProcessor().keyUp(21);
+                playScreen.getInputProcessor().keyUp(Input.Keys.LEFT);
             }
         }));
         gameButtonRight.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                playScreen.getInputProcessor().keyDown(22);
+                playScreen.getInputProcessor().keyDown(Input.Keys.RIGHT);
             }
 
         }));
         gameButtonRight.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                playScreen.getInputProcessor().keyUp(22);
+                playScreen.getInputProcessor().keyUp(Input.Keys.RIGHT);
             }
         }));
         gameButtonPush.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {

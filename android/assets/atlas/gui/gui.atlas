@@ -24,7 +24,7 @@ button/button_jump
   orig: 150, 150
   offset: 0, 0
   index: -1
-button/button_left
+button/button_right
   rotate: false
   xy: 469, 1
   size: 126, 146
@@ -45,7 +45,7 @@ button/button_push
   orig: 150, 150
   offset: 0, 0
   index: -1
-button/button_right
+button/button_left
   rotate: false
   xy: 597, 1
   size: 126, 146

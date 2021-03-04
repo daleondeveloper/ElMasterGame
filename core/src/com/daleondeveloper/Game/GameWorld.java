@@ -243,12 +243,14 @@ public class GameWorld {
 
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
-            waterElement.turn(-30);
+            waterElement.turnLeft();
+            waterElement.turn(30);
             if(!gameSettings.isPush_button_show()){
                 //waterElement.push(30f);
             }
         }
         if(isRightButtonPressed()){
+            waterElement.turnRight();
             waterElement.turn(30);
             if(!gameSettings.isPush_button_show()){
                //waterElement.push(30f);
