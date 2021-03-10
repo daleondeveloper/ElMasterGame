@@ -191,10 +191,19 @@ public class WaterElement extends AbstractDynamicObject {
 
 
     public void turnLeft(){
-        moveRight = true;
+        moveRight = false;
     }
     public void turnRight(){
-        moveRight = false;
+        moveRight = true;
+    }
+    private void setPushSpriteSide(){
+        if(pushBlock != null){
+            if(blockInRightSide == pushBlock){
+                pushRight = true;
+            }else if(blockInLeftSide == pushBlock){
+                pushRight = false;
+            }
+        }
     }
     public void turn(float impulse){
             if (isIdle()) {
@@ -207,6 +216,9 @@ public class WaterElement extends AbstractDynamicObject {
                     turnImpulse = 0;
                 }
                 setTurnVelocityByMultiplier(SPEED_MULTIPIER_IN_AIR);
+            }
+            if(isPush()){
+               //setPushSpriteSide();
             }
     }
     private boolean isBlockInTurnDirection(){
@@ -222,12 +234,12 @@ public class WaterElement extends AbstractDynamicObject {
         }
     }
     private boolean isPossibleToPush(){
-        if(!moveRight && positionInGameGrid.x > 0 && blockController.getDownBlock(this) == null
-                && blockInRightSide != null){
+        if(!moveRight
+                && blockInLeftSide == null){
             return false;
         }
-        if(moveRight && positionInGameGrid.y > 0 && blockController.getDownBlock(this) == null
-                && blockInLeftSide != null){
+        if(moveRight
+                && blockInRightSide == null){
             return false;
         }
         return true;
@@ -236,15 +248,18 @@ public class WaterElement extends AbstractDynamicObject {
     private Block choiceBlockForPush(){
         if(blockInRightSide != null && moveRight && sensorRight.size() > 0 &&
         isPossibleToPushBlock(blockInRightSide)){
+            pushRight = true;
             return blockInRightSide;
-        }else if(blockInLeftSide != null && moveRight && sensorRight.size() > 0 &&
+        }else if(blockInLeftSide != null && !moveRight && sensorLeft.size() > 0 &&
                 isPossibleToPushBlock(blockInLeftSide)){
+            pushRight = false;
             return blockInLeftSide;
         }
         return null;
     }
     private boolean isPossibleToPushBlock(Block blockToPush){
-        if(!blockInRightSide.isIdle()
+        if(blockToPush != null &&
+                !blockToPush.isIdle()
                 || blockController.getUpBlock(blockToPush) != null ||
                 (moveRight && blockController.getRightBlock(blockToPush) != null) ||
                 (!moveRight && blockController.getLeftBlock(blockToPush) != null)){
@@ -268,7 +283,6 @@ public class WaterElement extends AbstractDynamicObject {
             }
             pushBlock = choiceBlockForPush();
             setStatePush();
-            pushRight = true;
         }
     }
 
@@ -423,8 +437,8 @@ public class WaterElement extends AbstractDynamicObject {
             if(isPossibilityToPushBack()){fall();return;}
             if(isPushedBlockNearHero()){idle();return;}
             setReturnPositionY();
-            pushBlock.push(turnImpulse);
             setTurnVelocityByMultiplier(SPEED_MULTIPIER_PUSH);
+            pushBlock.push(body.getLinearVelocity().x);
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
@@ -518,8 +532,11 @@ public class WaterElement extends AbstractDynamicObject {
     }
 
     private void setTurnVelocityByMultiplier(float multiplier){
+        setTurnVelocityByMultiplier(multiplier, moveRight);
+    }
+    private void setTurnVelocityByMultiplier(float multiplier, boolean sideMultipier){
         int movedSideMultipier = 1;
-        if(!moveRight){movedSideMultipier = -1;}
+        if(!sideMultipier){movedSideMultipier = -1;}
         body.setLinearVelocity(new Vector2(movedSideMultipier* turnImpulse * multiplier,body.getLinearVelocity().y));
     }
     // Update this Sprite to correspond with the position of the Box2D body.
