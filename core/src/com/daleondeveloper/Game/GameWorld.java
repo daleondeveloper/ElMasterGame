@@ -253,12 +253,13 @@ public class GameWorld {
             waterElement.turnRight();
             waterElement.turn(30);
             if(!gameSettings.isPush_button_show()){
-               //waterElement.push(30f);
+
             }
         }
         if(!isLeftButtonPressed() && !isRightButtonPressed()){
-            if(!gameSettings.isPush_button_show()){
-               // waterElement.idle();
+            if(!gameSettings.isPush_button_show() &&
+            waterElement.isPush()){
+               waterElement.turn(0);
             }
         }
         if(isButtonPushPressed()){

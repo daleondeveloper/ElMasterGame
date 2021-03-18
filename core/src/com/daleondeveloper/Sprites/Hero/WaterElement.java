@@ -189,104 +189,6 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorUp).setUserData(this);
     }
 
-
-    public void turnLeft(){
-        moveRight = false;
-    }
-    public void turnRight(){
-        moveRight = true;
-    }
-    private void setPushSpriteSide(){
-        if(pushBlock != null){
-            if(blockInRightSide == pushBlock){
-                pushRight = true;
-            }else if(blockInLeftSide == pushBlock){
-                pushRight = false;
-            }
-        }
-    }
-    public void turn(float impulse){
-            if (isIdle()) {
-                setStateWalk();
-                turnImpulse = impulse;
-                return;
-            }
-            if (isJump() || isFall()) {
-                if (isBlockInTurnDirection()) {
-                    turnImpulse = 0;
-                }
-                setTurnVelocityByMultiplier(SPEED_MULTIPIER_IN_AIR);
-            }
-            if(isPush()){
-               //setPushSpriteSide();
-            }
-    }
-    private boolean isBlockInTurnDirection(){
-        if ((turnImpulse > 0 && sensorRight.size() > 0) ||
-                (turnImpulse < 0 && sensorLeft.size() > 0)) {
-            return true;
-        }
-        return false;
-    }
-    public void stopWalk(){
-        if(currentState == State.WALK){
-            idle();
-        }
-    }
-    private boolean isPossibleToPush(){
-        if(!moveRight
-                && blockInLeftSide == null){
-            return false;
-        }
-        if(moveRight
-                && blockInRightSide == null){
-            return false;
-        }
-        return true;
-    }
-
-    private Block choiceBlockForPush(){
-        if(blockInRightSide != null && moveRight && sensorRight.size() > 0 &&
-        isPossibleToPushBlock(blockInRightSide)){
-            pushRight = true;
-            return blockInRightSide;
-        }else if(blockInLeftSide != null && !moveRight && sensorLeft.size() > 0 &&
-                isPossibleToPushBlock(blockInLeftSide)){
-            pushRight = false;
-            return blockInLeftSide;
-        }
-        return null;
-    }
-    private boolean isPossibleToPushBlock(Block blockToPush){
-        if(blockToPush != null &&
-                !blockToPush.isIdle()
-                || blockController.getUpBlock(blockToPush) != null ||
-                (moveRight && blockController.getRightBlock(blockToPush) != null) ||
-                (!moveRight && blockController.getLeftBlock(blockToPush) != null)){
-            return false;
-        }
-        return true;
-    }
-    private void setStatePush(){
-        if(pushBlock != null){
-            currentState = State.PUSH;
-            pushImpulse = turnImpulse;
-            stateTime = 0;
-        }
-    }
-    public void push(float impulse){
-        if(isIdle() || isWalk() || isJump() || isFall()) {
-            blockInRightSide = blockController.getRightBlock(this);
-            blockInLeftSide = blockController.getLeftBlock(this);
-            if (!isPossibleToPush()) {
-                return;
-            }
-            pushBlock = choiceBlockForPush();
-            setStatePush();
-        }
-    }
-
-
     public boolean load(){
         GameSettings.getInstance().loadHero();
         setLoadParameters();
@@ -426,7 +328,7 @@ public class WaterElement extends AbstractDynamicObject {
             updateSpritePosition(elemStandAnim.getKeyFrame(stateTime,true),moveRight);
         }
     private void stateJump(float deltaTime){
-            if(!isHeroIsFall() && stateTime > 1f){ idle(); return; }
+            if(!isHeroIsFall() && getVelocity().y < 0){ idle(); return; }
             updateSpritePosition(elemJumpAnim.getKeyFrame(stateTime,false),moveRight);
         }
     private void stateFall(float deltaTime){
@@ -435,7 +337,7 @@ public class WaterElement extends AbstractDynamicObject {
         }
     private void statePush(float deltaTime){
             if(isPossibilityToPushBack()){fall();return;}
-            if(isPushedBlockNearHero()){idle();return;}
+            if(!isPushedBlockNearHero()){idle();return;}
             setReturnPositionY();
             setTurnVelocityByMultiplier(SPEED_MULTIPIER_PUSH);
             pushBlock.push(body.getLinearVelocity().x);
@@ -472,28 +374,83 @@ public class WaterElement extends AbstractDynamicObject {
         return false;
     }
     private boolean isPossibilityToPushBack(){
-        if(pushRight && !moveRight &&
-                blockController.getDownBlock(this) == null
-                && blockController.getRightBlock(this) != null){
-            return true;
-        }
-        if(!pushRight && moveRight &&
-                blockController.getDownBlock(this) == null
-                && blockController.getLeftBlock(this) != null){
-            return true;
-        }
+//        if(pushRight && !moveRight &&
+//                blockController.getDownBlock(this) == null
+//                && blockController.getRightBlock(this) == pushBlock){
+//            return true;
+//        }
+//        if(!pushRight && moveRight &&
+//                blockController.getDownBlock(this) == null
+//                && blockController.getLeftBlock(this) == pushBlock){
+//            return true;
+//        }
         return  false;
     }
     private boolean isPushedBlockNearHero(){
-        if(sensorLeft.isEmpty() && sensorRight.isEmpty()){
+        if(pushBlock == blockController.getLeftBlock(this) &&
+        pushBlock == blockController.getRightBlock(this)){
+            return false;
+        }
+        return true;
+    }
+    private boolean isPossibleToPushBlock(Block blockToPush){
+        if(blockToPush != null &&
+                !blockToPush.isIdle()
+                || blockController.getUpBlock(blockToPush) != null ||
+                blockController.getRightBlock(blockToPush) instanceof Block ||
+                blockController.getLeftBlock(blockToPush) instanceof Block){
+            return false;
+        }
+        return true;
+    }
+    private boolean isBlockInTurnDirection(){
+        if ((turnImpulse > 0 && sensorRight.size() > 0) ||
+                (turnImpulse < 0 && sensorLeft.size() > 0)) {
             return true;
         }
         return false;
     }
 
+
     public void idle(){
         currentState = State.IDLE;
         stateTime = 0;
+    }
+    public void turn(float impulse){
+        if (isIdle()) {
+            setStateWalk();
+            turnImpulse = impulse;
+            return;
+        }
+        if(isPush()){
+            turnImpulse = impulse;
+        }
+        if (isJump() || isFall()) {
+            setTurnVelocityByMultiplier(SPEED_MULTIPIER_IN_AIR);
+        }
+    }
+    public void stopWalk(){
+        if(currentState == State.WALK){
+            idle();
+        }
+    }
+    public void push(float impulse){
+        if(isIdle() || isWalk() || isJump() || isFall()) {
+            blockInRightSide = blockController.getRightBlock(this);
+            blockInLeftSide = blockController.getLeftBlock(this);
+            pushBlock = choiceBlockForPush();
+            if(pushBlock == null){
+                return;
+            }
+            setStatePush();
+        }
+    }
+    private void setStatePush(){
+        if(pushBlock != null){
+            currentState = State.PUSH;
+            pushImpulse = turnImpulse;
+            stateTime = 0;
+        }
     }
     public void setStateWalk(){
         currentState = State.WALK;
@@ -503,7 +460,7 @@ public class WaterElement extends AbstractDynamicObject {
         if(isWalk() || isIdle()) {
             stateTime = 0;
             currentState = State.JUMP;
-            body.applyLinearImpulse(0, IMPULSE_Y,getWidth()/2,getHeight()/2,true);
+            body.setLinearVelocity(getVelocity().x,IMPULSE_Y);
         }
     }
     public void fall(){
@@ -525,12 +482,37 @@ public class WaterElement extends AbstractDynamicObject {
         currentState = State.DISPOSE;
     }
 
+    private Block choiceBlockForPush(){
+        if(blockInRightSide != null &&
+                sensorRight.contains(blockInRightSide) &&
+                sensorRight.size() > 0 &&
+                isPossibleToPushBlock(blockInRightSide)){
+            pushRight = true;
+            return blockInRightSide;
+
+        }else if(blockInLeftSide != null &&
+                sensorLeft.size() > 0 &&
+                isPossibleToPushBlock(blockInLeftSide)){
+            pushRight = false;
+            return blockInLeftSide;
+        }
+
+        return null;
+    }
+
     private void setLoadParameters(){
         body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
         returnPosition.x = GameSettings.getInstance().getHeroX() + getWidth()/2;
         returnPosition.y = GameSettings.getInstance().getHeroY() + getHeight()/2;
     }
 
+    public void turnLeft(){
+        moveRight = false;
+    }
+    public void turnRight()
+    {
+        moveRight = true;
+    }
     private void setTurnVelocityByMultiplier(float multiplier){
         setTurnVelocityByMultiplier(multiplier, moveRight);
     }
