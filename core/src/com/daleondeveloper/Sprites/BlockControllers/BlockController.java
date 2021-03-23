@@ -295,7 +295,7 @@ public Block checkLeftContact(Block block) {
         return null;
     }public Block getLeftBlock(AbstractDynamicObject object){
         Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
-        if(objectPositionInWorldCells.x > 1 && objectPositionInWorldCells.y >= 0 &&
+        if(objectPositionInWorldCells.x >= 1 && objectPositionInWorldCells.y >= 0 &&
                 (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length){
             return blocksMas[(int)objectPositionInWorldCells.x - 1][(int)objectPositionInWorldCells.y];
         }
@@ -310,7 +310,7 @@ public Block checkLeftContact(Block block) {
     }
     public Block getDownBlock(AbstractDynamicObject object){
         Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
-        if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y > 1 &&
+        if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 1 &&
                 (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length){
             return blocksMas[(int)objectPositionInWorldCells.x][(int)objectPositionInWorldCells.y - 1];
         }

@@ -1,5 +1,6 @@
 package com.daleondeveloper.Sprites.Hero;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -336,11 +337,14 @@ public class WaterElement extends AbstractDynamicObject {
             updateSpritePosition(elemJumpAnim.getKeyFrame(stateTime,false),moveRight);
         }
     private void statePush(float deltaTime){
-            if(isPossibilityToPushBack()){fall();return;}
+            if(!isPossibilityToPushBack()){fall();return;}
             if(!isPushedBlockNearHero()){idle();return;}
             setReturnPositionY();
             setTurnVelocityByMultiplier(SPEED_MULTIPIER_PUSH);
             pushBlock.push(body.getLinearVelocity().x);
+        Gdx.app.debug(TAG,body.getLinearVelocity().x + "");
+
+        if(getVelocity().x == 0)stateTime -= deltaTime;
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
@@ -373,18 +377,18 @@ public class WaterElement extends AbstractDynamicObject {
         }
         return false;
     }
-    private boolean isPossibilityToPushBack(){
-//        if(pushRight && !moveRight &&
-//                blockController.getDownBlock(this) == null
-//                && blockController.getRightBlock(this) == pushBlock){
-//            return true;
-//        }
-//        if(!pushRight && moveRight &&
-//                blockController.getDownBlock(this) == null
-//                && blockController.getLeftBlock(this) == pushBlock){
-//            return true;
-//        }
-        return  false;
+    private boolean isPossibilityToPushBack() {
+        if (pushRight && !moveRight &&
+                blockController.getDownBlock(this) == null
+                && blockController.getRightBlock(this) == pushBlock) {
+            return false;
+        } else if (!pushRight && moveRight &&
+                blockController.getDownBlock(this) == null
+                && blockController.getLeftBlock(this) == pushBlock) {
+            return false;
+        } else {
+            return true;
+        }
     }
     private boolean isPushedBlockNearHero(){
         if(pushBlock == blockController.getLeftBlock(this) &&
@@ -509,8 +513,7 @@ public class WaterElement extends AbstractDynamicObject {
     public void turnLeft(){
         moveRight = false;
     }
-    public void turnRight()
-    {
+    public void turnRight(){
         moveRight = true;
     }
     private void setTurnVelocityByMultiplier(float multiplier){
