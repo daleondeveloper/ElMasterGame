@@ -18,4 +18,8 @@ public class GameConstants {
     public static final float BUTTON_ARROW_WIDTH = 50f;
     public static final float BUTTON_ARROW_HEIGHT = 58f;
 
+    //константи розмірів світу
+    public static final int WORLD_WIDTH_CELLS = 10;
+    public static final int WORLD_HEIGHT_CELLS = 20;
+
 }
