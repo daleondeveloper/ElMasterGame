@@ -283,7 +283,7 @@ public Block checkLeftContact(Block block) {
         y > 0 && y < getLengthBlockGridY() - 1){
             return blocksMas[x][y];
         }else{
-            return null;
+            throw new ArrayIndexOutOfBoundsException();
         }
     }
     public Block getRightBlock(AbstractDynamicObject object){

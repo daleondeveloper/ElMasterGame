@@ -22,4 +22,7 @@ public class GameConstants {
     public static final int WORLD_WIDTH_CELLS = 10;
     public static final int WORLD_HEIGHT_CELLS = 20;
 
+    //Кількість пікселів у одній ігровій клітинці
+    public static final int PIX_IN_CELL = 10;
+
 }
