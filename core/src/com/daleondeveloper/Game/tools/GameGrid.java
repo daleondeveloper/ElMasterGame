@@ -2,14 +2,15 @@ package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
+import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.tools.GameConstants;
 
 public class GameGrid {
 
     private Grid<AbstractDynamicObject> gameGridImpl;
 
-    public GameGrid (){
-        gameGridImpl = new GridImpl<AbstractDynamicObject>(10,30);
+    public GameGrid (int width, int height){
+        gameGridImpl = new GridImpl<AbstractDynamicObject>(width,height);
     }
 
     public Vector2 findObject (AbstractDynamicObject objToFind){
@@ -24,9 +25,19 @@ public class GameGrid {
         }
         return objCordinate.set(-1,-1);
     }
+
     public AbstractDynamicObject findObjectByCordinate(int x,int y){
         if(checkCordinateInCorrection(x,y,10,30)){
             return gameGridImpl.getElementByCordinate(x,y);
+        }
+        return null;
+    }
+    public Block findBlockByCordinate(int x, int y){
+        if(checkCordinateInCorrection(x,y,10,30)){
+            AbstractDynamicObject obj =  gameGridImpl.getElementByCordinate(x,y);
+            if(obj instanceof Block){
+                return (Block)obj;
+            }
         }
         return null;
     }
