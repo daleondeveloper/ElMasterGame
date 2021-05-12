@@ -13,6 +13,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Exception.NoPushBlocks;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
@@ -46,6 +47,7 @@ public class WaterElement extends AbstractDynamicObject {
     private PlayScreen playScreen;
     private GameWorld gameWorld;
     private BlockController blockController;
+    private GameGrid gameGrid;
 
     private TextureRegion elemTexReg;
     private TextureRegion newHero;
@@ -89,6 +91,7 @@ public class WaterElement extends AbstractDynamicObject {
         this.playScreen = playScreen;
         this.gameWorld = gameWorld;
         blockController = gameWorld.getBlockController();
+        gameGrid = gameWorld.getGameGrid();
 
         AssetHero assetWaterElem = Assets.getInstance().getAssetHero();
         elemStandAnim = assetWaterElem.getHeroStand();
@@ -363,15 +366,15 @@ public class WaterElement extends AbstractDynamicObject {
 
     private boolean isBlockUnderHero(){
         if(getSensorUp().size() > 0 &&
-                (blockController.getUpBlock(this) != null ||
-                blockController.getUpBlock(blockController.getUpBlock(this)) != null)) {
+                (gameGrid.findBlockByCordinate((int)positionInGameGrid.x,(int)positionInGameGrid.y + 1) != null ||
+                        gameGrid.findBlockByCordinate((int)positionInGameGrid.x,(int)positionInGameGrid.y + 2) != null)) {
             return true;
         }
         return false;
     }
     private boolean isHeroIsFall(){
         if(sensorDown.size() == 0 &&
-                (blockController.getDownBlock(this) == null ||
+                (gameGrid.findBlockByCordinate((int)positionInGameGrid.x,(int)positionInGameGrid.y - 1) == null ||
                         (positionInGameGrid.y == 0)) ){
             return true;
         }
@@ -379,20 +382,20 @@ public class WaterElement extends AbstractDynamicObject {
     }
     private boolean isPossibilityToPushBack() {
         if (pushRight && !moveRight &&
-                blockController.getDownBlock(this) == null
-                && blockController.getRightBlock(this) == pushBlock) {
+                gameGrid.findBlockByCordinate((int)positionInGameGrid.x,(int)positionInGameGrid.y - 1) == null
+                && gameGrid.findBlockByCordinate((int)positionInGameGrid.x + 1,(int)positionInGameGrid.y) == pushBlock) {
             return false;
         } else if (!pushRight && moveRight &&
-                blockController.getDownBlock(this) == null
-                && blockController.getLeftBlock(this) == pushBlock) {
+                gameGrid.findBlockByCordinate((int)positionInGameGrid.x,(int)positionInGameGrid.y - 1) == null
+                && gameGrid.findBlockByCordinate((int)positionInGameGrid.x - 1,(int)positionInGameGrid.y) == pushBlock) {
             return false;
         } else {
             return true;
         }
     }
     private boolean isPushedBlockNearHero(){
-        if(pushBlock == blockController.getLeftBlock(this) &&
-        pushBlock == blockController.getRightBlock(this)){
+        if(pushBlock == gameGrid.findBlockByCordinate((int)positionInGameGrid.x - 1,(int)positionInGameGrid.y) &&
+        pushBlock == gameGrid.findBlockByCordinate((int)positionInGameGrid.x + 1,(int)positionInGameGrid.y)){
             return false;
         }
         return true;
@@ -400,9 +403,9 @@ public class WaterElement extends AbstractDynamicObject {
     private boolean isPossibleToPushBlock(Block blockToPush){
         if(blockToPush != null &&
                 !blockToPush.isIdle()
-                || blockController.getUpBlock(blockToPush) != null ||
-                blockController.getRightBlock(blockToPush) instanceof Block ||
-                blockController.getLeftBlock(blockToPush) instanceof Block){
+                || gameGrid.findBlockByCordinate((int)blockToPush.positionInGameGrid.x,(int)blockToPush.positionInGameGrid.y + 1) != null ||
+                gameGrid.findBlockByCordinate((int)blockToPush.positionInGameGrid.x + 1,(int)blockToPush.positionInGameGrid.y) instanceof Block ||
+                gameGrid.findBlockByCordinate((int)blockToPush.positionInGameGrid.x - 1,(int)blockToPush.positionInGameGrid.y) instanceof Block){
             return false;
         }
         return true;
@@ -440,8 +443,8 @@ public class WaterElement extends AbstractDynamicObject {
     }
     public void push(float impulse){
         if(isIdle() || isWalk() || isJump() || isFall()) {
-            blockInRightSide = blockController.getRightBlock(this);
-            blockInLeftSide = blockController.getLeftBlock(this);
+            blockInRightSide = gameGrid.findBlockByCordinate((int)positionInGameGrid.x + 1,(int)positionInGameGrid.y);
+            blockInLeftSide = gameGrid.findBlockByCordinate((int)positionInGameGrid.x - 1,(int)positionInGameGrid.y);
             pushBlock = choiceBlockForPush();
             if(pushBlock == null){
                 return;
