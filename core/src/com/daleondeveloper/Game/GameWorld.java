@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
@@ -24,6 +25,7 @@ import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.Sprites.Platform;
 import com.daleondeveloper.Sprites.PlatformController;
+import com.daleondeveloper.tools.GameConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,7 @@ public class GameWorld {
 
     private BlockController blockController;
     private PlatformController platformController;
+    private GameGrid gameGrid;
 
     private com.daleondeveloper.Sprites.Hero.WaterElement waterElement;
     private Platform regionDown;
@@ -78,6 +81,8 @@ public class GameWorld {
         this.box2DWorld = box2DWorld;
         this.level = level;
         gameCamera = new GameCamera();
+        gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
+
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
@@ -423,5 +428,9 @@ private void updatePlatform(float deltaTime){
 
     public Platform getRegionRight() {
         return regionRight;
+    }
+
+    public GameGrid getGameGrid() {
+        return gameGrid;
     }
 }
