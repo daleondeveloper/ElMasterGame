@@ -222,7 +222,7 @@ public class WaterElement extends AbstractDynamicObject {
         int posMasY = (int) (returnPosition.y / 10) - 15;
         if(posMasY > 0){
             Block block;
-            block = (blockController.getBlockFromGridByCoordinate(posMasX,posMasY));
+            block = gameGrid.findBlockByCordinate(posMasX,posMasY);
             if(block != null)sensorDown.add(block);
         }else{
             sensorDown.add(gameWorld.getRegionDown());

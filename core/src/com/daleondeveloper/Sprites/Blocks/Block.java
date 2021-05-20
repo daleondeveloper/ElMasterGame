@@ -14,6 +14,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.GameWorld;
+import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
@@ -36,6 +37,7 @@ public class Block extends AbstractDynamicObject {
 
     protected GameWorld gameWorld;
     protected Body body;
+    protected GameGrid gameGrid;
     protected com.daleondeveloper.Sprites.BlockControllers.BlockController blockController;
 
     protected Array<TextureRegion> assetBlocks;
@@ -73,6 +75,7 @@ public class Block extends AbstractDynamicObject {
         this.gameWorld = gameWorld;
         this.blockController = blockController;
         effectManager = gameWorld.getPlayScreen().getPef();
+        gameGrid = gameWorld.getGameGrid();
 
         assetBlocks = new Array<TextureRegion>();
         AssetBlock assets =  Assets.getInstance().getAssetBlock();
@@ -123,7 +126,7 @@ public class Block extends AbstractDynamicObject {
             leftReg += 10;
             rightReg += 10;
         }
-        blockController.addBlockToBlockMass(this);
+        gameGrid.addObject(this,(int)positionInBlocksMasX,(int)positionInBlocksMasY);
     }
 
     private void defineBlock(){
@@ -255,30 +258,12 @@ public class Block extends AbstractDynamicObject {
     protected void stateIdle(float deltaTime){
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.StaticBody);
-        blockController.checkDownContact(this);
-        //Check the correctness of the list of the lower sensor every 1 second
-//        if(stateTime > 1){
-//            stateTime = 0;
-//            Set<AbstractGameObject> objToDel = new HashSet<AbstractGameObject>();
-//
-//            for(AbstractGameObject obj : contactDownList){
-//                float xDist = Math.abs(getBodyPosition().x - (obj.getX() + getWidth()/2));
-//                float yDist = Math.abs(getBodyPosition().y - (obj.getY() + obj.getHeight() / 2));
-//                float centerDist = (float)Math.sqrt(xDist * xDist + yDist * yDist);
-//
-//                float widthDist = (getWidth() + obj.getWidth())/2 ;
-//                float heightDist = (getHeight() + obj.getHeight())/2;
-//                float centerWidthHeight = (float)Math.sqrt(widthDist*widthDist + heightDist* heightDist);
-//                if(xDist * 0.99f > widthDist ||
-//                        yDist * 0.99f  > heightDist ||
-//                        centerDist > centerWidthHeight
-//
-//                ){
-//                   objToDel.add(obj);
-//                }
-//            }
-//            contactDownList.removeAll(objToDel);
-//        }
+        //TODO зробити нормальні перевірки контактів блоку, зроблено для тимччасової перевірки і внесення класу GameGrid;
+        getContactDownList().clear();
+        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
+        if(downObj != null){
+            getContactDownList().add(downObj);
+        }
         body.setTransform(returnCellsPosition,returnCellsPositionY,0);
         if(contactDownList.size() == 0){fall();return;}
 
@@ -286,20 +271,23 @@ public class Block extends AbstractDynamicObject {
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-//        textureRegionBlock = assetBlocks.get(1);
         setRegion(textureRegionBlock);
 
         stateTime += deltaTime;
     }
     protected void statePush(float deltaTime){
-        blockController.checkDownContact(this);
-        //Setting a fixed value for the X coordinate
+//TODO зробити нормальні перевірки контактів блоку, зроблено для тимччасової перевірки і внесення класу GameGrid;
+        getContactDownList().clear();
+        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
+        if(downObj != null){
+            getContactDownList().add(downObj);
+        }        //Setting a fixed value for the X coordinate
         float x = body.getPosition().x;
         int leftReg = 53,rightReg = 57;
         for(int i = 0; i < 12; i++){
             if(x >= leftReg && x < rightReg){
                 returnCellsPosition = (rightReg + leftReg) >> 1;
-                blockController.addBlockToBlockMass(this);
+                gameGrid.addObject(this,(int)positionInBlocksMasX,(int)positionInBlocksMasY);
                 break;
             }
             leftReg += 10;
@@ -347,7 +335,7 @@ public class Block extends AbstractDynamicObject {
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
                 returnCellsPositionY = (leftReg + rightReg) >> 1;
-                blockController.addBlockToBlockMass(this);
+                gameGrid.addObject(this,(int)positionInBlocksMasX,(int)positionInBlocksMasY);
                 break;
             }
             leftReg += 10;
@@ -356,8 +344,12 @@ public class Block extends AbstractDynamicObject {
 
         //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.DynamicBody);
-        blockController.checkDownContact(this);
-        if(contactDownList.size() > 0){stopFall();}
+//TODO зробити нормальні перевірки контактів блоку, зроблено для тимччасової перевірки і внесення класу GameGrid;
+        getContactDownList().clear();
+        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
+        if(downObj != null){
+            getContactDownList().add(downObj);
+        }        if(contactDownList.size() > 0){stopFall();}
 
         //Change fall velocity
         body.setLinearVelocity(0,blockController.getBlockFallVelocity());
@@ -378,7 +370,7 @@ public class Block extends AbstractDynamicObject {
                 textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
         stateTime += deltaTime;
         if(stateTime > destroyAnimation.getAnimationDuration()) {
-            blockController.deleteBlockFormMass(this);
+            gameGrid.deleteObjectFromGrid(this);
             //Change body type and check the main allegations to change the state to another immediately
             body.setType(BodyDef.BodyType.KinematicBody);
 

@@ -3,19 +3,17 @@ package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.Settings.BlockLoad;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
-import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
 import com.daleondeveloper.Sprites.Blocks.FireBlock;
 import com.daleondeveloper.Sprites.Blocks.LightBlock;
 import com.daleondeveloper.Sprites.Blocks.SnowBlock;
 import com.daleondeveloper.Sprites.Blocks.WaterBlock;
-import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,129 +146,6 @@ public class BlockController {
         block.fall();
         return true;
     }
-    public boolean addBlockToBlockMass(Block block){
-        int posMasX = (int)(block.getReturnCellsPosition() / 10 ) - 5;
-        int posMasY = (int)(block.getReturnCellsPositionY() / 10 ) - 15;
-        if(posMasX < blocksMas.length && posMasY < blocksMas[0].length) {
-            int i,j;
-            if(posMasX == 0 ){i = posMasX;}else{i = posMasX - 1;}
-            for (;i < posMasX + 2 && i < blocksMas.length; i++) {
-                if(posMasY == 0 ){j = posMasY;}else{j = posMasY - 1;}
-                for (;j < posMasY + 2 && j < blocksMas[0].length; j++) {
-                    if (blocksMas[i][j] == block) {
-                        blocksMas[i][j] = null;
-                    }
-                }
-            }
-            blocksMas[posMasX][posMasY] = block;
-            return true;
-        }
-        return false;
-    }
-    public void deleteBlockFormMass(Block block){
-        int posMasX = (int)(block.getReturnCellsPosition() / 10 ) - 5;
-        int posMasY = (int)(block.getReturnCellsPositionY() / 10 ) - 15;
-        if(posMasX < blocksMas.length && posMasY < blocksMas[0].length) {
-            blocksMas[posMasX][posMasY] = null;
-        }
-    }
-    public Block checkDownContact(Block block) {
-        int posMasX = (int) (block.getReturnCellsPosition() / 10) - 5;
-        int posMasY = (int) (block.getReturnCellsPositionY() / 10) - 15;
-        if (posMasX < blocksMas.length && posMasY < blocksMas[0].length) {
-            if(posMasY > 0) {
-                WaterElement hero = null;
-                for(AbstractGameObject downBlock : block.getContactDownList()){
-                    if(downBlock instanceof WaterElement){
-                        hero = (WaterElement)downBlock;
-                    }
-                }
-                block.getContactDownList().clear();
-                if (blocksMas[posMasX][posMasY - 1] != null) {
-                    block.getContactDownList().add(blocksMas[posMasX][posMasY]);
-                }
-                if(hero != null){
-                   // block.getContactDownList().add(hero);
-                }
-            }
-        }
-        return null;
-    }
-public Block checkUpContact(Block block) {
-        int posMasX = (int) (block.getReturnCellsPosition() / 10) - 5;
-        int posMasY = (int) (block.getReturnCellsPositionY() / 10) - 15;
-        if (posMasX < blocksMas.length && posMasY < blocksMas[0].length) {
-            if(posMasY > 0 && posMasY + 1 < blocksMas[0].length) {
-                WaterElement hero = null;
-                for(AbstractGameObject downBlock : block.getContactUpList()){
-                    if(downBlock instanceof WaterElement){
-                        hero = (WaterElement)downBlock;
-                    }
-                }
-                if (blocksMas[posMasX][posMasY + 1] != null) {
-                    block.getContactUpList().add(blocksMas[posMasX][posMasY]);
-                }
-                if(hero != null){
-                    block.getContactUpList().add(hero);
-                }
-            }
-        }
-        return null;
-    }
-public Block checkRightContact(Block block) {
-        int posMasX = (int) (block.getReturnCellsPosition() / 10) - 5;
-        int posMasY = (int) (block.getReturnCellsPositionY() / 10) - 15;
-        if (posMasX < blocksMas.length && posMasY < blocksMas[0].length) {
-            if(posMasX >= 0 && posMasX + 1 < blocksMas.length) {
-                WaterElement hero = null;
-                for(AbstractGameObject downBlock : block.getContactRightBlockList()){
-                    if(downBlock instanceof WaterElement){
-                        hero = (WaterElement)downBlock;
-                    }
-                }
-                if (blocksMas[posMasX][posMasY - 1] != null) {
-                    block.getContactRightBlockList().add(blocksMas[posMasX][posMasY]);
-                    if(hero != null){
-                        block.getContactRightBlockList().add(hero);
-                    }
-                }
-            }
-        }
-        return null;
-    }
-public Block checkLeftContact(Block block) {
-        int posMasX = (int) (block.getReturnCellsPosition() / 10) - 5;
-        int posMasY = (int) (block.getReturnCellsPositionY() / 10) - 15;
-        if (posMasX < blocksMas.length && posMasY < blocksMas[0].length) {
-            if(posMasY > 0) {
-                WaterElement hero = null;
-                for(AbstractGameObject downBlock : block.getContactLeftBlockList()){
-                    if(downBlock instanceof WaterElement){
-                        hero = (WaterElement)downBlock;
-                    }
-                }
-                if (blocksMas[posMasX][posMasY - 1] != null) {
-                    block.getContactLeftBlockList().add(blocksMas[posMasX][posMasY]);
-                    if(hero != null){
-                        block.getContactLeftBlockList().add(hero);
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    public boolean deleteBlock(Block block){
-
-
-        return true;
-    }
-    public void blockChecker(){
-        for(Block block : arrayBlock){
-            if(block.isIdle()){
-            }
-        }
-    }
 
     public void load(){
         GameSettings.getInstance().loadBlock();
@@ -278,14 +153,7 @@ public Block checkLeftContact(Block block) {
             addBlock(loadedBlock.getPosition().x, loadedBlock.getPosition().y,loadedBlock.getBlockType());
         }
     }
-    public Block getBlockFromGridByCoordinate(int x, int y){
-        if(x > 0 && x < getLengthBlockGridX() - 1 &&
-        y > 0 && y < getLengthBlockGridY() - 1){
-            return blocksMas[x][y];
-        }else{
-            throw new ArrayIndexOutOfBoundsException();
-        }
-    }
+
     public Block getRightBlock(AbstractDynamicObject object){
         Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
         if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 0 &&

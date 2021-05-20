@@ -19,8 +19,8 @@ public class LightBlock extends Block {
         int posMasX = (int)(getReturnCellsPosition() / 10 ) - 5;
 
         for(int i = 0; i < blockController.getLengthBlockGridY(); i++){
-            if(blockController.getBlockFromGridByCoordinate(posMasX,i) != null){
-                blockController.getBlockFromGridByCoordinate(posMasX,i).delete();
+            if(gameGrid.findBlockByCordinate(posMasX,i) != null){
+                gameGrid.findBlockByCordinate(posMasX,i).delete();
             }
         }
     }
