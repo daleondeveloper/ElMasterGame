@@ -17,14 +17,14 @@ public class HeroSkill extends AbstractDynamicObject {
     private final static String TAG = HeroSkill.class.getName();
 
     private enum State{
-        WAITINGUSES, SKILL1, SKILL2;
+        WAITING, SKILL1, SKILL2;
     }
 
     private GameWorld world;
     private PlayScreen playScreen;
     private WaterElement hero;
     private float stateTime;
-    private Enum currentState;
+    private State currentState;
     private Body body;
 
     private Vector2 heroVector2;
@@ -43,7 +43,7 @@ public class HeroSkill extends AbstractDynamicObject {
         heroHeight = hero.getHeight();
         blockCollisions = new ArrayList<Block>();
 
-        currentState = State.WAITINGUSES;
+        currentState = State.WAITING;
         stateTime = 0;
 
         setBounds(heroVector2.x + 1, heroVector2.y,heroWidth/4,heroHeight/4);
@@ -61,8 +61,8 @@ public class HeroSkill extends AbstractDynamicObject {
         CircleShape circleShape = new CircleShape();
         circleShape.setRadius(heroHeight/4);
         circleShape.setPosition(new Vector2(heroVector2.x + 2.5f, heroVector2.y));
-   //     fixtureDef.filter.categoryBits = WorldContactListner.CATEGORY_SKIIL_BIT;
-   //     fixtureDef.filter.maskBits = WorldContactListner.MASK_ALL;
+   //     fixtureDef.filter.categoryBits = WorldContactListener.CATEGORY_SKILL_BIT;
+   //     fixtureDef.filter.maskBits = WorldContactListener.MASK_ALL;
         fixtureDef.shape = circleShape;
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef).setUserData(this);
@@ -102,12 +102,12 @@ public class HeroSkill extends AbstractDynamicObject {
         }
     }
     //Uses from hero class
-    public void useSkill(boolean heroSeeRigth){
+    public void useSkill(boolean heroSeeRight){
         for(Block block : blockCollisions){
-            if(block.getBodyPosition().x > heroVector2.x && heroSeeRigth){
+            if(block.getBodyPosition().x > heroVector2.x && heroSeeRight){
                 blockInUsesSkill = block;
 //                block.skill1Start();
-            }else if(block.getBodyPosition().x < heroVector2.x && !heroSeeRigth){
+            }else if(block.getBodyPosition().x < heroVector2.x && !heroSeeRight){
                 blockInUsesSkill = block;
 //                block.skill1Start();
             }

@@ -8,8 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Game.ElMaster;
-import com.daleondeveloper.Screens.AbstractScreen;
-import com.daleondeveloper.Screens.Play.PlayAbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
 
 
@@ -32,7 +30,7 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
         guiCamera = new OrthographicCamera();
         guiViewport = new ExtendViewport(ElMaster.APPLICATION_WIDTH, ElMaster.APPLICATION_HEIGHT, guiCamera);
 
-        /** Internally calls guiViewport.update() (see {@link .game.GameWorld} and
+        /* Internally calls guiViewport.update() (see {@link .game.GameWorld} and
          * this.resize(int width, int height)) */
         stage = new Stage(guiViewport, game.getGuiBatch());
     }
