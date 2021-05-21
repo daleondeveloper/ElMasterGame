@@ -2,12 +2,10 @@ package com.daleondeveloper.Sprites.BlockControllers;
 
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.Settings.BlockLoad;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
 import com.daleondeveloper.Sprites.Blocks.FireBlock;
@@ -83,7 +81,7 @@ public class BlockController {
     }
     public Block addBlock (int blockType){
         int countNextRandomNumbers = 0;
-        float posCreateX = 0;
+        float posCreateX;
         int posMasX = rnd.nextInt(10);
         //if(posMasX >= blocksMas.length-1){posMasX = 0;}
         while (true) {
@@ -96,7 +94,7 @@ public class BlockController {
                     blocksMas[posMasX][9] == null) {
                 break;
             }else{
-                posMasX = (int)rnd.nextInt(10);
+                posMasX = rnd.nextInt(10);
             }
             countNextRandomNumbers++;
             if(countNextRandomNumbers > 100)break;
@@ -115,7 +113,7 @@ public class BlockController {
         return true;
     }
     public boolean addBlock(float x, float y, int blockTypeNumber){
-        Block block = null;
+        Block block;
         switch (blockTypeNumber){
             case 0 :
                 block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
@@ -154,36 +152,6 @@ public class BlockController {
         }
     }
 
-    public Block getRightBlock(AbstractDynamicObject object){
-        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
-        if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 0 &&
-                (int)objectPositionInWorldCells.x < blocksMas.length - 1 && (int)objectPositionInWorldCells.y < blocksMas[0].length){
-            return blocksMas[(int)objectPositionInWorldCells.x + 1][(int)objectPositionInWorldCells.y];
-        }
-        return null;
-    }public Block getLeftBlock(AbstractDynamicObject object){
-        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
-        if(objectPositionInWorldCells.x >= 1 && objectPositionInWorldCells.y >= 0 &&
-                (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length){
-            return blocksMas[(int)objectPositionInWorldCells.x - 1][(int)objectPositionInWorldCells.y];
-        }
-        return null;
-    }public Block getUpBlock(AbstractDynamicObject object){
-        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
-        if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 0 &&
-                (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length - 1){
-            return blocksMas[(int)objectPositionInWorldCells.x][(int)objectPositionInWorldCells.y + 1];
-        }
-        return null;
-    }
-    public Block getDownBlock(AbstractDynamicObject object){
-        Vector2 objectPositionInWorldCells = object.getPositionInGameGrid();
-        if(objectPositionInWorldCells.x >= 0 && objectPositionInWorldCells.y >= 1 &&
-                (int)objectPositionInWorldCells.x < blocksMas.length && (int)objectPositionInWorldCells.y < blocksMas[0].length){
-            return blocksMas[(int)objectPositionInWorldCells.x][(int)objectPositionInWorldCells.y - 1];
-        }
-        return null;
-    }
     public int getLengthBlockGridX(){
         return blocksMas.length;
     }

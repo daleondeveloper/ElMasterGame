@@ -10,7 +10,7 @@ public class GameGrid {
     private Grid<AbstractDynamicObject> gameGridImpl;
 
     public GameGrid (int width, int height){
-        gameGridImpl = new GridImpl<AbstractDynamicObject>(width,height);
+        gameGridImpl = new GridImpl<AbstractDynamicObject>(new AbstractDynamicObject[width][height]);
     }
 
     public Vector2 findObject (AbstractDynamicObject objToFind){
@@ -26,21 +26,46 @@ public class GameGrid {
         return objCordinate.set(-1,-1);
     }
 
-    public AbstractDynamicObject findObjectByCordinate(int x,int y){
-        if(checkCordinateInCorrection(x,y,10,30)){
-            return gameGridImpl.getElementByCordinate(x,y);
-        }
-        return null;
+    //Методи для отримання обєктів з сітки
+    public Block getBlockByCordinate(int x, int y){
+         return getBlockIfObjectIsBlock(gameGridImpl.getElementByCordinate(x,y));
+
     }
-    public Block findBlockByCordinate(int x, int y){
-        if(checkCordinateInCorrection(x,y,10,30)){
-            AbstractDynamicObject obj =  gameGridImpl.getElementByCordinate(x,y);
-            if(obj instanceof Block){
-                return (Block)obj;
-            }
-        }
-        return null;
+    //Блоки відносно кординати
+    public Block getLowerBlockRelativeToCoordinates(int x,int y){
+        return getBlockIfObjectIsBlock(gameGridImpl.getLowerObjectRelativeToCoordinates(x,y));
     }
+    public Block getTopBlockRelativeToCoordinates(int x, int y){
+        return getBlockIfObjectIsBlock(gameGridImpl.getTopObjectRelativeToCoordinates(x,y));
+    }
+    public Block getLeftBlockRelativeToCoordinates(int x, int y){
+        return getBlockIfObjectIsBlock(gameGridImpl.getLeftObjectRelativeToCoordinates(x,y));
+    }
+    public Block getRightBlockRelativeToCoordinates(int x, int y){
+        return getBlockIfObjectIsBlock(gameGridImpl.getRightObjectRelativeToCoordinates(x,y));
+    }
+    //Блоки відносно обєкта
+    public Block getLowerBlockRelativeToObject(AbstractDynamicObject obj){
+        return getBlockIfObjectIsBlock(gameGridImpl.getLowerObjectRelativeToCoordinates(
+                (int)obj.positionInGameGrid.x,(int)obj.positionInGameGrid.y
+        ));
+    }
+    public Block getTopBlockRelativeToObject(AbstractDynamicObject obj){
+        return getBlockIfObjectIsBlock(gameGridImpl.getTopObjectRelativeToCoordinates(
+                (int)obj.positionInGameGrid.x,(int)obj.positionInGameGrid.y
+        ));
+    }
+    public Block getLeftBlockRelativeToObject(AbstractDynamicObject obj){
+        return getBlockIfObjectIsBlock(gameGridImpl.getLeftObjectRelativeToCoordinates(
+                (int)obj.positionInGameGrid.x,(int)obj.positionInGameGrid.y
+        ));
+    }
+    public Block getRightBlockRelativeToObject(AbstractDynamicObject obj){
+        return getBlockIfObjectIsBlock(gameGridImpl.getRightObjectRelativeToCoordinates(
+                (int)obj.positionInGameGrid.x,(int)obj.positionInGameGrid.y
+        ));
+    }
+
     //Обєкти шукаються відносно нижнього лівої клітинки обєкта
     //Можливе повернення цього ж обєкта
     public AbstractDynamicObject findObjNearObj(AbstractDynamicObject obj,int x,int y){
@@ -49,8 +74,7 @@ public class GameGrid {
         if(checkObjectCordinate(obj) &&
                 checkCordinateInCorrection(findingObjX, findingObjY,
                         gameGridImpl.getGrid().length,gameGridImpl.getGrid()[0].length)){
-            AbstractDynamicObject foundObj =  gameGridImpl.getElementByCordinate(findingObjX, findingObjY);
-            return foundObj;
+            return  gameGridImpl.getElementByCordinate(findingObjX, findingObjY);
         }
         return null;
     }
@@ -86,17 +110,21 @@ public class GameGrid {
 
     public boolean checkObjectCordinate(AbstractDynamicObject obj){
         Vector2 objCordinate = obj.positionInGameGrid;
-        if(gameGridImpl.getElementByCordinate((int)objCordinate.x, (int)objCordinate.y) == obj){
-            return true;
-        }
-        return false;
+        return (gameGridImpl.getElementByCordinate((int)objCordinate.x, (int)objCordinate.y) == obj);
     }
     public boolean checkCordinateInCorrection(int x, int y, int xMax, int yMax){
-        if(x >= 0 && x < xMax && y >= 0 && y < yMax){
-            return true;
-        }else {
-            return false;
+        return (x >= 0 && x < xMax && y >= 0 && y < yMax);
+    }
+    private Block getBlockIfObjectIsBlock(AbstractDynamicObject obj){
+        if(obj instanceof Block){
+            return (Block)obj;
         }
+        return  null;
     }
 
+    public int getGridWidthLength(){return gameGridImpl.getGrid().length;}
+    public int getGridHeightLength(){return gameGridImpl.getGrid()[0].length;}
+    public Grid<AbstractDynamicObject> getGameGridImpl() {
+        return gameGridImpl;
+    }
 }

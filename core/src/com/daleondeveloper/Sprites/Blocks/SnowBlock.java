@@ -53,29 +53,29 @@ public class SnowBlock extends Block {
 //            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
 //            int posMasX = (int) (getReturnCellsPosition() / 10) - 5;
 
-            if ( blockController.getLeftBlock(this) != null) {
-                Block block = blockController.getLeftBlock(this);
+            if ( gameGrid.getLeftBlockRelativeToObject(this) != null) {
+                Block block = gameGrid.getLeftBlockRelativeToObject(this);
                 if (block.isPush()) {
                     block.idle();
                     block.stateIdle(0);
                 }
             }
-            if (blockController.getRightBlock(this) != null) {
-                Block block = blockController.getRightBlock(this);
+            if (gameGrid.getRightBlockRelativeToObject(this) != null) {
+                Block block = gameGrid.getRightBlockRelativeToObject(this);
                 if (block.isPush()) {
                     block.idle();
                     block.stateIdle(0);
 
                 }
             }
-            if (blockController.getDownBlock(this) != null) {
-                Block block = blockController.getDownBlock(this);
+            if (gameGrid.getLowerBlockRelativeToObject(this) != null) {
+                Block block = gameGrid.getLowerBlockRelativeToObject(this);
                 if (block.isPush()) {
                     block.idle();
                 }
             }
-            if (blockController.getUpBlock(this) != null) {
-                Block block = blockController.getUpBlock(this);
+            if (gameGrid.getTopBlockRelativeToObject(this) != null) {
+                Block block = gameGrid.getTopBlockRelativeToObject(this);
                 if (block.isPush()) {
                     block.idle();
                 }

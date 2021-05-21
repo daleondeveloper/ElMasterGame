@@ -31,8 +31,8 @@ public class FireBlock extends Block {
 
         for(int i = xStartPosInCycle; i <= xEndPosInCycle; i++){
             for(int j = yStartPosInCycle; j <= yEndPosInCycle; j++) {
-                if (gameGrid.findBlockByCordinate(i,j) != null) {
-                    gameGrid.findBlockByCordinate(i,j).delete();
+                if (gameGrid.getBlockByCordinate(i,j) != null) {
+                    gameGrid.getBlockByCordinate(i,j).delete();
                 }
             }
         }

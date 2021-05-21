@@ -29,10 +29,10 @@ public class Block extends AbstractDynamicObject {
     private static final String TAG = Block.class.getName();
 
     protected enum State{
-        FALL, IDLE, PUSH, DESTROY, DISPOSE;
+        FALL, IDLE, PUSH, DESTROY, DISPOSE
     }
     protected enum BlockType{
-        WHITE,DARK,FIRE,WATER,LIGHT,SNOW;
+        WHITE,DARK,FIRE,WATER,LIGHT,SNOW
     }
 
     protected GameWorld gameWorld;
@@ -120,7 +120,7 @@ public class Block extends AbstractDynamicObject {
         int leftReg = 44,rightReg = 46;
         for(int i = 0; i < 12; i++){
             if(BPx > leftReg && BPx < rightReg){
-                returnCellsPosition = (leftReg + rightReg)/2;
+                returnCellsPosition = (float)((leftReg + rightReg)/2);
                 break;
             }
             leftReg += 10;
@@ -363,7 +363,7 @@ public class Block extends AbstractDynamicObject {
         stateTime += deltaTime;
     }
     protected void stateDestroy(float deltaTime){
-        TextureRegion textureRegion = (TextureRegion) destroyAnimation.getKeyFrame(stateTime, true);
+        TextureRegion textureRegion =destroyAnimation.getKeyFrame(stateTime, true);
         setRegion(textureRegion);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setBounds(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2,
@@ -376,9 +376,7 @@ public class Block extends AbstractDynamicObject {
 
             // Remove a block from the GameSensor object's contact list
             GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
-            if (gameSensor.getFirstLineBlocks().contains(this)) {
-                gameSensor.getFirstLineBlocks().remove(this);
-            }
+            gameSensor.getFirstLineBlocks().remove(this);
 
             // Remove a block from the contact list of all its contacts
             Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
@@ -408,30 +406,20 @@ public class Block extends AbstractDynamicObject {
 
     //Methods of checking the state of the object
     public boolean isIdle(){
-        if(currentState == State.IDLE){
-            return true;
-        }else return false;
+        return(currentState == State.IDLE);
     }
     public boolean isIFall(){
-        if(currentState == State.FALL){
-            return true;
-        }else return false;
+        return(currentState == State.FALL);
     }
     public boolean isPush(){
-        if(currentState == State.PUSH){
-            return true;
-        }else return false;
+        return (currentState == State.PUSH);
     }
     public boolean isDestroy(){
-        if(currentState == State.DESTROY){
-            return true;
-        }else return false;
+        return (currentState == State.DESTROY);
     }
     @Override
     public boolean isDisposable() {
-        if(currentState == State.DISPOSE){
-            return true;
-        }else return false;
+        return (currentState == State.DISPOSE);
     }
 
     @Override
