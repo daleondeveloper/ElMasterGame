@@ -229,6 +229,9 @@ public class Block extends AbstractDynamicObject {
         if(effect != null) {
             effect.update(deltaTime);
         }
+        updatePositionInCells();
+        gameGrid.addObject(this,(int)positionInGameGrid.x,(int)positionInGameGrid.y);
+        findDownContacts();
 
         switch (currentState){
             case IDLE:
@@ -253,48 +256,19 @@ public class Block extends AbstractDynamicObject {
         if(currentState != State.FALL){
             effect =null;
         }
-        updatePositionInGrid();
+
     }
     protected void stateIdle(float deltaTime){
-        //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.StaticBody);
-        //TODO зробити нормальні перевірки контактів блоку, зроблено для тимччасової перевірки і внесення класу GameGrid;
-        getContactDownList().clear();
-        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
-        if(downObj != null){
-            getContactDownList().add(downObj);
-        }
         body.setTransform(returnCellsPosition,returnCellsPositionY,0);
         if(contactDownList.size() == 0){fall();return;}
-
-        //Setting a fixed block position may cause the contacts to break
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
-
         stateTime += deltaTime;
     }
     protected void statePush(float deltaTime){
-//TODO зробити нормальні перевірки контактів блоку, зроблено для тимччасової перевірки і внесення класу GameGrid;
-        getContactDownList().clear();
-        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
-        if(downObj != null){
-            getContactDownList().add(downObj);
-        }        //Setting a fixed value for the X coordinate
-        float x = body.getPosition().x;
-        int leftReg = 53,rightReg = 57;
-        for(int i = 0; i < 12; i++){
-            if(x >= leftReg && x < rightReg){
-                returnCellsPosition = (rightReg + leftReg) >> 1;
-                gameGrid.addObject(this,(int)positionInBlocksMasX,(int)positionInBlocksMasY);
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-
-        //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.DynamicBody);
         if(currentState == State.FALL || getContactUpList().size() > 0 || !gameWorld.getWaterElement().isPush()){
             idle();
@@ -306,59 +280,23 @@ public class Block extends AbstractDynamicObject {
             gameWorld.getWaterElement().idle();
             return;
         }
-
-        //Set push velocity
-//        if(Math.abs(contactHero.getY() - getY()) < 3 && Math.abs(contactHero.getX() - getX()) < 15) {
-            System.out.println("deltaTime = " + pushImpulse);
-//            if (contactHero.getX() - getX() > 1) {
-                body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
-//            } else if (contactHero.getX() - getX() < -1) {
-//                body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
-//            }
-  //      }else{ idle();return;}
-        //body.setLinearVelocity(1, body.getLinearVelocity().y);
-
-        //Setting a fixed block position may cause the contacts to break
-        body.setTransform(body.getPosition().x,returnCellsPositionY,0);
-
+        body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
         // Update this Sprite to correspond with the position of the Box2D body.
+        body.setTransform(body.getPosition().x,returnCellsPositionY,0);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-//        textureRegionBlock =assetBlocks.get(2);
         setRegion(textureRegionBlock);
-
         stateTime += deltaTime;
     }
     protected void stateFall(float deltaTime){
-        //Setting a fixed value for the Y coordinate
-        float y = body.getPosition().y;
-        int leftReg = 153,rightReg = 157;
-        for(int i = 0; i < 20; i++){
-            if(y > leftReg && y < rightReg){
-                returnCellsPositionY = (leftReg + rightReg) >> 1;
-                gameGrid.addObject(this,(int)positionInBlocksMasX,(int)positionInBlocksMasY);
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
-
-        //Change body type and check the main allegations to change the state to another immediately
         body.setType(BodyDef.BodyType.DynamicBody);
-//TODO зробити нормальні перевірки контактів блоку, зроблено для тимччасової перевірки і внесення класу GameGrid;
-        getContactDownList().clear();
-        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
-        if(downObj != null){
-            getContactDownList().add(downObj);
-        }        if(contactDownList.size() > 0){stopFall();}
+        if(contactDownList.size() > 0 ){stopFall();return;}
 
         //Change fall velocity
         body.setLinearVelocity(0,blockController.getBlockFallVelocity());
-
         body.setTransform(returnCellsPosition,body.getPosition().y,0);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-//        textureRegionBlock = assetBlocks.get(3);
         setRegion(textureRegionBlock);
         stateTime += deltaTime;
     }
@@ -393,18 +331,18 @@ public class Block extends AbstractDynamicObject {
     protected void stateDead(float deltaTime){
 
     }
-
     @Override
     public void render(SpriteBatch spriteBatch) {
         draw(spriteBatch);
     }
+
     public void renderEffect(SpriteBatch spriteBatch) {
         if (effect != null) {
             effect.draw(spriteBatch);
         }
     }
-
     //Methods of checking the state of the object
+
     public boolean isIdle(){
         return(currentState == State.IDLE);
     }
@@ -421,10 +359,51 @@ public class Block extends AbstractDynamicObject {
     public boolean isDisposable() {
         return (currentState == State.DISPOSE);
     }
+    private void findDownContacts(){
+        getContactDownList().clear();
+        AbstractDynamicObject downObj = gameGrid.findObjNearObj(this,0,-1);
+        if(downObj != null){
+            getContactDownList().add(downObj);
+        }
+        if((int)positionInGameGrid.y == 0 && body.getPosition().y < 160){
+            getContactDownList().add(gameWorld.getRegionDown());
+        }
+    }
 
-    @Override
-    protected void updatePositionInGrid() {
-        positionInGameGrid.set(positionInBlocksMasX,positionInBlocksMasY);
+    private void updatePositionInCells(){
+        updateReturnPositionX();
+        updateReturnPositionY();
+        updatePositionInGrid();
+    }
+    protected void updatePositionInGrid(){
+        positionInGameGrid.set((returnCellsPosition / 10) - 5, (returnCellsPositionY / 10) - 15);
+    }
+    private void updateReturnPositionX(){
+        float x = body.getPosition().x;
+        int leftReg = 53, rightReg = 57;
+        for(int i = 0; i < 10; i++){
+            if(x >= leftReg && x < rightReg){
+                returnCellsPosition = (rightReg + leftReg) >> 1;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
+    }
+    private void updateReturnPositionY(){
+        float y = body.getPosition().y - 2;
+        int leftReg = 153,rightReg = 157;
+        for(int i = 0; i < 20; i++){
+            if(y > leftReg && y < rightReg){
+                returnCellsPositionY = (rightReg + leftReg) >> 1;
+                break;
+            }
+            leftReg += 10;
+            rightReg += 10;
+        }
+        if(getY() < 0){
+            returnCellsPositionY = 160;
+        }
     }
 
     //вНЕСТИ ОПИС МЕТОДА

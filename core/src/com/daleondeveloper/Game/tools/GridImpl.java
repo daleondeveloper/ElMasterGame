@@ -58,8 +58,8 @@ public class GridImpl<E> implements Grid<E>{
         }
     }
     private boolean isCordinateCorrect(int x,int y){
-        return (x > 0 && x < playGrid.length &&
-                        y > 0 && y < playGrid[0].length);
+        return (x >= 0 && x < playGrid.length &&
+                        y >= 0 && y < playGrid[0].length);
     }
     public int getWidth() {
         return width;

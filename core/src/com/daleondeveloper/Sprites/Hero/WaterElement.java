@@ -374,22 +374,19 @@ public class WaterElement extends AbstractDynamicObject {
     }
     private boolean isHeroIsFall(){
         if(sensorDown.size() == 0 &&
-                (gameGrid.getLeftBlockRelativeToObject(this) == null ||
+                (gameGrid.getLowerBlockRelativeToObject(this) == null ||
                         (positionInGameGrid.y == 0)) ){
             return true;
         }
         return false;
     }
     private boolean isPossibilityToPushBack() {
-        if (pushRight && !moveRight &&
-                gameGrid.getLeftBlockRelativeToObject(this) == null
-                && gameGrid.getLeftBlockRelativeToObject(this) == pushBlock) {
+        if (((pushRight && !moveRight) ||
+                (!pushRight && moveRight)) &&
+                (gameGrid.getLowerBlockRelativeToObject(this) == null &&
+                        getPositionInGameGrid().y > 0)) {
             return false;
-        } else if (!pushRight && moveRight &&
-                gameGrid.getLeftBlockRelativeToObject(this) == null
-                && gameGrid.getLeftBlockRelativeToObject(this) == pushBlock) {
-            return false;
-        } else {
+        } else  {
             return true;
         }
     }
@@ -403,9 +400,7 @@ public class WaterElement extends AbstractDynamicObject {
     private boolean isPossibleToPushBlock(Block blockToPush){
         if(blockToPush != null &&
                 !blockToPush.isIdle()
-                || gameGrid.getTopBlockRelativeToObject(blockToPush) != null ||
-                gameGrid.getRightBlockRelativeToObject(blockToPush) instanceof Block ||
-                gameGrid.getLeftBlockRelativeToObject(blockToPush) instanceof Block){
+                || gameGrid.getTopBlockRelativeToObject(blockToPush) != null){
             return false;
         }
         return true;

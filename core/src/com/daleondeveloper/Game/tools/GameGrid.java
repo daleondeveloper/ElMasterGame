@@ -3,7 +3,6 @@ package com.daleondeveloper.Game.tools;
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
-import com.daleondeveloper.tools.GameConstants;
 
 public class GameGrid {
 
@@ -80,21 +79,8 @@ public class GameGrid {
     }
     public boolean addObject(AbstractDynamicObject addObject, int x, int y){
         if(checkCordinateInCorrection(x,y,gameGridImpl.getGrid().length,gameGridImpl.getGrid()[0].length)){
-            int objWidth = (int)(addObject.getWidth() / GameConstants.PIX_IN_CELL);
-            int objHeight = (int)(addObject.getHeight() / GameConstants.PIX_IN_CELL);
-            for(int i = 0; i <= objWidth; i++){
-                for(int j = 0; j <= objHeight; j++){
-                    if(gameGridImpl.getElementByCordinate(x+i, y+j) != null){
-                        throw new RuntimeException();
-                    }
-                }
-            }
             deleteObjectFromGrid(addObject);
-            for(int i = 0; i <= objWidth; i++){
-                for(int j = 0; j <= objHeight; j++){
-                    gameGridImpl.put(addObject,x + i,y + j);
-                }
-            }
+            gameGridImpl.put(addObject,x ,y);
         }
         return false;
     }
