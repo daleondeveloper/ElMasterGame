@@ -14,6 +14,7 @@ import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Exception.NoPushBlocks;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Game.tools.LevelParser;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
@@ -351,6 +352,13 @@ public class WaterElement extends AbstractDynamicObject {
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
+        LevelParser.parseBlockForLevel("<block><type : default><position : {1,0}></block>" +
+                "<block><type : default><position : 7,0></block>" +
+                "<block><type : default><position : 1,1></block>" +
+                "<block><type : default><position : 7,1></block>" +
+                "<block><type : default><position : 1,2></block>" +
+                "<block><type : default><position : 7,2></block>" +
+                "<hero><position : 5,1></hero>");
             if(isHeroIsFall()){fall();return;}
             setTurnVelocityByMultiplier(SPEED_MULTIPIER_WALK);
             setReturnPositionY();
