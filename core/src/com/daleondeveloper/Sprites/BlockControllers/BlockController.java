@@ -50,26 +50,6 @@ public class BlockController {
 
         blockCreateTime += deltaTime;
         int score = playScreen.getHud().getScore();
-//       float timeToCreateNewBlockRelativeScore = (4f - score / 125);
-//       if(timeToCreateNewBlockRelativeScore < 1.5f){
-//           timeToCreateNewBlockRelativeScore = 1.5f;
-//       }
-//
-//        if(blockCreateTime > 4f){
-////            float s = (score/10) % 6;
-////            if(s > 3){
-////                addBlock();
-////                addBlock();
-////                addBlock();
-////            }else if(s > 0){
-////                addBlock();
-////                addBlock();
-////            }else{
-//                addBlock();
-////            }
-//            blockCreateTime = 0;
-//        }
-//
     }
     public void render(SpriteBatch spriteBatch){
         for(Block block : arrayBlock){

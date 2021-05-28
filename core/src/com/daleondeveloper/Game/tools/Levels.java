@@ -6,7 +6,8 @@ public class Levels {
      //d - default, f - fire, s - snow, dk - dark, l - light, s - star;
      public Levels(){
           levels = new String[100];
-          levels[0] = "<block><type : default><position : {1,0}></block>" +
+          levels[0] = "<blockController><type : classic></blockController>" +
+                  "<block><type : default><position : {1,0}></block>" +
                   "<block><type : default><position : {7,0}></block>" +
                   "<block><type : default><position : {1,1}></block>" +
                   "<block><type : default><position : {7,1}></block>" +

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Game.tools.LevelGenerator;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
@@ -45,6 +46,7 @@ public class GameWorld {
     private com.daleondeveloper.Game.Settings.GameSettings gameSettings;
     private int level;
     private GameCamera gameCamera;
+    private LevelGenerator levelGenerator;
 
     private  boolean moveCamera;
     private boolean pauseCamera;
@@ -82,6 +84,7 @@ public class GameWorld {
         this.level = level;
         gameCamera = new GameCamera();
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
+        levelGenerator = new LevelGenerator(playScreen,this,level);
 
         moveCamera = false;
         pauseCamera = false;
