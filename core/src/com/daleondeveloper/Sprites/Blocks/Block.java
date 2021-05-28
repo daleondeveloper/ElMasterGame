@@ -74,7 +74,7 @@ public class Block extends AbstractDynamicObject {
     public Block(GameWorld gameWorld, com.daleondeveloper.Sprites.BlockControllers.BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
         this.gameWorld = gameWorld;
         this.blockController = blockController;
-        effectManager = gameWorld.getPlayScreen().getPef();
+        effectManager = ParticleEffectManager.getInstance();
         gameGrid = gameWorld.getGameGrid();
 
         assetBlocks = new Array<TextureRegion>();

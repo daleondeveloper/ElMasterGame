@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 
 public class LevelParser {
 
-    private static final Pattern findBlockController = Pattern.compile("blockController>.+?<blockController>");
-    private static final Pattern findBlock = Pattern.compile("<block>.+?</block>");
-    private static final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
-    private static final Pattern findPosition = Pattern.compile("<position.+?>");
-    private static final Pattern findType = Pattern.compile("<type.+?>");
+    private final Pattern findBlockController = Pattern.compile("blockController>.+?</blockController>");
+    private final Pattern findBlock = Pattern.compile("<block>.+?</block>");
+    private final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
+    private final Pattern findPosition = Pattern.compile("<position.+?>");
+    private final Pattern findType = Pattern.compile("<type.+?>");
 
     private String level;
 
@@ -25,7 +25,7 @@ public class LevelParser {
         if(matcher.find()){
             return matcher.group();
         }
-        return null;
+        return "";
     }
     public String getHeroStartParameter(){
         Matcher matcher = findHero.matcher(level);
@@ -54,8 +54,8 @@ public class LevelParser {
         if(matcher.find()){
             String[] posStr = matcher.group().split(":")[1].split(">")[0].trim().split(",");
             Vector2 position = new Vector2();
-            position.x = Integer.getInteger(posStr[0]);
-            position.y = Integer.getInteger(posStr[1]);
+            position.x = (Integer.parseInt(posStr[0])+5)*10;
+            position.y = (Integer.parseInt(posStr[1])+15)*10;
             return position;
         }
         return null;

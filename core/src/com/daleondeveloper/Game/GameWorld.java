@@ -14,13 +14,6 @@ import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerDarkMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerFireMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerLightMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSnowMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSpecialMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerWaterMode;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
@@ -84,14 +77,15 @@ public class GameWorld {
         this.level = level;
         gameCamera = new GameCamera();
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
+
         levelGenerator = new LevelGenerator(playScreen,this,level);
+
+        blockController = levelGenerator.getBlockController();
 
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
         gameSettings = GameSettings.getInstance();
-
-        gameMode = GameMode.CLASSIC;
 
         rightButtonPressed = false;
         leftButtonPressed = false;
@@ -103,77 +97,31 @@ public class GameWorld {
 
         createSprites();
         createBackground();
-
+        createStartObject();
         gameObjectToCreate = new Array<AbstractGameObject>();
 
-
-
     }
-
+    private void createStartObject(){
+        levelGenerator.addStartBlocks();
+    }
     private void loadParameters(){
         gameSettings.loadGameWorldParameters();
-        switch (gameSettings.getGameModeDragon()){
-            case 0:
-                gameMode = GameMode.CLASSIC;
-                blockController = new BlockControllerClassicMode(playScreen,this);
-                break;
-                case 1:
-                gameMode = GameMode.LIGHT_MODE;
-                    blockController = new BlockControllerLightMode(playScreen,this);
-                    break;
-                case 2:
-                gameMode = GameMode.SNOW_MODE;
-                    blockController = new BlockControllerSnowMode(playScreen,this);
-                    break;
-                case 3:
-                gameMode = GameMode.FIRE_MODE;
-                    blockController = new BlockControllerFireMode(playScreen,this);
-                    break;
-                case 4:
-                gameMode = GameMode.WATER_MODE;
-                    blockController = new BlockControllerWaterMode(playScreen,this);
-                    break;
-                case 5:
-                gameMode = GameMode.DARK_MODE;
-                    blockController = new BlockControllerDarkMode(playScreen,this);
-                    break;
-                case 6:
-                gameMode = GameMode.SPECIAL_MODE;
-                    blockController = new BlockControllerSpecialMode(playScreen,this);
-                    break;
-        }
     }
 
     private void createSprites(){
-        //Block(create block factory  to create block)
-        blockController = new BlockController(playScreen,this);
-
         loadParameters();
-
-        GameSettings.getInstance().setBlockController(blockController);
-        platformController = new PlatformController(playScreen,this);
-
-        //WaterHero(create player controller hero wich created in center of screen)
         waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()*2,DOWN_REGION + 10);
-
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
-
 
         //Regions ( create regions around the playing zone for player and game element)
         regionDown = new Platform(this,0,DOWN_REGION - 10,gameCamera.getWorldWidth(),10);
         regionLeft = new Platform(this,45,0,5,gameCamera.getWorldHeight());
         regionRight = new Platform(this,150,0,5,gameCamera.getWorldHeight());
-        System.out.println(gameCamera.getWorldWidth() + "////" + gameCamera.getWorldHeight());
-
-
     }
     private void createBackground(){
-
         backgroundGameFon = new Background(this,40,140,120,220);
         backgroundGameFon.setRegionGameFon();
     }
-
-
 
     private void loadGames(){
        gameSettings.loadHero();
@@ -223,7 +171,6 @@ public class GameWorld {
 
         if(firstLauch){
             GameSettings.getInstance().setHero(waterElement);
-//            GameSettings.getInstance().setBlockController(blockController);
             loadGames();
             firstLauch = false;
         }
@@ -295,13 +242,13 @@ public class GameWorld {
         blockController.getArrayBlock().removeAll(arrayBlock);
     }
 private void updatePlatform(float deltaTime){
-        Array<Platform> arrayPlatform = platformController.getPlatforms();
-        for(Platform platform: arrayPlatform){
-            platform.update(deltaTime);
-            if(platform.isDisposable()){
-                arrayPlatform.removeValue(platform,false);
-            }
-        }
+//        Array<Platform> arrayPlatform = platformController.getPlatforms();
+//        for(Platform platform: arrayPlatform){
+//            platform.update(deltaTime);
+//            if(platform.isDisposable()){
+//                arrayPlatform.removeValue(platform,false);
+//            }
+//        }
     }
 
     private void centerCamera(float deltaTime) {

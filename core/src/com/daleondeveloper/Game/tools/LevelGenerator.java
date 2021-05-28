@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
+import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerDarkMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerFireMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerLightMode;
@@ -23,6 +24,8 @@ public class LevelGenerator {
     private BlockController blockController;
 
     public LevelGenerator(PlayScreen playScreen, GameWorld gameWorld,int lvlNumber){
+        this.playScreen = playScreen;
+        this.gameWorld = gameWorld;
         levels = new Levels();
         levelParser = new LevelParser(levels.getLevel(lvlNumber));
         createStartBlockController();
@@ -43,7 +46,7 @@ public class LevelGenerator {
             }else if(type.equals("special")){
                 blockController = new BlockControllerSpecialMode(playScreen,gameWorld);
             }else{
-                blockController = new BlockController(playScreen,gameWorld);
+                blockController = new BlockControllerClassicMode(playScreen,gameWorld);
             }
     }
     public void addStartBlocks(){
@@ -57,5 +60,7 @@ public class LevelGenerator {
         }
     }
 
-
+    public BlockController getBlockController() {
+        return blockController;
+    }
 }

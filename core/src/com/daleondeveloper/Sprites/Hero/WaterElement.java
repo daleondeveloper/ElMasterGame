@@ -352,13 +352,6 @@ public class WaterElement extends AbstractDynamicObject {
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
         }
     private void stateWalk(float deltaTime){
-        LevelParser.parseBlockForLevel("<block><type : default><position : {1,0}></block>" +
-                "<block><type : default><position : 7,0></block>" +
-                "<block><type : default><position : 1,1></block>" +
-                "<block><type : default><position : 7,1></block>" +
-                "<block><type : default><position : 1,2></block>" +
-                "<block><type : default><position : 7,2></block>" +
-                "<hero><position : 5,1></hero>");
             if(isHeroIsFall()){fall();return;}
             setTurnVelocityByMultiplier(SPEED_MULTIPIER_WALK);
             setReturnPositionY();
