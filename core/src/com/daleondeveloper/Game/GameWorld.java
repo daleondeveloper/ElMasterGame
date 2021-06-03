@@ -61,7 +61,6 @@ public class GameWorld {
     private GameSensor firstLineBlockChecker;
 
     private float timeCreateBlock;
-    private float offSetY;
     private float timeToSave;
 
     private boolean rightButtonPressed;
@@ -92,7 +91,6 @@ public class GameWorld {
         buttonPushPressed = false;
 
         timeCreateBlock = 101;
-        offSetY = 0;
         timeToSave = TIME_TO_SAVE;
 
         createSprites();
@@ -177,8 +175,6 @@ public class GameWorld {
 
         backgroundGameFon.update(deltaTime);
         updateBlock(deltaTime);
-        updatePlatform(deltaTime);
-        centerCamera(deltaTime);
         firstLineBlockChecker.update(deltaTime);
 
         blockController.update(deltaTime);
@@ -237,22 +233,6 @@ public class GameWorld {
         }
         blockController.getArrayBlock().removeAll(arrayBlock);
     }
-private void updatePlatform(float deltaTime){
-//        Array<Platform> arrayPlatform = platformController.getPlatforms();
-//        for(Platform platform: arrayPlatform){
-//            platform.update(deltaTime);
-//            if(platform.isDisposable()){
-//                arrayPlatform.removeValue(platform,false);
-//            }
-//        }
-    }
-
-    private void centerCamera(float deltaTime) {
-        if (moveCamera && !pauseCamera) {
-            //gameCamera.position().x = gameCamera.position().x + CAMERA_VELOCITY * deltaTime;
-            //moveCamera = gameCamera.position().x - gameCamera.getWorldWidth() / 2 <= jumper.getBodyPosition().x - jumper.getWidth() / 2;
-        }
-    }
 
     public void render(SpriteBatch batch) {
         // This order is important.
@@ -267,11 +247,9 @@ private void updatePlatform(float deltaTime){
 
     }
 
-
     public void renderBox2DDebug(Box2DDebugRenderer box2DDebugRenderer) {
         box2DDebugRenderer.render(box2DWorld, gameCamera.getCombined());
     }
-
 
     public GameCamera getGameCamera() {
         return gameCamera;
@@ -281,7 +259,7 @@ private void updatePlatform(float deltaTime){
         return playScreen;
     }
 
-    public com.daleondeveloper.Sprites.BlockControllers.BlockController getBlockController() {
+    public BlockController getBlockController() {
         return blockController;
     }
 
