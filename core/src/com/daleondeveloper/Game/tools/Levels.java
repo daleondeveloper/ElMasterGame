@@ -13,7 +13,7 @@ public class Levels {
                   "<block><type : default><position : 7,1></block>" +
                   "<block><type : default><position : 1,2></block>" +
                   "<block><type : default><position : 7,2></block>" +
-                  "<hero><position : 5,1></hero>";
+                  "<hero><position : 5,5></hero>";
           levels[2] = "";
           levels[3] = "";
           levels[4] = "";

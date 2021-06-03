@@ -44,8 +44,6 @@ public class WaterElement extends AbstractDynamicObject {
     private enum State{
         IDLE,WALK,JUMP,FALL,PUSH,DEAD,DISPOSE
     }
-
-    private PlayScreen playScreen;
     private GameWorld gameWorld;
     private BlockController blockController;
     private GameGrid gameGrid;
@@ -88,8 +86,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     private State debugState;
 
-    public WaterElement (PlayScreen playScreen, GameWorld gameWorld, float x, float y){
-        this.playScreen = playScreen;
+    public WaterElement (GameWorld gameWorld, float x, float y){
         this.gameWorld = gameWorld;
         blockController = gameWorld.getBlockController();
         gameGrid = gameWorld.getGameGrid();

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.Settings.BlockLoad;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
 import com.daleondeveloper.Sprites.Blocks.FireBlock;
@@ -24,7 +23,6 @@ public class BlockController {
 
     protected List<Block> arrayBlock ;
     protected GameWorld gameWorld;
-    protected PlayScreen playScreen;
     protected Random rnd;
     protected Block lastCreateBlock;
     protected Block[][] blocksMas;
@@ -32,9 +30,8 @@ public class BlockController {
     protected float blockCreateTime;
 
 
-    public BlockController (PlayScreen playScreen, GameWorld gameWorld)  {
+    public BlockController (GameWorld gameWorld)  {
         this.gameWorld = gameWorld;
-        this.playScreen = playScreen;
 
         arrayBlock = new ArrayList<Block>(10);
 
@@ -47,9 +44,7 @@ public class BlockController {
     }
 
     public void update(float deltaTime){
-
         blockCreateTime += deltaTime;
-        int score = playScreen.getHud().getScore();
     }
     public void render(SpriteBatch spriteBatch){
         for(Block block : arrayBlock){
@@ -63,7 +58,6 @@ public class BlockController {
         int countNextRandomNumbers = 0;
         float posCreateX;
         int posMasX = rnd.nextInt(10);
-        //if(posMasX >= blocksMas.length-1){posMasX = 0;}
         while (true) {
             if (blocksMas[posMasX][15] == null &&
                     blocksMas[posMasX][14] == null &&
@@ -95,9 +89,6 @@ public class BlockController {
     public boolean addBlock(float x, float y, int blockTypeNumber){
         Block block;
         switch (blockTypeNumber){
-            case 0 :
-                block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
             case 1 :
                 block = new DarkBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
                 break;

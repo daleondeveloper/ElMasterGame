@@ -1,7 +1,6 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.FireBlock;
 
@@ -15,8 +14,8 @@ public class BlockControllerFireMode extends BlockController {
     private Block specialBlock;
 
 
-    public BlockControllerFireMode(PlayScreen playScreen, GameWorld gameWorld) {
-        super(playScreen, gameWorld);
+    public BlockControllerFireMode(GameWorld gameWorld) {
+        super(gameWorld);
 
     }
 

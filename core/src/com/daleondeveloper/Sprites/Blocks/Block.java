@@ -71,7 +71,7 @@ public class Block extends AbstractDynamicObject {
     public Block(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height){
         this(gameWorld, blockController, 0, x, y, width, height);
     }
-    public Block(GameWorld gameWorld, com.daleondeveloper.Sprites.BlockControllers.BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
+    public Block(GameWorld gameWorld, BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
         this.gameWorld = gameWorld;
         this.blockController = blockController;
         effectManager = ParticleEffectManager.getInstance();
@@ -101,8 +101,8 @@ public class Block extends AbstractDynamicObject {
         positionInGameGrid = new Vector2();
 
         pushImpulse = 10;
-        returnCellsPosition = x;
-        returnCellsPositionY = y;
+        returnCellsPosition = x + 5;
+        returnCellsPositionY = y + 5;
         positionInBlocksMasX = -1;
         positionInBlocksMasY = -1;
 

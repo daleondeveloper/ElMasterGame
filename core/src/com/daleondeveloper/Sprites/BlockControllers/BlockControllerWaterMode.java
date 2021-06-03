@@ -1,9 +1,7 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Blocks.Block;
-import com.daleondeveloper.Sprites.Blocks.SnowBlock;
 import com.daleondeveloper.Sprites.Blocks.WaterBlock;
 
 import java.util.Random;
@@ -17,8 +15,8 @@ public class BlockControllerWaterMode extends BlockController {
 
 
 
-    public BlockControllerWaterMode(PlayScreen playScreen, GameWorld gameWorld) {
-        super(playScreen, gameWorld);
+    public BlockControllerWaterMode(GameWorld gameWorld) {
+        super(gameWorld);
 
     }
 

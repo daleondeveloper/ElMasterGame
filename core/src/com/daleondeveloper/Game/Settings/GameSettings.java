@@ -65,7 +65,7 @@ public class GameSettings {
         countdownAd = DEF_COUNT_AD;
         showHelp = true;
         prefs = Gdx.app.getPreferences(SETTINGS);
-        blockController = new BlockController(null,null);
+        blockController = new BlockController(null);
         heroX = 100;
         heroY = 170;
         push_button_show = false;

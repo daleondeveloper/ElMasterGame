@@ -1,7 +1,6 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
 import com.daleondeveloper.Sprites.Blocks.FireBlock;
@@ -18,8 +17,8 @@ public class BlockControllerSpecialMode extends BlockController {
 
     private float timeToCreateSpecialBlock;
 
-    public BlockControllerSpecialMode(PlayScreen playScreen, GameWorld gameWorld) {
-        super(playScreen, gameWorld);
+    public BlockControllerSpecialMode(GameWorld gameWorld) {
+        super(gameWorld);
 
     }
 

@@ -1,10 +1,8 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
-import com.daleondeveloper.Sprites.Blocks.FireBlock;
 
 import java.util.Random;
 
@@ -16,8 +14,8 @@ public class BlockControllerDarkMode extends BlockController {
     private float timeToCreateSpecialBlock;
 
 
-    public BlockControllerDarkMode(PlayScreen playScreen, GameWorld gameWorld) {
-        super(playScreen, gameWorld);
+    public BlockControllerDarkMode(GameWorld gameWorld) {
+        super(gameWorld);
 
     }
 

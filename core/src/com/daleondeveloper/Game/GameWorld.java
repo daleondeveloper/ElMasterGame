@@ -78,7 +78,7 @@ public class GameWorld {
         gameCamera = new GameCamera();
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
 
-        levelGenerator = new LevelGenerator(playScreen,this,level);
+        levelGenerator = new LevelGenerator(this,level);
 
         blockController = levelGenerator.getBlockController();
 
@@ -97,12 +97,8 @@ public class GameWorld {
 
         createSprites();
         createBackground();
-        createStartObject();
         gameObjectToCreate = new Array<AbstractGameObject>();
 
-    }
-    private void createStartObject(){
-        levelGenerator.addStartBlocks();
     }
     private void loadParameters(){
         gameSettings.loadGameWorldParameters();
@@ -110,7 +106,7 @@ public class GameWorld {
 
     private void createSprites(){
         loadParameters();
-        waterElement = new WaterElement(playScreen,this,gameCamera.getWorldWidth()*2,DOWN_REGION + 10);
+        waterElement = levelGenerator.getHero();
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 
         //Regions ( create regions around the playing zone for player and game element)

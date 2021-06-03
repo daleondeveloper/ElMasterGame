@@ -1,7 +1,6 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 
 import java.util.Random;
 
@@ -11,8 +10,8 @@ public class BlockControllerClassicMode extends BlockController {
 
 
 
-    public BlockControllerClassicMode(PlayScreen playScreen, GameWorld gameWorld) {
-        super(playScreen, gameWorld);
+    public BlockControllerClassicMode(GameWorld gameWorld) {
+        super( gameWorld);
 
     }
 

@@ -1,9 +1,7 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Blocks.Block;
-import com.daleondeveloper.Sprites.Blocks.FireBlock;
 import com.daleondeveloper.Sprites.Blocks.LightBlock;
 
 import java.util.Random;
@@ -15,8 +13,8 @@ public class BlockControllerLightMode extends BlockController {
     private float timeToCreateSpecialBlock;
     private Block specialBlock;
 
-    public BlockControllerLightMode(PlayScreen playScreen, GameWorld gameWorld) {
-        super(playScreen, gameWorld);
+    public BlockControllerLightMode(GameWorld gameWorld) {
+        super(gameWorld);
         timeToCreateSpecialBlock = 0;
     }
 
