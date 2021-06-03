@@ -90,22 +90,22 @@ public class BlockController {
         Block block;
         switch (blockTypeNumber){
             case 1 :
-                block = new DarkBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-
-            case 2 :
-                block = new FireBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-
-            case 3 :
                 block = new LightBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
                 break;
 
-            case 4 :
+            case 2 :
                 block = new SnowBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
                 break;
-            case 5 :
+
+            case 3 :
+                block = new FireBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+
+            case 4 :
                 block = new WaterBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
+                break;
+            case 5 :
+                block = new DarkBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
                 break;
 
             default:
