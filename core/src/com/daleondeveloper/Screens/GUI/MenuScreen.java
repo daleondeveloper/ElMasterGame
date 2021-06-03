@@ -13,10 +13,11 @@ import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.filler.CreditMenuFiller;
-import com.daleondeveloper.Screens.GUI.filler.GameModeChangeMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.GameOverFiller;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.LevelChangeMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.MenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.SettingsMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
@@ -49,7 +50,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private PauseMenuFiller pauseMenuFiller;
     private SettingsMenuFiller settingsMenuFiller;
     private CreditMenuFiller creditMenuFiller;
-    private GameModeChangeMenuFiller gameModeChangeMenuFiller;
+    private MenuFiller gameModeChangeMenuFiller;
     private GameOverFiller gameOverFiller;
 
     private Image screenBg;
@@ -72,7 +73,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         pauseMenuFiller = new PauseMenuFiller(this);
         settingsMenuFiller = new SettingsMenuFiller(this);
         creditMenuFiller = new CreditMenuFiller(this);
-        gameModeChangeMenuFiller = new GameModeChangeMenuFiller(this);
+        gameModeChangeMenuFiller = new LevelChangeMenuFiller(this);
         gameOverFiller = new GameOverFiller(this);
 
         menuState = MenuState.CLOSE;

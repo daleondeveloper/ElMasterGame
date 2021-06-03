@@ -50,7 +50,7 @@ public class WorldController implements Disposable {
         box2DWorld.setContactListener(new WorldContactListner());
 
         // Creates our game world
-        gameWorld = new GameWorld(playScreen, box2DWorld, 0);
+        gameWorld = new GameWorld(playScreen, box2DWorld, GameSettings.getInstance().getLevel());
     }
 
     public void update(float deltaTime) {

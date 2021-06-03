@@ -50,6 +50,7 @@ public class GameSettings {
     private boolean push_button_show;
     private boolean gameSave;
     private boolean[] helpModeShow;
+    private int level;
 
     private WaterElement hero;
     private float heroX;
@@ -71,6 +72,7 @@ public class GameSettings {
         push_button_show = false;
         blockVector = new ArrayList<BlockLoad>();
         helpModeShow = new boolean[7];
+        level = 0;
     }
 
     // Singleton: retrieve instance
@@ -345,5 +347,13 @@ public class GameSettings {
 
     public boolean[] getHelpModeShow() {
         return helpModeShow;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }
