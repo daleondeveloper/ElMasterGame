@@ -122,6 +122,7 @@ public class WaterElement extends AbstractDynamicObject {
         sensorRight = new HashSet<AbstractGameObject>();
         sensorUp = new HashSet<AbstractGameObject>();
 
+        updatePositionInCells();
         initVoice();
     }
 
@@ -193,7 +194,7 @@ public class WaterElement extends AbstractDynamicObject {
 
     public boolean load(){
         GameSettings.getInstance().loadHero();
-        setLoadParameters();
+       // setLoadParameters();
         setReturnPosition();
         updateSpritePosition(elemStandAnim.getKeyFrame(stateTime),true);
         return true;
