@@ -11,6 +11,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.Levels;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -82,8 +83,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
         pageShow = 0;
-        levelsBtn = new ImageTextButton[100];
-        levelsTxt = new Label[levelsBtn.length];
+        levelsBtn = new ImageTextButton[Levels.maxLevel];
     }
 
     @Override
@@ -95,30 +95,29 @@ public class LevelChangeMenuFiller extends MenuFiller {
     @Override
     protected void defineElements() {
         // Title
-        gameModeChangeTitleLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.title"), labelStyleMedium);
+        gameModeChangeTitleLabel = new Label(i18NGameThreeBundle.format("levelsScreen.title"), labelStyleMedium);
 
         continueGameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.continueGame"), labelStyleMedium);
         newGameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.newGame"), labelStyleMedium);
 
-        classicModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleSmall);
-        lightModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.lightMode"), labelStyleSmall);
-        snowModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.snowMode"), labelStyleSmall);
-        fireModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.fireMode"), labelStyleSmall);
-        waterModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.waterMode"), labelStyleSmall);
-        darkModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.darkMode"), labelStyleSmall);
-        specialModeLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.specialMode"), labelStyleSmall);
-        //stage.addActor(pauseLabel);
-        nextModesImage = new Image(assetGUI.getButtonLeft());
-        previsionModeImage = new Image(assetGUI.getButtonRight());
+        nextModesImage = new Image(assetGUI.getButtonRight());
+        previsionModeImage = new Image(assetGUI.getButtonLeft());
 
         backButton = new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
         TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
+        TextureRegionDrawable textureRegionOff = new TextureRegionDrawable(assetGUI.getGameWindow());
 
+        int openedLevel = prefs.getHighCompletedLvl();
         for(int i = 0; i < levelsBtn.length; i++){
-            levelsBtn[i] = new ImageTextButton(String.valueOf(i),new ImageTextButton.ImageTextButtonStyle(
-                    textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-            ));
-
+            if(openedLevel > i){
+                levelsBtn[i] = new ImageTextButton(String.valueOf(i), new ImageTextButton.ImageTextButtonStyle(
+                        textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+                ));
+            }else{
+                levelsBtn[i] = new ImageTextButton(String.valueOf(i), new ImageTextButton.ImageTextButtonStyle(
+                        textureRegionOff, textureRegionOff, textureRegionOff, assets.getAssetFonts().getSmall()
+                ));
+            }
         }
         continueGameImage = new ImageTextButton("Continue",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
@@ -171,14 +170,16 @@ public class LevelChangeMenuFiller extends MenuFiller {
             }
         }));
         for(int i = 0; i < levelsBtn.length; i++){
-            final int j = i;
-            levelsBtn[0].addListener(ListenerHelper.runnableListener(new Runnable() {
-                @Override
-                public void run() {
-                prefs.setLevel(j);
-                    ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
-                }
-            }));
+            if(i < prefs.getHighCompletedLvl()) {
+                final int j = i;
+                levelsBtn[i].addListener(ListenerHelper.runnableListener(new Runnable() {
+                    @Override
+                    public void run() {
+                        prefs.setLevel(j);
+                        ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+                    }
+                }));
+            }
         }
     }
 
@@ -212,10 +213,13 @@ public class LevelChangeMenuFiller extends MenuFiller {
         scrollPane = new ScrollPane(gameModeTable);
         scrollPane.setScrollingDisabled(true,false);
         mainTable.add(scrollPane);
-        gameModeTable.defaults().pad(10).padLeft(200).padRight(200).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
-        for(int i =0; i < levelsBtn.length; i++){
+        gameModeTable.defaults().pad(10).padLeft(10).padRight(10).width(GameConstants.BUTTON_WIDTH/8).height(GameConstants.BUTTON_HEIGHT).center();
+        for(int i = 0, j = 0 ; i < levelsBtn.length; i++, j++){
             gameModeTable.add(levelsBtn[i]);
-            gameModeTable.row();
+            if(j == 5) {
+                j = -1;
+                gameModeTable.row();
+            }
         }
 
         mainTable.row();

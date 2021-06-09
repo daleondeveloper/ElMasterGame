@@ -51,6 +51,7 @@ public class GameSettings {
     private boolean gameSave;
     private boolean[] helpModeShow;
     private int level;
+    private int highCompletedLvl;
 
     private WaterElement hero;
     private float heroX;
@@ -73,6 +74,7 @@ public class GameSettings {
         blockVector = new ArrayList<BlockLoad>();
         helpModeShow = new boolean[7];
         level = 0;
+        highCompletedLvl = 44;
     }
 
     // Singleton: retrieve instance
@@ -355,5 +357,13 @@ public class GameSettings {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getHighCompletedLvl() {
+        return highCompletedLvl;
+    }
+
+    public void setHighCompletedLvl(int highCompletedLvl) {
+        this.highCompletedLvl = highCompletedLvl;
     }
 }
