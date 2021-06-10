@@ -19,7 +19,7 @@ public class BlockControllerClassicMode extends BlockController {
     public void update(float deltaTime) {
         super.update(deltaTime);
         if(blockCreateTime > 4f){
-            addBlock(new Random().nextInt(5));
+            addBlockInRandomPosition(new Random().nextInt(5));
             blockCreateTime = 0;
         }
     }

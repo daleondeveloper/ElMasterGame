@@ -69,9 +69,6 @@ public class Block extends AbstractDynamicObject {
     protected WaterElement contactHero;
 
     public Block(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height){
-        this(gameWorld, blockController, 0, x, y, width, height);
-    }
-    public Block(GameWorld gameWorld, BlockController blockController, int blockTypeNumber, float x, float y, float width, float height){
         this.gameWorld = gameWorld;
         this.blockController = blockController;
         effectManager = ParticleEffectManager.getInstance();

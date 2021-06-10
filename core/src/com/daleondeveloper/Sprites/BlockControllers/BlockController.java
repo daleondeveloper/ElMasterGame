@@ -3,12 +3,8 @@ package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Sprites.Blocks.Block;
-import com.daleondeveloper.Sprites.Blocks.DarkBlock;
-import com.daleondeveloper.Sprites.Blocks.FireBlock;
-import com.daleondeveloper.Sprites.Blocks.LightBlock;
-import com.daleondeveloper.Sprites.Blocks.SnowBlock;
-import com.daleondeveloper.Sprites.Blocks.WaterBlock;
+import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Sprites.Blocks.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +20,9 @@ public class BlockController {
 
     protected List<Block> arrayBlock ;
     protected GameWorld gameWorld;
+    protected GameGrid gameGrid;
     protected Random rnd;
     protected Block lastCreateBlock;
-    protected Block[][] blocksMas;
     protected float blockFallVelocity;
     protected float blockCreateTime;
     protected ControllerType type;
@@ -34,10 +30,9 @@ public class BlockController {
 
     public BlockController (GameWorld gameWorld)  {
         this.gameWorld = gameWorld;
-
+        gameGrid = gameWorld.getGameGrid();
         arrayBlock = new ArrayList<Block>(10);
 
-        blocksMas = new Block[10][20];
         rnd = new Random ();
         blockFallVelocity = 0;
         blockCreateTime = 0;
@@ -57,79 +52,69 @@ public class BlockController {
             block.render(spriteBatch);
         }
     }
-    public Block addBlock (int blockType){
+    public Block addBlockInRandomPosition (int blockType){
+        return addBlock(getRandomXBlockCordinateToCreate(),300,blockType);
+    }
+    public Block addBlock(float x, float y){
+        return addBlock(x,y,0);
+    }
+    public Block addBlock(float x, float y, int blockTypeNumber){
+        Block block;
+        switch (blockTypeNumber){
+            case 1 :
+                block = new LightBlock(gameWorld,this,x,y,9.94f,9.94f);
+                break;
+
+            case 2 :
+                block = new SnowBlock(gameWorld,this,x,y,9.94f,9.94f);
+                break;
+
+            case 3 :
+                block = new FireBlock(gameWorld,this,x,y,9.94f,9.94f);
+                break;
+
+            case 4 :
+                block = new WaterBlock(gameWorld,this,x,y,9.94f,9.94f);
+                break;
+            case 5 :
+                block = new DarkBlock(gameWorld,this,x,y,9.94f,9.94f);
+                break;
+
+            default:
+                block = new Block(gameWorld,this,x,y,9.94f,9.94f);
+        }
+        addBlockToArrayAndChangeStateFall(block);
+        return block;
+    }
+
+    private void addBlockToArrayAndChangeStateFall(Block block){
+        block.fall();
+        arrayBlock.add(block);
+    }
+    private float getRandomXBlockCordinateToCreate(){
         int countNextRandomNumbers = 0;
         float posCreateX;
         int posMasX = rnd.nextInt(10);
         while (true) {
-            if (blocksMas[posMasX][15] == null &&
-                    blocksMas[posMasX][14] == null &&
-                    blocksMas[posMasX][13] == null &&
-                    blocksMas[posMasX][12] == null &&
-                    blocksMas[posMasX][11] == null &&
-                    blocksMas[posMasX][10] == null &&
-                    blocksMas[posMasX][9] == null) {
+            if (gameGrid.getBlockByCordinate(posMasX,15) == null &&
+                    gameGrid.getBlockByCordinate(posMasX,14) == null &&
+                    gameGrid.getBlockByCordinate(posMasX,13) == null &&
+                    gameGrid.getBlockByCordinate(posMasX,12) == null &&
+                    gameGrid.getBlockByCordinate(posMasX,11) == null &&
+                    gameGrid.getBlockByCordinate(posMasX,10) == null) {
                 break;
             }else{
                 posMasX = rnd.nextInt(10);
             }
             countNextRandomNumbers++;
             if(countNextRandomNumbers > 100)break;
-            }
-        posCreateX = (float)posMasX*10+50;
-        blocksMas[posMasX][15] = new Block(gameWorld,this,blockType,posCreateX,300,9.94f,9.94f);
-        arrayBlock.add(blocksMas[posMasX][15]);
-        blocksMas[posMasX][15].fall();
-
-        return blocksMas[posMasX][15];
-    }
-    public boolean addBlock(float x, float y){
-        Block block = new Block(gameWorld,this,x,y,9.94f,9.94f);
-        arrayBlock.add(block);
-        block.fall();
-        return true;
-    }
-    public boolean addBlock(float x, float y, int blockTypeNumber){
-        Block block;
-        switch (blockTypeNumber){
-            case 1 :
-                block = new LightBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-
-            case 2 :
-                block = new SnowBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-
-            case 3 :
-                block = new FireBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-
-            case 4 :
-                block = new WaterBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-            case 5 :
-                block = new DarkBlock(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
-                break;
-
-            default:
-                block = new Block(gameWorld,this,blockTypeNumber,x,y,9.94f,9.94f);
         }
-        arrayBlock.add(block);
-        block.fall();
-        return true;
+        posCreateX = (float)posMasX*10+50;
+        return posCreateX;
     }
-
-    public int getLengthBlockGridX(){
-        return blocksMas.length;
-    }
-    public int getLengthBlockGridY(){
-        return blocksMas[0].length;
-    }
-
     public List<Block> getArrayBlock() {
         return arrayBlock;
     }
-
     public float getBlockFallVelocity() {
         return blockFallVelocity;
     }

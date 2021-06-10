@@ -6,8 +6,8 @@ import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 
 public class LightBlock extends Block {
 
-    public LightBlock(GameWorld gameWorld, BlockController blockController, int blockTypeNumber, float x, float y, float width, float height) {
-        super(gameWorld, blockController, blockTypeNumber, x, y, width, height);
+    public LightBlock(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height) {
+        super(gameWorld, blockController, x, y, width, height);
 
         textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockLight();
         blockType = BlockType.LIGHT;

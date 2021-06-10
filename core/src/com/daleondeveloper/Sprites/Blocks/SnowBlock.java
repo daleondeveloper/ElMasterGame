@@ -13,8 +13,8 @@ public class SnowBlock extends Block {
     private float freezingTime;
 
 
-    public SnowBlock(GameWorld gameWorld, BlockController blockController, int blockTypeNumber, float x, float y, float width, float height) {
-        super(gameWorld, blockController, blockTypeNumber, x, y, width, height);
+    public SnowBlock(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height) {
+        super(gameWorld, blockController, x, y, width, height);
 
         textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockSnow();
         blockType = BlockType.SNOW;
