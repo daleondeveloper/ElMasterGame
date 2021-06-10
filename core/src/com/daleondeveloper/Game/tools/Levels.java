@@ -45,6 +45,7 @@ public class Levels {
           if(level < levels.length && level >= 0){
                return levels[level];
           }else if(level == -1){
+               savesLevel = GameSettings.getInstance().getLevelSaved1();
                return savesLevel;
           }
           else
