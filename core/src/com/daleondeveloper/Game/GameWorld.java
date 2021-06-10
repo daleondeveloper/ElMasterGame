@@ -6,19 +6,16 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.LevelGenerator;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.Sprites.Platform;
-import com.daleondeveloper.Sprites.PlatformController;
 import com.daleondeveloper.tools.GameConstants;
 
 import java.util.ArrayList;
@@ -36,55 +33,55 @@ public class GameWorld {
 
     private PlayScreen playScreen;
     private World box2DWorld;
-    private com.daleondeveloper.Game.Settings.GameSettings gameSettings;
-    private int level;
+    private GameSettings gameSettings;
     private GameCamera gameCamera;
-    private LevelGenerator levelGenerator;
 
+    //Елементи управління грою
+    private LevelGenerator levelGenerator;
+    private GameGrid gameGrid;
+    private BlockController blockController;
+
+    //поки так TODO
+    private int level;
     private  boolean moveCamera;
     private boolean pauseCamera;
     private boolean firstLauch;
-
     private GameMode gameMode;
 
-    private BlockController blockController;
-    private PlatformController platformController;
-    private GameGrid gameGrid;
 
-    private com.daleondeveloper.Sprites.Hero.WaterElement waterElement;
+    //Ігрові фізичні елементи
+    private WaterElement waterElement;
     private Platform regionDown;
     private Platform regionLeft;
     private Platform regionRight;
-    private Background background;
-    private Background gates;
-    private Background backgroundGameFon;
     private GameSensor firstLineBlockChecker;
 
+    //Фон і інші графічні едементи
+    private Background backgroundGameFon;
+
+    //Timers
     private float timeCreateBlock;
     private float timeToSave;
 
+    //Buttons
     private boolean rightButtonPressed;
     private boolean leftButtonPressed;
     private boolean buttonPushPressed;
 
-
-    private Array<AbstractGameObject> gameObjectToCreate;
-
     public GameWorld(PlayScreen playScreen, World box2DWorld, int level){
         this.playScreen = playScreen;
         this.box2DWorld = box2DWorld;
-        this.level = level;
         gameCamera = new GameCamera();
+        gameSettings = GameSettings.getInstance();
+        this.level = level;
+
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
-
         levelGenerator = new LevelGenerator(this,level);
-
         blockController = levelGenerator.getBlockController();
 
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
-        gameSettings = GameSettings.getInstance();
 
         rightButtonPressed = false;
         leftButtonPressed = false;
@@ -95,8 +92,35 @@ public class GameWorld {
 
         createSprites();
         createBackground();
-        gameObjectToCreate = new Array<AbstractGameObject>();
+    }
+    public void update(float deltaTime){
+        timeToSave -= deltaTime;
 
+        waterElement.update(deltaTime);
+        regionLeft.update(deltaTime);
+        regionRight.update(deltaTime);
+        regionDown.update(deltaTime);
+
+        backgroundGameFon.update(deltaTime);
+        updateBlock(deltaTime);
+        firstLineBlockChecker.update(deltaTime);
+
+        blockController.update(deltaTime);
+
+        checkPressedButtons();
+        this.gameCamera.update(deltaTime);
+
+        if(timeToSave < 0){
+            saveLevel();
+        }
+
+    }
+    public void render(SpriteBatch batch) {
+        // This order is important.
+        // This determines if a sprite has to be drawn in front or behind another sprite.
+        backgroundGameFon.render(batch);
+        waterElement.render(batch);
+        blockController.render(batch);
     }
 
     private void createSprites(){
@@ -113,6 +137,9 @@ public class GameWorld {
         backgroundGameFon.setRegionGameFon();
     }
 
+    public Body createBody(BodyDef bodyDef) {
+        return box2DWorld.createBody(bodyDef);
+    }
     private void loadGames(){
 
        for (Block blockA : blockController.getArrayBlock()){
@@ -142,38 +169,6 @@ public class GameWorld {
        }
     }
 
-    public void handleGameObjectsToCreate(){
-        while(gameObjectToCreate.size > 0){
-            AbstractGameObject  gameObject = gameObjectToCreate.pop();
-        }
-    }
-    public void createGameObject(AbstractGameObject gameObject){gameObjectToCreate.add(gameObject);}
-    public Body createBody(BodyDef bodyDef) {
-        return box2DWorld.createBody(bodyDef);
-    }
-
-    public void update(float deltaTime){
-        timeToSave -= deltaTime;
-
-        waterElement.update(deltaTime);
-        regionLeft.update(deltaTime);
-        regionRight.update(deltaTime);
-        regionDown.update(deltaTime);
-
-        backgroundGameFon.update(deltaTime);
-        updateBlock(deltaTime);
-        firstLineBlockChecker.update(deltaTime);
-
-        blockController.update(deltaTime);
-
-        checkPressedButtons();
-        this.gameCamera.update(deltaTime);
-
-        if(timeToSave < 0){
-            saveLevel();
-        }
-
-    }
     private void saveLevel(){
         String level = "";
         level += blockController.toString();
@@ -183,7 +178,26 @@ public class GameWorld {
         }
         gameSettings.saveCurrentLevel(level);
     }
-
+    private void updateBlock(float deltaTime){
+        timeCreateBlock += deltaTime;
+        if(timeCreateBlock > 100){
+            timeCreateBlock = 0;
+            //getBlockController().addBlock();
+        }
+        List<com.daleondeveloper.Sprites.Blocks.Block> arrayBlock = new ArrayList<com.daleondeveloper.Sprites.Blocks.Block>();
+        for(com.daleondeveloper.Sprites.Blocks.Block block: blockController.getArrayBlock()){
+            if(block.isBody()) {
+                block.update(deltaTime);
+            }else {
+                arrayBlock.add(block);
+                continue;
+            }
+            if(block.isDisposable()){
+                arrayBlock.add(block);
+            }
+        }
+        blockController.getArrayBlock().removeAll(arrayBlock);
+    }
     private void checkPressedButtons(){
         if(isLeftButtonPressed()){
             waterElement.turnLeft();
@@ -209,40 +223,10 @@ public class GameWorld {
             waterElement.push(50f);
         }
     }
-    private void updateBlock(float deltaTime){
-        timeCreateBlock += deltaTime;
-        if(timeCreateBlock > 100){
-            timeCreateBlock = 0;
-            //getBlockController().addBlock();
-        }
-        List<com.daleondeveloper.Sprites.Blocks.Block> arrayBlock = new ArrayList<com.daleondeveloper.Sprites.Blocks.Block>();
-        for(com.daleondeveloper.Sprites.Blocks.Block block: blockController.getArrayBlock()){
-            if(block.isBody()) {
-                block.update(deltaTime);
-            }else {
-                arrayBlock.add(block);
-                continue;
-            }
-            if(block.isDisposable()){
-                arrayBlock.add(block);
-            }
-        }
-        blockController.getArrayBlock().removeAll(arrayBlock);
-    }
-
-    public void render(SpriteBatch batch) {
-        // This order is important.
-        // This determines if a sprite has to be drawn in front or behind another sprite.
-        backgroundGameFon.render(batch);
-        waterElement.render(batch);
-        blockController.render(batch);
-    }
-
 
     public void renderSpriteDebug(ShapeRenderer shapeRenderer) {
 
     }
-
     public void renderBox2DDebug(Box2DDebugRenderer box2DDebugRenderer) {
         box2DDebugRenderer.render(box2DWorld, gameCamera.getCombined());
     }
@@ -257,10 +241,6 @@ public class GameWorld {
 
     public BlockController getBlockController() {
         return blockController;
-    }
-
-    public PlatformController getPlatformController() {
-        return platformController;
     }
 
     public WaterElement getWaterElement() {
