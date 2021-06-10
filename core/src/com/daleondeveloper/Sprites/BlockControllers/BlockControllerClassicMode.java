@@ -12,7 +12,7 @@ public class BlockControllerClassicMode extends BlockController {
 
     public BlockControllerClassicMode(GameWorld gameWorld) {
         super( gameWorld);
-
+        type = ControllerType.CLASSIC;
     }
 
     @Override

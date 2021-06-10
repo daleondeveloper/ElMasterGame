@@ -17,7 +17,7 @@ public class BlockControllerWaterMode extends BlockController {
 
     public BlockControllerWaterMode(GameWorld gameWorld) {
         super(gameWorld);
-
+        type = ControllerType.WATER;
     }
 
     @Override

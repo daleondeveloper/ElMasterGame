@@ -15,7 +15,7 @@ public class Levels {
                   "<block><type : default><position : 1,2></block>" +
                   "<block><type : default><position : 7,2></block>" +
                   "<hero><position : 5,5></hero>";
-          levels[2] = "<blockController><type : classic></blockController>\" +\n" +
+          levels[1] = "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : dark><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : dark><position : 7,0></block>\" +\n" +
                   "                  \"<block><type : dark><position : 1,1></block>\" +\n" +
@@ -23,7 +23,7 @@ public class Levels {
                   "                  \"<block><type : default><position : 1,2></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,2></block>\" +\n" +
                   "                  \"<hero><position : 3,5></hero>";
-          levels[3] = "<blockController><type : classic></blockController>\" +\n" +
+          levels[2] = "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : light><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,5></block>\" +\n" +
                   "                  \"<block><type : default><position : 1,1></block>\" +\n" +
@@ -33,6 +33,9 @@ public class Levels {
                   "                  \"<hero><position : 5,5></hero>";
           levels[4] = "";
           levels[5] = "";
+          levels[6] = "";
+          levels[7] = "";
+          levels[8] = "";
      }
      public String getLevel(int level){
           if(level < levels.length){

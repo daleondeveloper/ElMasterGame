@@ -480,4 +480,12 @@ public class Block extends AbstractDynamicObject {
     public void setBlockTypeNumber(int blockTypeNumber) {
         this.blockTypeNumber = blockTypeNumber;
     }
+
+    @Override
+    public String toString() {
+        return "<block>" +
+                "<type : " + blockType.toString() +  ">" +
+                "<position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + ">" +
+                "</block>";
+    }
 }

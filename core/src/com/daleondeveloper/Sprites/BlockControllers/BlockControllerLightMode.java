@@ -16,6 +16,7 @@ public class BlockControllerLightMode extends BlockController {
     public BlockControllerLightMode(GameWorld gameWorld) {
         super(gameWorld);
         timeToCreateSpecialBlock = 0;
+        type = ControllerType.LIGHT;
     }
 
     @Override

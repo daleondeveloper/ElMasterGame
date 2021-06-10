@@ -19,6 +19,9 @@ import java.util.Random;
 public class BlockController {
     private static final String TAG = BlockController.class.getName();
 
+    protected  enum ControllerType{
+        CLASSIC,DARK,FIRE,LIGHT,SNOW,WATER,SPECIAL;
+    }
     private static BlockController instance;
 
     protected List<Block> arrayBlock ;
@@ -28,6 +31,7 @@ public class BlockController {
     protected Block[][] blocksMas;
     protected float blockFallVelocity;
     protected float blockCreateTime;
+    protected ControllerType type;
 
 
     public BlockController (GameWorld gameWorld)  {
@@ -41,6 +45,7 @@ public class BlockController {
         blockCreateTime = 0;
         blockFallVelocity = (-50);
 
+        type = ControllerType.CLASSIC;
     }
 
     public void update(float deltaTime){
@@ -136,5 +141,12 @@ public class BlockController {
 
     public float getBlockFallVelocity() {
         return blockFallVelocity;
+    }
+
+    @Override
+    public String toString() {
+        return "<blockController>" +
+                "<type : " + type.toString() + ">" +
+                "</blockController";
     }
 }

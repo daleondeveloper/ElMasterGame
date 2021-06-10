@@ -16,7 +16,7 @@ public class BlockControllerFireMode extends BlockController {
 
     public BlockControllerFireMode(GameWorld gameWorld) {
         super(gameWorld);
-
+        type = ControllerType.FIRE;
     }
 
     @Override

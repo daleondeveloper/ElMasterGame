@@ -19,7 +19,7 @@ public class BlockControllerSpecialMode extends BlockController {
 
     public BlockControllerSpecialMode(GameWorld gameWorld) {
         super(gameWorld);
-
+        type =ControllerType.SPECIAL;
     }
 
     @Override

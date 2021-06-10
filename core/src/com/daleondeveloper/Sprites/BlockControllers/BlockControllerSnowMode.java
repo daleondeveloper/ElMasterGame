@@ -15,7 +15,7 @@ public class BlockControllerSnowMode extends BlockController {
 
     public BlockControllerSnowMode(GameWorld gameWorld) {
         super(gameWorld);
-
+        type = ControllerType.SNOW;
     }
 
     @Override

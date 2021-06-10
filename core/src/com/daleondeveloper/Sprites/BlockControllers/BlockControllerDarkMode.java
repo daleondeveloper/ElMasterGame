@@ -16,7 +16,7 @@ public class BlockControllerDarkMode extends BlockController {
 
     public BlockControllerDarkMode(GameWorld gameWorld) {
         super(gameWorld);
-
+        type = ControllerType.DARK;
     }
 
     @Override

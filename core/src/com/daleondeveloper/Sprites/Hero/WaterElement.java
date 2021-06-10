@@ -615,11 +615,8 @@ public class WaterElement extends AbstractDynamicObject {
 
     @Override
     public String toString() {
-        return "WaterElement{" +
-                ", currentState=" + currentState +
-                ", moveRight=" + moveRight +
-                ", returnCellsPositionY=" + returnPosition.y +
-                ", returnCellsPositionX=" + returnPosition.x +
-                '}';
+        return "<hero>" +
+                "<position : " + positionInGameGrid.x + "," + positionInGameGrid.y + ">" +
+                "</hero>";
     }
 }

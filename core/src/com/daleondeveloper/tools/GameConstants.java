@@ -34,6 +34,7 @@ public class GameConstants {
     public static final int PIX_IN_CELL = 10;
 
     public static int getBlockTypeByName(String name){
+        name = name.toLowerCase().trim();
         if(name.equals("default") || name.equals("classic")){
             return BLOCK_CLASSIC;
         }else if(name.equals("light")){
@@ -50,6 +51,7 @@ public class GameConstants {
         return -1;
     }
     public static int getBlockControllerTypeByName(String name){
+        name = name.toLowerCase().trim();
         if(name.equals("default") || name.equals("classic")){
             return GAME_MODE_CLASSIC;
         }else if(name.equals("light")){
