@@ -26,8 +26,8 @@ public class FireBlock extends Block {
 
         int xEndPosInCycle = posMasX + 1;
         int yEndPosInCycle = posMasY + 1;
-        if(xEndPosInCycle >= blockController.getLengthBlockGridX()){xEndPosInCycle = blockController.getLengthBlockGridX() - 1;}
-        if(yEndPosInCycle >= blockController.getLengthBlockGridY()){yEndPosInCycle = blockController.getLengthBlockGridY() - 1;}
+        if(xEndPosInCycle >= gameGrid.getGridWidthLength()){xEndPosInCycle = gameGrid.getGridWidthLength() - 1;}
+        if(yEndPosInCycle >= gameGrid.getGridHeightLength()){yEndPosInCycle = gameGrid.getGridHeightLength() - 1;}
 
         for(int i = xStartPosInCycle; i <= xEndPosInCycle; i++){
             for(int j = yStartPosInCycle; j <= yEndPosInCycle; j++) {

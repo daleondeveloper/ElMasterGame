@@ -43,6 +43,10 @@ public class BlockController {
 
     public void update(float deltaTime){
         blockCreateTime += deltaTime;
+        if(blockCreateTime > 4f){
+            addBlockInRandomPosition(0);
+            blockCreateTime = 0;
+        }
     }
     public void render(SpriteBatch spriteBatch){
         for(Block block : arrayBlock){
