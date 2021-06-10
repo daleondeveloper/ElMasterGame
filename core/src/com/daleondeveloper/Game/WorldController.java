@@ -112,7 +112,7 @@ public class WorldController implements Disposable {
         GameCamera gameCamera = gameWorld.getGameCamera();
 
         if(hero.isDisposable()) {
-            GameSettings.getInstance().deleteSave();
+            GameSettings.getInstance().saveCurrentLevel("");
             for(Block block :gameWorld.getBlockController().getArrayBlock()){
                 block.delete();
             }

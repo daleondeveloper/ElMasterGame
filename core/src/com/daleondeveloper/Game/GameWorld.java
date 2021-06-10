@@ -98,12 +98,8 @@ public class GameWorld {
         gameObjectToCreate = new Array<AbstractGameObject>();
 
     }
-    private void loadParameters(){
-        gameSettings.loadGameWorldParameters();
-    }
 
     private void createSprites(){
-        loadParameters();
         waterElement = levelGenerator.getHero();
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 
@@ -118,10 +114,6 @@ public class GameWorld {
     }
 
     private void loadGames(){
-       gameSettings.loadHero();
-       waterElement.load();
-       gameSettings.loadBlock();
-       blockController.load();
 
        for (Block blockA : blockController.getArrayBlock()){
            for(Block blockB : blockController.getArrayBlock()){
@@ -163,11 +155,6 @@ public class GameWorld {
     public void update(float deltaTime){
         timeToSave -= deltaTime;
 
-        if(firstLauch){
-            GameSettings.getInstance().setHero(waterElement);
-            loadGames();
-            firstLauch = false;
-        }
         waterElement.update(deltaTime);
         regionLeft.update(deltaTime);
         regionRight.update(deltaTime);
@@ -183,9 +170,18 @@ public class GameWorld {
         this.gameCamera.update(deltaTime);
 
         if(timeToSave < 0){
-            gameSettings.save();
+            saveLevel();
         }
 
+    }
+    private void saveLevel(){
+        String level = "";
+        level += blockController.toString();
+        level += waterElement.toString();
+        for(Block block : blockController.getArrayBlock()){
+            level += block;
+        }
+        gameSettings.saveCurrentLevel(level);
     }
 
     private void checkPressedButtons(){

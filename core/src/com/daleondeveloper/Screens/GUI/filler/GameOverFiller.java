@@ -86,7 +86,7 @@ public class GameOverFiller extends MenuFiller{
         mainMenuButton.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                prefs.deleteSave();
+                prefs.clearSaveLevel();
                 ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }
@@ -95,7 +95,7 @@ public class GameOverFiller extends MenuFiller{
         restartButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                GameSettings.getInstance().deleteSave();
+                prefs.clearSaveLevel();
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }
@@ -157,60 +157,11 @@ public class GameOverFiller extends MenuFiller{
 
     private void updateScore(){
         playerScore = prefs.getLastPlayScore();
-        switch (prefs.getGameModeDragon()){
-            case 0:
                 bestScore = prefs.getHighScoreClassic();
-                break;
-            case 1:
-                bestScore = prefs.getHighScoreLight();
-                break;
-            case 2:
-                bestScore = prefs.getHighScoreSnow();
-                break;
-            case 3:
-                bestScore = prefs.getHighScoreFire();
-                break;
-            case 4:
-                bestScore = prefs.getHighScoreWater();
-                break;
-            case 5:
-                bestScore = prefs.getHighScoreDark();
-                break;
-            case 6:
-                bestScore = prefs.getHighScoreSpecial();
-                break;
-            default:
-                bestScore = prefs.getHighScoreClassic();
-        }
         if(bestScore < playerScore){
             bestScore = playerScore;
-            switch (prefs.getGameModeDragon()){
-                case 0:
-                    prefs.setHighScoreClassic(bestScore);
-                    break;
-                case 1:
-                    prefs.setHighScoreLight(bestScore);
-                    break;
-                case 2:
-                    prefs.setHighScoreSnow(bestScore);
-                    break;
-                case 3:
-                    prefs.setHighScoreFire(bestScore);
-                    break;
-                case 4:
-                    prefs.setHighScoreWater(bestScore);
-                    break;
-                case 5:
-                    prefs.setHighScoreDark(bestScore);
-                    break;
-                case 6:
-                    prefs.setHighScoreSpecial(bestScore);
-                    break;
-                default:
-                    prefs.setHighScoreClassic(bestScore);
-            };
+            prefs.saveNewBestScore(bestScore);
         }
         prefs.setLastPlayScore(0);
-        prefs.save();
     }
 }

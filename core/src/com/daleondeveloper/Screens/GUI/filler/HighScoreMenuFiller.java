@@ -143,39 +143,7 @@ public class HighScoreMenuFiller extends MenuFiller  {
     }
 
     private void changeScore() {
-        switch (pageShow){
-            case 0:
-                modeNameLabel.setText("Classic");
-                bestHighScoreLabel.setText(prefs.getHighScoreClassic());
-                break;
-            case 1:
-                modeNameLabel.setText("Light");
-                bestHighScoreLabel.setText(prefs.getHighScoreLight());
-                break;
-            case 2:
-                modeNameLabel.setText("Snow");
-                bestHighScoreLabel.setText(prefs.getHighScoreSnow());
-                break;
-            case 3:
-                modeNameLabel.setText("Fire");
-                bestHighScoreLabel.setText(prefs.getHighScoreFire());
-                break;
-            case 4:
-                modeNameLabel.setText("Water");
-                bestHighScoreLabel.setText(prefs.getHighScoreWater());
-                break;
-            case 5:
-                modeNameLabel.setText("Dark");
-                bestHighScoreLabel.setText(prefs.getHighScoreDark());
-                break;
-            case 6:
-                modeNameLabel.setText("Special");
-                bestHighScoreLabel.setText(prefs.getHighScoreSpecial());
-                break;
-            default:
-                modeNameLabel.setText("Mode");
-                bestHighScoreLabel.setText(prefs.getHighScoreClassic());
-        }
-
-    }
+       modeNameLabel.setText("Classic");
+       bestHighScoreLabel.setText(prefs.getHighScoreClassic());
+       }
 }

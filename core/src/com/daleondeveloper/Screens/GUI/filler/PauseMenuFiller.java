@@ -94,7 +94,7 @@ public class PauseMenuFiller extends MenuFiller {
         restartButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                GameSettings.getInstance().deleteSave();
+                GameSettings.getInstance().setSavedLevel("");
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }

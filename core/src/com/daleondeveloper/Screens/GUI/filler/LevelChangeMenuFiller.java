@@ -165,7 +165,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         newGameImage.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                GameSettings.getInstance().deleteSave();
+                prefs.clearSaveLevel();
                 menuScreen.setGameModeChangeScreen();
             }
         }));
@@ -207,7 +207,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
 
     }
     private void chooseModePanel(){
-        GameSettings.getInstance().deleteSave();
+        prefs.clearSaveLevel();
         // Таблиця вибору режиму гри
         Table gameModeTable = new Table();
         scrollPane = new ScrollPane(gameModeTable);

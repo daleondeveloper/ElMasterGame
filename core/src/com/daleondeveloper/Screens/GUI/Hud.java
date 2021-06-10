@@ -120,7 +120,7 @@ public class Hud extends GUIOverlayAbstractScreen {
         pauseButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                GameSettings.getInstance().save();
+                GameSettings.getInstance().saveSetting();
                 playScreen.setStatePaused();
                 startButton.setVisible(true);
             }

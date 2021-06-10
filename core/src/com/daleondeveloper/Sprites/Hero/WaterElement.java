@@ -192,14 +192,6 @@ public class WaterElement extends AbstractDynamicObject {
         body.createFixture(sensorUp).setUserData(this);
     }
 
-    public boolean load(){
-        GameSettings.getInstance().loadHero();
-       // setLoadParameters();
-        setReturnPosition();
-        updateSpritePosition(elemStandAnim.getKeyFrame(stateTime),true);
-        return true;
-    }
-
     @Override
     public void renderDebug(ShapeRenderer shapeRenderer) {
         super.renderDebug(shapeRenderer);
@@ -499,12 +491,6 @@ public class WaterElement extends AbstractDynamicObject {
         }
 
         return null;
-    }
-
-    private void setLoadParameters(){
-        body.setTransform(GameSettings.getInstance().getHeroX(),GameSettings.getInstance().getHeroY(),0);
-        returnPosition.x = GameSettings.getInstance().getHeroX() + getWidth()/2;
-        returnPosition.y = GameSettings.getInstance().getHeroY() + getHeight()/2;
     }
 
     public void turnLeft(){

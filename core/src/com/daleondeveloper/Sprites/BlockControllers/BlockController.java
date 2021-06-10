@@ -3,8 +3,6 @@ package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Game.Settings.BlockLoad;
-import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.DarkBlock;
 import com.daleondeveloper.Sprites.Blocks.FireBlock;
@@ -119,13 +117,6 @@ public class BlockController {
         arrayBlock.add(block);
         block.fall();
         return true;
-    }
-
-    public void load(){
-        GameSettings.getInstance().loadBlock();
-        for(BlockLoad loadedBlock : GameSettings.getInstance().getBlockVector()){
-            addBlock(loadedBlock.getPosition().x, loadedBlock.getPosition().y,loadedBlock.getBlockType());
-        }
     }
 
     public int getLengthBlockGridX(){
