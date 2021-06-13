@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -66,21 +65,6 @@ public class GameCamera {
 
     }
     public void resize(int width, int height) {
-
-
-//        if((height / width) < 2){
-//            width = height / 2;
-//            viewPort.update(width,height,true);
-//
-//        } else if((height / width) > 2){
-//            height = width * 2;
-//            viewPort.update(width,height,true);
-//            viewPort.setScreenY(Gdx.graphics.getHeight() - height / 2);
-//        }else {
-//            viewPort.update(width,height,true);
-//
-//        }
-
         this.width = width;
         this.height = height;
         camera.position.set(100,200,0);

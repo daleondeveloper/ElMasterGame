@@ -95,12 +95,10 @@ public class PlayScreen extends GUIAbstractScreen {
             worldController.update(deltaTime);
         }
         backgroundScreen.render();
-//        Viewport viewport = gameWorld.getGameCamera().setFitViewPort();
         worldRenderer.render();
         gatesScreen.render();
         hud.render();
         menuScreen.render();
-//        viewport.update(viewport.getScreenWidth(),viewport.getScreenHeight());
         stage.draw();
         //Analys game result
         if(guiScreenState == GUIScreenState.RUNNING){
@@ -122,13 +120,6 @@ public class PlayScreen extends GUIAbstractScreen {
             // A boolean value is used to avoid nested if/else sentences.
             boolean finish = false;
 
-            // Show game controllers help
-//            finish = !finish && prefs.mustShowHelp();
-//            if (finish) {
-//                infoScreen.showHelp();
-//                prefs.setShowHelp(false);
-//            }
-
             finish = !finish && levelCompleted;
             if (finish) {
                 gameWorld.addLevel();
@@ -145,12 +136,6 @@ public class PlayScreen extends GUIAbstractScreen {
                         showInterstitialAd();
                     }
                 }
-
-                // Game over
-//                gameWorld.getGameCamera().shake(SHAKE_DURATION, true);
-              //  gameWorld.getWaterElement().fonDead();
-
-//                infoScreen.showGameOver();
                 menuScreen.setGameOverScreen();
                 endGame = true;
                 prefs.saveCurrentLevel("");

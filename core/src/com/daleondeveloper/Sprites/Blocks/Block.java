@@ -113,16 +113,7 @@ public class Block extends AbstractDynamicObject {
         defineBlock();
 
         currentState = State.IDLE;
-        float BPx = body.getPosition().x;
-        int leftReg = 44,rightReg = 46;
-        for(int i = 0; i < 12; i++){
-            if(BPx > leftReg && BPx < rightReg){
-                returnCellsPosition = (float)((leftReg + rightReg)/2);
-                break;
-            }
-            leftReg += 10;
-            rightReg += 10;
-        }
+        updatePositionInCells();
         gameGrid.addObject(this,(int)positionInBlocksMasX,(int)positionInBlocksMasY);
     }
 
