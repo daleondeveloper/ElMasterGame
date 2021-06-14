@@ -50,7 +50,12 @@ public class WorldController implements Disposable {
         box2DWorld.setContactListener(new WorldContactListner());
 
         // Creates our game world
-        gameWorld = new GameWorld(playScreen, box2DWorld, GameSettings.getInstance().getLevel());
+        if(GameSettings.getInstance().getSavedLevel().isEmpty()) {
+            gameWorld = new GameWorld(playScreen, box2DWorld, GameSettings.getInstance().getLevel());
+        }else{
+            gameWorld = new GameWorld(playScreen, box2DWorld, -1);
+        }
+
     }
 
     public void update(float deltaTime) {
@@ -109,7 +114,7 @@ public class WorldController implements Disposable {
         GameCamera gameCamera = gameWorld.getGameCamera();
 
         if(hero.isDisposable()) {
-            GameSettings.getInstance().saveCurrentLevel("");
+            GameSettings.getInstance().saveCurrentLevel("2");
             for(Block block :gameWorld.getBlockController().getArrayBlock()){
                 block.delete();
             }

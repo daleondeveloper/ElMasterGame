@@ -185,7 +185,7 @@ public class GameSettings {
         this.savedLevel = savedLevel;
     }
 
-    public static String getLevelSaved1() {
-        return LEVEL_SAVED_1;
+    public String getSavedLevel() {
+        return savedLevel;
     }
 }

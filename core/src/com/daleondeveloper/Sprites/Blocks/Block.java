@@ -32,7 +32,7 @@ public class Block extends AbstractDynamicObject {
         FALL, IDLE, PUSH, DESTROY, DISPOSE
     }
     protected enum BlockType{
-        WHITE,DARK,FIRE,WATER,LIGHT,SNOW
+        CLASSIC,DARK,FIRE,WATER,LIGHT,SNOW
     }
 
     protected GameWorld gameWorld;
@@ -87,7 +87,7 @@ public class Block extends AbstractDynamicObject {
 
         textureRegionBlock = assets.getBlockClassic();
         this.blockTypeNumber = 0;
-        blockType = BlockType.WHITE;
+        blockType = BlockType.CLASSIC;
 
         // Sets initial values for position, width and height and initial frame as jumperStand.
         setBounds(x, y, width, height);

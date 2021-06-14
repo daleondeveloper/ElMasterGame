@@ -158,6 +158,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         continueGameImage.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
+                prefs.setLevel(-1);
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
@@ -198,7 +199,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         labelTable.add(gameModeChangeTitleLabel);
         labelTable.add().growX();
         mainTable.row();
-        if(prefs.isGameSave()){
+        if(!prefs.loadSavedLevel().isEmpty()){
             continueGamePanel();
         }else{
             chooseModePanel();
@@ -207,7 +208,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
 
     }
     private void chooseModePanel(){
-        prefs.clearSaveLevel();
+//        prefs.clearSaveLevel();
         // Таблиця вибору режиму гри
         Table gameModeTable = new Table();
         scrollPane = new ScrollPane(gameModeTable);

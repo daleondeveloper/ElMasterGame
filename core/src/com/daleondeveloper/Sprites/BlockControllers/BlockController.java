@@ -127,6 +127,6 @@ public class BlockController {
     public String toString() {
         return "<blockController>" +
                 "<type : " + type.toString() + ">" +
-                "</blockController";
+                "</blockController>";
     }
 }

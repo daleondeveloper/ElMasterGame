@@ -1,5 +1,7 @@
 package com.daleondeveloper.tools;
 
+import com.badlogic.gdx.Gdx;
+
 public class GameConstants {
     private static final String TAG = GameConstants.class.getName();
 
@@ -48,6 +50,7 @@ public class GameConstants {
         }else if(name.equals("dark")){
             return BLOCK_DARK;
         }
+        Gdx.app.debug(TAG,name + " is not correct to get type");
         return -1;
     }
     public static int getBlockControllerTypeByName(String name){

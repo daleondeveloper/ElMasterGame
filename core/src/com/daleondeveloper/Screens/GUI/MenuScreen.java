@@ -132,10 +132,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         }else{
             setVisible(true);
         }
-//
-//        helpMenuFiller.update(deltaTime);
-//        highScoreMenuFiller.update(deltaTime);
-//        gameModeChangeMenuFiller.update(deltaTime);
+
 
     }
 

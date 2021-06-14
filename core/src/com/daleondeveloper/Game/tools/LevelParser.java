@@ -45,7 +45,7 @@ public class LevelParser {
     public String getType(String row){
         Matcher matcher = findType.matcher(row);
         if(matcher.find()){
-            return matcher.group().split(":")[1].split(">")[0].trim();
+            return matcher.group().split(":")[1].split(">")[0].trim().toLowerCase();
             }
         return "";
     }
@@ -54,8 +54,8 @@ public class LevelParser {
         if(matcher.find()){
             String[] posStr = matcher.group().split(":")[1].split(">")[0].trim().split(",");
             Vector2 position = new Vector2();
-            position.x = (Integer.parseInt(posStr[0])+5)*10;
-            position.y = (Integer.parseInt(posStr[1])+15)*10;
+            position.x = (int)(Float.parseFloat(posStr[0])+5)*10;
+            position.y = (int)(Float.parseFloat(posStr[1])+15 )*10;
             return position;
         }
         return null;

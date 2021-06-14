@@ -1,5 +1,6 @@
 package com.daleondeveloper.Game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -112,6 +113,7 @@ public class GameWorld {
 
         if(timeToSave < 0){
             saveLevel();
+            timeCreateBlock = TIME_TO_SAVE;
         }
 
     }
@@ -177,6 +179,7 @@ public class GameWorld {
             level += block;
         }
         gameSettings.saveCurrentLevel(level);
+        Gdx.app.debug(TAG, "Game saved" + level);
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;
