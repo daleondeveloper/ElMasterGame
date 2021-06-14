@@ -69,6 +69,9 @@ public class LevelGenerator {
     public int getLevelNumber(){
         return levelParser.getLevelNumber();
     }
+    public int getScore(){
+        return levelParser.getScore();
+    }
     public BlockController getBlockController() {
         return blockController;
     }

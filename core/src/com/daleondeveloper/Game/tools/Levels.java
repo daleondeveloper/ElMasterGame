@@ -11,6 +11,7 @@ public class Levels {
      public Levels(){
           levels = new String[maxLevel];
           levels[0] = "<lvlNmb>0</lvlNmb>" +
+                  "<score>0</score>" +
                   "<blockController><type : fire></blockController>" +
                   "<block><type : default><position : 1,0></block>" +
                   "<block><type : default><position : 7,0></block>" +
@@ -20,6 +21,7 @@ public class Levels {
                   "<block><type : default><position : 7,2></block>" +
                   "<hero><position : 5,5></hero>";
           levels[1] = "<lvlNmb>1</lvlNmb>" +
+                  "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : dark><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : dark><position : 7,0></block>\" +\n" +
@@ -29,6 +31,7 @@ public class Levels {
                   "                  \"<block><type : default><position : 7,2></block>\" +\n" +
                   "                  \"<hero><position : 3,5></hero>";
           levels[2] = "<lvlNmb>2</lvlNmb>" +
+                  "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : light><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,5></block>\" +\n" +

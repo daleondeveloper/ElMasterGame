@@ -89,6 +89,8 @@ public class GameWorld {
         leftButtonPressed = false;
         buttonPushPressed = false;
 
+        playScreen.getHud().setScore(levelGenerator.getScore());
+
         timeCreateBlock = 101;
         timeToSave = TIME_TO_SAVE;
 
@@ -114,7 +116,7 @@ public class GameWorld {
 
         if(timeToSave < 0){
             saveLevel();
-            timeCreateBlock = TIME_TO_SAVE;
+            timeToSave = TIME_TO_SAVE;
         }
 
     }
@@ -178,6 +180,7 @@ public class GameWorld {
     private void saveLevel(){
         String level = "";
         level += "<lvlNmb>" + level + "</lvlNmb>";
+        level += "<score>" + playScreen.getHud().getScore() + "</score>";
         level += blockController.toString();
         level += waterElement.toString();
         for(Block block : blockController.getArrayBlock()){

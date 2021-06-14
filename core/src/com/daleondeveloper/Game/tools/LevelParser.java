@@ -1,5 +1,6 @@
 package com.daleondeveloper.Game.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -7,8 +8,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LevelParser {
+    private static final String TAG = LevelParser.class.getName();
 
     private final Pattern findLevelNumber = Pattern.compile("<lvlNmb>.+?</lvlNmb>");
+    private final Pattern findScore = Pattern.compile("<score>.+?</score>");
     private final Pattern findBlockController = Pattern.compile("blockController>.+?</blockController>");
     private final Pattern findBlock = Pattern.compile("<block>.+?</block>");
     private final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
@@ -22,14 +25,27 @@ public class LevelParser {
         this.level = level;
     }
     public int getLevelNumber(){
-        Matcher matcher = findLevelNumber.matcher(level);
+        return findNumberByPattern(findLevelNumber);
+    }
+    public int getScore(){
+        int score =  findNumberByPattern(findScore);
+        if(score < 0)score =0;
+        return score;
+    }
+    public int findNumberByPattern(Pattern pattern){
+        Matcher matcher = pattern.matcher(level);
+        int number = -999;
         if(matcher.find()){
             String s = matcher.group();
-            s = s.substring(8, s.length() - 9).intern();
-            int number = Integer.parseInt(s);
-            return number;
+            s = s.split(">",2)[1];
+            s = s.split("<",2)[0].trim();
+            try {
+                number = Integer.parseInt(s);
+            }catch (NumberFormatException e){
+                Gdx.app.error(TAG, "Incorrect number format", e);
+            }
         }
-        return -100;
+        return number;
     }
     public String getBlockController(){
         Matcher matcher = findBlockController.matcher(level);

@@ -145,11 +145,6 @@ public class PlayScreen extends GUIAbstractScreen {
 
     @Override
     public void resize(int width, int height){
-
-
-        float w = gameWorld.getGameCamera().getWorldHeight(); // Same as stage.getViewport().getWorldWidth()
-        float h = gameWorld.getGameCamera().getWorldHeight();
-
         // Place the menu background in the middle of the screen
         background.setX(0);
         background.setY(0);

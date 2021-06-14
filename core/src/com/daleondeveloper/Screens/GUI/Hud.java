@@ -271,6 +271,10 @@ public class Hud extends GUIOverlayAbstractScreen {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public boolean isScoreAboveAverage() {
         return score > AVERAGE_SCORE;
     }
