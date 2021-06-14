@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class LevelParser {
 
+    private final Pattern findLevelNumber = Pattern.compile("<lvlNmb>.+?</lvlNmb>");
     private final Pattern findBlockController = Pattern.compile("blockController>.+?</blockController>");
     private final Pattern findBlock = Pattern.compile("<block>.+?</block>");
     private final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
@@ -19,6 +20,16 @@ public class LevelParser {
 
     public LevelParser (String level){
         this.level = level;
+    }
+    public int getLevelNumber(){
+        Matcher matcher = findLevelNumber.matcher(level);
+        if(matcher.find()){
+            String s = matcher.group();
+            s = s.substring(8, s.length() - 9).intern();
+            int number = Integer.parseInt(s);
+            return number;
+        }
+        return -100;
     }
     public String getBlockController(){
         Matcher matcher = findBlockController.matcher(level);

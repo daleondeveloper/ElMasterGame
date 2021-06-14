@@ -175,6 +175,7 @@ public class PlayScreen extends GUIAbstractScreen {
 
     public void doPause() {
         hideBannerAd();
+        worldController.pause();
         super.pause();
     }
 

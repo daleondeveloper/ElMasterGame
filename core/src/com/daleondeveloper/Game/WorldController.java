@@ -123,6 +123,9 @@ public class WorldController implements Disposable {
         return false;
     }
 
+    public void pause(){
+        gameWorld.pause();
+    }
     @Override
     public void dispose() {
         box2DWorld.dispose();

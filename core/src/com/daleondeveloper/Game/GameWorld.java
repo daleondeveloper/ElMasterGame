@@ -78,6 +78,7 @@ public class GameWorld {
 
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
         levelGenerator = new LevelGenerator(this,level);
+        level = levelGenerator.getLevelNumber();
         blockController = levelGenerator.getBlockController();
 
         moveCamera = false;
@@ -123,6 +124,9 @@ public class GameWorld {
         backgroundGameFon.render(batch);
         waterElement.render(batch);
         blockController.render(batch);
+    }
+    public void pause(){
+        saveLevel();
     }
 
     private void createSprites(){
@@ -173,6 +177,7 @@ public class GameWorld {
 
     private void saveLevel(){
         String level = "";
+        level += "<lvlNmb>" + level + "</lvlNmb>";
         level += blockController.toString();
         level += waterElement.toString();
         for(Block block : blockController.getArrayBlock()){

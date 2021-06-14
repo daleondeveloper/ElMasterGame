@@ -10,7 +10,8 @@ public class Levels {
      //d - default, f - fire, s - snow, dk - dark, l - light, s - star;
      public Levels(){
           levels = new String[maxLevel];
-          levels[0] = "<blockController><type : fire></blockController>" +
+          levels[0] = "<lvlNmb>0</lvlNmb>" +
+                  "<blockController><type : fire></blockController>" +
                   "<block><type : default><position : 1,0></block>" +
                   "<block><type : default><position : 7,0></block>" +
                   "<block><type : default><position : 1,1></block>" +
@@ -18,7 +19,8 @@ public class Levels {
                   "<block><type : default><position : 1,2></block>" +
                   "<block><type : default><position : 7,2></block>" +
                   "<hero><position : 5,5></hero>";
-          levels[1] = "<blockController><type : classic></blockController>\" +\n" +
+          levels[1] = "<lvlNmb>1</lvlNmb>" +
+                  "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : dark><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : dark><position : 7,0></block>\" +\n" +
                   "                  \"<block><type : dark><position : 1,1></block>\" +\n" +
@@ -26,7 +28,8 @@ public class Levels {
                   "                  \"<block><type : default><position : 1,2></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,2></block>\" +\n" +
                   "                  \"<hero><position : 3,5></hero>";
-          levels[2] = "<blockController><type : classic></blockController>\" +\n" +
+          levels[2] = "<lvlNmb>2</lvlNmb>" +
+                  "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : light><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,5></block>\" +\n" +
                   "                  \"<block><type : default><position : 1,1></block>\" +\n" +

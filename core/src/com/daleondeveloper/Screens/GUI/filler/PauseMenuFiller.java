@@ -82,7 +82,8 @@ public class PauseMenuFiller extends MenuFiller {
     }
     @Override
     protected void addAction(){
-        mainMenuButton.addListener(ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
+        mainMenuButton.addListener(
+                ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
 
         settingsButton.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
