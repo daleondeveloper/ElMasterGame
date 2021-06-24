@@ -143,6 +143,10 @@ public class PlayScreen extends GUIAbstractScreen {
         }
     }
 
+    public void showNextLvlMenu(){
+        pause();
+        menuScreen.setLvlCompleteMF();
+    }
     @Override
     public void resize(int width, int height){
         // Place the menu background in the middle of the screen

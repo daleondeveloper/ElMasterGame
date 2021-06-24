@@ -30,6 +30,7 @@ public class GameSettings {
     private boolean push_button_show;
     private boolean gameSave;
     private boolean[] helpModeShow;
+    private boolean infinityLvl;
     private int level;
     private int highCompletedLvl;
 
@@ -42,6 +43,7 @@ public class GameSettings {
         helpModeShow = new boolean[7];
         level = 0;
         highCompletedLvl = 44;
+        infinityLvl = false;
     }
 
     // Singleton: retrieve instance
@@ -187,5 +189,13 @@ public class GameSettings {
 
     public String getSavedLevel() {
         return savedLevel;
+    }
+
+    public boolean isInfinityLvl() {
+        return infinityLvl;
+    }
+
+    public void setInfinityLvl(boolean infinityLvl) {
+        this.infinityLvl = infinityLvl;
     }
 }

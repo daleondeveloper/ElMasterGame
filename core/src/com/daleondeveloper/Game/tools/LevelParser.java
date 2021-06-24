@@ -10,13 +10,16 @@ import java.util.regex.Pattern;
 public class LevelParser {
     private static final String TAG = LevelParser.class.getName();
 
-    private final Pattern findLevelNumber = Pattern.compile("<lvlNmb>.+?</lvlNmb>");
-    private final Pattern findScore = Pattern.compile("<score>.+?</score>");
-    private final Pattern findBlockController = Pattern.compile("blockController>.+?</blockController>");
-    private final Pattern findBlock = Pattern.compile("<block>.+?</block>");
-    private final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
-    private final Pattern findPosition = Pattern.compile("<position.+?>");
-    private final Pattern findType = Pattern.compile("<type.+?>");
+    public static final Pattern findLevelNumber = Pattern.compile("<lvlNmb>.+?</lvlNmb>");
+    public static final Pattern findLevelChecker = Pattern.compile("<condition>.+?</condition>");
+    public static final Pattern findScore = Pattern.compile("<score>.+?</score>");
+    public static final Pattern findBlockController = Pattern.compile("blockController>.+?</blockController>");
+    public static final Pattern findBlock = Pattern.compile("<block>.+?</block>");
+    public static final Pattern findStar = Pattern.compile("<star>.+?</star>");
+    public static final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
+    public static final Pattern findPosition = Pattern.compile("<position.+?>");
+    public static final Pattern findType = Pattern.compile("<type.+?>");
+    public static final Pattern findValue = Pattern.compile("<value.+?>");
 
     private String level;
 
@@ -32,42 +35,27 @@ public class LevelParser {
         if(score < 0)score =0;
         return score;
     }
-    public int findNumberByPattern(Pattern pattern){
+    public String getDateByPattern(Pattern pattern){
         Matcher matcher = pattern.matcher(level);
-        int number = -999;
-        if(matcher.find()){
-            String s = matcher.group();
-            s = s.split(">",2)[1];
-            s = s.split("<",2)[0].trim();
-            try {
-                number = Integer.parseInt(s);
-            }catch (NumberFormatException e){
-                Gdx.app.error(TAG, "Incorrect number format", e);
-            }
-        }
-        return number;
-    }
-    public String getBlockController(){
-        Matcher matcher = findBlockController.matcher(level);
         if(matcher.find()){
             return matcher.group();
         }
         return "";
     }
-    public String getHeroStartParameter(){
-        Matcher matcher = findHero.matcher(level);
-        if(matcher.find()){
-            return matcher.group();
-        }
-        return null;
-    }
-    public ArrayList<String> getStartBlock(){
-        ArrayList<String> blocks = new ArrayList<String>();
-        Matcher matcher = findBlock.matcher(level);
+    public ArrayList<String> getObjectsByPattern(Pattern pattern){
+        ArrayList<String> objects = new ArrayList<String>();
+        Matcher matcher = pattern.matcher(level);
         while (matcher.find()){
-            blocks.add(matcher.group());
+            objects.add(matcher.group());
         }
-        return blocks;
+        return objects;
+    }
+    public int getValue(String row){
+        Matcher matcher = findValue.matcher(row);
+        if(matcher.find()){
+            return Integer.parseInt(matcher.group().split(":")[1].split(">")[0].trim().toLowerCase());
+        }
+        return 0;
     }
     public String getType(String row){
         Matcher matcher = findType.matcher(row);
@@ -86,6 +74,21 @@ public class LevelParser {
             return position;
         }
         return null;
+    }
+    public int findNumberByPattern(Pattern pattern){
+        Matcher matcher = pattern.matcher(level);
+        int number = -999;
+        if(matcher.find()){
+            String s = matcher.group();
+            s = s.split(">",2)[1];
+            s = s.split("<",2)[0].trim();
+            try {
+                number = Integer.parseInt(s);
+            }catch (NumberFormatException e){
+                Gdx.app.error(TAG, "Incorrect number format", e);
+            }
+        }
+        return number;
     }
 
     public void setLevel(String level){

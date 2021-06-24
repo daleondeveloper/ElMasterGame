@@ -273,6 +273,7 @@ public class Hud extends GUIOverlayAbstractScreen {
 
     public void setScore(int score) {
         this.score = score;
+        GameSettings.getInstance().setLastPlayScore(score);
     }
 
     public boolean isScoreAboveAverage() {

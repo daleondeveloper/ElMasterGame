@@ -1,6 +1,5 @@
 package com.daleondeveloper.Game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.LevelGenerator;
+import com.daleondeveloper.Game.tools.LvlEndConditionController;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Background;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
@@ -39,6 +39,7 @@ public class GameWorld {
 
     //Елементи управління грою
     private LevelGenerator levelGenerator;
+    private LvlEndConditionController lvlEndConditionController;
     private GameGrid gameGrid;
     private BlockController blockController;
 
@@ -78,8 +79,9 @@ public class GameWorld {
 
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
         levelGenerator = new LevelGenerator(this,level);
-        level = levelGenerator.getLevelNumber();
+        this.level = levelGenerator.getLevelNumber();
         blockController = levelGenerator.getBlockController();
+        lvlEndConditionController = levelGenerator.getLvlEndConditionController();
 
         moveCamera = false;
         pauseCamera = false;
@@ -112,6 +114,12 @@ public class GameWorld {
         blockController.update(deltaTime);
 
         checkPressedButtons();
+
+        lvlEndConditionController.update(deltaTime);
+        if(lvlEndConditionController.checkComplianceConditions() &&
+        !gameSettings.isInfinityLvl()){
+            playScreen.showNextLvlMenu();
+        }
         this.gameCamera.update(deltaTime);
 
         if(timeToSave < 0){
@@ -187,7 +195,6 @@ public class GameWorld {
             level += block;
         }
         gameSettings.saveCurrentLevel(level);
-        Gdx.app.debug(TAG, "Game saved" + level);
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;

@@ -17,6 +17,7 @@ import com.daleondeveloper.Screens.GUI.filler.GameOverFiller;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.LevelChangeMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.LevelCompleteMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.MenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.SettingsMenuFiller;
@@ -34,7 +35,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
 
     public enum MenuState{
-        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE, GAME_OVER;
+        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE,LVLCOMPLETE, GAME_OVER;
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -51,6 +52,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private SettingsMenuFiller settingsMenuFiller;
     private CreditMenuFiller creditMenuFiller;
     private MenuFiller gameModeChangeMenuFiller;
+    private MenuFiller lvlCompleteMF;
     private GameOverFiller gameOverFiller;
 
     private Image screenBg;
@@ -74,6 +76,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         settingsMenuFiller = new SettingsMenuFiller(this);
         creditMenuFiller = new CreditMenuFiller(this);
         gameModeChangeMenuFiller = new LevelChangeMenuFiller(this);
+        lvlCompleteMF = new LevelCompleteMenuFiller(this);
         gameOverFiller = new GameOverFiller(this);
 
         menuState = MenuState.CLOSE;
@@ -217,6 +220,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void setGameModeChangeScreen(){
         menuState = MenuState.GAMEMODECHOOSE;
         gameModeChangeMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+
+    }
+    public void setLvlCompleteMF(){
+        menuState = MenuState.LVLCOMPLETE;
+        lvlCompleteMF.build();
         Gdx.input.setInputProcessor(stage);
 
     }

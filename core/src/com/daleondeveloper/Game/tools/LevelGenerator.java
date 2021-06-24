@@ -2,6 +2,8 @@ package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.GameWorld;
+import com.daleondeveloper.Game.tools.Checkers.ScoreLvlCondition;
+import com.daleondeveloper.Game.tools.Checkers.TimeLvlCondition;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerDarkMode;
@@ -16,10 +18,12 @@ import com.daleondeveloper.tools.GameConstants;
 import java.util.ArrayList;
 
 public class LevelGenerator {
+    private static final String TAG = LevelGenerator.class.getName();
 
     private GameWorld gameWorld;
     private Levels levels;
     private LevelParser levelParser;
+    private LvlEndConditionController lvlEndConditionController;
     private BlockController blockController;
     private WaterElement waterElement;
 
@@ -27,13 +31,31 @@ public class LevelGenerator {
         this.gameWorld = gameWorld;
         levels = new Levels();
         levelParser = new LevelParser(levels.getLevel(lvlNumber));
+        lvlEndConditionController = new LvlEndConditionController();
+        createLevelConditions();
         createStartBlockController();
         addStartBlocks();
         createHero();
     }
 
+
+    private void createLevelConditions(){
+        ArrayList<String> allConditions = levelParser.getObjectsByPattern(LevelParser.findLevelChecker);
+        for(String condition : allConditions){
+            String type = levelParser.getType(condition);
+            if(type.equals("time")){
+                int time = levelParser.getValue(condition);
+                lvlEndConditionController.addCondition(new TimeLvlCondition(time));
+            }else if(type.equals("score")){
+                int score = levelParser.getValue(condition);
+                lvlEndConditionController.addCondition(new ScoreLvlCondition(score));
+            }else{
+
+            }
+        }
+    }
     private void createStartBlockController(){
-        String type = levelParser.getType(levelParser.getBlockController());
+        String type = levelParser.getType(levelParser.getDateByPattern(LevelParser.findBlockController));
             if(type.equals("light")){
                 blockController = new BlockControllerLightMode(gameWorld);
             }else if(type.equals("snow")){
@@ -51,12 +73,12 @@ public class LevelGenerator {
             }
     }
     private void createHero(){
-        String heroStr = levelParser.getHeroStartParameter();
+        String heroStr = levelParser.getDateByPattern(LevelParser.findHero);
         Vector2 startPos = levelParser.getPosition(heroStr);
         waterElement = new WaterElement(gameWorld,startPos.x,startPos.y);
     }
     private void addStartBlocks(){
-        ArrayList<String> startBlocks = levelParser.getStartBlock();
+        ArrayList<String> startBlocks = levelParser.getObjectsByPattern(LevelParser.findBlock);
         for(String block: startBlocks){
             Vector2 position = levelParser.getPosition(block);
             int type = GameConstants.getBlockTypeByName(levelParser.getType(block));
@@ -80,5 +102,9 @@ public class LevelGenerator {
             createHero();
         }
         return waterElement;
+    }
+
+    public LvlEndConditionController getLvlEndConditionController() {
+        return lvlEndConditionController;
     }
 }
