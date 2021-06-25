@@ -27,11 +27,14 @@ public class LevelGenerator {
     private BlockController blockController;
     private WaterElement waterElement;
 
+    private int score ;
+
     public LevelGenerator(GameWorld gameWorld,int lvlNumber){
         this.gameWorld = gameWorld;
         levels = new Levels();
         levelParser = new LevelParser(levels.getLevel(lvlNumber));
         lvlEndConditionController = new LvlEndConditionController();
+        score = levelParser.getScore();
         createStartBlockController();
         addStartBlocks();
         createHero();
@@ -95,7 +98,7 @@ public class LevelGenerator {
         return levelParser.getLevelNumber();
     }
     public int getScore(){
-        return levelParser.getScore();
+        return score;
     }
     public BlockController getBlockController() {
         return blockController;
