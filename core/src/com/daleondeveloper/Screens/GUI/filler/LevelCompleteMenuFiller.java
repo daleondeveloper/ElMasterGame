@@ -69,7 +69,7 @@ public class LevelCompleteMenuFiller extends MenuFiller {
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
         ));
 //        textureRegion.setRegionHeight(50);
-        nextLvl = new ImageTextButton("Settings",new ImageTextButton.ImageTextButtonStyle(
+        nextLvl = new ImageTextButton("NextLvl",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion,textureRegion, textureRegion, assets.getAssetFonts().getSmall()
         ));
         backButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonX()));
@@ -89,8 +89,13 @@ public class LevelCompleteMenuFiller extends MenuFiller {
             @Override
             public void run() {
                 GameSettings.getInstance().setSavedLevel("");
-                GameSettings.getInstance().setLevel(GameSettings.getInstance().getLevel() + 1);
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+                int nextLvl = GameSettings.getInstance().getLevel() + 1;
+                if(nextLvl < GameConstants.MAX_LEVEL-1){
+                    GameSettings.getInstance().setLevel(nextLvl);
+                    ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+                }else {
+                    ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
+                }
             }
         }));
 
