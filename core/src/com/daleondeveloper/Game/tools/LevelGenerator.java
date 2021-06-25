@@ -32,13 +32,16 @@ public class LevelGenerator {
         levels = new Levels();
         levelParser = new LevelParser(levels.getLevel(lvlNumber));
         lvlEndConditionController = new LvlEndConditionController();
-        createLevelConditions();
         createStartBlockController();
         addStartBlocks();
         createHero();
+        loadNotSavedElement();
     }
 
-
+    public void loadNotSavedElement(){
+        levelParser = new LevelParser(levels.getLevel(getLevelNumber()));
+        createLevelConditions();
+    }
     private void createLevelConditions(){
         ArrayList<String> allConditions = levelParser.getObjectsByPattern(LevelParser.findLevelChecker);
         for(String condition : allConditions){
@@ -107,4 +110,5 @@ public class LevelGenerator {
     public LvlEndConditionController getLvlEndConditionController() {
         return lvlEndConditionController;
     }
+
 }

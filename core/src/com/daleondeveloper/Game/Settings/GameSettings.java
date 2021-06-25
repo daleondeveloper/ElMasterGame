@@ -16,6 +16,7 @@ public class GameSettings {
     private static final String AUDIO = "audio";
 
     private static final String LEVEL_SAVED_1 = "levelSaved1";
+    private static final String INFINITY_LVL = "infinityLvl";
     // Singleton: unique instance
     private static GameSettings instance;
 
@@ -69,6 +70,7 @@ public class GameSettings {
 
     public String loadSavedLevel(){
         savedLevel = prefs.getString(LEVEL_SAVED_1);
+        infinityLvl = prefs.getBoolean(INFINITY_LVL);
         return savedLevel;
     }
 
@@ -90,6 +92,7 @@ public class GameSettings {
     public void saveCurrentLevel(String level){
         prefs.putString(LEVEL_SAVED_1,level);
         savedLevel = level;
+        prefs.putBoolean(INFINITY_LVL,infinityLvl);
         prefs.flush();
     }
     public void clearSaveLevel(){

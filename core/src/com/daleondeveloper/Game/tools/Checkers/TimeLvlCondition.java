@@ -12,7 +12,7 @@ public class TimeLvlCondition extends LvlCondition {
 
     @Override
     public void checkCondition() {
-        conditionFulfilled = currentTime > endTime;
+        conditionFulfilled = currentTime >= endTime;
     }
 
     @Override

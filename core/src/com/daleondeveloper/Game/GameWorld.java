@@ -187,7 +187,7 @@ public class GameWorld {
 
     private void saveLevel(){
         String level = "";
-        level += "<lvlNmb>" + level + "</lvlNmb>";
+        level += "<lvlNmb>" + this.level + "</lvlNmb>";
         level += "<score>" + playScreen.getHud().getScore() + "</score>";
         level += blockController.toString();
         level += waterElement.toString();

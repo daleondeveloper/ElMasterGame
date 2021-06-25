@@ -38,6 +38,7 @@ public class GameOverFiller extends MenuFiller{
 
     private ImageTextButton restartButton;
     private ImageTextButton mainMenuButton;
+    private ImageTextButton continueBtn;
 
     private Label gameOverLabel;
     private Label playerScoreLabel;
@@ -73,6 +74,9 @@ public class GameOverFiller extends MenuFiller{
         TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
 
         restartButton = new ImageTextButton("Restart",new ImageTextButton.ImageTextButtonStyle(
+                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+        ));
+        continueBtn = new ImageTextButton("Continue (Ads)",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
         ));
         mainMenuButton = new ImageTextButton("MainMenu",new ImageTextButton.ImageTextButtonStyle(
@@ -130,12 +134,10 @@ public class GameOverFiller extends MenuFiller{
 
         Table scoreTable = new Table();
         mainTable.add(scoreTable).grow();
-        scoreTable.add(bestScoreLabel);
-        scoreTable.row();
-        if(bestScore == playerScore){
+        if(bestScore < playerScore){
             bestScoreLabel = new Label("New Best Score : " + playerScore + " !!!!!!",labelStyleMedium);
 
-        }{
+        } else {
             scoreTable.add(playerScoreLabel);
             scoreTable.row();
         }
@@ -143,6 +145,8 @@ public class GameOverFiller extends MenuFiller{
         scoreTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
 
         scoreTable.add(mainMenuButton);
+        scoreTable.row();
+        scoreTable.add(continueBtn);
         scoreTable.row();
         scoreTable.add(restartButton);
         scoreTable.row();
