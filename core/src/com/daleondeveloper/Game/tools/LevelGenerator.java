@@ -2,6 +2,7 @@ package com.daleondeveloper.Game.tools;
 
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.GameWorld;
+import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Checkers.ScoreLvlCondition;
 import com.daleondeveloper.Game.tools.Checkers.TimeLvlCondition;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
@@ -43,6 +44,7 @@ public class LevelGenerator {
 
     public void loadNotSavedElement(){
         levelParser = new LevelParser(levels.getLevel(getLevelNumber()));
+        GameSettings.getInstance().setLevel(getLevelNumber());
         createLevelConditions();
     }
     private void createLevelConditions(){
