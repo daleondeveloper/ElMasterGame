@@ -1,6 +1,6 @@
 package com.daleondeveloper.Game.tools.Checkers;
 
-import com.daleondeveloper.Game.tools.LevelGenerator;
+import com.daleondeveloper.Game.tools.Level.LevelGenerator;
 
 import java.util.ArrayList;
 

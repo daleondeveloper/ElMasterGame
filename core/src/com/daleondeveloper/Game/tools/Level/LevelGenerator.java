@@ -1,4 +1,4 @@
-package com.daleondeveloper.Game.tools;
+package com.daleondeveloper.Game.tools.Level;
 
 import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.GameWorld;

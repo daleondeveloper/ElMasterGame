@@ -11,13 +11,9 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetHero;
-import com.daleondeveloper.Exception.NoPushBlocks;
-import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
-import com.daleondeveloper.Game.tools.LevelParser;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Game.GameWorld;
-import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
@@ -25,7 +21,6 @@ import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Platform;
 
 import java.util.HashSet;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 public class WaterElement extends AbstractDynamicObject {

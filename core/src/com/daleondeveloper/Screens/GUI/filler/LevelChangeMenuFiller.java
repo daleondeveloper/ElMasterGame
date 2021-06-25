@@ -11,7 +11,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Game.tools.Levels;
+import com.daleondeveloper.Game.tools.Level.Levels;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -159,6 +159,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
             @Override
             public void run() {
                 prefs.setLevel(-1);
+                prefs.loadIsInfinityLevel();
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
@@ -167,6 +168,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
             @Override
             public void run() {
                 prefs.clearSaveLevel();
+                prefs.setInfinityLvl(false);
                 menuScreen.setGameModeChangeScreen();
             }
         }));

@@ -70,8 +70,10 @@ public class GameSettings {
 
     public String loadSavedLevel(){
         savedLevel = prefs.getString(LEVEL_SAVED_1);
-        infinityLvl = prefs.getBoolean(INFINITY_LVL);
         return savedLevel;
+    }
+    public void loadIsInfinityLevel(){
+        infinityLvl = prefs.getBoolean(INFINITY_LVL);
     }
 
     public void saveSetting(){

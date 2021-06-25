@@ -1,4 +1,4 @@
-package com.daleondeveloper.Game.tools;
+package com.daleondeveloper.Game.tools.Level;
 
 import com.daleondeveloper.Game.tools.Checkers.LvlCondition;
 

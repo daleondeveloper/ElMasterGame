@@ -1,4 +1,4 @@
-package com.daleondeveloper.Game.tools;
+package com.daleondeveloper.Game.tools.Level;
 
 import com.daleondeveloper.Game.Settings.GameSettings;
 
@@ -13,12 +13,12 @@ public class Levels {
           levels[0] = "<lvlNmb>0</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>" +
-                  "<block><type : default><position : 1,0></block>" +
-                  "<block><type : default><position : 7,0></block>" +
-                  "<block><type : default><position : 1,1></block>" +
-                  "<block><type : default><position : 7,1></block>" +
-                  "<block><type : default><position : 1,2></block>" +
-                  "<block><type : default><position : 7,2></block>" +
+                  "<block><type : snow><position : 1,5></block>" +
+                  "<block><type : snow><position : 2,5></block>" +
+                  "<block><type : snow><position : 0,5></block>" +
+                  "<block><type : dark><position : 1,6></block>" +
+                  "<block><type : dark><position : 2,6></block>" +
+                  "<block><type : dark><position : 0,6></block>" +
                   "<hero><position : 5,5></hero>" +
                   "<condition><type : time><value : 10></condition>" +
                   "<condition><type : score><value : 10></condition>";

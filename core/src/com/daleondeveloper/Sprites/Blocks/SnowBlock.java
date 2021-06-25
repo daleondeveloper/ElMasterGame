@@ -27,9 +27,10 @@ public class SnowBlock extends Block {
     public void update(float deltaTime) {
         super.update(deltaTime);
         if(!isIdle()){
-            freezingTime = 0;
+//            freezingTime = 0;
         }
-//        if(currentState != State.IDLE){
+        freezeBlock(deltaTime);
+        //        if(currentState != State.IDLE){
 //            if(effect != null) {
 //                effect.reset();
 //            }
@@ -48,21 +49,25 @@ public class SnowBlock extends Block {
     @Override
     protected void stateIdle(float deltaTime) {
         super.stateIdle(deltaTime);
+
+
+    }
+    private void freezeBlock(float deltaTime) {
         freezingTime += deltaTime;
-        if(freezingTime < FREEZING_TIME) {
+        if (freezingTime < FREEZING_TIME) {
 //            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
 //            int posMasX = (int) (getReturnCellsPosition() / 10) - 5;
 
-            if ( gameGrid.getLeftBlockRelativeToObject(this) != null) {
+            if (gameGrid.getLeftBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLeftBlockRelativeToObject(this);
-                if (block.isPush()) {
+                if (block.isPush() || block.isIFall()) {
                     block.idle();
                     block.stateIdle(0);
                 }
             }
             if (gameGrid.getRightBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getRightBlockRelativeToObject(this);
-                if (block.isPush()) {
+                if (block.isPush() || block.isIFall()) {
                     block.idle();
                     block.stateIdle(0);
 
@@ -70,13 +75,13 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getLowerBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLowerBlockRelativeToObject(this);
-                if (block.isPush()) {
+                if (block.isPush() || block.isIFall()) {
                     block.idle();
                 }
             }
             if (gameGrid.getTopBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getTopBlockRelativeToObject(this);
-                if (block.isPush()) {
+                if (block.isPush() || block.isIFall()) {
                     block.idle();
                 }
             }
