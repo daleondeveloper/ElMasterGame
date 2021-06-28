@@ -51,6 +51,7 @@ public class Block extends AbstractDynamicObject {
     protected boolean statePosition;
     protected float checkTime;
 
+    protected float coefficientFrostbite;
     protected float pushImpulse;
     protected float returnCellsPosition;
     protected float returnCellsPositionY;
@@ -96,6 +97,7 @@ public class Block extends AbstractDynamicObject {
         checkTime = 0;
         statePosition = false;
         positionInGameGrid = new Vector2();
+        coefficientFrostbite = 1;
 
         pushImpulse = 10;
         returnCellsPosition = x + 5;
@@ -467,6 +469,14 @@ public class Block extends AbstractDynamicObject {
 
     public void setBlockTypeNumber(int blockTypeNumber) {
         this.blockTypeNumber = blockTypeNumber;
+    }
+
+    public void setCoefficientFrostbite(float coefficientFrostbite) {
+        this.coefficientFrostbite = coefficientFrostbite;
+    }
+
+    public float getCoefficientFrostbite() {
+        return coefficientFrostbite;
     }
 
     @Override

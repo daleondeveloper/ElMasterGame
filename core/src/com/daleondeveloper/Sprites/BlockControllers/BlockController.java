@@ -70,11 +70,12 @@ public class BlockController {
                 break;
 
             case 2 :
-                block = new SnowBlock(gameWorld,this,x,y,9.94f,9.94f);
+                block = new SnowBlock(gameWorld,this,x,y,9.94f,9.94f,20);
                 break;
 
             case 3 :
                 block = new FireBlock(gameWorld,this,x,y,9.94f,9.94f);
+                block.setCoefficientFrostbite(0);
                 break;
 
             case 4 :
@@ -82,6 +83,7 @@ public class BlockController {
                 break;
             case 5 :
                 block = new DarkBlock(gameWorld,this,x,y,9.94f,9.94f);
+                block.setCoefficientFrostbite(0.5f);
                 break;
 
             default:

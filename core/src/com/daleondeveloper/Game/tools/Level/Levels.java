@@ -13,15 +13,25 @@ public class Levels {
           levels[0] = "<lvlNmb>0</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>" +
-                  "<block><type : snow><position : 1,5></block>" +
-                  "<block><type : snow><position : 2,5></block>" +
-                  "<block><type : snow><position : 0,5></block>" +
-                  "<block><type : dark><position : 1,6></block>" +
-                  "<block><type : dark><position : 2,6></block>" +
-                  "<block><type : dark><position : 0,6></block>" +
-                  "<hero><position : 5,5></hero>" +
+                  "<block><type : snow><position : 0,3></block>" +
+                  "<block><type : snow><position : 1,3></block>" +
+                  "<block><type : snow><position : 2,3></block>" +
+                  "<block><type : snow><position : 3,3></block>" +
+                  "<block><type : snow><position : 4,3></block>" +
+                  "<block><type : snow><position : 5,3></block>" +
+                  "<block><type : snow><position : 6,3></block>" +
+                  "<block><type : snow><position : 7,3></block>" +
+                  "<block><type : snow><position : 8,3></block>" +
+                  "<block><type : snow><position : 9,3></block>" +
+                  "<block><type : snow><position : 1,0></block>" +
+                  "<block><type : snow><position : 2,0></block>" +
+                  "<block><type : snow><position : 5,0></block>" +
+                  "<block><type : snow><position : 6,0></block>" +
+                  "<block><type : snow><position : 8,0></block>" +
+                  "<block><type : snow><position : 9,0></block>" +
+                  "<hero><position : 5,4></hero>" +
                   "<condition><type : time><value : 10></condition>" +
-                  "<condition><type : score><value : 10></condition>";
+                  "<condition><type : score><value : 100></condition>";
           levels[1] = "<lvlNmb>1</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n" +

@@ -16,6 +16,7 @@ public class FireBlock extends Block {
 
     @Override
     protected void stateIdle(float deltaTime) {
+        super.stateIdle(deltaTime);
         int posMasX = (int)(getReturnCellsPosition() / 10 ) - 5;
         int posMasY = (int)(getReturnCellsPositionY() / 10 ) - 15;
 
@@ -29,6 +30,8 @@ public class FireBlock extends Block {
         if(xEndPosInCycle >= gameGrid.getGridWidthLength()){xEndPosInCycle = gameGrid.getGridWidthLength() - 1;}
         if(yEndPosInCycle >= gameGrid.getGridHeightLength()){yEndPosInCycle = gameGrid.getGridHeightLength() - 1;}
 
+        if(gameGrid.getLowerBlockRelativeToObject(this) != null ||
+        posMasY == 0)
         for(int i = xStartPosInCycle; i <= xEndPosInCycle; i++){
             for(int j = yStartPosInCycle; j <= yEndPosInCycle; j++) {
                 if (gameGrid.getBlockByCordinate(i,j) != null) {

@@ -13,6 +13,8 @@ import com.daleondeveloper.Sprites.BlockControllers.BlockControllerLightMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSnowMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSpecialMode;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerWaterMode;
+import com.daleondeveloper.Sprites.Blocks.Block;
+import com.daleondeveloper.Sprites.Blocks.SnowBlock;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.tools.GameConstants;
 
@@ -91,7 +93,11 @@ public class LevelGenerator {
             Vector2 position = levelParser.getPosition(block);
             int type = GameConstants.getBlockTypeByName(levelParser.getType(block));
             if(type >= 0 && position != null){
-                blockController.addBlock(position.x,position.y,type);
+                Block createdBlock = blockController.addBlock(position.x,position.y,type);
+                    if(createdBlock instanceof SnowBlock) {
+                        SnowBlock snowBlock = (SnowBlock) createdBlock;
+                        snowBlock.setFreezingTime(10);
+                    }
             }
         }
     }
