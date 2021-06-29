@@ -29,7 +29,7 @@ public class Levels {
                   "<block><type : snow><position : 6,0></block>" +
                   "<block><type : snow><position : 8,0></block>" +
                   "<block><type : snow><position : 9,0></block>" +
-                  "<hero><position : 5,4></hero>" +
+                  "<hero><position : 5,0></hero>" +
                   "<condition><type : time><value : 10></condition>" +
                   "<condition><type : score><value : 100></condition>";
           levels[1] = "<lvlNmb>1</lvlNmb>" +

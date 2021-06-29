@@ -12,7 +12,6 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Screens.GUI.filler.CreditMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.GameOverFiller;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
@@ -21,6 +20,7 @@ import com.daleondeveloper.Screens.GUI.filler.LevelCompleteMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.MenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.SettingsMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.TeacherMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -50,7 +50,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private HighScoreMenuFiller highScoreMenuFiller;
     private PauseMenuFiller pauseMenuFiller;
     private SettingsMenuFiller settingsMenuFiller;
-    private CreditMenuFiller creditMenuFiller;
+    private MenuFiller creditMenuFiller;
     private MenuFiller gameModeChangeMenuFiller;
     private MenuFiller lvlCompleteMF;
     private GameOverFiller gameOverFiller;
@@ -74,7 +74,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreMenuFiller = new HighScoreMenuFiller(this);
         pauseMenuFiller = new PauseMenuFiller(this);
         settingsMenuFiller = new SettingsMenuFiller(this);
-        creditMenuFiller = new CreditMenuFiller(this);
+        creditMenuFiller = new TeacherMenuFiller(this);
         gameModeChangeMenuFiller = new LevelChangeMenuFiller(this);
         lvlCompleteMF = new LevelCompleteMenuFiller(this);
         gameOverFiller = new GameOverFiller(this);
@@ -107,7 +107,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         screenBg.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                hideMenuScreen();
+               // hideMenuScreen();
             }
         }));
         pauseWindow = new Image(new TextureRegionDrawable(assetGUI.getPauseWindow()));

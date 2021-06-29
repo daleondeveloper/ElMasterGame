@@ -40,6 +40,7 @@ public class SnowBlock extends Block {
 //            addColdEffect();
 //        }
 
+
     }
     private void addColdEffect(){
         effect =effectManager.getPoolParticleEffect(ParticleEffectManager.COLD_BLOCK_EFFECT);
@@ -62,9 +63,9 @@ public class SnowBlock extends Block {
 
             if (gameGrid.getLeftBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLeftBlockRelativeToObject(this);
-                if ((block.isPush() || block.isIFall()) &&
-                freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
                     block.idle();
+                    block.stateIdle(0);
                     if(!isFreezingTimeIncreased){
                     freezingTime += deltaTime;
                     isFreezingTimeIncreased = true;
@@ -73,9 +74,9 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getRightBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getRightBlockRelativeToObject(this);
-                if ((block.isPush() || block.isIFall()) &&
-                        freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
                     block.idle();
+                    block.stateIdle(0);
                     if(!isFreezingTimeIncreased) {
                         freezingTime += deltaTime;
                         isFreezingTimeIncreased = true;
@@ -84,8 +85,7 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getLowerBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLowerBlockRelativeToObject(this);
-                if ((block.isPush() || block.isIFall())&&
-                        freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
                     block.idle();
                     if(!isFreezingTimeIncreased) {
                         freezingTime += deltaTime;
@@ -95,8 +95,7 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getTopBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getTopBlockRelativeToObject(this);
-                if ((block.isPush() || block.isIFall()) &&
-                        freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
                     block.idle();
                     if(!isFreezingTimeIncreased) {
                         freezingTime += deltaTime;
@@ -104,6 +103,12 @@ public class SnowBlock extends Block {
                     }
                 }
             }
+        }
+        if((FREEZING_TIME - freezingTime) < 7f){
+            if(textureRegionBlock == Assets.getInstance().getAssetBlock().getBlockSnow()){
+            textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockWater();}
+            else textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockSnow();
+            setRegion(textureRegionBlock);
         }
     }
 
