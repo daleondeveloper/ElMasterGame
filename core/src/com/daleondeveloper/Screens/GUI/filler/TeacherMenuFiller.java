@@ -166,9 +166,9 @@ public class TeacherMenuFiller extends MenuFiller {
             textLabel.setText(allTexts[level]);
         }
         textLabel.setWrap(true);
-        textTable.add(textLabel).width(mainTable.getMinWidth() * 2.5f);
+        textTable.add(textLabel).growX();
         textTable.row();
-        mainTable.add(scrollPane);
+        mainTable.add(scrollPane).growX().padRight(50).padLeft(50);
         mainTable.row();
     }
 
@@ -186,12 +186,12 @@ public class TeacherMenuFiller extends MenuFiller {
     private void addTile(){
         tile[0] = "Teaching";
         tile[1] = "First lesson";
-        tile[2] = "First lesson";
+        tile[2] = "First trouble";
     }
     private void addTasks(){
         tasks[0] = "-Clear 1 block line";
-        tasks[1] = "-Clear 10 block line";
-        tasks[2] = "-Clear 10 block line";
+        tasks[1] = "-Clear 5 block line";
+        tasks[2] = "-Clear 5 block line";
     }
     private void addAllTexts(){
         allTexts[0] = "   Congratulations, young student !!! \n "+
@@ -201,7 +201,7 @@ public class TeacherMenuFiller extends MenuFiller {
                 "   Let's start with what you can do. With the buttons below you can do different actions. \n " +
                 "   Yes, use the buttons on the left to move to the sides, and the buttons on the right to push the blocks and jump.\n" +
                 "   Try to dodge the blocks and draw a line from them";
-        allTexts[1] = "Now you know what and how, let's move on to training, to score 100 points to begin with";
+        allTexts[1] = "Now you know what and how, let's move on to training, to score 50 points to begin with";
         allTexts[2] = "The first lesson was easy for you, so let's complicate the arena, I've added a few blocks to it, let's see how you handle it.";
     }
 }

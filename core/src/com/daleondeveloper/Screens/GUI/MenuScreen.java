@@ -12,6 +12,7 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUI.filler.CreditMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.GameOverFiller;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
@@ -35,7 +36,8 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
 
     public enum MenuState{
-        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE,LVLCOMPLETE, GAME_OVER;
+        CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE,LVLCOMPLETE, GAME_OVER,
+        TEACHER_MENU;
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -51,6 +53,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private PauseMenuFiller pauseMenuFiller;
     private SettingsMenuFiller settingsMenuFiller;
     private MenuFiller creditMenuFiller;
+    private MenuFiller teacherMenuFiller;
     private MenuFiller gameModeChangeMenuFiller;
     private MenuFiller lvlCompleteMF;
     private GameOverFiller gameOverFiller;
@@ -74,7 +77,8 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         highScoreMenuFiller = new HighScoreMenuFiller(this);
         pauseMenuFiller = new PauseMenuFiller(this);
         settingsMenuFiller = new SettingsMenuFiller(this);
-        creditMenuFiller = new TeacherMenuFiller(this);
+        creditMenuFiller = new CreditMenuFiller(this);
+        teacherMenuFiller = new TeacherMenuFiller(this);
         gameModeChangeMenuFiller = new LevelChangeMenuFiller(this);
         lvlCompleteMF = new LevelCompleteMenuFiller(this);
         gameOverFiller = new GameOverFiller(this);
@@ -188,6 +192,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         setHelpScreen();
 
     }
+    public void setTeacherMenuFiller(){
+        menuState = MenuState.TEACHER_MENU;
+        teacherMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+    }
     public void setHelpScreen(){
         menuState = MenuState.HELP;
         helpMenuFiller.build();
@@ -211,9 +220,13 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         Gdx.input.setInputProcessor(stage);
 
     }
+    public void setScreen(MenuFiller menuFiller){
+        menuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+    }
     public void setCreditScreen(){
         menuState = MenuState.CREDIT;
-        creditMenuFiller.build();
+        new CreditMenuFiller(this).build();
         Gdx.input.setInputProcessor(stage);
 
     }

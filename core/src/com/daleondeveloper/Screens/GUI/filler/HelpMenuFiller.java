@@ -81,8 +81,8 @@ public class HelpMenuFiller extends MenuFiller {
         backButton  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
 
         help = new Image(assetHelp.getHelp_block_fall());
-        nextHelp = new Image(assetGUI.getButtonLeft());
-        previsionHelp = new Image(assetGUI.getButtonRight());
+        nextHelp = new Image(assetGUI.getButtonRight());
+        previsionHelp = new Image(assetGUI.getButtonLeft());
         changeHelpImage();
     }
 

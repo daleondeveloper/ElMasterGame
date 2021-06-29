@@ -105,7 +105,7 @@ public class PlayScreen extends GUIAbstractScreen {
             gameResults();
         }
         if(stateTime > 1f && stateTime < 1.2f){
-            menuScreen.setCreditScreen();
+            menuScreen.setTeacherMenuFiller();
             doPause();
         }
 

@@ -11,7 +11,6 @@ import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
-import com.daleondeveloper.tools.GameConstants;
 
 public class HighScoreMenuFiller extends MenuFiller  {
     private static final String TAG = SettingsMenuFiller.class.getName();
@@ -132,14 +131,6 @@ public class HighScoreMenuFiller extends MenuFiller  {
         scoreTable.row();
         scoreTable.add(bestHighScoreLabel);
         mainTable.row();
-        //Додавання кнопок переміщення знизу
-        Table moveArrowTable = new Table();
-        mainTable.add(moveArrowTable).padBottom(30).padRight(50).padLeft(50).growX();
-        moveArrowTable.add(previsionScoreImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
-        .padLeft(50).padRight(100);
-        moveArrowTable.add().growX();
-        moveArrowTable.add(nextScoreImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
-        .padRight(50).padLeft(100);
     }
 
     private void changeScore() {
