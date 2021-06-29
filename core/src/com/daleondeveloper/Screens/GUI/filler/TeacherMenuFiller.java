@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.DebugConstants;
+import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.tools.GameConstants;
@@ -29,9 +30,15 @@ public class TeacherMenuFiller extends MenuFiller {
     private Label textLabel;
     private Image nextModesImage;
     private Image previsionModeImage;
+    private Image startButton;
+
+    private int level;
 
     private String[] tile;
     private String[] allTexts;
+    private String[] tasks;
+
+    private boolean tasksShow;
 
     private Image backButton;
 
@@ -43,6 +50,13 @@ public class TeacherMenuFiller extends MenuFiller {
 
         tile = new String[GameConstants.MAX_LEVEL];
         allTexts = new String[GameConstants.MAX_LEVEL];
+        tasks = new String[GameConstants.MAX_LEVEL];
+        addTile();
+        addTasks();
+        addAllTexts();
+        tasksShow = false;
+
+        level = GameSettings.getInstance().getLevel();
 
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
@@ -77,6 +91,7 @@ public class TeacherMenuFiller extends MenuFiller {
 
         nextModesImage = new Image(Assets.getInstance().getAssetGUI().getButtonRight());
         previsionModeImage = new Image(assets.getAssetGUI().getButtonLeft());
+        startButton = new Image(assets.getAssetGUI().getButtonStart());
         backButton  =new Image(new TextureRegionDrawable(assets.getAssetGUI().getButtonX()));
 
     }
@@ -99,6 +114,17 @@ public class TeacherMenuFiller extends MenuFiller {
 
             }
         }));
+        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                if(tasksShow) {
+                    menuScreen.hideMenuScreen();
+                }else {
+                    tasksShow = true;
+                    addToTable();
+                }
+            }
+        }));
         backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
@@ -113,35 +139,32 @@ public class TeacherMenuFiller extends MenuFiller {
         if(DebugConstants.DEBUG_GUI){
             mainTable.debug();
         }
-        mainTable.top();
-        mainTable.add(backButton).height(15).width(15).right().padRight(30);
-        mainTable.row();
+        addBackButtonToTable(mainTable,backButton);
+        addTitleToTable();
+        addScrollPanelToMainTable();
+        addFootTable();
+
+    }
+    private void addTitleToTable(){
         Table labelTable = new Table();
         mainTable.add(labelTable).growX();
+        mainLabel.setText(tile[level]);
         labelTable.add().growX();
-        addTile();
-        mainLabel.setText(tile[0]);
         labelTable.add(mainLabel);
         labelTable.add().growX();
         labelTable.row();
         mainTable.row();
-        addScrollPanelToMainTable(mainTable);
-        mainTable.row();
-        Table moveArrowTable = new Table();
-        mainTable.add(moveArrowTable).padBottom(20).padRight(50).padLeft(50).growX();
-        moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
-                .padRight(50);
-        moveArrowTable.add().growX();
-        moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
-                .padLeft(50);
+
     }
-    private void addScrollPanelToMainTable(Table mainTable){
+    private void addScrollPanelToMainTable(){
         Table textTable = new Table();
         scrollPane = new ScrollPane(textTable);
         scrollPane.setScrollingDisabled(true,false);
-        addAllTexts();
-        textLabel.setText(allTexts[0]);
-//        textLabel.setAlignment(Align.center);
+        if(tasksShow){
+            textLabel.setText(tasks[level]);
+        }else {
+            textLabel.setText(allTexts[level]);
+        }
         textLabel.setWrap(true);
         textTable.add(textLabel).width(mainTable.getMinWidth() * 2.5f);
         textTable.row();
@@ -149,10 +172,26 @@ public class TeacherMenuFiller extends MenuFiller {
         mainTable.row();
     }
 
+    private void addFootTable(){
+        Table moveArrowTable = new Table();
+        mainTable.add(moveArrowTable).padBottom(20).padRight(50).padLeft(50).growX();
+        moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
+                .padRight(50);
+        moveArrowTable.add().growX();
+        moveArrowTable.add(startButton).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT); moveArrowTable.add().growX();
+        moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
+                .padLeft(50);
+    }
+
     private void addTile(){
         tile[0] = "Teaching";
-        tile[1] = "Перший урок";
-        tile[2] = "Перший урок";
+        tile[1] = "First lesson";
+        tile[2] = "First lesson";
+    }
+    private void addTasks(){
+        tasks[0] = "-Clear 1 block line";
+        tasks[1] = "-Clear 10 block line";
+        tasks[2] = "-Clear 10 block line";
     }
     private void addAllTexts(){
         allTexts[0] = "   Congratulations, young student !!! \n "+
@@ -162,8 +201,7 @@ public class TeacherMenuFiller extends MenuFiller {
                 "   Let's start with what you can do. With the buttons below you can do different actions. \n " +
                 "   Yes, use the buttons on the left to move to the sides, and the buttons on the right to push the blocks and jump.\n" +
                 "   Try to dodge the blocks and draw a line from them";
-        allTexts[1] = "Тепер ти знаєш, що і як, перейдемо до навчання, для початку набери 100 очків";
-        allTexts[2] = "Перший урок тобі легко дався, тому давай ускладнемо арену, я додав декілька блоків уже на неї," +
-                "подивимося як ти з цим справишся.";
+        allTexts[1] = "Now you know what and how, let's move on to training, to score 100 points to begin with";
+        allTexts[2] = "The first lesson was easy for you, so let's complicate the arena, I've added a few blocks to it, let's see how you handle it.";
     }
 }

@@ -13,53 +13,30 @@ public class Levels {
           levels[0] = "<lvlNmb>0</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>" +
-                  "<block><type : snow><position : 0,3></block>" +
-                  "<block><type : snow><position : 1,3></block>" +
-                  "<block><type : snow><position : 2,3></block>" +
-                  "<block><type : snow><position : 3,3></block>" +
-                  "<block><type : snow><position : 4,3></block>" +
-                  "<block><type : snow><position : 5,3></block>" +
-                  "<block><type : snow><position : 6,3></block>" +
-                  "<block><type : snow><position : 7,3></block>" +
-                  "<block><type : snow><position : 8,3></block>" +
-                  "<block><type : snow><position : 9,3></block>" +
-                  "<block><type : snow><position : 1,0></block>" +
-                  "<block><type : snow><position : 2,0></block>" +
-                  "<block><type : snow><position : 5,0></block>" +
-                  "<block><type : snow><position : 6,0></block>" +
-                  "<block><type : snow><position : 8,0></block>" +
-                  "<block><type : snow><position : 9,0></block>" +
                   "<hero><position : 5,0></hero>" +
-                  "<condition><type : time><value : 10></condition>" +
-                  "<condition><type : score><value : 100></condition>";
+                  "<condition><type : score><value : 10></condition>";
           levels[1] = "<lvlNmb>1</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n" +
-                  "                  \"<block><type : dark><position : 1,0></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 7,0></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 1,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 7,1></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 1,0></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 8,0></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 1,1></block>\" +\n" +
+                  "                  \"<block><type : default><position : 8,1></block>\" +\n" +
                   "                  \"<block><type : default><position : 1,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 7,2></block>\" +\n" +
-                  "                  \"<hero><position : 3,5></hero>" +
-                  "                  \"<lvlEndChecker><type : star><value : 3>" +
-                  "<star><position : 2,1><number : 0></star>" +
-                  "<star><position : 2,5><number : 1></star>" +
-                  "<star><position : 3,3><number : 1></star></lvlEndChecker>" +
-                  "<condition><type : time><value : 10></condition>" +
+                  "                  \"<block><type : default><position : 8,2></block>\" +\n" +
+                  "                  \"<hero><position : 5,0></hero>" +
                   "<condition><type : score><value : 10></condition>";
           levels[2] = "<lvlNmb>2</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n" +
-                  "                  \"<block><type : light><position : 1,0></block>\" +\n" +
+                  "                  \"<block><type : light><position : 6,0></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,5></block>\" +\n" +
-                  "                  \"<block><type : default><position : 1,1></block>\" +\n" +
+                  "                  \"<block><type : default><position : 6,1></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 1,2></block>\" +\n" +
+                  "                  \"<block><type : default><position : 6,2></block>\" +\n" +
                   "                  \"<block><type : default><position : 7,2></block>\" +\n" +
-                  "                  \"<hero><position : 5,5></hero>" +
-                  "<condition><type : time><value : 10></condition>" +
-                  "<condition><type : score><value : 10></condition>";
+                  "                  \"<hero><position : 6,4></hero>" +
+                  "<condition><type : score><value : 100></condition>";
           levels[4] = "";
           levels[5] = "";
           levels[6] = "";

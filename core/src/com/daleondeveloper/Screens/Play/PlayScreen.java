@@ -104,7 +104,10 @@ public class PlayScreen extends GUIAbstractScreen {
         if(guiScreenState == GUIScreenState.RUNNING){
             gameResults();
         }
-
+        if(stateTime > 1f && stateTime < 1.2f){
+            menuScreen.setCreditScreen();
+            doPause();
+        }
 
         if(!gameStart){
             doPause();
@@ -147,6 +150,7 @@ public class PlayScreen extends GUIAbstractScreen {
         pause();
         menuScreen.setLvlCompleteMF();
     }
+
     @Override
     public void resize(int width, int height){
         // Place the menu background in the middle of the screen

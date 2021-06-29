@@ -90,7 +90,7 @@ public class LevelCompleteMenuFiller extends MenuFiller {
             public void run() {
                 GameSettings.getInstance().setSavedLevel("");
                 int nextLvl = GameSettings.getInstance().getLevel() + 1;
-                if(nextLvl < GameConstants.MAX_LEVEL-1){
+                if(nextLvl < GameConstants.MAX_LEVEL){
                     GameSettings.getInstance().setLevel(nextLvl);
                     ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
                 }else {
