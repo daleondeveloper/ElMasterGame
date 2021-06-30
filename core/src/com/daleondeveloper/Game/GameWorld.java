@@ -64,6 +64,7 @@ public class GameWorld {
     //Timers
     private float timeCreateBlock;
     private float timeToSave;
+    private float completeLvlTime;
 
     //Buttons
     private boolean rightButtonPressed;
@@ -86,6 +87,7 @@ public class GameWorld {
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
+        completeLvlTime = 0;
 
         rightButtonPressed = false;
         leftButtonPressed = false;
@@ -118,7 +120,10 @@ public class GameWorld {
         lvlEndConditionController.update(deltaTime);
         if(lvlEndConditionController.checkComplianceConditions() &&
         !gameSettings.isInfinityLvl()){
-            playScreen.showNextLvlMenu();
+            completeLvlTime += deltaTime;
+                    if(completeLvlTime > 2) {
+                        playScreen.showNextLvlMenu();
+                    }
         }
         this.gameCamera.update(deltaTime);
 

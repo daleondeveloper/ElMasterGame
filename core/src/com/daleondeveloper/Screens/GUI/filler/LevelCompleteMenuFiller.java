@@ -60,7 +60,7 @@ public class LevelCompleteMenuFiller extends MenuFiller {
     @Override
     protected void defineElements() {
         // Title
-        pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleMedium);
+        pauseLabel = new Label("Level Complete",labelStyleMedium);
         TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
         infinityLvl = new ImageTextButton("InfinityLvl",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
