@@ -33,7 +33,7 @@ public class GameConstants {
     public static final int WORLD_HEIGHT_CELLS = 20;
 
     //
-    public static final int MAX_LEVEL = 3;
+    public static final int MAX_LEVEL = 11;
 
     //Кількість пікселів у одній ігровій клітинці
     public static final int PIX_IN_CELL = 10;

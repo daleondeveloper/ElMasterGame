@@ -117,7 +117,7 @@ public class Levels {
                   "                  \"<block><type : default><position : 5,2></block>\" +\n" +
                   "                  \"<block><type : default><position : 4,3></block>\" +\n" +
                   "                  \"<hero><position : 4,4></hero>" +
-                  "<condition><type : score><value : 50></condition>";
+                  "<condition><type : score><value : 100></condition>";
      }
      private void addLevel_6(){
           levels[6] = "<lvlNmb>6</lvlNmb>" +
@@ -159,7 +159,7 @@ public class Levels {
                   "                  \"<block><type : default><position : 0,3></block>\" +\n" +
                   "                  \"<block><type : default><position : 9,3></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : score><value : 50></condition>";
+                  "<condition><type : score><value : 100></condition>";
      }
      private void addLevel_8(){
           levels[8] = "<lvlNmb>8</lvlNmb>" +
@@ -193,7 +193,7 @@ public class Levels {
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n"+
                   "                  \"<hero><position : 4,4></hero>" +
-                  "<condition><type : score><value : 50></condition>";
+                  "<condition><type : time><value : 60></condition>";
           for(int i = 0; i < 5; i++){
                levels[9] += "                  \"<block><type : default><position : 0," + i + "></block>\" +\n" +
                        "                  \"<block><type : default><position : 1," + i + "></block>\" +\n" +
@@ -215,7 +215,7 @@ public class Levels {
                   "                  \"<block><type : dark><position : 8,1></block>\" +\n" +
                   "                  \"<block><type : dark><position : 8,2></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : score><value : 50></condition>";
+                  "<condition><type : score><value : 30></condition>";
      }
      private void addLevel_11(){
 

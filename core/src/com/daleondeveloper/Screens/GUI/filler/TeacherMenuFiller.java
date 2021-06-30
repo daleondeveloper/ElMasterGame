@@ -186,12 +186,28 @@ public class TeacherMenuFiller extends MenuFiller {
     private void addTile(){
         tile[0] = "Teaching";
         tile[1] = "First lesson";
-        tile[2] = "First trouble";
+        tile[2] = "First problems";
+        tile[3] = "Tower";
+        tile[4] = "Two towers";
+        tile[5] = "Pyramid";
+        tile[6] = "Limited area";
+        tile[7] = "Two pyramid";
+        tile[8] = "Lesson at height";
+        tile[9] = "Survival at altitude";
+        tile[10] = "Again the first problems";
     }
     private void addTasks(){
         tasks[0] = "-Clear 1 block line";
         tasks[1] = "-Clear 5 block line";
         tasks[2] = "-Clear 5 block line";
+        tasks[3] = "-Clear 5 block line";
+        tasks[4] = "-Clear 5 block line";
+        tasks[5] = "-Clear 10 block line";
+        tasks[6] = "-Clear 10 block line";
+        tasks[7] = "-Clear 10 block line";
+        tasks[8] = "-Clear 5 block line";
+        tasks[9] = "-Survive 60 seconds";
+        tasks[10] = "-Clear 3 block line";
     }
     private void addAllTexts(){
         allTexts[0] = "   Congratulations, young student !!! \n "+
@@ -203,5 +219,18 @@ public class TeacherMenuFiller extends MenuFiller {
                 "   Try to dodge the blocks and draw a line from them";
         allTexts[1] = "Now you know what and how, let's move on to training, to score 50 points to begin with";
         allTexts[2] = "The first lesson was easy for you, so let's complicate the arena, I've added a few blocks to it, let's see how you handle it.";
+        allTexts[3] = "I managed the first tests skillfully, now I have built one tower in the arena.\n" +
+                "Good luck !!";
+         allTexts[4] = "And try to deal with two towers.";
+         allTexts[5] = "How did you like the towers?\n" +
+                 "I replaced the towers with a pyramid, let's see how you like it.";
+        allTexts[6] = "Towers and pyramids have tired you, my student.\n" +
+                "You can relax a little, this time I just reduced the arena.";
+        allTexts[7] = "After a little rest, now you will try to practice with two pyramids.";
+        allTexts[8] = "Try to deal with the tall tower now.\n" +
+                "Don't fall, because the lesson will become harder in an instant.";
+        allTexts[9] = "Let's continue the lessons at height.\n" +
+                "In this lesson, you do not need to erase the lines, just survive for a minute.";
+         allTexts[10] = "Let's remember where we started, I think this level is familiar to you.";
     }
 }
