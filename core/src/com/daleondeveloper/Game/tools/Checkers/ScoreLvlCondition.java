@@ -15,7 +15,6 @@ public class ScoreLvlCondition extends LvlCondition {
     @Override
     public void checkCondition() {
         conditionFulfilled = endScore <= prefs.getLastPlayScore();
-        System.out.println(prefs.getLastPlayScore());
     }
 
     @Override

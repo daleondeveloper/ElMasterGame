@@ -61,12 +61,12 @@ public class Levels {
                   "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : classic><position : 1,0></block>\" +\n" +
                   "                  \"<block><type : classic><position : 8,0></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 1,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 8,1></block>\" +\n" +
+                  "                  \"<block><type : star><position : 1,1></block>\" +\n" +
+                  "                  \"<block><type : star><position : 8,1></block>\" +\n" +
                   "                  \"<block><type : default><position : 1,2></block>\" +\n" +
                   "                  \"<block><type : default><position : 8,2></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : score><value : 50></condition>";
+                  "<condition><type : star></condition>";
      }
      private void addLevel_3(){
           levels[3] = "<lvlNmb>3</lvlNmb>" +
@@ -125,7 +125,7 @@ public class Levels {
                   "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
                   "<condition><type : score><value : 100></condition>";
-          for(int i = 0; i < 10; i++){
+          for(int i = 0; i < 100; i++){
                levels[6] +="                  \"<block><type : default><position : 0," + i + "></block>\" +\n" +
                        "                  \"<block><type : default><position : 1," + i + "></block>\" +\n" +
                        "                  \"<block><type : default><position : 8," + i + "></block>\" +\n" +

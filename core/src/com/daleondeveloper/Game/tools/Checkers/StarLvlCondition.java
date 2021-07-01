@@ -1,27 +1,33 @@
 package com.daleondeveloper.Game.tools.Checkers;
 
-import com.daleondeveloper.Game.tools.Level.LevelGenerator;
+import com.daleondeveloper.Sprites.BlockControllers.BlockController;
+import com.daleondeveloper.Sprites.Blocks.Block;
+import com.daleondeveloper.Sprites.Blocks.StarBlock;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class StarLvlCondition extends LvlCondition {
 
-    private String endStr;
-    private ArrayList<String> starsToCollect;
-    public StarLvlCondition(LevelGenerator levelGenerator) {
-    }
+    private BlockController blockController;
 
-    private void getStars(){
-
+    public StarLvlCondition(BlockController blockController) {
+        this.blockController = blockController;
     }
 
     @Override
     public void checkCondition() {
-
+        conditionFulfilled = true;
+        List<Block> blocks = blockController.getArrayBlock();
+        for(Block block : blocks){
+            if(block instanceof StarBlock){
+                conditionFulfilled = false;
+                break;
+            }
+        }
     }
 
     @Override
     public void update(float deltaTime) {
-
+        if(!conditionFulfilled)checkCondition();
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Checkers.ScoreLvlCondition;
+import com.daleondeveloper.Game.tools.Checkers.StarLvlCondition;
 import com.daleondeveloper.Game.tools.Checkers.TimeLvlCondition;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
@@ -59,6 +60,8 @@ public class LevelGenerator {
             }else if(type.equals("score")){
                 int score = levelParser.getValue(condition);
                 lvlEndConditionController.addCondition(new ScoreLvlCondition(score));
+            }else if(type.equals("star")){
+                lvlEndConditionController.addCondition(new StarLvlCondition(blockController));
             }else{
 
             }

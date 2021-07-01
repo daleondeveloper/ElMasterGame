@@ -104,7 +104,7 @@ public class PlayScreen extends GUIAbstractScreen {
         if(guiScreenState == GUIScreenState.RUNNING){
             gameResults();
         }
-        if(stateTime > 1f && stateTime < 1.2f){
+        if(stateTime > 1f && stateTime < 1.2f && prefs.getLevel() >= 0){
             menuScreen.setTeacherMenuFiller();
             doPause();
         }

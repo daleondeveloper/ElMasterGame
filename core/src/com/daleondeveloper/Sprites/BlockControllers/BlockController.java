@@ -85,6 +85,9 @@ public class BlockController {
                 block = new DarkBlock(gameWorld,this,x,y,9.94f,9.94f);
                 block.setCoefficientFrostbite(0.5f);
                 break;
+            case 6 :
+                block = new StarBlock(gameWorld,this,x,y,9.94f,9.94f);
+                break;
 
             default:
                 block = new Block(gameWorld,this,x,y,9.94f,9.94f);
