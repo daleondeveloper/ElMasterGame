@@ -108,12 +108,9 @@ public class PlayScreen extends GUIAbstractScreen {
             menuScreen.setTeacherMenuFiller();
             doPause();
         }
-
         if(!gameStart){
             doPause();
-
         }
-
     }
 
     private void gameResults(){

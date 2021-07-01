@@ -32,7 +32,7 @@ public class Block extends AbstractDynamicObject {
         FALL, IDLE, PUSH, DESTROY, DISPOSE
     }
     protected enum BlockType{
-        CLASSIC,DARK,FIRE,WATER,LIGHT,SNOW
+        CLASSIC,DARK,FIRE,WATER,LIGHT,SNOW,STAR
     }
 
     protected GameWorld gameWorld;

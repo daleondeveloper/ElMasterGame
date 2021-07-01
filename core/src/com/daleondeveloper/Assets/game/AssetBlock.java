@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.GameCamera;
 
 public class AssetBlock implements IAssetSprite {
@@ -18,6 +17,7 @@ public class AssetBlock implements IAssetSprite {
     private TextureRegion blockLight;
     private TextureRegion blockDark;
     private TextureRegion blockWhite;
+    private TextureRegion blockStar;
     private TextureRegion blockClassic;
 
     private Animation<TextureRegion> destroyFire;
@@ -33,6 +33,7 @@ public class AssetBlock implements IAssetSprite {
         blockLight = atlas.findRegion("light/light_main");
         blockDark = atlas.findRegion("dark/main");
         blockWhite = atlas.findRegion("white/main");
+        blockStar = atlas.findRegion("star/main");
         blockClassic = atlas.findRegion("main");
 
         //animation
@@ -90,6 +91,10 @@ public class AssetBlock implements IAssetSprite {
 
     public TextureRegion getBlockClassic() {
         return blockClassic;
+    }
+
+    public TextureRegion getBlockStar() {
+        return blockStar;
     }
 
     public Animation<TextureRegion> getDestroyFire() {

@@ -71,11 +71,7 @@ public class TeacherMenuFiller extends MenuFiller {
     public void build() {
         mainTable = menuScreen.getWindowTable();
         super.build();
-
-
-
         defineButtons();
-
     }
 
     private void defineButtons(){
@@ -140,9 +136,20 @@ public class TeacherMenuFiller extends MenuFiller {
             mainTable.debug();
         }
         addBackButtonToTable(mainTable,backButton);
-        addTitleToTable();
-        addScrollPanelToMainTable();
-        addFootTable();
+        if(level >= 0) {
+            addTitleToTable();
+            addScrollPanelToMainTable();
+            addFootTable();
+        }else{
+            Table labelTable = new Table();
+            mainTable.add(labelTable).growX();
+            mainLabel.setText("Continue");
+            labelTable.add().growX();
+            labelTable.add(mainLabel);
+            labelTable.add().growX();
+            labelTable.row();
+            mainTable.row();
+        }
 
     }
     private void addTitleToTable(){

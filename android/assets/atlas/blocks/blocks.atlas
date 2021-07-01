@@ -1,249 +1,256 @@
 blocks.png
-size: 510, 514
+size: 213, 1236
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 dark/main
   rotate: false
-  xy: 1, 409
+  xy: 1, 1
   size: 105, 104
   orig: 1200, 800
   offset: 41, 295
   index: -1
 fire/destroy/destroy
   rotate: false
-  xy: 307, 205
+  xy: 108, 215
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 1
 fire/destroy/destroy
   rotate: false
-  xy: 103, 205
+  xy: 108, 317
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 2
 fire/destroy/destroy
   rotate: false
-  xy: 409, 205
+  xy: 1, 319
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 3
 fire/destroy/destroy
   rotate: false
-  xy: 1, 307
+  xy: 103, 419
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 4
 fire/destroy/destroy
   rotate: false
-  xy: 205, 307
+  xy: 1, 421
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 5
 fire/destroy/destroy
   rotate: false
-  xy: 307, 307
+  xy: 103, 521
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 6
 fire/destroy/destroy
   rotate: false
-  xy: 103, 307
+  xy: 1, 523
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 7
 fire/main
-  rotate: false
-  xy: 215, 409
+  rotate: true
+  xy: 108, 1
   size: 105, 104
   orig: 1200, 800
   offset: 40, 417
   index: -1
 light/destroy/destroy
   rotate: false
-  xy: 409, 103
+  xy: 103, 623
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 1
 light/destroy/destroy
   rotate: false
-  xy: 205, 1
+  xy: 1, 625
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 2
 light/destroy/destroy
   rotate: false
-  xy: 205, 205
+  xy: 103, 725
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 3
 light/destroy/destroy
   rotate: false
-  xy: 1, 307
+  xy: 103, 419
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 4
 light/destroy/destroy
   rotate: false
-  xy: 205, 307
+  xy: 1, 421
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 5
 light/destroy/destroy
   rotate: false
-  xy: 307, 307
+  xy: 103, 521
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 6
 light/destroy/destroy
   rotate: false
-  xy: 103, 307
+  xy: 1, 523
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 7
 light/light_main
   rotate: false
-  xy: 103, 1
+  xy: 1, 727
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 main
   rotate: false
-  xy: 322, 409
+  xy: 1, 107
   size: 105, 104
   orig: 1200, 800
   offset: 41, 295
   index: -1
 snow/destroy/snow
   rotate: false
-  xy: 1, 103
+  xy: 103, 827
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 1
 snow/destroy/snow
   rotate: false
-  xy: 205, 103
+  xy: 1, 829
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 2
 snow/destroy/snow
   rotate: false
-  xy: 307, 103
+  xy: 103, 929
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 3
 snow/destroy/snow
   rotate: false
-  xy: 1, 307
+  xy: 103, 419
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 4
 snow/destroy/snow
   rotate: false
-  xy: 205, 307
+  xy: 1, 421
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 5
 snow/destroy/snow
   rotate: false
-  xy: 307, 307
+  xy: 103, 521
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 6
 snow/destroy/snow
   rotate: false
-  xy: 103, 307
+  xy: 1, 523
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 7
 snow/main
   rotate: false
-  xy: 103, 103
+  xy: 1, 931
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
+star/main
+  rotate: true
+  xy: 108, 108
+  size: 105, 104
+  orig: 1200, 800
+  offset: 533, 380
+  index: -1
 water/destroy/destroy
   rotate: false
-  xy: 1, 1
+  xy: 103, 1031
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 1
 water/destroy/destroy
   rotate: false
-  xy: 409, 1
+  xy: 1, 1033
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 2
 water/destroy/destroy
   rotate: false
-  xy: 307, 1
+  xy: 1, 1135
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 3
 water/destroy/destroy
   rotate: false
-  xy: 1, 307
+  xy: 103, 419
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 4
 water/destroy/destroy
   rotate: false
-  xy: 205, 307
+  xy: 1, 421
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 5
 water/destroy/destroy
   rotate: false
-  xy: 307, 307
+  xy: 103, 521
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 6
 water/destroy/destroy
   rotate: false
-  xy: 103, 307
+  xy: 1, 523
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: 7
 water/main
   rotate: false
-  xy: 1, 205
+  xy: 103, 1133
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 white/main
   rotate: false
-  xy: 108, 409
+  xy: 1, 213
   size: 105, 104
   orig: 1200, 800
   offset: 41, 172
