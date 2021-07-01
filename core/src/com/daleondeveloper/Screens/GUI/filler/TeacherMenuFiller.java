@@ -204,17 +204,18 @@ public class TeacherMenuFiller extends MenuFiller {
         tile[10] = "Again the first problems";
     }
     private void addTasks(){
-        tasks[0] = "-Clear 1 block line";
+        tasks[0] = "-Practice for 60 seconds";
         tasks[1] = "-Clear 5 block line";
         tasks[2] = "-Clear 5 block line";
-        tasks[3] = "-Clear 5 block line";
-        tasks[4] = "-Clear 5 block line";
-        tasks[5] = "-Clear 10 block line";
-        tasks[6] = "-Clear 10 block line";
-        tasks[7] = "-Clear 10 block line";
+        tasks[3] = "-Clear all star block line";
+        tasks[4] = "-Clear all star block line";
+        tasks[5] = "-Clear all star block line";
+        tasks[6] = "-Clear 7 block line";
+        tasks[7] = "-Clear all star block line";
         tasks[8] = "-Clear 5 block line";
-        tasks[9] = "-Survive 60 seconds";
-        tasks[10] = "-Clear 3 block line";
+        tasks[9] = "-Survive 60 seconds \n" +
+                "-Clear 2 block line";
+        tasks[10] = "-Clear all star block line";
     }
     private void addAllTexts(){
         allTexts[0] = "   Congratulations, young student !!! \n "+
@@ -228,7 +229,7 @@ public class TeacherMenuFiller extends MenuFiller {
         allTexts[2] = "The first lesson was easy for you, so let's complicate the arena, I've added a few blocks to it, let's see how you handle it.";
         allTexts[3] = "I managed the first tests skillfully, now I have built one tower in the arena.\n" +
                 "Good luck !!";
-         allTexts[4] = "And try to deal with two towers.";
+         allTexts[4] = "I added a couple of new blocks to the arena, now you need to destroy these blocks to pass this lesson.";
          allTexts[5] = "How did you like the towers?\n" +
                  "I replaced the towers with a pyramid, let's see how you like it.";
         allTexts[6] = "Towers and pyramids have tired you, my student.\n" +
