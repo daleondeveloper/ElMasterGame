@@ -45,6 +45,8 @@ public class Levels {
           levels[0] = "<lvlNmb>0</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>" +
+                  "<blockSpawner><type : classic><value : 5></blockSpawner>" +
+                  "<blockSpawner><type : dark><value : 5></blockSpawner>" +
                   "<hero><position : 5,0></hero>" +
                   "<condition><type : score><value : 10></condition>";
      }

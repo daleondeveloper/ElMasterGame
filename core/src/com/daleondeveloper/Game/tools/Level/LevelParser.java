@@ -15,6 +15,7 @@ public class LevelParser {
     public static final Pattern findScore = Pattern.compile("<score>.+?</score>");
     public static final Pattern findBlockController = Pattern.compile("blockController>.+?</blockController>");
     public static final Pattern findBlock = Pattern.compile("<block>.+?</block>");
+    public static final Pattern findBlockSpawner = Pattern.compile("<blockSpawner>.+?</blockSpawner>");
     public static final Pattern findStar = Pattern.compile("<star>.+?</star>");
     public static final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
     public static final Pattern findPosition = Pattern.compile("<position.+?>");

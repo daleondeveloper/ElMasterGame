@@ -44,11 +44,6 @@ public class BlockController {
     }
 
     public void update(float deltaTime){
-        blockCreateTime += deltaTime;
-        if(blockCreateTime > 4f){
-            addBlockInRandomPosition(0);
-            blockCreateTime = 0;
-        }
         for(BlockSpawner spawner: blockSpawners){
             spawner.update(deltaTime);
         }

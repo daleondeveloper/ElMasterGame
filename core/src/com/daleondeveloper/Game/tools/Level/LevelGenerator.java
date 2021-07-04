@@ -7,13 +7,7 @@ import com.daleondeveloper.Game.tools.Checkers.ScoreLvlCondition;
 import com.daleondeveloper.Game.tools.Checkers.StarLvlCondition;
 import com.daleondeveloper.Game.tools.Checkers.TimeLvlCondition;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerClassicMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerDarkMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerFireMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerLightMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSnowMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerSpecialMode;
-import com.daleondeveloper.Sprites.BlockControllers.BlockControllerWaterMode;
+import com.daleondeveloper.Sprites.BlockControllers.BlockSpawner;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Blocks.SnowBlock;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
@@ -48,6 +42,7 @@ public class LevelGenerator {
     public void loadNotSavedElement(){
         levelParser = new LevelParser(levels.getLevel(getLevelNumber()));
         GameSettings.getInstance().setLevel(getLevelNumber());
+        createBlockSpawners();
         createLevelConditions();
     }
     private void createLevelConditions(){
@@ -67,23 +62,17 @@ public class LevelGenerator {
             }
         }
     }
+    private void createBlockSpawners(){
+        ArrayList<String> allSpawner = levelParser.getObjectsByPattern(LevelParser.findBlockSpawner);
+        for(String spawner : allSpawner){
+            String type = levelParser.getType(spawner);
+                int time = levelParser.getValue(spawner);
+                blockController.addBlockSpawner(new BlockSpawner(blockController,GameConstants.getBlockTypeByName(type),time));
+        }
+    }
+
     private void createStartBlockController(){
-        String type = levelParser.getType(levelParser.getDateByPattern(LevelParser.findBlockController));
-            if(type.equals("light")){
-                blockController = new BlockControllerLightMode(gameWorld);
-            }else if(type.equals("snow")){
-                blockController = new BlockControllerSnowMode(gameWorld);
-            }else if(type.equals("fire")){
-                blockController = new BlockControllerFireMode(gameWorld);
-            }else if(type.equals("water")){
-                blockController = new BlockControllerWaterMode(gameWorld);
-            }else if(type.equals("dark")){
-                blockController = new BlockControllerDarkMode(gameWorld);
-            }else if(type.equals("special")){
-                blockController = new BlockControllerSpecialMode(gameWorld);
-            }else{
-                blockController = new BlockControllerClassicMode(gameWorld);
-            }
+        blockController = new BlockController(gameWorld);
     }
     private void createHero(){
         String heroStr = levelParser.getDateByPattern(LevelParser.findHero);
