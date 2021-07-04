@@ -210,13 +210,13 @@ public class Levels {
                   "<score>0</score>" +
                   "<blockController><type : classic></blockController>\" +\n" +
                   "                  \"<block><type : dark><position : 1,0></block>\" +\n" +
-                  "                  \"<block><type : star><position : 1,1></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 1,1></block>\" +\n" +
                   "                  \"<block><type : dark><position : 1,2></block>\" +\n" +
                   "                  \"<block><type : dark><position : 8,0></block>\" +\n" +
-                  "                  \"<block><type : star><position : 8,1></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 8,1></block>\" +\n" +
                   "                  \"<block><type : dark><position : 8,2></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : star><value : 30></condition>";
+                  "<condition><type : score><value : 50></condition>";
      }
      private void addLevel_11(){
 

@@ -18,7 +18,8 @@ public class BlockController {
     }
     private static BlockController instance;
 
-    protected List<Block> arrayBlock ;
+    protected List<Block> arrayBlock;
+    protected List<BlockSpawner> blockSpawners;
     protected GameWorld gameWorld;
     protected GameGrid gameGrid;
     protected Random rnd;
@@ -32,6 +33,7 @@ public class BlockController {
         this.gameWorld = gameWorld;
         gameGrid = gameWorld.getGameGrid();
         arrayBlock = new ArrayList<Block>(10);
+        blockSpawners = new ArrayList<BlockSpawner>();
 
         rnd = new Random ();
         blockFallVelocity = 0;
@@ -46,6 +48,9 @@ public class BlockController {
         if(blockCreateTime > 4f){
             addBlockInRandomPosition(0);
             blockCreateTime = 0;
+        }
+        for(BlockSpawner spawner: blockSpawners){
+            spawner.update(deltaTime);
         }
     }
     public void render(SpriteBatch spriteBatch){
@@ -120,6 +125,11 @@ public class BlockController {
         }
         posCreateX = (float)posMasX*10+50;
         return posCreateX;
+    }
+    public void addBlockSpawner(BlockSpawner blockSpawner){
+        if(blockSpawner != null){
+            blockSpawners.add(blockSpawner);
+        }
     }
     public List<Block> getArrayBlock() {
         return arrayBlock;

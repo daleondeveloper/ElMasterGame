@@ -11,6 +11,7 @@ public class GameSettings {
     private static final int INITIAL_BACKGROUND_ID = 1;
     private static final String SETTINGS = "elMasterSettings";
     private static final String HIGH_SCORE_CLASSIC = "highScoreClassic";
+    private static final String HIGH_COMPLETED_LEVEL = "highCompletedLevel";
     private static final String LAST_PLAY_SCORE = "lastPlayScore";
     private static final String BACKGROUND_ID = "backgroundId";
     private static final String AUDIO = "audio";
@@ -43,7 +44,7 @@ public class GameSettings {
         push_button_show = false;
         helpModeShow = new boolean[7];
         level = 0;
-        highCompletedLvl = 44;
+        highCompletedLvl = 0;
         infinityLvl = false;
     }
 
@@ -60,6 +61,7 @@ public class GameSettings {
         highScore = prefs.getInteger(HIGH_SCORE_CLASSIC, DEFAULT_HIGH_SCORE);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
+        highCompletedLvl = prefs.getInteger(HIGH_COMPLETED_LEVEL);
         if(lastPlayScore > 0){
             gameSave = true;
         }
@@ -95,6 +97,7 @@ public class GameSettings {
         prefs.putString(LEVEL_SAVED_1,level);
         savedLevel = level;
         prefs.putBoolean(INFINITY_LVL,infinityLvl);
+        prefs.putInteger(HIGH_COMPLETED_LEVEL,highCompletedLvl);
         prefs.flush();
     }
     public void clearSaveLevel(){

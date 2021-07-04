@@ -109,14 +109,14 @@ public class LevelChangeMenuFiller extends MenuFiller {
 
         int openedLevel = prefs.getHighCompletedLvl();
         for(int i = 0; i < levelsBtn.length; i++){
-            if(openedLevel > i){
+            if(openedLevel >= i){
                 levelsBtn[i] = new ImageTextButton(String.valueOf(i), new ImageTextButton.ImageTextButtonStyle(
                         textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
                 ));
             }else{
-                levelsBtn[i] = new ImageTextButton(String.valueOf(i), new ImageTextButton.ImageTextButtonStyle(
-                        textureRegionOff, textureRegionOff, textureRegionOff, assets.getAssetFonts().getSmall()
-                ));
+    //                levelsBtn[i] = new ImageTextButton(String.valueOf(i), new ImageTextButton.ImageTextButtonStyle(
+    //                        textureRegionOff, textureRegionOff, textureRegionOff, assets.getAssetFonts().getSmall()
+    //                ));
             }
         }
         continueGameImage = new ImageTextButton("Continue",new ImageTextButton.ImageTextButtonStyle(
@@ -173,7 +173,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
             }
         }));
         for(int i = 0; i < levelsBtn.length; i++){
-            if(i < prefs.getHighCompletedLvl()) {
+            if(i <= prefs.getHighCompletedLvl()) {
                 final int j = i;
                 levelsBtn[i].addListener(ListenerHelper.runnableListener(new Runnable() {
                     @Override
