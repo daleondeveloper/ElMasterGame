@@ -1,6 +1,5 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.GameGrid;

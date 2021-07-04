@@ -205,9 +205,9 @@ public class TeacherMenuFiller extends MenuFiller {
     }
     private void addTasks(){
         tasks[0] = "-Practice for 60 seconds";
-        tasks[1] = "-Clear 5 block line";
-        tasks[2] = "-Clear 5 block line";
-        tasks[3] = "-Clear all star block line" +
+        tasks[1] = "-Clear 3 block line";
+        tasks[2] = "-Clear 4 block line";
+        tasks[3] = "-Clear all star block line\n\n" +
                 "***NEW STAR BLOCK***";
         tasks[4] = "-Clear all star block line";
         tasks[5] = "-Clear all star block line";
@@ -216,7 +216,7 @@ public class TeacherMenuFiller extends MenuFiller {
         tasks[8] = "-Clear 5 block line";
         tasks[9] = "-Survive 60 seconds \n" +
                 "-Clear 2 block line";
-        tasks[10] = "-Clear 5 block line" +
+        tasks[10] = "-Clear 5 block line\n\n" +
                 "***NEW HEAVY BLOCK***";
     }
     private void addAllTexts(){
