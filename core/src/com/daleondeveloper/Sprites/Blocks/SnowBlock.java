@@ -62,7 +62,8 @@ public class SnowBlock extends Block {
 
             if (gameGrid.getLeftBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLeftBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
+                !block.isDestroy() && !block.isDisposable()) {
                     block.idle();
                     block.stateIdle(0);
                     if(!isFreezingTimeIncreased){
@@ -73,7 +74,8 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getRightBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getRightBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
+                        !block.isDestroy() && !block.isDisposable()) {
                     block.idle();
                     block.stateIdle(0);
                     if(!isFreezingTimeIncreased) {
@@ -84,7 +86,8 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getLowerBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLowerBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
+                        !block.isDestroy() && !block.isDisposable()) {
                     block.idle();
                     if(!isFreezingTimeIncreased) {
                         freezingTime += deltaTime;
@@ -94,7 +97,8 @@ public class SnowBlock extends Block {
             }
             if (gameGrid.getTopBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getTopBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite)) {
+                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
+                        !block.isDestroy() && !block.isDisposable()) {
                     block.idle();
                     if(!isFreezingTimeIncreased) {
                         freezingTime += deltaTime;

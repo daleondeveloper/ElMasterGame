@@ -111,7 +111,7 @@ public class GameWorld {
 
         backgroundGameFon.update(deltaTime);
         updateBlock(deltaTime);
-        firstLineBlockChecker.update(deltaTime);
+        checkBlockLine();
 
         blockController.update(deltaTime);
 
@@ -158,38 +158,25 @@ public class GameWorld {
         backgroundGameFon.setRegionGameFon();
     }
 
+    public void checkBlockLine(){
+        for(int y = 0; y < 10; y++){
+            for(int x = 0; x < gameGrid.getGridWidthLength(); x++){
+                if(gameGrid.getBlockByCordinate(x,y) == null ||
+                !gameGrid.getBlockByCordinate(x,y).isIdle()){
+                    break;
+                }
+                if(x == gameGrid.getGridWidthLength() - 1){
+                    for(int secondX = 0; secondX < gameGrid.getGridWidthLength(); secondX++){
+                        gameGrid.getBlockByCordinate(secondX,y).delete();
+                    }
+                    playScreen.getHud().addScore(10);
+                }
+            }
+        }
+    }
     public Body createBody(BodyDef bodyDef) {
         return box2DWorld.createBody(bodyDef);
     }
-    private void loadGames(){
-
-       for (Block blockA : blockController.getArrayBlock()){
-           for(Block blockB : blockController.getArrayBlock()){
-               if(blockA == blockB)continue;
-               if(Math.abs(blockA.getBodyPosition().x - blockB.getBodyPosition().x) * 1.1f <= (blockA.getWidth() + blockB.getWidth())/2 &&
-               Math.abs(blockA.getBodyPosition().y - blockB.getBodyPosition().y) * 0.95f <= (blockA.getHeight() + blockB.getHeight())/2){
-                   if(blockA.getBodyPosition().x - blockB.getBodyPosition().x >= 0){
-                       blockA.getContactLeftBlockList().add(blockB);
-                       blockB.getContactRightBlockList().add(blockA);
-                   }else {
-                       blockA.getContactRightBlockList().add(blockB);
-                       blockB.getContactLeftBlockList().add(blockA);
-                   }
-               }
-               if(Math.abs(blockA.getBodyPosition().y - blockB.getBodyPosition().y) * 1.1f <= (blockA.getHeight() + blockB.getHeight()) &&
-                       Math.abs(blockA.getBodyPosition().x - blockB.getBodyPosition().x) * 0.9f <= (blockA.getWidth() + blockB.getWidth())/2){
-                   if(blockA.getBodyPosition().y - blockB.getBodyPosition().y >= 0){
-                       blockA.getContactDownList().add(blockB);
-                       blockB.getContactUpList().add(blockA);
-                   }else{
-                       blockA.getContactUpList().add(blockB);
-                       blockB.getContactDownList().add(blockA);
-                   }
-               }
-           }
-       }
-    }
-
     private void saveLevel(){
         String level = "";
         level += "<lvlNmb>" + this.level + "</lvlNmb>";
