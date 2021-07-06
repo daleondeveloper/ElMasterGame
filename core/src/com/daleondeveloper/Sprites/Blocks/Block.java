@@ -247,7 +247,6 @@ public class Block extends AbstractDynamicObject {
 
     }
     protected void stateIdle(float deltaTime){
-        body.setType(BodyDef.BodyType.StaticBody);
         body.setTransform(returnCellsPosition,returnCellsPositionY,0);
         if(contactDownList.size() == 0){fall();return;}
 
@@ -257,7 +256,6 @@ public class Block extends AbstractDynamicObject {
         stateTime += deltaTime;
     }
     protected void statePush(float deltaTime){
-        body.setType(BodyDef.BodyType.DynamicBody);
         if(currentState == State.FALL || getContactUpList().size() > 0 || !gameWorld.getWaterElement().isPush()){
             idle();
             gameWorld.getWaterElement().idle();
@@ -276,7 +274,6 @@ public class Block extends AbstractDynamicObject {
         stateTime += deltaTime;
     }
     protected void stateFall(float deltaTime){
-        body.setType(BodyDef.BodyType.DynamicBody);
         if(contactDownList.size() > 0 ){stopFall();return;}
 
         //Change fall velocity
@@ -329,10 +326,14 @@ public class Block extends AbstractDynamicObject {
             effect.draw(spriteBatch);
         }
     }
+
+    public void setStaticBody(){
+        body.setType(BodyDef.BodyType.StaticBody);
+    }
     //Methods of checking the state of the object
 
     public boolean isIdle(){
-        return(currentState == State.IDLE);
+        return((currentState == State.IDLE) || body.getType() == BodyDef.BodyType.StaticBody);
     }
     public boolean isIFall(){
         return(currentState == State.FALL);

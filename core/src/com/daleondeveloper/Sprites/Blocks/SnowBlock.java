@@ -26,20 +26,7 @@ public class SnowBlock extends Block {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        if(!isIdle()){
-//            freezingTime = 0;
-        }
         freezeBlock(deltaTime);
-        //        if(currentState != State.IDLE){
-//            if(effect != null) {
-//                effect.reset();
-//            }
-//            effect = null;
-//        }else if(effect == null){
-//            addColdEffect();
-//        }
-
-
     }
     private void addColdEffect(){
         effect =effectManager.getPoolParticleEffect(ParticleEffectManager.COLD_BLOCK_EFFECT);
