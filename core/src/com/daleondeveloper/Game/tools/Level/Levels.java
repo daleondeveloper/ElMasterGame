@@ -455,18 +455,18 @@ public class Levels {
           levels[21] = "<lvlNmb>21</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : classic><position : 2,2></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 3,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 5,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 6,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 7,2></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 2,3></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 2,2><body : static ></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 3,2><body : static ></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 6,2><body : static ></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 4,2><body : static ></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 5,2><body : static ></block>\" +\n" +
+                  "                  \"<block><type : classic><position : 7,2><body : static ></block>\" +\n" +
+                  "                  \"<block><type : star><position : 2,3></block>\" +\n" +
                   "                  \"<block><type : star><position : 3,3></block>\" +\n" +
                   "                  \"<block><type : star><position : 4,3></block>\" +\n" +
                   "                  \"<block><type : star><position : 5,3></block>\" +\n" +
                   "                  \"<block><type : star><position : 6,3></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 7,3></block>\" +\n" +
+                  "                  \"<block><type : star><position : 7,3></block>\" +\n" +
                   "                  \"<hero><position : 5,4></hero>" +
                   "<condition><type : star><value : 50></condition>";
      }
@@ -573,9 +573,9 @@ public class Levels {
                   "                  \"<block><type : classic><position : 0,3></block>\" +\n" +
                   "                  \"<block><type : classic><position : 5,3></block>\" +\n" +
                   "                  \"<block><type : classic><position : 5,4></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,9><value : 60></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,9><value : 60></block>\" +\n" +
-                  "                  \"<block><type : star><position : 4,9></block>\" +\n" +
+                  "                  \"<block><type : snow><position : 4,9><value : 30></block>\" +\n" +
+                  "                  \"<block><type : snow><position : 4,10><value : 30></block>\" +\n" +
+                  "                  \"<block><type : star><position : 4,11></block>\" +\n" +
                   "                  \"<hero><position : 2,2></hero>" +
                   "<condition><type : star><value : 50></condition>";
      }

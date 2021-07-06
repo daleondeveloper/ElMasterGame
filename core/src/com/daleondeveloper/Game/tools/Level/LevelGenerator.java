@@ -90,6 +90,9 @@ public class LevelGenerator {
                         SnowBlock snowBlock = (SnowBlock) createdBlock;
                         snowBlock.setFreezingTime(levelParser.getValue(block));
                     }
+                    if(levelParser.getBodyType(block).equals("static")){
+                        createdBlock.setStaticBody();
+                    }
             }
         }
     }

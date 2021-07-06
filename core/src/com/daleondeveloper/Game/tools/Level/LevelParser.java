@@ -20,6 +20,7 @@ public class LevelParser {
     public static final Pattern findHero = Pattern.compile("<hero>.+?</hero>");
     public static final Pattern findPosition = Pattern.compile("<position.+?>");
     public static final Pattern findType = Pattern.compile("<type.+?>");
+    public static final Pattern findBodyType = Pattern.compile("<body.+?>");
     public static final Pattern findValue = Pattern.compile("<value.+?>");
 
     private String level;
@@ -65,6 +66,14 @@ public class LevelParser {
             }
         return "";
     }
+    public String getBodyType(String row){
+        Matcher matcher = findBodyType.matcher(row);
+        if(matcher.find()){
+            return matcher.group().split(":")[1].split(">")[0].trim().toLowerCase();
+            }
+        return "";
+    }
+
     public Vector2 getPosition(String row){
         Matcher matcher = findPosition.matcher(row);
         if(matcher.find()){
