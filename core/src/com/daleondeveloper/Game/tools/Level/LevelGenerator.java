@@ -88,7 +88,7 @@ public class LevelGenerator {
                 Block createdBlock = blockController.addBlock(position.x,position.y,type);
                     if(createdBlock instanceof SnowBlock) {
                         SnowBlock snowBlock = (SnowBlock) createdBlock;
-                        snowBlock.setFreezingTime(10);
+                        snowBlock.setFreezingTime(levelParser.getValue(block));
                     }
             }
         }

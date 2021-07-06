@@ -167,8 +167,9 @@ public class TeacherMenuFiller extends MenuFiller {
         Table textTable = new Table();
         scrollPane = new ScrollPane(textTable);
         scrollPane.setScrollingDisabled(true,false);
-        if(tasksShow){
+        if(tasksShow || allTexts[level] == null ){
             textLabel.setText(tasks[level]);
+            tasksShow = true;
         }else {
             textLabel.setText(allTexts[level]);
         }
@@ -202,6 +203,26 @@ public class TeacherMenuFiller extends MenuFiller {
         tile[8] = "Lesson at height";
         tile[9] = "Survival at altitude";
         tile[10] = "Again the first problems";
+        tile[11] = "Level 11";
+        tile[12] = "Level 12";
+        tile[13] = "Level 13";
+        tile[14] = "Level 14";
+        tile[15] = "Level 15";
+        tile[16] = "Level 16";
+        tile[17] = "Level 17";
+        tile[18] = "Level 18";
+        tile[19] = "Level 19";
+        tile[20] = "Level 20";
+        tile[21] = "Level 21";
+        tile[22] = "Level 22";
+        tile[23] = "Level 23";
+        tile[24] = "Level 24";
+        tile[25] = "Level 25";
+        tile[26] = "Level 26";
+        tile[27] = "Level 27";
+        tile[28] = "Level 28";
+        tile[29] = "Level 29";
+        tile[30] = "Level 30";
     }
     private void addTasks(){
         tasks[0] = "-Practice for 60 seconds";
@@ -218,6 +239,28 @@ public class TeacherMenuFiller extends MenuFiller {
                 "-Clear 2 block line";
         tasks[10] = "-Clear 5 block line\n\n" +
                 "***NEW HEAVY BLOCK***";
+        tasks[11] = "-Clear 5 block line";
+        tasks[12] = "-Clear 5 block line";
+        tasks[13] = "-Clear all stars";
+        tasks[14] = "-Clear 5 block line";
+        tasks[15] = "-Clear 5 block line \n" +
+                    "-Cleat all stars";
+        tasks[16] = "-Revive 120 seconds";
+        tasks[17] = "-Clear 5 block line";
+        tasks[18] = "-Clear all stars";
+        tasks[19] = "-Clear all stars";
+        tasks[20] = "-Clear all stars";
+        tasks[21] = "-Clear all stars";
+        tasks[22] = "-Clear all stars";
+        tasks[23] = "-Clear 5 block line";
+        tasks[24] = "-Clear 10 block line";
+        tasks[25] = "-Clear 5 block line";
+        tasks[26] = "-Clear all stars";
+        tasks[27] = "-Clear all stars";
+        tasks[28] = "-Revive 180 seconds";
+        tasks[29] = "-Clear all stars";
+        tasks[30] = "-Clear all stars";
+
     }
     private void addAllTexts(){
         allTexts[0] = "   Congratulations, young student !!! \n "+

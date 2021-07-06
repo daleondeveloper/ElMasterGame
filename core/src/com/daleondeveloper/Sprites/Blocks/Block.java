@@ -31,7 +31,7 @@ public class Block extends AbstractDynamicObject {
     protected enum State{
         FALL, IDLE, PUSH, DESTROY, DISPOSE
     }
-    protected enum BlockType{
+    public enum BlockType{
         CLASSIC,DARK,FIRE,WATER,LIGHT,SNOW,STAR
     }
 
@@ -46,7 +46,6 @@ public class Block extends AbstractDynamicObject {
 
     protected State currentState;
     protected BlockType blockType;
-    private int blockTypeNumber;
     protected float stateTime;
     protected boolean statePosition;
     protected float checkTime;
@@ -87,7 +86,6 @@ public class Block extends AbstractDynamicObject {
         destroyAnimation = assets.getDestroyWater();
 
         textureRegionBlock = assets.getBlockClassic();
-        this.blockTypeNumber = 0;
         blockType = BlockType.CLASSIC;
 
         // Sets initial values for position, width and height and initial frame as jumperStand.
@@ -463,12 +461,8 @@ public class Block extends AbstractDynamicObject {
         return returnCellsPositionY;
     }
 
-    public int getBlockTypeNumber() {
-        return blockTypeNumber;
-    }
-
-    public void setBlockTypeNumber(int blockTypeNumber) {
-        this.blockTypeNumber = blockTypeNumber;
+    public BlockType getBlockType(){
+        return blockType;
     }
 
     public void setCoefficientFrostbite(float coefficientFrostbite) {

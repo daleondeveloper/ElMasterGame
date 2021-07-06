@@ -34,7 +34,7 @@ public class GameConstants {
     public static final int WORLD_HEIGHT_CELLS = 20;
 
     //
-    public static final int MAX_LEVEL = 11;
+    public static final int MAX_LEVEL = 31;
 
     //Кількість пікселів у одній ігровій клітинці
     public static final int PIX_IN_CELL = 10;
@@ -57,25 +57,6 @@ public class GameConstants {
             return BLOCK_STAR;
         }
         Gdx.app.debug(TAG,name + " is not correct to get type");
-        return -1;
-    }
-    public static int getBlockControllerTypeByName(String name){
-        name = name.toLowerCase().trim();
-        if(name.equals("default") || name.equals("classic")){
-            return GAME_MODE_CLASSIC;
-        }else if(name.equals("light")){
-            return GAME_MODE_LIGHT;
-        }else if(name.equals("snow")){
-            return GAME_MODE_SNOW;
-        }else if(name.equals("fire")){
-            return GAME_MODE_FIRE;
-        }else if(name.equals("water")){
-            return GAME_MODE_WATER;
-        }else if(name.equals("dark")){
-            return GAME_MODE_DARK;
-        }else if(name.equals("special")){
-            return GAME_MODE_SPECIAL;
-        }
         return -1;
     }
 }

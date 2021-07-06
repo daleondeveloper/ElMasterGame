@@ -20,7 +20,6 @@ public class SnowBlock extends Block {
         blockType = BlockType.SNOW;
         this.freezingTime = 0;
         FREEZING_TIME = freezingTime;
-        this.setBlockTypeNumber(4);
 
     }
 

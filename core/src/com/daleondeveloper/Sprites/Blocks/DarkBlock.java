@@ -9,7 +9,6 @@ public class DarkBlock extends Block {
         super(gameWorld, blockController, x, y, width, height);
         textureRegionBlock = Assets.getInstance().getAssetBlock().getBlockDark();
         blockType = BlockType.DARK;
-        this.setBlockTypeNumber(1);
     }
 
     @Override

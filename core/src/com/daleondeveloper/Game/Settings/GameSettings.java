@@ -61,7 +61,8 @@ public class GameSettings {
         highScore = prefs.getInteger(HIGH_SCORE_CLASSIC, DEFAULT_HIGH_SCORE);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
-        highCompletedLvl = prefs.getInteger(HIGH_COMPLETED_LEVEL);
+        highCompletedLvl = 30;
+                //prefs.getInteger(HIGH_COMPLETED_LEVEL);
         if(lastPlayScore > 0){
             gameSave = true;
         }
