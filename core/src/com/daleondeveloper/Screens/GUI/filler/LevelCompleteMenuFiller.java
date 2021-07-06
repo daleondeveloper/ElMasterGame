@@ -56,6 +56,10 @@ public class LevelCompleteMenuFiller extends MenuFiller {
     public void build() {
         mainTable = menuScreen.getWindowTable();
         super.build();
+        int nextLevelNumber = GameSettings.getInstance().getLevel() + 1;
+        if(nextLevelNumber >= GameSettings.getInstance().getHighCompletedLvl()) {
+            GameSettings.getInstance().setHighCompletedLvl(nextLevelNumber);
+        }
     }
     @Override
     protected void defineElements() {
@@ -92,9 +96,6 @@ public class LevelCompleteMenuFiller extends MenuFiller {
                 int nextLvl = GameSettings.getInstance().getLevel() + 1;
                 if(nextLvl < GameConstants.MAX_LEVEL){
                     GameSettings.getInstance().setLevel(nextLvl);
-                    if(nextLvl >= GameSettings.getInstance().getHighCompletedLvl()) {
-                        GameSettings.getInstance().setHighCompletedLvl(nextLvl);
-                    }
                     ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
                 }else {
                     ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
