@@ -148,7 +148,9 @@ public class TeacherMenuFiller extends MenuFiller {
             labelTable.add(mainLabel);
             labelTable.add().growX();
             labelTable.row();
+            tasksShow = true;
             mainTable.row();
+            addFootTable();
         }
 
     }
@@ -186,7 +188,8 @@ public class TeacherMenuFiller extends MenuFiller {
         moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
                 .padRight(50);
         moveArrowTable.add().growX();
-        moveArrowTable.add(startButton).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT); moveArrowTable.add().growX();
+        moveArrowTable.add(startButton).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT);
+        moveArrowTable.add().growX();
         moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
                 .padLeft(50);
     }

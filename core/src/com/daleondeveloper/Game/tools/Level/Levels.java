@@ -586,24 +586,41 @@ public class Levels {
           levels[29] = "<lvlNmb>29</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : star><position : 2,4></block>\" +\n" +
-                  "                  \"<block><type : star><position : 2,6></block>\" +\n" +
-                  "                  \"<block><type : star><position : 7,5></block>\" +\n" +
-                  "                  \"<block><type : star><position : 7,7></block>\" +\n" +
+                  "                  \"<block><type : star><position : 1,4></block>\" +\n" +
+                  "                  \"<block><type : star><position : 0,4></block>\" +\n" +
+                  "                  \"<block><type : star><position : 8,4></block>\" +\n" +
+                  "                  \"<block><type : star><position : 9,4></block>\" +\n" +
+                  "                  \"<block><type : star><position : 0,6></block>\" +\n" +
+                  "                  \"<block><type : star><position : 1,6></block>\" +\n" +
+                  "                  \"<block><type : star><position : 8,6></block>\" +\n" +
+                  "                  \"<block><type : star><position : 9,6></block>\" +\n" +
+                  "                  \"<block><type : star><position : 0,5></block>\" +\n" +
+                  "                  \"<block><type : star><position : 1,5></block>\" +\n" +
+                  "                  \"<block><type : star><position : 9,5></block>\" +\n" +
+                  "                  \"<block><type : star><position : 8,5></block>\" +\n" +
+                  "                  \"<block><type : star><position : 0,7></block>\" +\n" +
+                  "                  \"<block><type : star><position : 1,7></block>\" +\n" +
+                  "                  \"<block><type : star><position : 9,7></block>\" +\n" +
+                  "                  \"<block><type : star><position : 8,7></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
                   "<condition><type : star><value : 50></condition>";
-          for(int i = 0; i < 20 ; i++){
-               levels[29] += "<block><type : classic><position : 0,"+ i +"></block>\" +\n" +
-                       "                  \"<block><type : snow><position : 1,"+ i +"><value : 180></block>\" +\n" +
-                       "                  \"<block><type : snow><position : 8,"+ i +"><value : 180></block>\" +\n" +
-                       "                  \"<block><type : classic><position : 9,"+ i +"></block>\" +\n" ;
+          for(int i = 0; i < 20 ; i++) {
+               if (i < 3 || i > 8 && i < 20) {
+                    levels[29] += "<block><type : classic><position : 0," + i + "></block>\" +\n" +
+                            "                  \"<block><type : classic><position : 1," + i + "><value : 180></block>\" +\n" +
+                            "                  \"<block><type : classic><position : 8," + i + "><value : 180></block>\" +\n" +
+                            "                  \"<block><type : classic><position : 9," + i + "></block>\" +\n";
+               }
           }
      }
      private void addLevel_30(){
           levels[30] = "<lvlNmb>30</lvlNmb>" +
                   "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "<blockSpawner><type : fire><value : 6></blockSpawner>" +
+                  "<blockSpawner><type : fire><value : 2></blockSpawner>" +
+                  "                  \"<block><type : star><position : 4,4><body : static></block>\" +\n" +
+                  "                  \"<block><type : star><position : 5,4><body : static></block>\" +\n" +
+                  "                  \"<block><type : star><position : 4,5><body : static></block>\" +\n" +
+                  "                  \"<block><type : star><position : 5,5><body : static></block>\" +\n" +
                   "                  \"<block><type : star><position : 4,6><body : static></block>\" +\n" +
                   "                  \"<block><type : star><position : 5,6><body : static></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
