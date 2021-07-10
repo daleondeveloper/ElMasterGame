@@ -136,6 +136,7 @@ public class PlayScreen extends GUIAbstractScreen {
                         showInterstitialAd();
                     }
                 }
+                doPause();
                 menuScreen.setGameOverScreen();
                 endGame = true;
                 prefs.saveCurrentLevel("");

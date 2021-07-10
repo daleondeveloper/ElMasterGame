@@ -331,7 +331,6 @@ public class WaterElement extends AbstractDynamicObject {
             setReturnPositionY();
             setTurnVelocityByMultiplier(SPEED_MULTIPIER_PUSH);
             pushBlock.push(body.getLinearVelocity().x);
-        Gdx.app.debug(TAG,body.getLinearVelocity().x + "");
 
         if(getVelocity().x == 0)stateTime -= deltaTime;
             updateSpritePosition(elemPushAnim.getKeyFrame(stateTime,false),pushRight);
@@ -401,20 +400,24 @@ public class WaterElement extends AbstractDynamicObject {
 
 
     public void idle(){
-        currentState = State.IDLE;
-        stateTime = 0;
+        if(!isDead() && !isDisposable()) {
+            currentState = State.IDLE;
+            stateTime = 0;
+        }
     }
     public void turn(float impulse){
-        if (isIdle()) {
-            setStateWalk();
-            turnImpulse = impulse;
-            return;
-        }
-        if(isPush()){
-            turnImpulse = impulse;
-        }
-        if (isJump() || isFall()) {
-            setTurnVelocityByMultiplier(SPEED_MULTIPIER_IN_AIR);
+        if(!isDead() && !isDisposable()) {
+            if (isIdle()) {
+                setStateWalk();
+                turnImpulse = impulse;
+                return;
+            }
+            if (isPush()) {
+                turnImpulse = impulse;
+            }
+            if (isJump() || isFall()) {
+                setTurnVelocityByMultiplier(SPEED_MULTIPIER_IN_AIR);
+            }
         }
     }
     public void stopWalk(){
@@ -589,6 +592,7 @@ public class WaterElement extends AbstractDynamicObject {
     public boolean isJump(){return currentState == State.JUMP;}
     public boolean isPush(){return currentState == State.PUSH;}
     public boolean isFall(){return currentState == State.FALL;}
+    public boolean isDead(){return currentState == State.DEAD;}
     @Override
     public boolean isDisposable() {
         return currentState == State.DISPOSE;

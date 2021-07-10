@@ -204,7 +204,7 @@ public class Levels {
           levels[9] = "<lvlNmb>9</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<hero><position : 4,4></hero>" +
+                  "                  \"<hero><position : 4,6></hero>" +
                   "<condition><type : time><value : 60></condition>" +
                   "<condition><type : score><value :20></condition>";
           for(int i = 0; i < 5; i++){
@@ -474,24 +474,18 @@ public class Levels {
           levels[22] = "<lvlNmb>22</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : classic><position : 0,0></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 1,0><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 2,0><value : 999></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 1,0><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 2,0><body : static></block>\" +\n" +
                   "                  \"<block><type : star><position : 4,0></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 6,0><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 7,0><value : 999></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 8,0></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 1,1></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 2,1><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 3,1><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 5,1><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 6,1><value : 999></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 7,1></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 2,2></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 3,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 5,2><value : 999></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 6,2></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 6,0><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 7,0><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 2,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 3,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 5,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 6,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 3,2><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 4,2><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 5,2><body : static></block>\" +\n" +
                   "                  \"<hero><position : 4,3></hero>" +
                   "<condition><type : star><value : 50></condition>";
      }
@@ -520,14 +514,14 @@ public class Levels {
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
                   "<blockSpawner><type : dark><value : 6></blockSpawner>" +
-                  "                  \"<block><type : dark><position : 4,0></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 5,0></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 3,1></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,1><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 5,1><value : 999></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 6,1></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 3,2></block>\" +\n" +
-                  "                  \"<block><type : dark><position : 6,2></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 4,0><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 5,0><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 3,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 4,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 5,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 6,1><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 3,2><body : static></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 6,2><body : static></block>\" +\n" +
                   "                  \"<hero><position : 5,2></hero>" +
                   "<condition><type : score><value : 50></condition>";
      }
@@ -536,8 +530,9 @@ public class Levels {
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
                   "<blockSpawner><type : dark><value : 6></blockSpawner>" +
-                  "                  \"<block><type : snow><position : 9,1></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 9,2><value : 999></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 9,0></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 9,1></block>\" +\n" +
+                  "                  \"<block><type : dark><position : 9,2></block>\" +\n" +
                   "                  \"<block><type : dark><position : 9,3></block>\" +\n" +
                   "                  \"<block><type : star><position : 9,4></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
@@ -609,12 +604,8 @@ public class Levels {
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
                   "<blockSpawner><type : fire><value : 6></blockSpawner>" +
-                  "                  \"<block><type : star><position : 4,6></block>\" +\n" +
-                  "                  \"<block><type : star><position : 5,6></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,7><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 5,7><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 4,8><value : 999></block>\" +\n" +
-                  "                  \"<block><type : snow><position : 5,8><value : 999></block>\" +\n" +
+                  "                  \"<block><type : star><position : 4,6><body : static></block>\" +\n" +
+                  "                  \"<block><type : star><position : 5,6><body : static></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
                   "<condition><type : star><value : 50></condition>";
      }

@@ -19,7 +19,6 @@ import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
-import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 import java.util.HashSet;
@@ -261,7 +260,7 @@ public class Block extends AbstractDynamicObject {
             gameWorld.getWaterElement().idle();
             return;
         }
-        if(contactDownList.size() == 0){
+        if(getContactDownList().size() == 0){
             fall();
             gameWorld.getWaterElement().idle();
             return;
@@ -296,10 +295,6 @@ public class Block extends AbstractDynamicObject {
             gameGrid.deleteObjectFromGrid(this);
             //Change body type and check the main allegations to change the state to another immediately
             body.setType(BodyDef.BodyType.KinematicBody);
-
-            // Remove a block from the GameSensor object's contact list
-            GameSensor gameSensor = gameWorld.getFirstLineBlockChecker();
-            gameSensor.getFirstLineBlocks().remove(this);
 
             // Remove a block from the contact list of all its contacts
             Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
@@ -476,9 +471,13 @@ public class Block extends AbstractDynamicObject {
 
     @Override
     public String toString() {
-        return "<block>" +
+        String s = "<block>" +
                 "<type : " + blockType.toString() +  ">" +
-                "<position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + ">" +
-                "</block>";
+                "<position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + ">" ;
+                if(body.getType() == BodyDef.BodyType.StaticBody){
+                    s += "<body : static>";
+                }
+                s += "</block>";
+                return s;
     }
 }
