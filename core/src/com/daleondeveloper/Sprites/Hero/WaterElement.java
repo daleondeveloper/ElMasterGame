@@ -371,7 +371,10 @@ public class WaterElement extends AbstractDynamicObject {
                 (gameGrid.getLowerBlockRelativeToObject(this) == null &&
                         getPositionInGameGrid().y > 0)) {
             return false;
-        } else  {
+        } else  if(((pushRight && !moveRight && gameGrid.getLeftBlockRelativeToObject(this) != null) ||
+                (!pushRight && moveRight && gameGrid.getRightBlockRelativeToObject(this) != null))){
+            return false;
+        } else{
             return true;
         }
     }
