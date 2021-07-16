@@ -105,8 +105,11 @@ public class PlayScreen extends GUIAbstractScreen {
             gameResults();
         }
         if(stateTime > 1f && stateTime < 1.2f && prefs.getLevel() >= 0){
-            menuScreen.setTeacherMenuFiller();
+//            menuScreen.setTeacherMenuFiller();
             doPause();
+            if(game.getAdsController() != null){
+                game.getAdsController().showRewardedVideo();
+            }
         }
         if(!gameStart){
             doPause();

@@ -23,7 +23,6 @@ public class BlockDestroy extends LvlCondition {
         List<Block> blocks = blockController.getArrayBlock();
         for(Block block : blocks){
             if(block.getBlockType() == blockType){
-               // if(block.is)
                 break;
             }
         }

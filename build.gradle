@@ -80,6 +80,8 @@ project(":android") {
 
     dependencies {
         implementation project(":core")
+        implementation 'com.google.android.gms:play-services-ads:17.2.0'
+        implementation 'com.android.support:multidex:1.0.3'
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"

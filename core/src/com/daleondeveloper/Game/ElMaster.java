@@ -1,18 +1,15 @@
 package com.daleondeveloper.Game;
 
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.daleondeveloper.Assets.Assets;
+import com.daleondeveloper.Game.Ads.AdsController;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
-import com.daleondeveloper.Screens.ScreenTransitionEnum;
 import com.rafaskoberg.gdx.typinglabel.TypingConfig;
 
 public class ElMaster extends DirectedGame {
@@ -22,14 +19,15 @@ public class ElMaster extends DirectedGame {
 	public static final int APPLICATION_HEIGHT = 840;
 	public static final int GAME_WORLD_CELL = 24;
 	public static final String TITLE = "ElMaster";
+	private final AdsController adsController;
 
 	private SpriteBatch gameBatch;
 	private SpriteBatch guiBatch;
 	private ShapeRenderer gameShapeRenderer;
 	private Box2DDebugRenderer box2DDebugRenderer;
 
-	public ElMaster (){
-
+	public ElMaster (AdsController adsController){
+		this.adsController = adsController;
 	}
 
 	@Override
@@ -107,4 +105,7 @@ public class ElMaster extends DirectedGame {
 		box2DDebugRenderer = null;
 	}
 
+	public AdsController getAdsController() {
+		return adsController;
+	}
 }

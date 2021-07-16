@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		config.title = ElMaster.TITLE;
 		config.width = (int) (ElMaster.APPLICATION_WIDTH * 0.75f);
 		config.height = (int) (ElMaster.APPLICATION_HEIGHT * 0.75f);
-		new LwjglApplication(new ElMaster(), config);
+		new LwjglApplication(new ElMaster(null), config);
 	}
 }
