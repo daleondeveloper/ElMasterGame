@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.daleondeveloper.Game.Ads.AdsController;
+import com.daleondeveloper.Game.Ads.AdsShower;
 import com.daleondeveloper.Game.ElMaster;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
@@ -45,13 +46,14 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 
 	@Override
 	public void loadRewardedVideo() {
-		rewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+		rewardedVideoAd.loadAd("ca-app-pub-7212487374998214/3837973668",
 				new AdRequest.Builder().build());
 	}
 
 	@Override
 	public void onRewardedVideoAdLoaded() {
 		Toast.makeText(this,"Ad Loaded",Toast.LENGTH_SHORT).show();
+		AdsShower.getInstance().setAdsWatched(true);
 	}
 
 	@Override

@@ -2,11 +2,13 @@ package com.daleondeveloper.Screens.GUI.filler;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.daleondeveloper.Screens.GUI.MenuScreen;
 
 //Абстрактний клас наслідники якого заповнюватимуть
 //таблицю меню
 public abstract  class MenuFiller {
 
+    protected MenuScreen.MenuState menuType;
     public void build(){
         defineElements();
         addAction();

@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
+import com.daleondeveloper.Game.Ads.AdsShower;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
@@ -56,6 +57,7 @@ public class GameOverFiller extends MenuFiller{
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
+       // menuType = MenuScreen.MenuState.GAME_OVER;
     }
 
 
@@ -87,6 +89,12 @@ public class GameOverFiller extends MenuFiller{
 
     @Override
     protected void addAction() {
+        continueBtn.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                AdsShower.getInstance().showAds();
+            }
+        }));
         mainMenuButton.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
@@ -146,8 +154,10 @@ public class GameOverFiller extends MenuFiller{
 
         scoreTable.add(mainMenuButton);
         scoreTable.row();
-        scoreTable.add(continueBtn);
-        scoreTable.row();
+        if(GameSettings.getInstance().getAdsContinueCount() > 0) {
+            scoreTable.add(continueBtn);
+            scoreTable.row();
+        }
         scoreTable.add(restartButton);
         scoreTable.row();
 

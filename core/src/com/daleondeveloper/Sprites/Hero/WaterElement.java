@@ -343,10 +343,16 @@ public class WaterElement extends AbstractDynamicObject {
         }
     private void stateDead(float deltaTime){
             if(stateTime> elemDeathAnim.getAnimationDuration()) {
-                setStateDisposeAndDestroyBody();
+               // setStateDisposeAndDestroyBody();
+                gameWorld.gameOver();
             }else {
                 updateSpritePosition(elemDeathAnim.getKeyFrame(stateTime,false),moveRight);
             }
+    }
+    public void revive(){
+        currentState = State.IDLE;
+        currentState = State.IDLE;
+        stateTime = 0;
     }
 
     private boolean isBlockUnderHero(){
@@ -596,6 +602,7 @@ public class WaterElement extends AbstractDynamicObject {
     public boolean isPush(){return currentState == State.PUSH;}
     public boolean isFall(){return currentState == State.FALL;}
     public boolean isDead(){return currentState == State.DEAD;}
+    public boolean isHeroDeading(){return currentState == State.DEAD && stateTime> elemDeathAnim.getAnimationDuration();}
     @Override
     public boolean isDisposable() {
         return currentState == State.DISPOSE;

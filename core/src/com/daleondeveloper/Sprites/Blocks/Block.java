@@ -292,21 +292,20 @@ public class Block extends AbstractDynamicObject {
                 textureRegion.getRegionWidth() * 0.12f,textureRegion.getRegionHeight() * 0.12f);
         stateTime += deltaTime;
         if(stateTime > destroyAnimation.getAnimationDuration()) {
-            gameGrid.deleteObjectFromGrid(this);
-            //Change body type and check the main allegations to change the state to another immediately
-            body.setType(BodyDef.BodyType.KinematicBody);
-
-            // Remove a block from the contact list of all its contacts
-            Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
-            objToDelete.addAll(fixOnContact);
-            for (AbstractGameObject abstractGO : objToDelete) {
-                removeFixOnContact(this, abstractGO);
-            }
-
-            gameWorld.destroyBody(body);
-            body = null;
-            currentState = State.DISPOSE;
+            disposeBlockFromGame();
         }
+    }
+    public void disposeBlockFromGame(){
+        gameGrid.deleteObjectFromGrid(this);
+        // Remove a block from the contact list of all its contacts
+        Set<AbstractGameObject> objToDelete = new HashSet<AbstractGameObject>();
+        objToDelete.addAll(fixOnContact);
+        for (AbstractGameObject abstractGO : objToDelete) {
+            removeFixOnContact(this, abstractGO);
+        }
+        gameWorld.destroyBody(body);
+        body = null;
+        currentState = State.DISPOSE;
     }
     protected void stateDead(float deltaTime){
 

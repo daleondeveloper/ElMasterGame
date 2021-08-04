@@ -158,9 +158,10 @@ public class LevelChangeMenuFiller extends MenuFiller {
         continueGameImage.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-//                prefs.setLevel(-1);
-//                prefs.loadIsInfinityLevel();
-//                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
+                prefs.setLevel(-1);
+                prefs.setAdsContinueCount(1);
+                prefs.loadIsInfinityLevel();
+                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME,ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));
 
@@ -179,6 +180,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
                     @Override
                     public void run() {
                         prefs.setLevel(j);
+                        prefs.setAdsContinueCount(1);
                         ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
                     }
                 }));

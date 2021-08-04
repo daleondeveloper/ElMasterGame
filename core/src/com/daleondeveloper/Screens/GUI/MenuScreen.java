@@ -267,4 +267,5 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public Table getWindowTable() {
         return windowTable;
     }
+
 }

@@ -84,6 +84,8 @@ public class GameWorld {
         blockController = levelGenerator.getBlockController();
         lvlEndConditionController = levelGenerator.getLvlEndConditionController();
 
+        gameSettings.setAdsContinueCount(1);
+
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
@@ -174,6 +176,17 @@ public class GameWorld {
             }
         }
     }
+    public void revive(){
+        int x = (int)waterElement.getPositionInGameGrid().x;
+        int y = (int)waterElement.getPositionInGameGrid().y;
+        for(int i = y; i < gameGrid.getGridHeightLength();i++){
+            Block block = gameGrid.getBlockByCordinate(x,i);
+            if(block != null){
+                block.delete();
+            }
+        }
+        waterElement.revive();
+    }
     public Body createBody(BodyDef bodyDef) {
         return box2DWorld.createBody(bodyDef);
     }
@@ -194,8 +207,9 @@ public class GameWorld {
             timeCreateBlock = 0;
             //getBlockController().addBlock();
         }
-        List<com.daleondeveloper.Sprites.Blocks.Block> arrayBlock = new ArrayList<com.daleondeveloper.Sprites.Blocks.Block>();
-        for(com.daleondeveloper.Sprites.Blocks.Block block: blockController.getArrayBlock()){
+        List<Block> arrayBlock = new ArrayList<Block>();
+
+        for(Block block: blockController.getArrayBlock()){
             if(block.isBody()) {
                 block.update(deltaTime);
             }else {
@@ -261,6 +275,9 @@ public class GameWorld {
         level++;
         moveCamera = true;
         newLevel();
+    }
+    public void gameOver(){
+
     }
 
     private void newLevel() {

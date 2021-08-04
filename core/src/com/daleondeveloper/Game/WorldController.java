@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
-import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 
 public class WorldController implements Disposable {
@@ -111,13 +110,12 @@ public class WorldController implements Disposable {
 
     public boolean isGameOver() {
         WaterElement hero = gameWorld.getWaterElement();
-        GameCamera gameCamera = gameWorld.getGameCamera();
 
-        if(hero.isDisposable()) {
-            GameSettings.getInstance().saveCurrentLevel("2");
-            for(Block block :gameWorld.getBlockController().getArrayBlock()){
-                block.delete();
-            }
+        if(hero.isHeroDeading()) {
+            GameSettings.getInstance().saveCurrentLevel("");
+//            for(Block block :gameWorld.getBlockController().getArrayBlock()){
+//                block.delete();
+//            }
             return true;
         }
         return false;

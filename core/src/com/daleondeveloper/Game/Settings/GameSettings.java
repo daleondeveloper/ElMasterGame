@@ -35,6 +35,7 @@ public class GameSettings {
     private boolean infinityLvl;
     private int level;
     private int highCompletedLvl;
+    private int adsContinueCount;
 
     // Singleton: prevent instantiation from other classes
     private GameSettings() {
@@ -46,6 +47,7 @@ public class GameSettings {
         level = 0;
         highCompletedLvl = 0;
         infinityLvl = false;
+        adsContinueCount = 1;
     }
 
     // Singleton: retrieve instance
@@ -61,8 +63,7 @@ public class GameSettings {
         highScore = prefs.getInteger(HIGH_SCORE_CLASSIC, DEFAULT_HIGH_SCORE);
         audio = prefs.getBoolean(AUDIO, true);
         lastPlayScore = prefs.getInteger(LAST_PLAY_SCORE,0);
-        highCompletedLvl = 30;
-                //prefs.getInteger(HIGH_COMPLETED_LEVEL);
+        highCompletedLvl = prefs.getInteger(HIGH_COMPLETED_LEVEL);
         if(lastPlayScore > 0){
             gameSave = true;
         }
@@ -107,6 +108,13 @@ public class GameSettings {
         prefs.flush();
     }
 
+    public int getAdsContinueCount() {
+        return adsContinueCount;
+    }
+
+    public void setAdsContinueCount(int adsContinueCount) {
+        this.adsContinueCount = adsContinueCount;
+    }
 
     public void decreaseCountdownAd() {
         countdownAd = countdownAd > 0 ? countdownAd - 1 : 0;

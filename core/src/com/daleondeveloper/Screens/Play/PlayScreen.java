@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Effects.ParticleEffectManager;
+import com.daleondeveloper.Game.Ads.AdsShower;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.GameController;
 import com.daleondeveloper.Game.GameWorld;
@@ -40,9 +41,6 @@ public class PlayScreen extends GUIAbstractScreen {
     private GameWorld gameWorld;
     private WorldRenderer worldRenderer;
     private GameSettings prefs;
-    private boolean endGame;
-    private boolean levelCompleted;
-    private boolean showHelp;
 
     public PlayScreen(ElMaster game) {
         super(game);
@@ -61,9 +59,6 @@ public class PlayScreen extends GUIAbstractScreen {
         gameWorld = worldController.getGameWorld();
         worldRenderer = new WorldRenderer(gameWorld,game.getGameBatch(),game.getGameShapeRenderer(),game.getBox2DDebugRenderer());
         prefs = GameSettings.getInstance();
-        endGame = false;
-        levelCompleted = false;
-        showHelp = true;
 
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongGame());
     }
@@ -105,45 +100,36 @@ public class PlayScreen extends GUIAbstractScreen {
             gameResults();
         }
         if(stateTime > 1f && stateTime < 1.2f && prefs.getLevel() >= 0){
-//            menuScreen.setTeacherMenuFiller();
+            menuScreen.setTeacherMenuFiller();
             doPause();
-            if(game.getAdsController() != null){
-                game.getAdsController().showRewardedVideo();
-            }
+
         }
         if(!gameStart){
             doPause();
+        }
+
+//        if(AdsShower.getInstance().isAdsWatched() && GameSettings.getInstance().getAdsContinueCount() > 0){
+//            gameWorld.revive();
+//            resume();
+//            GameSettings.getInstance().setAdsContinueCount(GameSettings.getInstance().getAdsContinueCount() - 1);
+//            AdsShower.getInstance().setAdsWatched(false);
+//        }
+        if(menuScreen.getMenuState() == MenuScreen.MenuState.GAME_OVER){
+            if(AdsShower.getInstance().isAdsWatched()){
+                gameWorld.revive();
+                AdsShower.getInstance().setAdsWatched(false);
+                setStateRunning();
+                System.out.println("revive");
+            }
         }
     }
 
     private void gameResults(){
 
-        if (!endGame) {
-            // We evaluate mutual exclusion conditions.
-            // A boolean value is used to avoid nested if/else sentences.
-            boolean finish = false;
-
-            finish = !finish && levelCompleted;
-            if (finish) {
-                gameWorld.addLevel();
-                levelCompleted = false;
-            }
-
-            finish = !finish && worldController.isGameOver();
-            if (finish) {
-                // Advertisement
-                if (hud.isScoreAboveAverage()) {
-                    prefs.decreaseCountdownAd();
-                    if (prefs.isCountdownAdFinish()) {
-                        prefs.resetCountdownAd();
-                        showInterstitialAd();
-                    }
-                }
-                doPause();
-                menuScreen.setGameOverScreen();
-                endGame = true;
-                prefs.saveCurrentLevel("");
-            }
+        if (worldController.isGameOver()) {
+            doPause();
+            menuScreen.setGameOverScreen();
+            prefs.saveCurrentLevel("");
         }
     }
 
@@ -231,6 +217,12 @@ public class PlayScreen extends GUIAbstractScreen {
 
     }
 
+    public void showAds(){
+        if(game.getAdsController() != null){
+            game.getAdsController().showRewardedVideo();
+        }
+    }
+
     @Override
     public InputProcessor getInputProcessor() {
         return worldController.getInputProcessor(new GameController(gameWorld,this));
@@ -257,10 +249,6 @@ public class PlayScreen extends GUIAbstractScreen {
 
     public WorldController getWorldController() {
         return worldController;
-    }
-
-    public void setLevelIsCompleted() {
-        levelCompleted = true;
     }
 
     public ParticleEffectManager getPef() {

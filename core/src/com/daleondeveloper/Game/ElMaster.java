@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Ads.AdsController;
+import com.daleondeveloper.Game.Ads.AdsShower;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
@@ -40,7 +41,7 @@ public class ElMaster extends DirectedGame {
 			Gdx.app.log(TAG, "**** Debug messages not enabled (set DEBUG_MODE = true to enable them) ****");
 
 		}
-
+		new AdsShower(this);
 		//Load preferences and settings
 		GameSettings.getInstance().loadSettings();
 
