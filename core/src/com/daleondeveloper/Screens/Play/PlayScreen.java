@@ -45,6 +45,7 @@ public class PlayScreen extends GUIAbstractScreen {
     public PlayScreen(ElMaster game) {
         super(game);
 
+
         hud = new Hud(game,this);
         menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
@@ -101,6 +102,9 @@ public class PlayScreen extends GUIAbstractScreen {
         }
         if(stateTime > 1f && stateTime < 1.2f && prefs.getLevel() >= 0){
             menuScreen.setTeacherMenuFiller();
+            if(prefs.getLevel() == 0){
+                menuScreen.setHelpScreen();
+            }
             doPause();
 
         }
@@ -108,12 +112,6 @@ public class PlayScreen extends GUIAbstractScreen {
             doPause();
         }
 
-//        if(AdsShower.getInstance().isAdsWatched() && GameSettings.getInstance().getAdsContinueCount() > 0){
-//            gameWorld.revive();
-//            resume();
-//            GameSettings.getInstance().setAdsContinueCount(GameSettings.getInstance().getAdsContinueCount() - 1);
-//            AdsShower.getInstance().setAdsWatched(false);
-//        }
         if(menuScreen.getMenuState() == MenuScreen.MenuState.GAME_OVER){
             if(AdsShower.getInstance().isAdsWatched()){
                 gameWorld.revive();
@@ -127,8 +125,8 @@ public class PlayScreen extends GUIAbstractScreen {
     private void gameResults(){
 
         if (worldController.isGameOver()) {
-            doPause();
             menuScreen.setGameOverScreen();
+            doPause();
             prefs.saveCurrentLevel("");
         }
     }
@@ -165,6 +163,7 @@ public class PlayScreen extends GUIAbstractScreen {
 
     public void doPause() {
         hideBannerAd();
+
         worldController.pause();
         super.pause();
     }

@@ -3,7 +3,7 @@ package com.daleondeveloper.Game.Ads;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 
-public class AdsShower {
+public class AdsShower{
     private ElMaster game;
     private static AdsShower adsShower;
     private boolean adsWatched;
@@ -12,6 +12,8 @@ public class AdsShower {
     public AdsShower (ElMaster game){
         adsShower = this;
         this.game = game;
+        adsWatched = false;
+        adsShowed = false;
     }
     public static AdsShower getInstance(){
         return adsShower;

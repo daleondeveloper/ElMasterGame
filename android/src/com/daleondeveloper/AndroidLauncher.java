@@ -1,7 +1,6 @@
 package com.daleondeveloper;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -27,7 +26,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 		rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
 		rewardedVideoAd.setRewardedVideoAdListener(this);
 
-		loadRewardedVideo();
+			loadRewardedVideo();
 	}
 
 	@Override
@@ -46,14 +45,13 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 
 	@Override
 	public void loadRewardedVideo() {
-		rewardedVideoAd.loadAd("ca-app-pub-7212487374998214/3837973668",
-				new AdRequest.Builder().build());
+				rewardedVideoAd.loadAd("ca-app-pub-7212487374998214/3837973668",
+						new AdRequest.Builder().build());
+
 	}
 
 	@Override
 	public void onRewardedVideoAdLoaded() {
-		Toast.makeText(this,"Ad Loaded",Toast.LENGTH_SHORT).show();
-		AdsShower.getInstance().setAdsWatched(true);
 	}
 
 	@Override
@@ -73,7 +71,8 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 
 	@Override
 	public void onRewarded(RewardItem rewardItem) {
-		Toast.makeText(this,"Reward" + rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this,"Reward" + rewardItem.getAmount(), Toast.LENGTH_SHORT).show();
+		AdsShower.getInstance().setAdsWatched(true);
 	}
 
 	@Override

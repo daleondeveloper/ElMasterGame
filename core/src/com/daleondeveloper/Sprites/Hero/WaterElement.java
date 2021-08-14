@@ -347,11 +347,16 @@ public class WaterElement extends AbstractDynamicObject {
                 gameWorld.gameOver();
             }else {
                 updateSpritePosition(elemDeathAnim.getKeyFrame(stateTime,false),moveRight);
+                Block block = gameGrid.getTopBlockRelativeToObject(this);
+                if(block != null && block.isIFall()){
+
+                    block.delete();
+                }
             }
     }
     public void revive(){
         currentState = State.IDLE;
-        currentState = State.IDLE;
+        returnPosition.y += 20;
         stateTime = 0;
     }
 
