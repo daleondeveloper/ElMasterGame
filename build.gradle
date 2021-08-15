@@ -25,11 +25,11 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:4.0.2'
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.6'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.5'
-        
+        classpath 'com.google.gms:google-services:4.3.5'
 
     }
 }
@@ -46,6 +46,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+
     }
 
     repositories {
@@ -75,6 +76,7 @@ project(":desktop") {
 
 project(":android") {
    apply plugin: "android"
+    apply plugin: "com.google.gms.google-services"
 
 
     configurations { natives }
@@ -83,6 +85,9 @@ project(":android") {
         implementation project(":core")
         implementation 'com.google.android.gms:play-services-ads:17.2.0'
         implementation 'com.google.firebase:firebase-analytics:17.4.1'
+        implementation 'com.google.firebase:firebase-database'
+        implementation platform('com.google.firebase:firebase-bom:26.7.0')
+
         implementation 'com.android.support:multidex:1.0.3'
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
@@ -106,6 +111,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86_64"
         implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+
+
         
     }
 }

@@ -12,17 +12,31 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class AndroidLauncher extends AndroidApplication implements AdsController, RewardedVideoAdListener {
 
 	private RewardedVideoAd rewardedVideoAd;
+	private FirebaseAnalytics fbAnalytics;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+
+
 		initialize(new ElMaster(this), config);
 
+		fbAnalytics = FirebaseAnalytics.getInstance(this);
+		Bundle bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
+		fbAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
+		 bundle = new Bundle();
+		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
+		bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "asd");
+		bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+		fbAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+		
 		rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
 		rewardedVideoAd.setRewardedVideoAdListener(this);
 

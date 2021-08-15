@@ -85,6 +85,8 @@ public class ElMaster extends DirectedGame {
 		ScreenManager.getInstance().initialize(this);
 		ScreenManager.getInstance().showScreen(ScreenEnum.SPLASH, null,this);
 
+
+
 	}
 
 //	synchronized Tracker getTracker(TrackerName trackerId) {

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "592330753376",
+    "project_id": "elmastergame-69123",
+    "storage_bucket": "elmastergame-69123.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592330753376:android:c0eabe1d41cbdcdc138a05",
+        "android_client_info": {
+          "package_name": "com.daleondeveloper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592330753376-l64cdhjb6fkj3e4vg7254d28nmbopbc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA9BmVEDp_wieSunYfBA-PaMLsTTKl7io"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592330753376-l64cdhjb6fkj3e4vg7254d28nmbopbc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
