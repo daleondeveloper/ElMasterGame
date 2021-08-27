@@ -29,6 +29,7 @@ buildscript {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.6'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.5'
+        classpath 'com.mobidevelop.robovm:robovm-rt:2.3.6'
         classpath 'com.google.gms:google-services:4.3.5'
 
     }
@@ -63,6 +64,8 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
+        implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
@@ -83,6 +86,8 @@ project(":android") {
 
     dependencies {
         implementation project(":core")
+        implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+
         implementation 'com.google.android.gms:play-services-ads:17.2.0'
         implementation 'com.google.firebase:firebase-analytics:17.4.1'
         implementation 'com.google.firebase:firebase-database'
@@ -141,6 +146,8 @@ project(":html") {
 
     dependencies {
         implementation project(":core")
+        implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+
         implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
@@ -160,6 +167,8 @@ project(":core") {
 
 
     dependencies {
+        implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
+
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"

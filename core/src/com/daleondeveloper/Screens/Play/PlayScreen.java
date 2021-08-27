@@ -134,6 +134,7 @@ public class PlayScreen extends GUIAbstractScreen {
     public void showNextLvlMenu(){
         pause();
         menuScreen.setLvlCompleteMF();
+        game.getAnaliticsController().levelUp(prefs.getLevel());
     }
 
     @Override

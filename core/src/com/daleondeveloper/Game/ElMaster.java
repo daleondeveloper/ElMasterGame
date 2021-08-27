@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Ads.AdsController;
 import com.daleondeveloper.Game.Ads.AdsShower;
+import com.daleondeveloper.Game.Ads.AnaliticsController;
+import com.daleondeveloper.Game.Ads.AnaliticsGoogle;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
@@ -23,6 +25,7 @@ public class ElMaster extends DirectedGame {
 	public static final int GAME_WORLD_CELL = 24;
 	public static final String TITLE = "ElMaster";
 	private final AdsController adsController;
+	private final AnaliticsController analiticsController;
 
 	private SpriteBatch gameBatch;
 	private SpriteBatch guiBatch;
@@ -40,8 +43,9 @@ public class ElMaster extends DirectedGame {
 //	HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 
 
-	public ElMaster (AdsController adsController){
+	public ElMaster (AdsController adsController, AnaliticsController analiticsController){
 		this.adsController = adsController;
+		this.analiticsController = analiticsController;
 	}
 
 	@Override
@@ -55,6 +59,7 @@ public class ElMaster extends DirectedGame {
 
 		}
 		new AdsShower(this);
+		new AnaliticsGoogle(this);
 		//Load preferences and settings
 		GameSettings.getInstance().loadSettings();
 
@@ -137,5 +142,9 @@ public class ElMaster extends DirectedGame {
 
 	public AdsController getAdsController() {
 		return adsController;
+	}
+
+	public AnaliticsController getAnaliticsController() {
+		return analiticsController;
 	}
 }

@@ -2,10 +2,12 @@ package com.daleondeveloper;
 
 import android.os.Bundle;
 
+
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.daleondeveloper.Game.Ads.AdsController;
 import com.daleondeveloper.Game.Ads.AdsShower;
+import com.daleondeveloper.Game.Ads.AnaliticsController;
 import com.daleondeveloper.Game.ElMaster;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
@@ -14,7 +16,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-public class AndroidLauncher extends AndroidApplication implements AdsController, RewardedVideoAdListener {
+public class AndroidLauncher extends AndroidApplication implements AdsController, RewardedVideoAdListener, AnaliticsController {
 
 	private RewardedVideoAd rewardedVideoAd;
 	private FirebaseAnalytics fbAnalytics;
@@ -23,24 +25,22 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-
-
-		initialize(new ElMaster(this), config);
-
 		fbAnalytics = FirebaseAnalytics.getInstance(this);
-		Bundle bundle = new Bundle();
-		bundle.putString(FirebaseAnalytics.Param.METHOD, "method");
-		fbAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
-		 bundle = new Bundle();
-		bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1");
-		bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "asd");
-		bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
-		fbAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-		
+		levelUp(100);
+		initialize(new ElMaster(this,this), config);
+
 		rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
 		rewardedVideoAd.setRewardedVideoAdListener(this);
 
 			loadRewardedVideo();
+	}
+
+	@Override
+	public void levelUp(int level) {
+		Bundle bundle = new Bundle();
+		bundle.putLong(FirebaseAnalytics.Param.LEVEL, level);
+		fbAnalytics.logEvent(FirebaseAnalytics.Event.LEVEL_UP, bundle);
+		fbAnalytics.toString();
 	}
 
 	@Override

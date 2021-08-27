@@ -78,7 +78,7 @@ public class GameOverFiller extends MenuFiller{
         restartButton = new ImageTextButton("Restart",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
         ));
-        continueBtn = new ImageTextButton("Continue (Ads)",new ImageTextButton.ImageTextButtonStyle(
+        continueBtn = new ImageTextButton("Revive (Ads)",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
         ));
         mainMenuButton = new ImageTextButton("MainMenu",new ImageTextButton.ImageTextButtonStyle(
