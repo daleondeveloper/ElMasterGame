@@ -73,6 +73,7 @@ public class PlayScreen extends GUIAbstractScreen {
         hud.build();
         menuScreen.build();
         background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
+        game.getAnaliticsController().levelStart(prefs.getLevel());
     }
 
 
@@ -102,9 +103,6 @@ public class PlayScreen extends GUIAbstractScreen {
         }
         if(stateTime > 1f && stateTime < 1.2f && prefs.getLevel() >= 0){
             menuScreen.setTeacherMenuFiller();
-            if(prefs.getLevel() == 0){
-                menuScreen.setHelpScreen();
-            }
             doPause();
 
         }
@@ -134,7 +132,7 @@ public class PlayScreen extends GUIAbstractScreen {
     public void showNextLvlMenu(){
         pause();
         menuScreen.setLvlCompleteMF();
-        game.getAnaliticsController().levelUp(prefs.getLevel());
+        game.getAnaliticsController().levelUp(prefs.getLevel(),(long)stateTime);
     }
 
     @Override

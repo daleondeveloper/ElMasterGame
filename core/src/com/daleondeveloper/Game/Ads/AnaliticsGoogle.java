@@ -19,7 +19,7 @@ public class AnaliticsGoogle {
     }
 
     public void levelUp(int level){
-        game.getAnaliticsController().levelUp(level);
+        game.getAnaliticsController().levelUp(level,1);
     }
 
 

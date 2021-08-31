@@ -26,7 +26,6 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		fbAnalytics = FirebaseAnalytics.getInstance(this);
-		levelUp(100);
 		initialize(new ElMaster(this,this), config);
 
 		rewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
@@ -36,12 +35,21 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 	}
 
 	@Override
-	public void levelUp(int level) {
+	public void levelUp(int level, long timelvlcompleted) {
 		Bundle bundle = new Bundle();
 		bundle.putLong(FirebaseAnalytics.Param.LEVEL, level);
-		fbAnalytics.logEvent(FirebaseAnalytics.Event.LEVEL_UP, bundle);
-		fbAnalytics.toString();
+		bundle.putLong(FirebaseAnalytics.Param.VALUE,timelvlcompleted);
+		fbAnalytics.logEvent(FirebaseAnalytics.Event.LEVEL_END, bundle);
 	}
+
+	@Override
+	public void levelStart(int level){
+		Bundle bundle = new Bundle();
+		bundle.putLong(FirebaseAnalytics.Param.LEVEL, level);
+		fbAnalytics.logEvent(FirebaseAnalytics.Event.LEVEL_START, bundle);
+	}
+
+
 
 	@Override
 	public void showRewardedVideo() {

@@ -12,6 +12,7 @@ import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
+import com.daleondeveloper.tools.GameConstants;
 
 public class HelpMenuFiller extends MenuFiller {
     private static final String TAG = SettingsMenuFiller.class.getName();
@@ -44,6 +45,7 @@ public class HelpMenuFiller extends MenuFiller {
     private Image help;
     private Image nextHelp;
     private Image previsionHelp;
+    private Image startButton;
 
     private Label helpLabel;
 
@@ -83,6 +85,7 @@ public class HelpMenuFiller extends MenuFiller {
         help = new Image(assetHelp.getHelp_block_fall());
         nextHelp = new Image(assetGUI.getButtonRight());
         previsionHelp = new Image(assetGUI.getButtonLeft());
+        startButton = new Image(assetGUI.getButtonStart());
         changeHelpImage();
     }
 
@@ -98,7 +101,7 @@ public class HelpMenuFiller extends MenuFiller {
         nextHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                if(helpMenuShow < 2)helpMenuShow++;
+                if(helpMenuShow < 3)helpMenuShow++;
                 changeHelpImage();
             }
         }));
@@ -109,7 +112,12 @@ public class HelpMenuFiller extends MenuFiller {
                 changeHelpImage();
             }
         }));
-
+        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
+            @Override
+            public void run() {
+                    menuScreen.hideMenuScreen();
+            }
+        }));
     }
 
     @Override
@@ -137,6 +145,8 @@ public class HelpMenuFiller extends MenuFiller {
             Table moveArrowTable = new Table();
             mainTable.add(moveArrowTable).padBottom(30).padRight(50).padLeft(50).growX();
             moveArrowTable.add(previsionHelp).width(50).height(58).left();
+            moveArrowTable.add().growX();
+            moveArrowTable.add(startButton).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT);;
             moveArrowTable.add().growX();
             moveArrowTable.add(nextHelp).width(50).height(58).right();
         }

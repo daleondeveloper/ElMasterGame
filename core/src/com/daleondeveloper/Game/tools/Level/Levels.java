@@ -3,7 +3,7 @@ package com.daleondeveloper.Game.tools.Level;
 import com.daleondeveloper.Game.Settings.GameSettings;
 
 public class Levels {
-     public static final int maxLevel = 31;
+     public static final int maxLevel = 5;
      private String[] levels;
      private String savesLevel;
 
@@ -15,32 +15,32 @@ public class Levels {
           addLevel_2();
           addLevel_3();
           addLevel_4();
-          addLevel_5();
-          addLevel_6();
-          addLevel_7();
-          addLevel_8();
-          addLevel_9();
-          addLevel_10();
-          addLevel_11();
-          addLevel_12();
-          addLevel_13();
-          addLevel_14();
-          addLevel_15();
-          addLevel_16();
-          addLevel_17();
-          addLevel_18();
-          addLevel_19();
-          addLevel_20();
-          addLevel_21();
-          addLevel_22();
-          addLevel_23();
-          addLevel_24();
-          addLevel_25();
-          addLevel_26();
-          addLevel_27();
-          addLevel_28();
-          addLevel_29();
-          addLevel_30();
+//          addLevel_5();
+//          addLevel_6();
+//          addLevel_7();
+//          addLevel_8();
+//          addLevel_9();
+//          addLevel_10();
+//          addLevel_11();
+//          addLevel_12();
+//          addLevel_13();
+//          addLevel_14();
+//          addLevel_15();
+//          addLevel_16();
+//          addLevel_17();
+//          addLevel_18();
+//          addLevel_19();
+//          addLevel_20();
+//          addLevel_21();
+//          addLevel_22();
+//          addLevel_23();
+//          addLevel_24();
+//          addLevel_25();
+//          addLevel_26();
+//          addLevel_27();
+//          addLevel_28();
+//          addLevel_29();
+//          addLevel_30();
           savesLevel = GameSettings.getInstance().loadSavedLevel();
      }
      public String getLevel(int level){
@@ -57,97 +57,25 @@ public class Levels {
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
                   "<hero><position : 5,0></hero>" +
-                  "<condition><type : score><value : 10></condition>";
-     }
-     private void addLevel_1(){
-          levels[1] = "<lvlNmb>1</lvlNmb>" +
-                  "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "<blockController><type : classic></blockController>\" +\n" +
-                  "                  \"<hero><position : 5,0></hero>" +
                   "<condition><type : score><value : 30></condition>";
+     }
+     private void addLevel_1() {
+          levels[1] = "<lvlNmb>1</lvlNmb>\" +\n" +
+                  "<score>0</score>\" +\n" +
+                  "<blockSpawner><type : classic><value : 3></blockSpawner>\" +\n" +
+                  "<block><type : classic><position : 1,0></block>\n" +
+                  "<block><type : classic><position : 8,0></block>\n" +
+                  "<block><type : classic><position : 1,1></block>\n" +
+                  "<block><type : classic><position : 8,1></block>\n" +
+                  "<block><type : default><position : 1,2></block>\n" +
+                  "<block><type : default><position : 8,2></block>\n" +
+                  "<block><type : default><position : 1,3></block>\n" +
+                  "<block><type : default><position : 8,3></block>\n" +
+                  "<hero><position : 5,0></hero>\n" +
+                  "<condition><type : score><value : 40></condition>";
      }
      private void addLevel_2(){
           levels[2] = "<lvlNmb>2</lvlNmb>" +
-                  "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : classic><position : 1,0></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 8,0></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 1,1></block>\" +\n" +
-                  "                  \"<block><type : classic><position : 8,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 1,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 8,2></block>\" +\n" +
-                  "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : score><value : 40></condition>";
-     }
-     private void addLevel_3(){
-          levels[3] = "<lvlNmb>3</lvlNmb>" +
-                  "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : star><position : 6,0></block>\" +\n" +
-                  "                  \"<block><type : star><position : 7,0></block>\" +\n" +
-                  "                  \"<block><type : star><position : 6,1></block>\" +\n" +
-                  "                  \"<block><type : star><position : 7,1></block>\" +\n" +
-                  "                  \"<block><type : star><position : 6,2></block>\" +\n" +
-                  "                  \"<block><type : star><position : 7,2></block>\" +\n" +
-                  "                  \"<hero><position : 6,4></hero>" +
-                  "<condition><type : star></condition>";
-     }
-     private void addLevel_4(){
-          levels[4] = "<lvlNmb>4</lvlNmb>" +
-                  "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : default><position : 6,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 7,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,1></block>\" +\n" +
-                  "                  \"<block><type : star><position : 7,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 2,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,0></block>\" +\n" +
-                  "                  \"<block><type : star><position : 2,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,1></block>\" +\n" +
-                  "                  \"<hero><position : 3,2></hero>" +
-                  "<condition><type : star></condition>";
-     }
-     private void addLevel_5(){
-          levels[5] = "<lvlNmb>5</lvlNmb>" +
-                  "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : default><position : 1,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 2,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,0></block>\" +\n" +
-                  "                  \"<block><type : star><position : 4,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 7,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 2,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,1></block>\" +\n" +
-                  "                  \"<block><type : star><position : 4,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,2></block>\" +\n" +
-                  "                  \"<block><type : star><position : 4,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,2></block>\" +\n" +
-                  "                  \"<block><type : star><position : 4,3></block>\" +\n" +
-                  "                  \"<hero><position : 4,4></hero>" +
-                  "<condition><type : star></condition>";
-     }
-     private void addLevel_6(){
-          levels[6] = "<lvlNmb>6</lvlNmb>" +
-                  "<score>0</score>" +
-                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : score><value : 70></condition>";
-          for(int i = 0; i < 18; i++){
-               levels[6] +="                  \"<block><type : default><position : 0," + i + "></block>\" +\n" +
-                       "                  \"<block><type : default><position : 1," + i + "></block>\" +\n" +
-                       "                  \"<block><type : default><position : 8," + i + "></block>\" +\n" +
-                       "                  \"<block><type : default><position : 9," + i + "></block>\" +\n" ;
-          }
-
-
-     }
-     private void addLevel_7(){
-          levels[7] = "<lvlNmb>7</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
                   "                  \"<block><type : default><position : 0,0></block>\" +\n" +
@@ -171,34 +99,27 @@ public class Levels {
                   "                  \"<block><type : star><position : 0,3></block>\" +\n" +
                   "                  \"<block><type : star><position : 9,3></block>\" +\n" +
                   "                  \"<hero><position : 5,0></hero>" +
-                  "<condition><type : star><value : 100></condition>";
+                  "<condition><type : star></condition>";
      }
-     private void addLevel_8(){
-          levels[8] = "<lvlNmb>8</lvlNmb>" +
+     private void addLevel_3(){
+          levels[3] = "<lvlNmb>3</lvlNmb>" +
                   "<score>0</score>" +
                   "<blockSpawner><type : classic><value : 3></blockSpawner>" +
-                  "                  \"<block><type : default><position : 4,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,0></block>\" +\n" +
-                  "                  \"<block><type : default><position : 4,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,1></block>\" +\n" +
-                  "                  \"<block><type : default><position : 4,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,2></block>\" +\n" +
-                  "                  \"<block><type : default><position : 4,3></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,3></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,3></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,3></block>\" +\n" +
-                  "                  \"<block><type : default><position : 4,4></block>\" +\n" +
-                  "                  \"<block><type : default><position : 5,4></block>\" +\n" +
-                  "                  \"<block><type : default><position : 6,4></block>\" +\n" +
-                  "                  \"<block><type : default><position : 3,4></block>\" +\n" +
-                  "                  \"<hero><position : 5,5></hero>" +
-                  "<condition><type : score><value : 50></condition>";
+                  "<blockSpawner><type : star><value : 8></blockSpawner>" +
+                  "                  \"<hero><position : 5,1></hero>" +
+                  "<condition><type : score><value : 50></condition>" +
+                  "<condition><type : star><value : 50></condition>";
+     }
+     private void addLevel_4(){
+          levels[4] = "<lvlNmb>4</lvlNmb>" +
+                  "<score>0</score>" +
+                  "<blockSpawner><type : classic><value : 3></blockSpawner>" +
+                  "<blockSpawner><type : star><value : 8></blockSpawner>" +
+                  "<blockSpawner><type : dark><value : 7></blockSpawner>" +
+                  "<hero><position : 5,1></hero>" +
+                  "<condition><type : score><value : 20></condition>" +
+                  "<condition><type : star></condition>";
+
      }
      private void addLevel_9(){
           levels[9] = "<lvlNmb>9</lvlNmb>" +

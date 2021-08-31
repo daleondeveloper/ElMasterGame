@@ -28,6 +28,6 @@ public class StarLvlCondition extends LvlCondition {
 
     @Override
     public void update(float deltaTime) {
-        if(!conditionFulfilled)checkCondition();
+        checkCondition();
     }
 }
