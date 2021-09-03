@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
-import com.daleondeveloper.Game.tools.Level.LevelGenerator;
+import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Game.tools.Level.LvlEndConditionController;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Background;
@@ -38,7 +38,7 @@ public class GameWorld {
     private GameCamera gameCamera;
 
     //Елементи управління грою
-    private LevelGenerator levelGenerator;
+    private Level levelGenerator;
     private LvlEndConditionController lvlEndConditionController;
     private GameGrid gameGrid;
     private BlockController blockController;
@@ -79,10 +79,10 @@ public class GameWorld {
         this.level = level;
 
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
-        levelGenerator = new LevelGenerator(this,level);
-        this.level = levelGenerator.getLevelNumber();
-        blockController = levelGenerator.getBlockController();
-        lvlEndConditionController = levelGenerator.getLvlEndConditionController();
+        levelGenerator = new Level(level);
+        blockController = new BlockController(this);
+        lvlEndConditionController = new LvlEndConditionController();
+        levelGenerator.getLevelTasks(lvlEndConditionController,blockController);
 
         gameSettings.setAdsContinueCount(1);
 
@@ -95,7 +95,7 @@ public class GameWorld {
         leftButtonPressed = false;
         buttonPushPressed = false;
 
-        playScreen.getHud().setScore(levelGenerator.getScore());
+        playScreen.getHud().setScore(0);
 
         timeCreateBlock = 101;
         timeToSave = TIME_TO_SAVE;
@@ -147,7 +147,8 @@ public class GameWorld {
     }
 
     private void createSprites(){
-        waterElement = levelGenerator.getHero();
+        waterElement = levelGenerator.getHero(this);
+        levelGenerator.getBlock(blockController);
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 
         //Regions ( create regions around the playing zone for player and game element)

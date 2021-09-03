@@ -11,7 +11,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Game.tools.Level.Levels;
+import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -83,7 +83,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
         pageShow = 0;
-        levelsBtn = new ImageTextButton[Levels.maxLevel];
+        levelsBtn = new ImageTextButton[Level.maxLevel];
     }
 
     @Override

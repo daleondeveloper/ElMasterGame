@@ -1,0 +1,13 @@
+<level>
+    <blockSpawner type = "classic" value = "3"/>
+    <block type = "classic" positionX = "1" positionY = "0"/>
+    <block type = "classic" positionX = "8" positionY = "0"/>
+    <block type = "classic" positionX = "1" positionY = "1"/>
+    <block type = "classic" positionX = "8" positionY = "1"/>
+    <block type = "classic" positionX = "1" positionY = "2"/>
+    <block type = "classic" positionX = "8" positionY = "2"/>
+    <block type = "classic" positionX = "1" positionY = "3"/>
+    <block type = "classic" positionX = "8" positionY = "3"/>
+    <hero positionX = "5" positionY = "0"/>
+    <levelTasks type = "score" value = "40"/>
+</level>

@@ -214,7 +214,7 @@ public class TeacherMenuFiller extends MenuFiller {
         tile[2] = "Star Block";
         tile[3] = "More Stars";
         tile[4] = "Two towers";
-//        tile[5] = "Pyramid";
+        tile[5] = "Pyramid";
 //        tile[6] = "Limited area";
 //        tile[7] = "Two pyramid";
 //        tile[8] = "Lesson at height";
@@ -253,7 +253,7 @@ public class TeacherMenuFiller extends MenuFiller {
                 "-Clear all star block line \n\n" +
                 "***NEW DARK BLOCK*** \n" +
                 "Dark block cannot be moved";
-//        tasks[5] = "-Clear all star block line";
+        tasks[5] = "-Clear all star block line";
 //        tasks[6] = "-Clear 7 block line";
 //        tasks[7] = "-Clear all star block line";
 //        tasks[8] = "-Clear 5 block line";
@@ -292,8 +292,8 @@ public class TeacherMenuFiller extends MenuFiller {
         allTexts[1] = "The path of the hero is not always easy, and there are always quality obstacles, then add them.";
         allTexts[2] = "No you always have to chase the number of points, sometimes - the star ...";
          allTexts[4] = "I have prepared something interesting for you, I have filled the blocks with dark essence, and now only a few can move them.";
-//         allTexts[5] = "How did you like the towers?\n" +
-//                 "I replaced the towers with a pyramid, let's see how you like it.";
+         allTexts[5] = "How did you like the towers?\n" +
+                 "I replaced the towers with a pyramid, let's see how you like it.";
 //        allTexts[6] = "Towers and pyramids have tired you, my student.\n" +
 //                "You can relax a little, this time I just reduced the arena.";
 //        allTexts[7] = "After a little rest, now you will try to practice with two pyramids.";

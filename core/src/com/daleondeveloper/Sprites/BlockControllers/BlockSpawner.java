@@ -13,6 +13,7 @@ public class BlockSpawner {
         this.blockType = blockType;
         this.timeToSpawn = timeToSpawn;
         timeFromLastSpawn = 0;
+        blockController.addBlockSpawner(this);
     }
     public void update(float deltaTime){
         timeFromLastSpawn += deltaTime;
