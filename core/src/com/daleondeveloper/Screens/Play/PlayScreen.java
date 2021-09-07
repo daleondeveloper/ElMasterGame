@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.Play;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
@@ -18,6 +19,7 @@ import com.daleondeveloper.Screens.GUI.BackgroundScreen;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
+import com.daleondeveloper.Screens.GUI.TeachingHud;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
 
@@ -27,6 +29,7 @@ public class PlayScreen extends GUIAbstractScreen {
     private static final float SHAKE_DURATION = 2.0f;
 
     private Hud hud;
+    private TeachingHud teachingHud;
     private MenuScreen menuScreen;
     private BackgroundScreen backgroundScreen;
     private GatesScreen gatesScreen;
@@ -47,6 +50,7 @@ public class PlayScreen extends GUIAbstractScreen {
 
 
         hud = new Hud(game,this);
+        teachingHud = new TeachingHud(game,this);
         menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
         gatesScreen = new GatesScreen(game);
@@ -59,6 +63,7 @@ public class PlayScreen extends GUIAbstractScreen {
         worldController = new WorldController(this);
         gameWorld = worldController.getGameWorld();
         worldRenderer = new WorldRenderer(gameWorld,game.getGameBatch(),game.getGameShapeRenderer(),game.getBox2DDebugRenderer());
+
         prefs = GameSettings.getInstance();
 
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongGame());
@@ -71,9 +76,12 @@ public class PlayScreen extends GUIAbstractScreen {
         backgroundScreen.build();
         gatesScreen.build();
         hud.build();
+        teachingHud.build();
         menuScreen.build();
         background = new Image(Assets.getInstance().getAssetGates().getStaticMain());
-        game.getAnaliticsController().levelStart(prefs.getLevel());
+        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+            game.getAnaliticsController().levelStart(prefs.getLevel());
+        }
     }
 
 
@@ -95,6 +103,10 @@ public class PlayScreen extends GUIAbstractScreen {
         worldRenderer.render();
         gatesScreen.render();
         hud.render();
+        if(prefs.getLevel() == 0){
+            teachingHud.update(deltaTime);
+            teachingHud.render();
+        }
         menuScreen.render();
         stage.draw();
         //Analys game result

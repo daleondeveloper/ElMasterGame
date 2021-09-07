@@ -15,6 +15,7 @@ import com.daleondeveloper.Assets.game.AssetBlock;
 import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Game.tools.Level.ElementSaved;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
@@ -24,7 +25,7 @@ import com.daleondeveloper.Sprites.Hero.WaterElement;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Block extends AbstractDynamicObject {
+public class Block extends AbstractDynamicObject implements ElementSaved {
     private static final String TAG = Block.class.getName();
 
     protected enum State{
@@ -466,6 +467,18 @@ public class Block extends AbstractDynamicObject {
 
     public float getCoefficientFrostbite() {
         return coefficientFrostbite;
+    }
+
+    @Override
+    public String save() {
+        String s = "<block>" +
+                "<type : " + blockType.toString() +  ">" +
+                "<position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + ">" ;
+        if(body.getType() == BodyDef.BodyType.StaticBody){
+            s += "<body : static>";
+        }
+        s += "</block>";
+        return s;
     }
 
     @Override

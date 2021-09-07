@@ -22,8 +22,8 @@ import com.daleondeveloper.tools.GameConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameWorld {
-    private static final String TAG = GameWorld.class.getName();
+public class TeachingGameWorld extends GameWorld {
+    private static final String TAG = TeachingGameWorld.class.getName();
 
     private static final float DOWN_REGION = 150;
     private static final float TIME_TO_SAVE = 30;
@@ -71,7 +71,8 @@ public class GameWorld {
     private boolean leftButtonPressed;
     private boolean buttonPushPressed;
 
-    public GameWorld(PlayScreen playScreen, World box2DWorld, int level){
+    public TeachingGameWorld(PlayScreen playScreen, World box2DWorld, int level){
+        super(playScreen, box2DWorld, level);
         this.playScreen = playScreen;
         this.box2DWorld = box2DWorld;
         gameCamera = new GameCamera();
@@ -149,7 +150,6 @@ public class GameWorld {
     private void createSprites(){
         waterElement = levelGenerator.getHero(this);
         levelGenerator.getBlock(blockController);
-        levelGenerator.getBlockSpawner(blockController);
         firstLineBlockChecker = new GameSensor(playScreen,this,55,DOWN_REGION + 5,90,1);
 
         //Regions ( create regions around the playing zone for player and game element)

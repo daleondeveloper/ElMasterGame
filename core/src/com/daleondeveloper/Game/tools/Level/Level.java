@@ -15,20 +15,22 @@ import com.daleondeveloper.Sprites.Blocks.SnowBlock;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
 import com.daleondeveloper.tools.GameConstants;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Level {
+public class Level implements ElementSaved {
      public static final int maxLevel = GameConstants.MAX_LEVEL;
 
      private XmlReader.Element xmlLevel;
-
+     private ArrayList<ElementSaved> elementSaveds;
      //d - default, f - fire, s - snow, dk - dark, l - light, s - star;
      public Level(int level){
+          elementSaveds = new ArrayList<ElementSaved>();
           FileHandle dirHandle;
           if (Gdx.app.getType() == Application.ApplicationType.Android) {
                dirHandle = Gdx.files.internal("levels/" + level + ".xml");
           } else {
-               dirHandle = Gdx.files.internal(System.getProperty("user.dir") + "/assets/levels/"+ level +".xml"); // хак для desktop проекта, так как он почему-то не видел этих файлов. Создайте символическую ссылку папки assets в в корне desktop-проекта на папку assets android-проекта
+               dirHandle = Gdx.files.internal(System.getProperty("user.dir") + "/levels/"+ level +".xml"); // хак для desktop проекта, так как он почему-то не видел этих файлов. Создайте символическую ссылку папки assets в в корне desktop-проекта на папку assets android-проекта
           }
           xmlLevel = new XmlReader().parse(dirHandle);
           //savesLevel = GameSettings.getInstance().loadSavedLevel();
@@ -83,7 +85,12 @@ public class Level {
           }
 
      }
-//     private void addLevel_0(){
+
+     @Override
+     public String save() {
+          return null;
+     }
+     //     private void addLevel_0(){
 //          XmlReader.Element element = new XmlReader().parse(Gdx.files.internal( "levels/0.xml"));
 //          Iterator iterator = element.getChildrenByName("block").iterator();
 //          while (iterator.hasNext()) {

@@ -1,19 +1,22 @@
 package com.daleondeveloper.Sprites.Hero;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.game.AssetHero;
-import com.daleondeveloper.Game.tools.GameGrid;
-import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Game.GameWorld;
+import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Game.tools.Level.ElementSaved;
+import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Sprites.AbstractDynamicObject;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
@@ -23,7 +26,7 @@ import com.daleondeveloper.Sprites.Platform;
 import java.util.HashSet;
 import java.util.Set;
 
-public class WaterElement extends AbstractDynamicObject {
+public class WaterElement extends AbstractDynamicObject implements ElementSaved {
     private static final String TAG = WaterElement.class.getName();
 
     private static float IMPULSE_Y = 50f;
@@ -611,6 +614,13 @@ public class WaterElement extends AbstractDynamicObject {
     @Override
     public boolean isDisposable() {
         return currentState == State.DISPOSE;
+    }
+
+    @Override
+    public String save() {
+        return "<hero>" +
+                "<position : " + positionInGameGrid.x + "," + positionInGameGrid.y + ">" +
+                "</hero>";
     }
 
     @Override

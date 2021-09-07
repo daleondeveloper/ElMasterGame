@@ -55,6 +55,12 @@ public class Hud extends GUIOverlayAbstractScreen {
     private Image gameButtonPush;
     private Image gameButtonJump;
 
+    private boolean isButtonLeftPressed;
+    private boolean isButtonRightPressed;
+    private boolean isButtonPushPressed;
+    private boolean isButtonJumpPressed;
+
+
 
     public Hud(ElMaster game, PlayScreen playScreen) {
         super(game);
@@ -136,6 +142,7 @@ public class Hud extends GUIOverlayAbstractScreen {
         gameButtonLeft.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
+                isButtonLeftPressed = true;
                 playScreen.getInputProcessor().keyDown(Input.Keys.LEFT);
             }
 
@@ -144,11 +151,13 @@ public class Hud extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 playScreen.getInputProcessor().keyUp(Input.Keys.LEFT);
+                isButtonLeftPressed = false;
             }
         }));
         gameButtonRight.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
+                isButtonRightPressed = true;
                 playScreen.getInputProcessor().keyDown(Input.Keys.RIGHT);
             }
 
@@ -157,11 +166,13 @@ public class Hud extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 playScreen.getInputProcessor().keyUp(Input.Keys.RIGHT);
+                isButtonRightPressed = false;
             }
         }));
         gameButtonPush.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
+                isButtonPushPressed = true;
                 playScreen.getInputProcessor().keyDown(31);
             }
 
@@ -170,11 +181,13 @@ public class Hud extends GUIOverlayAbstractScreen {
             @Override
             public void run() {
                 playScreen.getInputProcessor().keyUp(31);
+                isButtonPushPressed = false;
             }
         }));
         gameButtonJump.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
+                isButtonJumpPressed = true;
                 playScreen.getInputProcessor().keyDown(62);
             }
 
@@ -182,6 +195,7 @@ public class Hud extends GUIOverlayAbstractScreen {
         gameButtonJump.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
+                isButtonJumpPressed = false;
                 playScreen.getInputProcessor().keyUp(62);
             }
         }));
@@ -287,5 +301,21 @@ public class Hud extends GUIOverlayAbstractScreen {
 
     public void setVisible(boolean visible) {
         mainTable.setVisible(visible);
+    }
+
+    public boolean isButtonLeftPressed() {
+        return isButtonLeftPressed;
+    }
+
+    public boolean isButtonRightPressed() {
+        return isButtonRightPressed;
+    }
+
+    public boolean isButtonPushPressed() {
+        return isButtonPushPressed;
+    }
+
+    public boolean isButtonJumpPressed() {
+        return isButtonJumpPressed;
     }
 }

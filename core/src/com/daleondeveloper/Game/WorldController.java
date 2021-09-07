@@ -14,8 +14,6 @@ import com.daleondeveloper.Sprites.Hero.WaterElement;
 public class WorldController implements Disposable {
     private static final String TAG = WorldController.class.getName();
 
-    private static final float GAME_OVER_OFFSET = 0.5f;
-
     // Reference to the play screen
     private PlayScreen playScreen;
 
