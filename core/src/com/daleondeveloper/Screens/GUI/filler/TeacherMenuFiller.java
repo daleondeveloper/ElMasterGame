@@ -242,7 +242,7 @@ public class TeacherMenuFiller extends MenuFiller {
 //        tile[30] = "Level 30";
     }
     private void addTasks(){
-        tasks[0] = "-Clear 3 block line";
+        tasks[0] = "-Clear 1 block line";
         tasks[1] = "-Clear 4 block line";
         tasks[2] = "-Clear all star block line \n\n" +
                 "*** NEW STAR BLOCK *** \n" +

@@ -40,6 +40,7 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
     private ImageTextButton helpScreen;
     private Image helpButtonRight;
     private Image helpButtonLeft;
+    private Image helpButtonUp;
     private Image pushHelp;
     private Image backPushHelp;
 
@@ -111,6 +112,8 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
         ));
         helpButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
         helpButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
+        helpButtonUp = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
+        helpButtonUp.rotateBy(270);
     }
 
     private void updateTopTable() {
@@ -121,6 +124,28 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                 topTable.add(helpScreen).width(350).height(150).padTop(50);
                 helpScreen.setText("Use move button and \njump button to do diagonal \njumping");
                 topTable.add().growX();
+                break;
+            case 4 :
+                topTable.add().growX();
+                topTable.add(helpScreen).width(350).height(150).padTop(50);
+                helpScreen.setText("Try to push block. \n" +
+                        "Press push button and \nthen move button to push");
+                topTable.add().growX();
+                break;
+            case 5 :
+                topTable.add().growX();
+                topTable.add(helpScreen).width(350).height(150).padTop(50);
+                helpScreen.setText("Now try to create \n" +
+                        "a block line ");
+                topTable.add().growX();
+                break;
+            case 7:
+                topTable.add().growX();
+                topTable.add(helpScreen).width(420).height(150).padTop(50);
+                helpScreen.setText("Excellent !!!\n" +
+                        "Now you can continue your journey");
+                topTable.add().growX();
+                break;
         }
     }
 
@@ -152,6 +177,17 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                 bottomTable.add(helpScreen).width(200).height(250);
                 helpScreen.setText("Press this\n button \n to push block");
                 bottomTable.add().growX();
+                break;
+            case 6 :
+                bottomTable.add().growX();
+                bottomTable.add(helpButtonUp).width(50).height(50);
+                bottomTable.add().growX();
+                bottomTable.row();
+                bottomTable.add().growX();
+                bottomTable.add(helpScreen).width(400).height(200);
+                helpScreen.setText("When block line create score up");
+                bottomTable.add().growX();
+                break;
         }
     }
 
@@ -203,11 +239,45 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                     firstCondition = true;
             }
             if(firstCondition){
-                helpShowingCount = 3;
+                helpShowingCount ++;
                 stateTime = 0;
                 firstCondition = false;
                 Gdx.input.getInputProcessor().keyDown(54);
+                break;
             }
+            case 3 :
+                if(stateTime > 5){
+                    stateTime = 0;
+                    helpShowingCount++;
+                }
+                break;
+            case 4:
+                if(playScreen.getGameWorld().getBlockController().getArrayBlock().get(0).isPush()){
+                    stateTime = 0;
+                    helpShowingCount++;
+                }
+                break;
+            case 5:
+                if(stateTime > 3){
+                    Gdx.input.getInputProcessor().keyDown(54);
+                    stateTime = 0;
+                }
+                if(playScreen.getHud().getScore() > 0){
+                    stateTime = 0;
+                    helpShowingCount++;
+                }
+            case 6:
+                if(stateTime > 10) {
+                    stateTime = 0;
+                    helpShowingCount++;
+                }break;
+            case 7:
+                if(stateTime > 10){
+                    stateTime = 0;
+                    helpShowingCount++;
+                    playScreen.showNextLvlMenu();
+                }
+
         }
     }
 
