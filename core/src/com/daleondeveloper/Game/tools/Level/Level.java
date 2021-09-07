@@ -54,9 +54,10 @@ public class Level implements ElementSaved {
                     SnowBlock snowBlock = (SnowBlock) createdBlock;
                     snowBlock.setFreezingTime(block.getIntAttribute("freezeTime"));
                }
-//               if(block.getAttribute("body").equals("static")){
-//                    createdBlock.setStaticBody();
-//               }
+               String bodyStr = block.getAttributes().get("body");
+               if(bodyStr != null && bodyStr.equals("static")){
+                    createdBlock.setStaticBody();
+               }
           }
      }
      public void getBlockSpawner(BlockController blockController){
