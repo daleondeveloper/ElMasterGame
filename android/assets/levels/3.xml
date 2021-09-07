@@ -1,5 +1,15 @@
 <level>
     <blockSpawner type = "classic" value = "3"/>
-    <hero positionX = "5" posotionY = "0"/>
-    <levelTasks type = "score" value = "30"/>
+    <block type = "dark" positionX = "5" positionY = "2" body = "static"/>
+    <block type = "dark" positionX = "6" positionY = "1" body = "static"/>
+    <block type = "star" positionX = "6" positionY = "0" body = "static"/>
+    <block type = "dark" positionX = "4" positionY = "3" body = "static"/>
+    <block type = "dark" positionX = "7" positionY = "2" body = "static"/>
+    <block type = "dark" positionX = "1" positionY = "4" body = "static"/>
+    <block type = "dark" positionX = "2" positionY = "4" body = "static"/>
+    <block type = "dark" positionX = "3" positionY = "4" body = "static"/>
+    <block type = "dark" positionX = "8" positionY = "3" body = "static"/>
+    <block type = "dark" positionX = "9" positionY = "3" body = "static"/>
+    <hero positionX = "5" positionY = "3"/>
+    <levelTasks type = "star"/>
 </level>

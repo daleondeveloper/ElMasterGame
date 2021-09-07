@@ -211,10 +211,10 @@ public class TeacherMenuFiller extends MenuFiller {
     private void addTile(){
         tile[0] = "Teaching";
         tile[1] = "The first obstacles";
-        tile[2] = "Star Block";
-        tile[3] = "More Stars";
+        tile[2] = "Dark Block";
+        tile[3] = "Star Block";
         tile[4] = "Two towers";
-        tile[5] = "Pyramid";
+        tile[5] = "Very Hard Level";
 //        tile[6] = "Limited area";
 //        tile[7] = "Two pyramid";
 //        tile[8] = "Lesson at height";
@@ -244,16 +244,15 @@ public class TeacherMenuFiller extends MenuFiller {
     private void addTasks(){
         tasks[0] = "-Clear 1 block line";
         tasks[1] = "-Clear 4 block line";
-        tasks[2] = "-Clear all star block line \n\n" +
-                "*** NEW STAR BLOCK *** \n" +
-                "To go to the next level you need to erase the star blocks, they are no different from normal.";
-        tasks[3] = "-Clear 5 block line \n" +
-                "-Clear all star block line";
-        tasks[4] =  "-Clear 5 block line \n" +
-                "-Clear all star block line \n\n" +
-                "***NEW DARK BLOCK*** \n" +
+        tasks[2] = "-Clear 5 block line \n\n" +
+                "*** NEW DARK BLOCK *** \n" +
                 "Dark block cannot be moved";
-        tasks[5] = "-Clear all star block line";
+        tasks[3] = "-Clear all star block line" +
+                "***NEW STAR BLOCK*** \n" +
+                "To go to the next level you need to erase the star blocks, they are no different from normal.";
+        tasks[4] ="-Clear all star block line";
+        tasks[5] = "-Collect 500 score" +
+                "***NEW FIRE BLOCK***";
 //        tasks[6] = "-Clear 7 block line";
 //        tasks[7] = "-Clear all star block line";
 //        tasks[8] = "-Clear 5 block line";
