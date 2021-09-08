@@ -1,4 +1,4 @@
-<level>
+<level number = "4" score = "0">
     <blockSpawner type = "classic" value = "3"/>
     <block type = "dark" positionX = "1" positionY = "0" body = "static"/>
     <block type = "dark" positionX = "1" positionY = "1" body = "static"/>

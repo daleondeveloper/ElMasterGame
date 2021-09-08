@@ -1,4 +1,4 @@
-<level>
+<level number = "3" score = "0">
     <blockSpawner type = "classic" value = "3"/>
     <block type = "dark" positionX = "5" positionY = "2" body = "static"/>
     <block type = "dark" positionX = "6" positionY = "1" body = "static"/>
@@ -11,5 +11,5 @@
     <block type = "dark" positionX = "8" positionY = "3" body = "static"/>
     <block type = "dark" positionX = "9" positionY = "3" body = "static"/>
     <hero positionX = "5" positionY = "3"/>
-    <levelTasks type = "star"/>
+    <levelTasks type = "star" />
 </level>
