@@ -3,13 +3,14 @@ package com.daleondeveloper.Sprites.BlockControllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Game.tools.Level.ElementSaved;
 import com.daleondeveloper.Sprites.Blocks.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class BlockController {
+public class BlockController implements ElementSaved {
     private static final String TAG = BlockController.class.getName();
 
     protected  enum ControllerType{
@@ -130,6 +131,18 @@ public class BlockController {
     }
     public float getBlockFallVelocity() {
         return blockFallVelocity;
+    }
+
+    @Override
+    public String save() {
+        String s = "";
+        for(Block block : arrayBlock){
+            s += block.save();
+        }
+        for(BlockSpawner blockSpawner : blockSpawners){
+            s += blockSpawner.save();
+        }
+        return s;
     }
 
     @Override

@@ -23,4 +23,12 @@ public class TimeLvlCondition extends LvlCondition {
         }
 
     }
+
+    @Override
+    public String save() {
+        String s = "<levelTasks " +
+                "type = \"time\" value = \"" + endTime + "\"" +
+                "/>\n";
+        return s;
+    }
 }

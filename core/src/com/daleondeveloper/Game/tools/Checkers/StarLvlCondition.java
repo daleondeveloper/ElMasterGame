@@ -30,4 +30,12 @@ public class StarLvlCondition extends LvlCondition {
     public void update(float deltaTime) {
         checkCondition();
     }
+
+    @Override
+    public String save() {
+        String s = "<levelTasks " +
+                "type = \"star\" " +
+                "/>\n";
+        return s;
+    }
 }

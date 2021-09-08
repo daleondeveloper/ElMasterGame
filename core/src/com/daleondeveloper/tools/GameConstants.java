@@ -55,6 +55,12 @@ public class GameConstants {
             return BLOCK_DARK;
         }else if(name.equals("star")){
             return BLOCK_STAR;
+        }else{
+            try {
+                return Integer.parseInt(name);
+            }catch (ClassCastException e){
+
+            }
         }
         Gdx.app.debug(TAG,name + " is not correct to get type");
         return -1;

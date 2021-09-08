@@ -86,6 +86,7 @@ public class GameWorld {
 
         gameSettings.setAdsContinueCount(1);
 
+        playScreen.getHud().setScore(levelGenerator.getScore());
         moveCamera = false;
         pauseCamera = false;
         firstLauch = true;
@@ -94,8 +95,6 @@ public class GameWorld {
         rightButtonPressed = false;
         leftButtonPressed = false;
         buttonPushPressed = false;
-
-        playScreen.getHud().setScore(0);
 
         timeCreateBlock = 101;
         timeToSave = TIME_TO_SAVE;
@@ -193,15 +192,15 @@ public class GameWorld {
         return box2DWorld.createBody(bodyDef);
     }
     private void saveLevel(){
-        String level = "";
-        level += "<lvlNmb>" + this.level + "</lvlNmb>";
-        level += "<score>" + playScreen.getHud().getScore() + "</score>";
-        level += blockController.toString();
-        level += waterElement.toString();
-        for(Block block : blockController.getArrayBlock()){
-            level += block;
-        }
-        gameSettings.saveCurrentLevel(level);
+        String level = "<level ";
+        level += "number =  \""+ levelGenerator.getLevelNumber() +"\" ";
+        level += "score = \"" + playScreen.getHud().getScore() + "\" ";
+        level += "> \n";
+        level += waterElement.save();
+        level += blockController.save();
+        level += lvlEndConditionController.save();
+        level += "</level>";
+        levelGenerator.saveLevel(level);
     }
     private void updateBlock(float deltaTime){
         timeCreateBlock += deltaTime;

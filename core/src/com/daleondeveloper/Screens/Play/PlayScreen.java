@@ -137,7 +137,6 @@ public class PlayScreen extends GUIAbstractScreen {
         if (worldController.isGameOver()) {
             menuScreen.setGameOverScreen();
             doPause();
-            prefs.saveCurrentLevel("");
         }
     }
 

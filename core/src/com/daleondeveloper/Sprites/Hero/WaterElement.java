@@ -618,15 +618,16 @@ public class WaterElement extends AbstractDynamicObject implements ElementSaved 
 
     @Override
     public String save() {
-        return "<hero>" +
-                "<position : " + positionInGameGrid.x + "," + positionInGameGrid.y + ">" +
-                "</hero>";
+        return "<hero " +
+                "positionX = \"" + (int)positionInGameGrid.x + "\" " +
+                "positionY = \"" + (int)positionInGameGrid.y + "\" " +
+                "/> \n";
     }
 
     @Override
     public String toString() {
-        return "<hero>" +
+        return "<hero" +
                 "<position : " + positionInGameGrid.x + "," + positionInGameGrid.y + ">" +
-                "</hero>";
+                "/>";
     }
 }

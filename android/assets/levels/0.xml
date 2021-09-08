@@ -1,4 +1,4 @@
-<level>
+<level number = "0" score = "0">
     <hero positionX = "5" positionY = "0"/>
     <levelTasks type = "score" value = "30"/>
 </level>

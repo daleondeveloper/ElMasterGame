@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Game.tools.WorldContactListner;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
@@ -47,7 +48,7 @@ public class WorldController implements Disposable {
         box2DWorld.setContactListener(new WorldContactListner());
 
         // Creates our game world
-        if(GameSettings.getInstance().getSavedLevel().isEmpty()) {
+        if(!Level.savedLevel.exists()) {
             gameWorld = new GameWorld(playScreen, box2DWorld, GameSettings.getInstance().getLevel());
         }else{
             gameWorld = new GameWorld(playScreen, box2DWorld, -1);
@@ -110,7 +111,7 @@ public class WorldController implements Disposable {
         WaterElement hero = gameWorld.getWaterElement();
 
         if(hero.isHeroDeading()) {
-            GameSettings.getInstance().saveCurrentLevel("");
+            Level.savedLevel.delete();
 //            for(Block block :gameWorld.getBlockController().getArrayBlock()){
 //                block.delete();
 //            }

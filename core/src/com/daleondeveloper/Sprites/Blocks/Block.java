@@ -471,25 +471,26 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
 
     @Override
     public String save() {
-        String s = "<block>" +
-                "<type : " + blockType.toString() +  ">" +
-                "<position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + ">" ;
+        String s = "<block  " +
+                "type = \"" + blockType.toString() +  "\" " +
+                "positionX = \"" + (int)positionInGameGrid.x + "\" " +
+                 "positionY = \""+ (int)positionInGameGrid.y + "\" " ;
         if(body.getType() == BodyDef.BodyType.StaticBody){
-            s += "<body : static>";
+            s += "body = \"static \" ";
         }
-        s += "</block>";
+        s += "/> \n";
         return s;
     }
 
     @Override
     public String toString() {
-        String s = "<block>" +
-                "<type : " + blockType.toString() +  ">" +
-                "<position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + ">" ;
+        String s = "<block  " +
+                "type : " + blockType.toString() +  "  " +
+                "position : " + positionInGameGrid.x + ","  + positionInGameGrid.y + " " ;
                 if(body.getType() == BodyDef.BodyType.StaticBody){
-                    s += "<body : static>";
+                    s += " body : static ";
                 }
-                s += "</block>";
+                s += "/>";
                 return s;
     }
 }

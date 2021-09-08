@@ -32,4 +32,12 @@ public class BlockDestroy extends LvlCondition {
     public void update(float deltaTime) {
         if(!conditionFulfilled)checkCondition();
     }
+
+    @Override
+    public String save() {
+        String s = "<levelTasks " +
+                "type = \"blockDestroy\" value = \"" + count + "\"" +
+                "/>\n";
+        return s;
+    }
 }

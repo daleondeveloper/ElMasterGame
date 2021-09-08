@@ -1,6 +1,8 @@
 package com.daleondeveloper.Game.tools.Checkers;
 
-public abstract class LvlCondition {
+import com.daleondeveloper.Game.tools.Level.ElementSaved;
+
+public abstract class LvlCondition implements ElementSaved {
     private static final String TAG = LvlCondition.class.getName();
 
     protected boolean conditionFulfilled;

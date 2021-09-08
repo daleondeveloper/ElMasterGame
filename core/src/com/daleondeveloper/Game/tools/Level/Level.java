@@ -18,28 +18,38 @@ import com.daleondeveloper.tools.GameConstants;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Level implements ElementSaved {
+public class Level {
      public static final int maxLevel = GameConstants.MAX_LEVEL;
+     public static final FileHandle savedLevel = Gdx.files.local("saved_level.xml");
 
+
+     private FileHandle currentLevel;
      private XmlReader.Element xmlLevel;
-     private ArrayList<ElementSaved> elementSaveds;
+     private ArrayList<ElementSaved> elementToSave;
      //d - default, f - fire, s - snow, dk - dark, l - light, s - star;
      public Level(int level){
-          elementSaveds = new ArrayList<ElementSaved>();
-          FileHandle dirHandle;
-          if (Gdx.app.getType() == Application.ApplicationType.Android) {
-               dirHandle = Gdx.files.internal("levels/" + level + ".xml");
-          } else {
-               dirHandle = Gdx.files.internal(System.getProperty("user.dir") + "/levels/"+ level +".xml"); // хак для desktop проекта, так как он почему-то не видел этих файлов. Создайте символическую ссылку папки assets в в корне desktop-проекта на папку assets android-проекта
+          elementToSave = new ArrayList<ElementSaved>();
+          if(level >= 0) {
+               if (Gdx.app.getType() == Application.ApplicationType.Android) {
+                    currentLevel = Gdx.files.internal("levels/" + level + ".xml");
+               } else {
+                    currentLevel = Gdx.files.internal(System.getProperty("user.dir") + "/levels/" + level + ".xml"); // хак для desktop проекта, так как он почему-то не видел этих файлов. Создайте символическую ссылку папки assets в в корне desktop-проекта на папку assets android-проекта
+               }
+          }else{
+               currentLevel = savedLevel;
           }
-          xmlLevel = new XmlReader().parse(dirHandle);
-          //savesLevel = GameSettings.getInstance().loadSavedLevel();
+          xmlLevel = new XmlReader().parse(currentLevel);
+     }
+     public int getLevelNumber(){
+          return xmlLevel.getIntAttribute("number");
      }
      public WaterElement getHero(GameWorld gameWorld){
           XmlReader.Element xmlHero = xmlLevel.getChildByName("hero");
           int x = (int)(Float.parseFloat(String.valueOf(xmlHero.getIntAttribute("positionX")))+5)*10;
           int y = (int)(Float.parseFloat(String.valueOf(xmlHero.getIntAttribute("positionY")))+15 )*10;
-          return new WaterElement(gameWorld,x,y);
+          WaterElement hero = new WaterElement(gameWorld,x,y);
+          elementToSave.add(hero);
+          return hero;
 
      }
      public void getBlock(BlockController blockController){
@@ -65,7 +75,7 @@ public class Level implements ElementSaved {
           while (iterator.hasNext()) {
                XmlReader.Element xmlSpawner = iterator.next();
                new BlockSpawner(blockController,
-                       GameConstants.getBlockTypeByName(xmlSpawner.getAttribute("type")),xmlSpawner.getIntAttribute("value"));
+                       GameConstants.getBlockTypeByName(xmlSpawner.getAttribute("type")),xmlSpawner.getFloatAttribute("value"));
           }
      }
      public void getLevelTasks(LvlEndConditionController lvlEndConditionController, BlockController blockController){
@@ -86,10 +96,13 @@ public class Level implements ElementSaved {
           }
 
      }
+     public int getScore(){
+          return xmlLevel.getIntAttribute("score");
+     }
 
-     @Override
-     public String save() {
-          return null;
+     public void saveLevel(String s) {
+          savedLevel.delete();
+          savedLevel.writeString(s,false);
      }
      //     private void addLevel_0(){
 //          XmlReader.Element element = new XmlReader().parse(Gdx.files.internal( "levels/0.xml"));

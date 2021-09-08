@@ -4,7 +4,7 @@ import com.daleondeveloper.Game.tools.Checkers.LvlCondition;
 
 import java.util.ArrayList;
 
-public class LvlEndConditionController {
+public class LvlEndConditionController implements ElementSaved {
 
     private ArrayList<LvlCondition> conditions;
 
@@ -27,5 +27,14 @@ public class LvlEndConditionController {
         for(LvlCondition lvlCondition : conditions){
             lvlCondition.update(deltaTime);
         }
+    }
+
+    @Override
+    public String save() {
+        String s = "";
+        for(ElementSaved elementSaved : conditions){
+            s += elementSaved.save();
+        }
+        return s;
     }
 }

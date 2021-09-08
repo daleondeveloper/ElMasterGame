@@ -21,4 +21,12 @@ public class ScoreLvlCondition extends LvlCondition {
     public void update(float deltaTime) {
         if(!conditionFulfilled)checkCondition();
     }
+
+    @Override
+    public String save() {
+        String s = "<levelTasks " +
+                "type = \"score\" value = \"" + endScore + "\"" +
+                "/>\n";
+        return s;
+    }
 }

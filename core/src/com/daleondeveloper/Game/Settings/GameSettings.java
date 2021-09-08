@@ -16,7 +16,6 @@ public class GameSettings {
     private static final String BACKGROUND_ID = "backgroundId";
     private static final String AUDIO = "audio";
 
-    private static final String LEVEL_SAVED_1 = "levelSaved1";
     private static final String INFINITY_LVL = "infinityLvl";
     // Singleton: unique instance
     private static GameSettings instance;
@@ -71,11 +70,6 @@ public class GameSettings {
             helpModeShow[i] = prefs.getBoolean("HELP_MODE_SHOW" + i,true);
         }
     }
-
-    public String loadSavedLevel(){
-        savedLevel = prefs.getString(LEVEL_SAVED_1);
-        return savedLevel;
-    }
     public void loadIsInfinityLevel(){
         infinityLvl = prefs.getBoolean(INFINITY_LVL);
     }
@@ -95,19 +89,6 @@ public class GameSettings {
         highScore = score;
         prefs.flush();
     }
-    public void saveCurrentLevel(String level){
-        prefs.putString(LEVEL_SAVED_1,level);
-        savedLevel = level;
-        prefs.putBoolean(INFINITY_LVL,infinityLvl);
-        prefs.putInteger(HIGH_COMPLETED_LEVEL,highCompletedLvl);
-        prefs.flush();
-    }
-    public void clearSaveLevel(){
-        prefs.putString(LEVEL_SAVED_1,"");
-        savedLevel = "";
-        prefs.flush();
-    }
-
     public int getAdsContinueCount() {
         return adsContinueCount;
     }

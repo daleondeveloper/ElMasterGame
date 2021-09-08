@@ -11,6 +11,7 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.Ads.AdsShower;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.MainMenuScreen;
@@ -98,7 +99,7 @@ public class GameOverFiller extends MenuFiller{
         mainMenuButton.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                prefs.clearSaveLevel();
+                Level.savedLevel.delete();
                 ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }
@@ -107,7 +108,7 @@ public class GameOverFiller extends MenuFiller{
         restartButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
-                prefs.clearSaveLevel();
+                Level.savedLevel.delete();
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
 
             }

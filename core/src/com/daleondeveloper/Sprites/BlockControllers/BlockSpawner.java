@@ -1,6 +1,8 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
-public class BlockSpawner {
+import com.daleondeveloper.Game.tools.Level.ElementSaved;
+
+public class BlockSpawner implements ElementSaved {
     private static final String TAG = BlockSpawner.class.getName();
 
     private BlockController blockController;
@@ -21,5 +23,10 @@ public class BlockSpawner {
             timeFromLastSpawn = 0;
             blockController.addBlockInRandomPosition(blockType);
         }
+    }
+
+    @Override
+    public String save() {
+        return     "<blockSpawner type = \""+ blockType +"\" value = \"" + (int)timeToSpawn + "\"/>";
     }
 }
