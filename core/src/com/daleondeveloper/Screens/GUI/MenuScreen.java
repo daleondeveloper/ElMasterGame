@@ -188,7 +188,6 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
     public void closeMenu(){menuState = MenuState.CLOSE;}
     public void setHelpScreen(HelpMenuFiller.HELP_TYPE_SHOW help_type_show){
-        helpMenuFiller.setHelp_type_show(help_type_show);
         setHelpScreen();
 
     }

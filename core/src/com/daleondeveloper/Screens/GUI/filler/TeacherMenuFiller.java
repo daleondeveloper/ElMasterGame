@@ -4,13 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUI.Button.BackButton;
+import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonLeft;
+import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonRight;
+import com.daleondeveloper.Screens.GUI.Button.StartButton;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
-import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.tools.GameConstants;
 
 public class TeacherMenuFiller extends MenuFiller {
@@ -29,9 +31,7 @@ public class TeacherMenuFiller extends MenuFiller {
     private Label mainLabel;
     private Label textLabel;
     private Label secondTextLabel;
-    private Image nextModesImage;
-    private Image previsionModeImage;
-    private Image startButton;
+
 
     private int level;
 
@@ -41,7 +41,6 @@ public class TeacherMenuFiller extends MenuFiller {
 
     private boolean tasksShow;
 
-    private Image backButton;
     private Image help1;
     private Image help2;
     private Image help3;
@@ -84,11 +83,6 @@ public class TeacherMenuFiller extends MenuFiller {
         secondTextLabel = new Label(i18NGameThreeBundle.format("creditsScreen.text"),labelStyleSmall);
         secondTextLabel.setWrap(true);
 
-        nextModesImage = new Image(Assets.getInstance().getAssetGUI().getButtonRight());
-        previsionModeImage = new Image(assets.getAssetGUI().getButtonLeft());
-        startButton = new Image(assets.getAssetGUI().getButtonStart());
-        backButton  =new Image(new TextureRegionDrawable(assets.getAssetGUI().getButtonX()));
-
         help1 = new Image(assets.getAssetHelp().getHelp_block_fall());
         help2 = new Image(assets.getAssetHelp().getHelp_block_push());
         help3 = new Image(assets.getAssetHelp().getHelp_create_block_line());
@@ -97,39 +91,6 @@ public class TeacherMenuFiller extends MenuFiller {
 
     @Override
     protected void addAction() {
-        nextModesImage.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                scrollPane.setScrollY(scrollPane.getVisualScrollY() + 150);
-                scrollPane.updateVisualScroll();
-            }
-        }));
-
-        previsionModeImage.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                scrollPane.setScrollY(scrollPane.getVisualScrollY() - 150);
-                scrollPane.updateVisualScroll();
-
-            }
-        }));
-        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                if(tasksShow) {
-                    menuScreen.hideMenuScreen();
-                }else {
-                    tasksShow = true;
-                    addToTable();
-                }
-            }
-        }));
-        backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                menuScreen.hideMenuScreen();
-            }
-        }));
     }
 
     @Override
@@ -138,7 +99,8 @@ public class TeacherMenuFiller extends MenuFiller {
         if(DebugConstants.DEBUG_GUI){
             mainTable.debug();
         }
-        addBackButtonToTable(mainTable,backButton);
+        mainTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
+        mainTable.row();
         if(level >= 0) {
             addTitleToTable();
             addScrollPanelToMainTable();
@@ -199,15 +161,18 @@ public class TeacherMenuFiller extends MenuFiller {
     private void addFootTable(){
         Table moveArrowTable = new Table();
         mainTable.add(moveArrowTable).padBottom(20).padRight(50).padLeft(50).growX();
-        moveArrowTable.add(previsionModeImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
+        moveArrowTable.add(new ScrollArrowButtonLeft(scrollPane,150)).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
                 .padRight(50);
         moveArrowTable.add().growX();
-        moveArrowTable.add(startButton).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT);
+        moveArrowTable.add(new StartButton(menuScreen,this)).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT);
         moveArrowTable.add().growX();
-        moveArrowTable.add(nextModesImage).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
+        moveArrowTable.add(new ScrollArrowButtonRight(scrollPane,150)).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
                 .padLeft(50);
     }
-
+    public void tasksShow(){
+            tasksShow = true;
+            addToTable();
+    }
     private void addTile(){
         tile[0] = "Teaching";
         tile[1] = "The first obstacles";
@@ -301,5 +266,8 @@ public class TeacherMenuFiller extends MenuFiller {
 //        allTexts[9] = "Let's continue the lessons at height.\n" +
 //                "In this lesson, you do not need to erase the lines, just survive for a minute.";
 //         allTexts[10] = "Let's remember where we started, I think this level is familiar to you.";
+    }
+    public boolean getTasksBoolean(){
+        return  tasksShow;
     }
 }

@@ -21,9 +21,10 @@ import java.util.Iterator;
 public class Level {
      public static final int maxLevel = GameConstants.MAX_LEVEL;
      public static final FileHandle savedLevel = Gdx.files.local("saved_level.xml");
+     public static int currentLevel = -1;
 
 
-     private FileHandle currentLevel;
+     private FileHandle currentLevelXml;
      private XmlReader.Element xmlLevel;
      private ArrayList<ElementSaved> elementToSave;
      //d - default, f - fire, s - snow, dk - dark, l - light, s - star;
@@ -31,14 +32,15 @@ public class Level {
           elementToSave = new ArrayList<ElementSaved>();
           if(level >= 0) {
                if (Gdx.app.getType() == Application.ApplicationType.Android) {
-                    currentLevel = Gdx.files.internal("levels/" + level + ".xml");
+                    currentLevelXml = Gdx.files.internal("levels/" + level + ".xml");
                } else {
-                    currentLevel = Gdx.files.internal(System.getProperty("user.dir") + "/levels/" + level + ".xml"); // хак для desktop проекта, так как он почему-то не видел этих файлов. Создайте символическую ссылку папки assets в в корне desktop-проекта на папку assets android-проекта
+                    currentLevelXml = Gdx.files.internal(System.getProperty("user.dir") + "/levels/" + level + ".xml"); // хак для desktop проекта, так как он почему-то не видел этих файлов. Создайте символическую ссылку папки assets в в корне desktop-проекта на папку assets android-проекта
                }
           }else{
-               currentLevel = savedLevel;
+               currentLevelXml = savedLevel;
           }
-          xmlLevel = new XmlReader().parse(currentLevel);
+          xmlLevel = new XmlReader().parse(currentLevelXml);
+          currentLevel = getLevelNumber();
      }
      public int getLevelNumber(){
           return xmlLevel.getIntAttribute("number");

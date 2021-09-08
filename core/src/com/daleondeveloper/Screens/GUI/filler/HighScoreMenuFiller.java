@@ -1,16 +1,14 @@
 package com.daleondeveloper.Screens.GUI.filler;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUI.Button.BackButton;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
-import com.daleondeveloper.Screens.ListenerHelper;
 
 public class HighScoreMenuFiller extends MenuFiller  {
     private static final String TAG = SettingsMenuFiller.class.getName();
@@ -29,10 +27,6 @@ public class HighScoreMenuFiller extends MenuFiller  {
     private Label.LabelStyle labelStyleMedium;
 
     private int pageShow;
-
-    private Image backButton;
-    private Image nextScoreImage;
-    private Image previsionScoreImage;
 
     private Label highScoreLabel;
     private Label bestHighScoreLabel;
@@ -68,44 +62,10 @@ public class HighScoreMenuFiller extends MenuFiller  {
         highScoreLabel = new Label(i18NGameThreeBundle.format("highScoreScreen.title"), labelStyleMedium);
         modeNameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleMedium);
         bestHighScoreLabel = new Label(String.valueOf(prefs.getHighScoreClassic()), labelStyleBig);
-        backButton  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
-        nextScoreImage = new Image(assetGUI.getButtonLeft());
-        previsionScoreImage = new Image(assetGUI.getButtonRight());
     }
 
     @Override
     protected void addAction() {
-        backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                menuScreen.hideMenuScreen();
-            }
-        }));
-
-
-        nextScoreImage.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                if(pageShow < LAST_SCORE_PAGE){
-                    pageShow++;
-                }else{
-                    pageShow = 0;
-                }
-                changeScore();
-            }
-        }));
-
-        previsionScoreImage.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                if(pageShow > 0){
-                    pageShow--;
-                }else{
-                    pageShow = LAST_SCORE_PAGE;
-                }
-                changeScore();
-            }
-        }));
     }
 
     @Override
@@ -115,7 +75,7 @@ public class HighScoreMenuFiller extends MenuFiller  {
             mainTable.debug();
         }
         mainTable.top();
-        mainTable.add(backButton).height(15).width(15).right().padRight(30);
+        mainTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
         mainTable.row();
         // Додавання назви меню до таблиці
         Table labelTable = new Table();

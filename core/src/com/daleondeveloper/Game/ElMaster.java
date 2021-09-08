@@ -9,7 +9,6 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Ads.AdsController;
 import com.daleondeveloper.Game.Ads.AdsShower;
 import com.daleondeveloper.Game.Ads.AnaliticsController;
-import com.daleondeveloper.Game.Ads.AnaliticsGoogle;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
@@ -59,7 +58,6 @@ public class ElMaster extends DirectedGame {
 
 		}
 		new AdsShower(this);
-		new AnaliticsGoogle(this);
 		//Load preferences and settings
 		GameSettings.getInstance().loadSettings();
 

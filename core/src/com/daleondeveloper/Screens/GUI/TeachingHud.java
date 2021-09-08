@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.GUI;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
@@ -75,6 +76,9 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
 
     @Override
     public void build() {
+            if(Gdx.app.getType() == Application.ApplicationType.Android) {
+                game.getAnaliticsController().tutorialBegin(helpShowingCount);
+            }
         mainTable = new Table();
         topTable = new Table();
         centerTable = new Table();
@@ -210,11 +214,7 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                     thirdCondition = true;
                 }
             if (firstCondition && secondCondition && thirdCondition) {
-                helpShowingCount = 1;
-                stateTime = 0;
-                firstCondition = false;
-                secondCondition = false;
-                thirdCondition = false;
+               nextTutorial();
             }
             break;
             case 1 :
@@ -225,10 +225,7 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                     secondCondition = true;
                 }
                 if(firstCondition && secondCondition){
-                    helpShowingCount = 2;
-                    stateTime = 0;
-                    firstCondition = false;
-                    secondCondition = false;
+                   nextTutorial();
                 }
                 break;
             case 2:
@@ -239,22 +236,19 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                     firstCondition = true;
             }
             if(firstCondition){
-                helpShowingCount ++;
-                stateTime = 0;
-                firstCondition = false;
+                nextTutorial();
                 Gdx.input.getInputProcessor().keyDown(54);
                 break;
             }
+            break;
             case 3 :
                 if(stateTime > 5){
-                    stateTime = 0;
-                    helpShowingCount++;
+                    nextTutorial();
                 }
                 break;
             case 4:
                 if(playScreen.getGameWorld().getBlockController().getArrayBlock().get(0).isPush()){
-                    stateTime = 0;
-                    helpShowingCount++;
+                    nextTutorial();
                 }
                 break;
             case 5:
@@ -263,18 +257,15 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                     stateTime = 0;
                 }
                 if(playScreen.getHud().getScore() > 0){
-                    stateTime = 0;
-                    helpShowingCount++;
+                   nextTutorial();
                 }
             case 6:
                 if(stateTime > 10) {
-                    stateTime = 0;
-                    helpShowingCount++;
+                   nextTutorial();
                 }break;
             case 7:
                 if(stateTime > 10){
-                    stateTime = 0;
-                    helpShowingCount++;
+                    nextTutorial();
                     playScreen.showNextLvlMenu();
                 }
 
@@ -297,5 +288,18 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
 
     public void setVisible(boolean visible) {
         mainTable.setVisible(visible);
+    }
+    private void nextTutorial(){
+        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+            game.getAnaliticsController().tutorialEnd(helpShowingCount);
+        }
+            helpShowingCount++;
+            if(Gdx.app.getType() == Application.ApplicationType.Android) {
+                game.getAnaliticsController().tutorialBegin(helpShowingCount);
+            }
+            stateTime = 0;
+            firstCondition = false;
+            secondCondition = false;
+            thirdCondition = false;
     }
 }

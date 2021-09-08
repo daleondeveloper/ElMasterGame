@@ -10,6 +10,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
@@ -93,7 +94,7 @@ public class LevelCompleteMenuFiller extends MenuFiller {
             @Override
             public void run() {
                 GameSettings.getInstance().setSavedLevel("");
-                int nextLvl = GameSettings.getInstance().getLevel() + 1;
+                int nextLvl = Level.currentLevel + 1;
                 if(nextLvl < GameConstants.MAX_LEVEL){
                     GameSettings.getInstance().setLevel(nextLvl);
                     ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);

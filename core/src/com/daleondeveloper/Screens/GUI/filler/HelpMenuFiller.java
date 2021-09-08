@@ -1,17 +1,17 @@
 package com.daleondeveloper.Screens.GUI.filler;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
-import com.daleondeveloper.Game.DebugConstants;
+import com.daleondeveloper.Screens.GUI.Button.BackButton;
+import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonLeft;
+import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonRight;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
-import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.tools.GameConstants;
 
 public class HelpMenuFiller extends MenuFiller {
@@ -40,14 +40,14 @@ public class HelpMenuFiller extends MenuFiller {
     private HELP_TYPE_SHOW help_type_show;
     private int helpMenuShow;
 
-    private Image menuWindow;
-    private Image backButton;
-    private Image help;
+    private Image[] help;
     private Image nextHelp;
     private Image previsionHelp;
     private Image startButton;
 
     private Label helpLabel;
+
+    private ScrollPane scrollPane;
 
 
     public HelpMenuFiller(com.daleondeveloper.Screens.GUI.MenuScreen menuScreen){
@@ -67,12 +67,14 @@ public class HelpMenuFiller extends MenuFiller {
 
         this.help_type_show = help_type_show;
         helpMenuShow = 0;
+        help = new Image[3];
 
     }
     @Override
     public void build() {
         mainTable = menuScreen.getWindowTable();
         super.build();
+        defineElements();
 
     }
 
@@ -80,129 +82,56 @@ public class HelpMenuFiller extends MenuFiller {
     protected void defineElements() {
         helpLabel = new Label(i18NGameThreeBundle.format("helpScreen.title"), labelStyleMedium);
 
-        backButton  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
-
-        help = new Image(assetHelp.getHelp_block_fall());
+        help[0] = new Image(assetHelp.getHelp_block_fall());
+        help[1] = new Image(assetHelp.getHelp_block_push());
+        help[2] = new Image(assetHelp.getHelp_create_block_line());
         nextHelp = new Image(assetGUI.getButtonRight());
         previsionHelp = new Image(assetGUI.getButtonLeft());
         startButton = new Image(assetGUI.getButtonStart());
-        changeHelpImage();
     }
 
     @Override
     protected void addAction() {
-
-        backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                menuScreen.hideMenuScreen();
-            }
-        }));
-        nextHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                if(helpMenuShow < 3)helpMenuShow++;
-                changeHelpImage();
-            }
-        }));
-        previsionHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                if(helpMenuShow > 0)helpMenuShow--;
-                changeHelpImage();
-            }
-        }));
-        startButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                    menuScreen.hideMenuScreen();
-            }
-        }));
     }
 
     @Override
     protected void addToTable() {
         mainTable.clearChildren();
-        if(DebugConstants.DEBUG_GUI){
-            mainTable.debug();
-        }
-        mainTable.top();
-        mainTable.add(backButton).height(15).width(15).right().padRight(30);
-        mainTable.row();
+        addTitleToTable();
+        addScrollPanelToMainTable();
+        addFootTable();
+    }
+    private void addTitleToTable(){
         Table labelTable = new Table();
         mainTable.add(labelTable).growX();
         labelTable.add().growX();
         labelTable.add(helpLabel);
         labelTable.add().growX();
+        labelTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
+        labelTable.row();
         mainTable.row();
-        //Таблиця з зображенням
-        Table imageTable = new Table();
-        mainTable.add(imageTable).grow();
-        imageTable.add(help);
+
+    }
+    private void addScrollPanelToMainTable(){
+        Table textTable = new Table();
+        scrollPane = new ScrollPane(textTable);
+        scrollPane.setScrollingDisabled(true,false);
+        for(Image image : help) {
+            textTable.add(image);
+            textTable.row();
+        }
+        mainTable.add(scrollPane).growX().padRight(50).padLeft(50);
         mainTable.row();
-        //Таблиця з кнопками управлінням зображеннями допомоги
-        if(help_type_show == HELP_TYPE_SHOW.GAME_PLAYING){
-            Table moveArrowTable = new Table();
-            mainTable.add(moveArrowTable).padBottom(30).padRight(50).padLeft(50).growX();
-            moveArrowTable.add(previsionHelp).width(50).height(58).left();
-            moveArrowTable.add().growX();
-            moveArrowTable.add(startButton).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT);;
-            moveArrowTable.add().growX();
-            moveArrowTable.add(nextHelp).width(50).height(58).right();
-        }
     }
 
-    public void changeHelpImage() {
-
-        if(help_type_show == HELP_TYPE_SHOW.GAME_PLAYING) {
-            switch (helpMenuShow) {
-                case 0:
-                    ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_block_fall()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(false);
-                    break;
-                case 1:
-                    ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_block_push()));
-                    nextHelp.setVisible(true);
-                    previsionHelp.setVisible(true);
-                    break;
-                case 2:
-                    ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_create_block_line()));
-                    nextHelp.setVisible(false);
-                    previsionHelp.setVisible(true);
-                    break;
-            }
-            return;
-        }
-
-        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_LIGHT_INFO) {
-            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_light_mode()));
-            return;
-        }
-        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_SNOW_INFO) {
-            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_snow_mode()));
-            return;
-        }
-        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_FIRE_INFO) {
-            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_fire_mode()));
-            return;
-        }
-        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_DARK_INFO) {
-            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_dark_mode()));
-            return;
-        }
-        if(help_type_show == HELP_TYPE_SHOW.GAME_MODE_SPECIAL_INFO) {
-            ((Image) help).setDrawable(new TextureRegionDrawable((TextureRegion) assetHelp.getHelp_special_mode()));
-            return;
-        }
-
+    private void addFootTable(){
+        Table moveArrowTable = new Table();
+        mainTable.add(moveArrowTable).padBottom(20).padRight(50).padLeft(50).growX();
+        moveArrowTable.add(new ScrollArrowButtonLeft(scrollPane, 50)).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).left()
+                .padRight(50);
+        moveArrowTable.add().growX();
+        moveArrowTable.add(new ScrollArrowButtonRight(scrollPane,50)).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
+                .padLeft(50);
     }
 
-    public HELP_TYPE_SHOW getHelp_type_show() {
-        return help_type_show;
-    }
-
-    public void setHelp_type_show(HELP_TYPE_SHOW help_type_show) {
-        this.help_type_show = help_type_show;
-    }
 }

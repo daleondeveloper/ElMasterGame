@@ -1,19 +1,15 @@
 package com.daleondeveloper.Screens.GUI.filler;
 
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
-import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Screens.ListenerHelper;
-import com.daleondeveloper.Screens.ScreenEnum;
-import com.daleondeveloper.Screens.ScreenManager;
-import com.daleondeveloper.Screens.ScreenTransitionEnum;
+import com.daleondeveloper.Screens.GUI.Button.BackButton;
+import com.daleondeveloper.Screens.GUI.Button.MainMenuTextButton;
+import com.daleondeveloper.Screens.GUI.Button.RestartTextButton;
+import com.daleondeveloper.Screens.GUI.Button.SettingsTextButton;
 import com.daleondeveloper.tools.GameConstants;
 
 /**
@@ -31,10 +27,6 @@ public class PauseMenuFiller extends MenuFiller {
 
     private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
-    private ImageTextButton restartButton;
-    private ImageTextButton mainMenuButton;
-    private ImageTextButton settingsButton;
-    private ImageButton backButton;
 
     private Label pauseLabel;
 
@@ -61,51 +53,9 @@ public class PauseMenuFiller extends MenuFiller {
     protected void defineElements() {
         // Title
         pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleMedium);
-        TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
-        restartButton = new ImageTextButton("Restart",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-        ));
-        mainMenuButton = new ImageTextButton("MainMenu",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-        ));
-//        textureRegion.setRegionHeight(50);
-        settingsButton = new ImageTextButton("Settings",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion,textureRegion, textureRegion, assets.getAssetFonts().getSmall()
-        ));
-        backButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonX()));
-
-        // Events
-
-
-
-
     }
     @Override
     protected void addAction(){
-        mainMenuButton.addListener(
-                ListenerHelper.screenNavigationListener(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK));
-
-        settingsButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                menuScreen.setSettingsScreen();
-            }
-        }));
-
-        restartButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
-            @Override
-            public void run() {
-                GameSettings.getInstance().setSavedLevel("");
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_BLACK);
-
-            }
-        }));
-        backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                menuScreen.hideMenuScreen();
-            }
-        }));
     }
     @Override
     protected void addToTable(){
@@ -115,7 +65,7 @@ public class PauseMenuFiller extends MenuFiller {
         }
         mainTable.columnDefaults(0);
         Table labelTable = new Table();
-        mainTable.add(backButton).height(15).width(15).right().padRight(30);
+        mainTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
         mainTable.row();
         mainTable.add(labelTable);
         labelTable.add().grow();
@@ -125,11 +75,11 @@ public class PauseMenuFiller extends MenuFiller {
         Table buttonTable = new Table();
         mainTable.add(buttonTable).grow().padBottom(30);
         buttonTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
-        buttonTable.add(mainMenuButton);
+        buttonTable.add(new MainMenuTextButton());
         buttonTable.row();
-        buttonTable.add(restartButton);
+        buttonTable.add(new RestartTextButton());
         buttonTable.row();
-        buttonTable.add(settingsButton);
+        buttonTable.add(new SettingsTextButton(menuScreen));
         mainTable.row();
     }
 

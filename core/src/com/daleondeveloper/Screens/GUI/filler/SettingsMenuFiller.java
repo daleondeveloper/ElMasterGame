@@ -1,16 +1,13 @@
 package com.daleondeveloper.Screens.GUI.filler;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.I18NBundle;
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
+import com.daleondeveloper.Screens.GUI.Button.BackButton;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
-import com.daleondeveloper.Screens.ListenerHelper;
-import com.daleondeveloper.Screens.Play.MainMenuScreen;
 
 public class SettingsMenuFiller extends MenuFiller{
     private static final String TAG = SettingsMenuFiller.class.getName();
@@ -23,8 +20,6 @@ public class SettingsMenuFiller extends MenuFiller{
 
     private Label.LabelStyle labelStyleMedium;
     private Label.LabelStyle labelStyleSmall;
-
-    private Image backButton;
 
     private Label settingsLabel;
 
@@ -50,22 +45,10 @@ public class SettingsMenuFiller extends MenuFiller{
     @Override
     protected void defineElements() {
         settingsLabel = new Label(i18NGameThreeBundle.format("settingsScreen.title"), labelStyleMedium);
-
-        backButton  =new Image(new TextureRegionDrawable(assetGUI.getButtonX()));
     }
 
     @Override
     protected void addAction() {
-        backButton.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                if(menuScreen.getGuiAbstractScreen() instanceof MainMenuScreen){
-                    menuScreen.hideMenuScreen();
-                }else {
-                    menuScreen.setPauseScreen();
-                }
-            }
-        }));
     }
 
     @Override
@@ -75,7 +58,7 @@ public class SettingsMenuFiller extends MenuFiller{
             mainTable.debug();
         }
         mainTable.top();
-        mainTable.add(backButton).height(15).width(15).right().padRight(30);
+        mainTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
         mainTable.row();
         Table labelTable = new Table();
         mainTable.add(labelTable).growX();
