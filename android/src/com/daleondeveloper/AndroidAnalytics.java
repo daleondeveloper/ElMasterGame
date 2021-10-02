@@ -22,7 +22,7 @@ public class AndroidAnalytics implements AnaliticsController {
     @Override
     public void tutorialEnd(int tutorialStage) {
         Bundle bundle = new Bundle();
-        bundle.putInt(FirebaseAnalytics.Param.VALUE, tutorialStage);
+        bundle.putInt(FirebaseAnalytics.Param.LEVEL, tutorialStage);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.TUTORIAL_COMPLETE, bundle);
     }
 

@@ -31,9 +31,9 @@ android {
         applicationId "com.daleondeveloper"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 14
+        versionCode 17
         versionName '1.11'
-        versionNameSuffix 'd-beta'
+        versionNameSuffix 'f-beta'
     }
     buildTypes {
         release {

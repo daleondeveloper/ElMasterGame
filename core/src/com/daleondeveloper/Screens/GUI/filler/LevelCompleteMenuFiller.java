@@ -93,7 +93,7 @@ public class LevelCompleteMenuFiller extends MenuFiller {
         nextLvl.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                GameSettings.getInstance().setSavedLevel("");
+                Level.savedLevel.delete();
                 int nextLvl = Level.currentLevel + 1;
                 if(nextLvl < GameConstants.MAX_LEVEL){
                     GameSettings.getInstance().setLevel(nextLvl);

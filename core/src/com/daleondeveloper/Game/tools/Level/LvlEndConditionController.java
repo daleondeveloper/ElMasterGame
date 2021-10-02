@@ -28,6 +28,9 @@ public class LvlEndConditionController implements ElementSaved {
             lvlCondition.update(deltaTime);
         }
     }
+    public void cleatTasks(){
+        conditions.clear();
+    }
 
     @Override
     public String save() {

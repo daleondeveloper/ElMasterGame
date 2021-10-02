@@ -102,7 +102,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         scrollPane.setScrollingDisabled(true,false);
         mainTable.add(scrollPane);
         gameModeTable.defaults().pad(10).padLeft(10).padRight(10).width(GameConstants.BUTTON_WIDTH/8).height(GameConstants.BUTTON_HEIGHT).center();
-        int level = prefs.getHighCompletedLvl();
+        int level = prefs.getHighCompletedLvl() + 1;
         if(level > GameConstants.MAX_LEVEL){
             level = GameConstants.MAX_LEVEL;
         }

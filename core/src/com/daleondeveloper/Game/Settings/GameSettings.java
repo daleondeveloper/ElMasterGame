@@ -181,14 +181,6 @@ public class GameSettings {
         this.highCompletedLvl = highCompletedLvl;
     }
 
-    public void setSavedLevel(String savedLevel) {
-        this.savedLevel = savedLevel;
-    }
-
-    public String getSavedLevel() {
-        return savedLevel;
-    }
-
     public boolean isInfinityLvl() {
         return infinityLvl;
     }

@@ -1,7 +1,8 @@
-<level number = "5" score = "0">
+<level number = "5" score = "200">
     <blockSpawner type = "classic" value = "3"/>
-    <blockSpawner type = "dark" value = "8"/>
-    <blockSpawner type = "fire" value = "12"/>
-    <hero positionX = "5" posotionY = "0"/>
-    <levelTasks type = "score" value = "500"/>
+    <blockSpawner type = "dark" value = "7"/>
+    <blockSpawner type = "light" value = "15"/>
+    <blockSpawner type = "light" value = "15"/>
+    <hero positionX = "5" positionY = "0"/>
+    <levelTasks type = "score" value = "250"/>
 </level>

@@ -126,6 +126,9 @@ public class BlockController implements ElementSaved {
             blockSpawners.add(blockSpawner);
         }
     }
+    public void cleatBlockSpawner(){
+            blockSpawners.clear();
+    }
     public List<Block> getArrayBlock() {
         return arrayBlock;
     }

@@ -123,7 +123,7 @@ public class GameWorld {
         !gameSettings.isInfinityLvl()){
             completeLvlTime += deltaTime;
                     if(completeLvlTime > 2) {
-                        playScreen.showNextLvlMenu();
+                       level = nextLvl(level);
                     }
         }
         this.gameCamera.update(deltaTime);
@@ -133,6 +133,15 @@ public class GameWorld {
             timeToSave = TIME_TO_SAVE;
         }
 
+    }
+    private int nextLvl(int lvl){
+
+        levelGenerator = new Level(++lvl);
+        blockController.cleatBlockSpawner();
+        levelGenerator.getBlockSpawner(blockController);
+        lvlEndConditionController.cleatTasks();
+        levelGenerator.getLevelTasks(lvlEndConditionController,blockController);
+        return lvl;
     }
     public void render(SpriteBatch batch) {
         // This order is important.
