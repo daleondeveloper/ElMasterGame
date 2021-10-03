@@ -9,13 +9,13 @@ import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
 import com.daleondeveloper.Screens.ScreenTransitionEnum;
 
-public class NewGameTextButton extends GameTextButton {
+public class TutorialTextButton extends GameTextButton {
 
     private GameSettings gameSettings;
     private MenuScreen menuScreen;
 
-    public NewGameTextButton(MenuScreen menuScreen) {
-        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("menu.newGame"));
+    public TutorialTextButton(MenuScreen menuScreen) {
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("menu.tutorial"));
         gameSettings = GameSettings.getInstance();
         this.menuScreen = menuScreen;
     }
@@ -30,7 +30,7 @@ public class NewGameTextButton extends GameTextButton {
         this.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                gameSettings.setLevel(1);
+                gameSettings.setLevel(0);
                 gameSettings.setAdsContinueCount(1);
                 Level.savedLevel.delete();
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);

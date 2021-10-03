@@ -123,14 +123,14 @@ public class Hud extends GUIOverlayAbstractScreen {
         gameButtonJump = new Image(new TextureRegionDrawable(assetGUI.getButtonJump()));
         gameButtonPush = new Image(new TextureRegionDrawable(assetGUI.getButtonPush()));
 
-        pauseButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
-            @Override
-            public void run() {
-                GameSettings.getInstance().saveSetting();
-                playScreen.setStatePaused();
-                startButton.setVisible(true);
-            }
-        }));
+            pauseButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+                @Override
+                public void run() {
+                    GameSettings.getInstance().saveSetting();
+                    playScreen.setStatePaused();
+                    startButton.setVisible(true);
+                }
+            }));
         startButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {

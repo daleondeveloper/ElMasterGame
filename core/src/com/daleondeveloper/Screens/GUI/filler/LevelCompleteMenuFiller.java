@@ -138,8 +138,6 @@ public class LevelCompleteMenuFiller extends MenuFiller {
         buttonTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();
         buttonTable.add(mainMenuButton);
         buttonTable.row();
-        buttonTable.add(infinityLvl);
-        buttonTable.row();
         buttonTable.add(nextLvl);
         mainTable.row();
     }

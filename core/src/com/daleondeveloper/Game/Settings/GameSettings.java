@@ -44,7 +44,7 @@ public class GameSettings {
         push_button_show = false;
         helpModeShow = new boolean[7];
         level = 0;
-        highCompletedLvl = 0;
+        highCompletedLvl = 1;
         infinityLvl = false;
         adsContinueCount = 1;
     }

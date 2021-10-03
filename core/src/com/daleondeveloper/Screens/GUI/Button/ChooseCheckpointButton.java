@@ -1,21 +1,17 @@
 package com.daleondeveloper.Screens.GUI.Button;
 
-import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
-import com.daleondeveloper.Screens.ScreenEnum;
-import com.daleondeveloper.Screens.ScreenManager;
-import com.daleondeveloper.Screens.ScreenTransitionEnum;
 
-public class NewGameTextButton extends GameTextButton {
+public class ChooseCheckpointButton extends GameTextButton {
 
     private GameSettings gameSettings;
     private MenuScreen menuScreen;
 
-    public NewGameTextButton(MenuScreen menuScreen) {
-        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("menu.newGame"));
+    public ChooseCheckpointButton(MenuScreen menuScreen) {
+        super("CHOOSE CHECKPOINT");
         gameSettings = GameSettings.getInstance();
         this.menuScreen = menuScreen;
     }
@@ -30,10 +26,9 @@ public class NewGameTextButton extends GameTextButton {
         this.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                gameSettings.setLevel(1);
-                gameSettings.setAdsContinueCount(1);
+                gameSettings.setInfinityLvl(false);
                 Level.savedLevel.delete();
-                ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
+                menuScreen.setGameModeChangeScreen();
             }
         }));
     }

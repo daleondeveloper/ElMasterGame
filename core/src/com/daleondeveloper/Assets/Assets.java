@@ -158,7 +158,7 @@ public class Assets implements Disposable,AssetErrorListener {
 
 
     private void loadI18NElementMaster(){
-        assetManager.load("i18n/I18NGameFourBundle", I18NBundle.class);
+        assetManager.load("i18n/I18NElMasterBundle", I18NBundle.class);
     }
 
     private void loadTextureAtlas(){

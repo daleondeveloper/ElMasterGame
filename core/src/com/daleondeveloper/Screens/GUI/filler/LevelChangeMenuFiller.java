@@ -10,11 +10,13 @@ import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.GUI.Button.BackButton;
+import com.daleondeveloper.Screens.GUI.Button.ChooseCheckpointButton;
 import com.daleondeveloper.Screens.GUI.Button.ContinueTextButton;
 import com.daleondeveloper.Screens.GUI.Button.LevelButton;
 import com.daleondeveloper.Screens.GUI.Button.NewGameTextButton;
 import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonLeft;
 import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonRight;
+import com.daleondeveloper.Screens.GUI.Button.TutorialTextButton;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.tools.GameConstants;
 
@@ -106,7 +108,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         if(level > GameConstants.MAX_LEVEL){
             level = GameConstants.MAX_LEVEL;
         }
-        for(int i = 0, j = 0 ; i < level; i++, j++){
+        for(int i = 1, j = 0 ; i < level; i++, j++){
             gameModeTable.add(new LevelButton(i));
             if(j == 5) {
                 j = -1;
@@ -130,6 +132,10 @@ public class LevelChangeMenuFiller extends MenuFiller {
         continueGameTable.add(new ContinueTextButton()).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
         continueGameTable.row();
         continueGameTable.add(new NewGameTextButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
+        continueGameTable.row();
+        continueGameTable.add(new ChooseCheckpointButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
+        continueGameTable.row();
+        continueGameTable.add(new TutorialTextButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
 
     }
 }

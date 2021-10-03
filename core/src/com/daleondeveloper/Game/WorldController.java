@@ -98,6 +98,7 @@ public class WorldController implements Disposable {
          * */
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(playScreen.getHud().getInputProcessor()); // InfoScreen also receives events (pause button)
+        multiplexer.addProcessor(playScreen.getTeachingHud().getInputProcessor()); // InfoScreen also receives events (pause button)
         multiplexer.addProcessor(new GestureDetector(gameController)); // Detects gestures (tap, long press, fling, pan, zoom, pinch)
         multiplexer.addProcessor(gameController); // User input handler
         return multiplexer;

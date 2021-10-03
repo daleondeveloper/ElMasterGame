@@ -9,7 +9,7 @@ public class AssetI18NElementMaster {
     private I18NBundle i18NElmasterBundle;
 
     public AssetI18NElementMaster(AssetManager assetManager){
-        i18NElmasterBundle = assetManager.get("i18n/I18NGameFourBundle", I18NBundle.class);
+        i18NElmasterBundle = assetManager.get("i18n/I18NElMasterBundle", I18NBundle.class);
     }
 
     public I18NBundle getI18NElmasterBundle() {

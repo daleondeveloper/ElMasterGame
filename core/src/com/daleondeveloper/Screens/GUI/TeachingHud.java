@@ -14,6 +14,7 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
+import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 
 //Екран відповідає за відображення панелі упарвління персонажем
@@ -23,6 +24,8 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
 
     private static final float PAD_BOTTOM = 800.0f;
     private static final int AVERAGE_SCORE = 8;
+    private static final int LAST_TUTORIAL = 7;
+
 
     private PlayScreen playScreen;
     private I18NBundle i18NGameThreeBundle;
@@ -39,6 +42,7 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
     private Table bottomTable;
 
     private ImageTextButton helpScreen;
+    private ImageTextButton skipButton;
     private Image helpButtonRight;
     private Image helpButtonLeft;
     private Image helpButtonUp;
@@ -114,14 +118,32 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
         helpScreen = new ImageTextButton("Restart",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, Assets.getInstance().getAssetFonts().getSmall()
         ));
+        textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
+         skipButton = new ImageTextButton("nextTutorial",new ImageTextButton.ImageTextButtonStyle(
+                textureRegion, textureRegion, textureRegion, Assets.getInstance().getAssetFonts().getSmall()
+        ));
+
         helpButtonRight = new Image(new TextureRegionDrawable(assetGUI.getButtonRight()));
         helpButtonLeft = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
         helpButtonUp = new Image(new TextureRegionDrawable(assetGUI.getButtonLeft()));
         helpButtonUp.rotateBy(270);
+
+        skipButton.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
+            @Override
+            public void run() {
+                if(helpShowingCount - 2 < LAST_TUTORIAL)
+                    nextTutorial();
+            }
+        }));
+
     }
 
     private void updateTopTable() {
         topTable.clearChildren();
+        topTable.add().growX();
+        topTable.add(skipButton).width(200).height(50);
+        topTable.add().growX();
+        topTable.row();
         switch (helpShowingCount){
             case 2 :
                 topTable.add().growX();
@@ -242,13 +264,17 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
             }
             break;
             case 3 :
-                if(stateTime > 5){
+                if(stateTime > 3){
                     nextTutorial();
                 }
                 break;
             case 4:
-                if(playScreen.getGameWorld().getBlockController().getArrayBlock().get(0).isPush()){
+                if(!playScreen.getGameWorld().getBlockController().getArrayBlock().isEmpty() &&
+                        playScreen.getGameWorld().getBlockController().getArrayBlock().get(0).isPush()){
                     nextTutorial();
+                }else if ((playScreen.getGameWorld().getBlockController().getArrayBlock().isEmpty())){
+                    Gdx.input.getInputProcessor().keyDown(54);
+
                 }
                 break;
             case 5:
@@ -260,11 +286,11 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                    nextTutorial();
                 }
             case 6:
-                if(stateTime > 10) {
+                if(stateTime > 3) {
                    nextTutorial();
                 }break;
             case 7:
-                if(stateTime > 10){
+                if(stateTime > 3){
                     nextTutorial();
                     playScreen.showNextLvlMenu();
                 }

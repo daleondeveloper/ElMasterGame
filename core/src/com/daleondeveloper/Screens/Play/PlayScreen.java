@@ -254,6 +254,10 @@ public class PlayScreen extends GUIAbstractScreen {
         return menuScreen;
     }
 
+    public TeachingHud getTeachingHud() {
+        return teachingHud;
+    }
+
     public GameWorld getGameWorld() {
         return gameWorld;
     }
