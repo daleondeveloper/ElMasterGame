@@ -8,15 +8,10 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.GUI.Button.BackButton;
-import com.daleondeveloper.Screens.GUI.Button.ChooseCheckpointButton;
-import com.daleondeveloper.Screens.GUI.Button.ContinueTextButton;
 import com.daleondeveloper.Screens.GUI.Button.LevelButton;
-import com.daleondeveloper.Screens.GUI.Button.NewGameTextButton;
 import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonLeft;
 import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonRight;
-import com.daleondeveloper.Screens.GUI.Button.TutorialTextButton;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.tools.GameConstants;
 
@@ -89,13 +84,7 @@ public class LevelChangeMenuFiller extends MenuFiller {
         labelTable.add(gameModeChangeTitleLabel);
         labelTable.add().growX();
         mainTable.row();
-        if(Level.savedLevel.exists()){
-            continueGamePanel();
-        }else{
             chooseModePanel();
-        }
-
-
     }
     private void chooseModePanel(){
         // Таблиця вибору режиму гри
@@ -125,17 +114,5 @@ public class LevelChangeMenuFiller extends MenuFiller {
         moveArrowTable.add().growX();
         moveArrowTable.add(new ScrollArrowButtonRight(scrollPane, 189)).width(GameConstants.BUTTON_ARROW_WIDTH).height(GameConstants.BUTTON_ARROW_HEIGHT).right()
         .padLeft(50);
-    }
-    private void continueGamePanel(){
-        Table continueGameTable = new Table();
-        mainTable.add(continueGameTable).grow().padBottom(40);
-        continueGameTable.add(new ContinueTextButton()).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
-        continueGameTable.row();
-        continueGameTable.add(new NewGameTextButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
-        continueGameTable.row();
-        continueGameTable.add(new ChooseCheckpointButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
-        continueGameTable.row();
-        continueGameTable.add(new TutorialTextButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
-
     }
 }

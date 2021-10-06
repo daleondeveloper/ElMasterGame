@@ -19,6 +19,7 @@ import com.daleondeveloper.Screens.GUI.filler.HighScoreMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.LevelChangeMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.LevelCompleteMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.MenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.NewGameMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.SettingsMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.TeacherMenuFiller;
@@ -37,7 +38,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
     public enum MenuState{
         CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE,LVLCOMPLETE, GAME_OVER,
-        TEACHER_MENU;
+        TEACHER_MENU,NEW_GAME;
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -57,6 +58,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private MenuFiller gameModeChangeMenuFiller;
     private MenuFiller lvlCompleteMF;
     private GameOverFiller gameOverFiller;
+    private NewGameMenuFiller newGameMenuFiller;
 
     private Image screenBg;
     private Image pauseWindow;
@@ -82,6 +84,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         gameModeChangeMenuFiller = new LevelChangeMenuFiller(this);
         lvlCompleteMF = new LevelCompleteMenuFiller(this);
         gameOverFiller = new GameOverFiller(this);
+        newGameMenuFiller = new NewGameMenuFiller(this);
 
         menuState = MenuState.CLOSE;
     }
@@ -232,6 +235,12 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     public void setGameModeChangeScreen(){
         menuState = MenuState.GAMEMODECHOOSE;
         gameModeChangeMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+
+    }
+    public void setNewGameMenuFiller(){
+        menuState = MenuState.NEW_GAME;
+        newGameMenuFiller.build();
         Gdx.input.setInputProcessor(stage);
 
     }

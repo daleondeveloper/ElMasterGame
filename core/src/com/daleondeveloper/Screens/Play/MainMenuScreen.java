@@ -18,8 +18,8 @@ import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
-import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
+import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -260,7 +260,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
             @Override
             public void run() {
                 setStatePaused();
-                menuScreen.setGameModeChangeScreen();
+                menuScreen.setNewGameMenuFiller();
             }
         }));
         buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {

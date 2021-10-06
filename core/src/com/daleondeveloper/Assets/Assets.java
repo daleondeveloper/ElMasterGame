@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -22,6 +23,8 @@ import com.daleondeveloper.Assets.game.AssetHero;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Assets.help.AssetHelp;
 import com.daleondeveloper.Assets.i18n.AssetI18NElementMaster;
+
+import java.util.Locale;
 
 public class Assets implements Disposable,AssetErrorListener {
     private static final String TAG = Assets.class.getName();
@@ -158,7 +161,9 @@ public class Assets implements Disposable,AssetErrorListener {
 
 
     private void loadI18NElementMaster(){
-        assetManager.load("i18n/I18NElMasterBundle", I18NBundle.class);
+        I18NBundleLoader.I18NBundleParameter parameter = new I18NBundleLoader.I18NBundleParameter(new Locale("ru","RU"),"UTF-8");
+        assetManager.load("i18n/I18NElMasterBundle", I18NBundle.class,parameter);
+
     }
 
     private void loadTextureAtlas(){

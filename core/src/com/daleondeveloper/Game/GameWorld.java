@@ -135,13 +135,15 @@ public class GameWorld {
 
     }
     private int nextLvl(int lvl){
+        if(lvl < Level.maxLevel) {
+            levelGenerator = new Level(++lvl);
+            blockController.cleatBlockSpawner();
+            levelGenerator.getBlockSpawner(blockController);
+            lvlEndConditionController.cleatTasks();
+            levelGenerator.getLevelTasks(lvlEndConditionController, blockController);
+        }
+            return lvl;
 
-        levelGenerator = new Level(++lvl);
-        blockController.cleatBlockSpawner();
-        levelGenerator.getBlockSpawner(blockController);
-        lvlEndConditionController.cleatTasks();
-        levelGenerator.getLevelTasks(lvlEndConditionController,blockController);
-        return lvl;
     }
     public void render(SpriteBatch batch) {
         // This order is important.
