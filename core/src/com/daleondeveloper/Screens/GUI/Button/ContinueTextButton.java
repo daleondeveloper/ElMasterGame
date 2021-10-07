@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.GUI.Button;
 
+import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
@@ -11,7 +12,7 @@ public class ContinueTextButton extends GameTextButton {
     private GameSettings gameSettings;
 
     public ContinueTextButton() {
-        super("Continue");
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("button.continue"));
         gameSettings = GameSettings.getInstance();
     }
 

@@ -27,8 +27,8 @@ public class GameOverFiller extends MenuFiller{
     private int bestScore;
     private int playerScore;
 
-    private Label.LabelStyle labelStyleMedium;
-    private Label.LabelStyle labelStyleSmall;
+    private Label.LabelStyle labelStyleTitle;
+    private Label.LabelStyle labelStyleNormal;
 
     private Label gameOverLabel;
     private Label playerScoreLabel;
@@ -41,10 +41,10 @@ public class GameOverFiller extends MenuFiller{
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
-        labelStyleSmall = new Label.LabelStyle();
-        labelStyleSmall.font = assets.getAssetFonts().getSmall();
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
+        labelStyleNormal = new Label.LabelStyle();
+        labelStyleNormal.font = assets.getAssetFonts().getNormal();
 
        // menuType = MenuScreen.MenuState.GAME_OVER;
     }
@@ -58,9 +58,9 @@ public class GameOverFiller extends MenuFiller{
     @Override
     protected void defineElements() {
         updateScore();
-        gameOverLabel = new Label("GAME OVER", labelStyleMedium);
-            bestScoreLabel = new Label("Best Score : " + bestScore, labelStyleMedium);
-        playerScoreLabel = new Label("Score : " + playerScore,labelStyleMedium);
+        gameOverLabel = new Label(i18NGameThreeBundle.format("title.gameOver"), labelStyleTitle);
+            bestScoreLabel = new Label("Best Score : " + bestScore, labelStyleNormal);
+        playerScoreLabel = new Label("Score : " + playerScore, labelStyleNormal);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class GameOverFiller extends MenuFiller{
         Table scoreTable = new Table();
         mainTable.add(scoreTable).grow();
         if(bestScore < playerScore){
-            bestScoreLabel = new Label("New Best Score : " + playerScore + " !!!!!!",labelStyleMedium);
+            bestScoreLabel = new Label("New Best Score : " + playerScore + " !!!!!!", labelStyleTitle);
 
         } else {
             scoreTable.add(playerScoreLabel);

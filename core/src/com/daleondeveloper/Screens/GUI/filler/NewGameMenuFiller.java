@@ -33,7 +33,7 @@ public class NewGameMenuFiller extends MenuFiller {
     private int pageShow;
 
     private ScrollPane scrollPane;
-    private Label.LabelStyle labelStyleMedium;
+    private Label.LabelStyle labelStyleTitle;
     private Label.LabelStyle labelStyleSmall;
     private Label gameModeChangeTitleLabel;
 
@@ -46,8 +46,8 @@ public class NewGameMenuFiller extends MenuFiller {
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
@@ -63,7 +63,7 @@ public class NewGameMenuFiller extends MenuFiller {
     @Override
     protected void defineElements() {
         // Title
-        gameModeChangeTitleLabel = new Label("ГОЛОВНЕ МЕНЮ", labelStyleMedium);
+        gameModeChangeTitleLabel = new Label(i18NGameThreeBundle.format("title.mainMenu"), labelStyleTitle);
     }
 
     @Override

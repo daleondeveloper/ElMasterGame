@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.GUI.Button;
 
+import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -12,7 +13,7 @@ public class MainMenuTextButton extends GameTextButton {
     private GameSettings gameSettings;
 
     public MainMenuTextButton() {
-        super("MainMenu");
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("button.mainMenu"));
         gameSettings = GameSettings.getInstance();
     }
 

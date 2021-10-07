@@ -146,30 +146,16 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
         topTable.row();
         switch (helpShowingCount){
             case 2 :
-                topTable.add().growX();
-                topTable.add(helpScreen).width(350).height(150).padTop(50);
-                helpScreen.setText("Use move button and \njump button to do diagonal \njumping");
-                topTable.add().growX();
-                break;
             case 4 :
-                topTable.add().growX();
-                topTable.add(helpScreen).width(350).height(150).padTop(50);
-                helpScreen.setText("Try to push block. \n" +
-                        "Press push button and \nthen move button to push");
-                topTable.add().growX();
-                break;
             case 5 :
                 topTable.add().growX();
                 topTable.add(helpScreen).width(350).height(150).padTop(50);
-                helpScreen.setText("Now try to create \n" +
-                        "a block line ");
                 topTable.add().growX();
                 break;
+
             case 7:
                 topTable.add().growX();
                 topTable.add(helpScreen).width(420).height(150).padTop(50);
-                helpScreen.setText("Excellent !!!\n" +
-                        "Now you can continue your journey");
                 topTable.add().growX();
                 break;
         }
@@ -185,7 +171,6 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
         switch (helpShowingCount){
             case 0 :
                 bottomTable.add(helpScreen).width(200).height(250);
-                helpScreen.setText("Press this \n button \nto move");
                 bottomTable.add(helpButtonRight).width(50).height(50).padLeft(-15);
                 bottomTable.add().growX();
                 bottomTable.add().growX();
@@ -195,13 +180,11 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                 bottomTable.add().growX();
                 bottomTable.add(helpButtonLeft).width(50).height(50).padRight(-15).padBottom(50);
                 bottomTable.add(helpScreen).width(200).height(250);
-                helpScreen.setText("Press this \n button \n to jump");
                 break;
             case 3:
                 bottomTable.add().growX();
                 bottomTable.add(helpButtonLeft).width(50).height(50).padTop(130);
                 bottomTable.add(helpScreen).width(200).height(250);
-                helpScreen.setText("Press this\n button \n to push block");
                 bottomTable.add().growX();
                 break;
             case 6 :
@@ -211,7 +194,6 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
                 bottomTable.row();
                 bottomTable.add().growX();
                 bottomTable.add(helpScreen).width(400).height(200);
-                helpScreen.setText("When block line create score up");
                 bottomTable.add().growX();
                 break;
         }
@@ -224,6 +206,7 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
         updateTopTable();
         updateCenterTable();
         updateBottomTable();
+        if(helpShowingCount < 8)helpScreen.setText(i18NGameThreeBundle.format("tutorial.text" + helpShowingCount));
         switch (helpShowingCount) {
             case 0:
                 if(playScreen.getHud().isButtonLeftPressed()){

@@ -25,7 +25,7 @@ public class PauseMenuFiller extends MenuFiller {
     private I18NBundle i18NGameThreeBundle;
     private Table mainTable;
 
-    private Label.LabelStyle labelStyleMedium;
+    private Label.LabelStyle labelStyleTitle;
     private Label.LabelStyle labelStyleSmall;
 
     private Label pauseLabel;
@@ -38,8 +38,8 @@ public class PauseMenuFiller extends MenuFiller {
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
@@ -52,7 +52,7 @@ public class PauseMenuFiller extends MenuFiller {
     @Override
     protected void defineElements() {
         // Title
-        pauseLabel = new Label(i18NGameThreeBundle.format("pauseScreen.title"), labelStyleMedium);
+        pauseLabel = new Label(i18NGameThreeBundle.format("title.pause"), labelStyleTitle);
     }
     @Override
     protected void addAction(){

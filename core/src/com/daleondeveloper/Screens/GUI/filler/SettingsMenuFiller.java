@@ -19,7 +19,7 @@ public class SettingsMenuFiller extends MenuFiller{
     private Table mainTable;
 
     private Label.LabelStyle labelStyleMedium;
-    private Label.LabelStyle labelStyleSmall;
+    private Label.LabelStyle labelStyleTitle;
 
     private Label settingsLabel;
 
@@ -30,9 +30,9 @@ public class SettingsMenuFiller extends MenuFiller{
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
         labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
-        labelStyleSmall = new Label.LabelStyle();
-        labelStyleSmall.font = assets.getAssetFonts().getSmall();
+        labelStyleMedium.font = assets.getAssetFonts().getGameTitle();
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
 
     }
 
@@ -44,7 +44,7 @@ public class SettingsMenuFiller extends MenuFiller{
     }
     @Override
     protected void defineElements() {
-        settingsLabel = new Label(i18NGameThreeBundle.format("settingsScreen.title"), labelStyleMedium);
+        settingsLabel = new Label(i18NGameThreeBundle.format("title.settings"), labelStyleMedium);
     }
 
     @Override

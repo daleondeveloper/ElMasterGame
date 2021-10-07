@@ -34,7 +34,7 @@ public class HelpMenuFiller extends MenuFiller {
     private I18NBundle i18NGameThreeBundle;
     private Table mainTable;
 
-    private Label.LabelStyle labelStyleMedium;
+    private Label.LabelStyle labelStyleTitle;
     private Label.LabelStyle labelStyleSmall;
 
     private HELP_TYPE_SHOW help_type_show;
@@ -60,8 +60,8 @@ public class HelpMenuFiller extends MenuFiller {
         assetHelp = assets.getAssetHelp();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
-        labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
@@ -80,7 +80,7 @@ public class HelpMenuFiller extends MenuFiller {
 
     @Override
     protected void defineElements() {
-        helpLabel = new Label(i18NGameThreeBundle.format("helpScreen.title"), labelStyleMedium);
+        helpLabel = new Label(i18NGameThreeBundle.format("title.help"), labelStyleTitle);
 
         help[0] = new Image(assetHelp.getHelp_block_fall());
         help[1] = new Image(assetHelp.getHelp_block_push());

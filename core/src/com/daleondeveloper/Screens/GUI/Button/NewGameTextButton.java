@@ -15,7 +15,7 @@ public class NewGameTextButton extends GameTextButton {
     private MenuScreen menuScreen;
 
     public NewGameTextButton(MenuScreen menuScreen) {
-        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("menu.newGame"));
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("button.newGame"));
         gameSettings = GameSettings.getInstance();
         this.menuScreen = menuScreen;
     }

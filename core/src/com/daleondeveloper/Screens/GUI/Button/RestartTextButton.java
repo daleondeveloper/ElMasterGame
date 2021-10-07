@@ -1,8 +1,8 @@
 package com.daleondeveloper.Screens.GUI.Button;
 
+import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
-import com.daleondeveloper.Screens.GUI.Button.GameTextButton;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
@@ -13,7 +13,7 @@ public class RestartTextButton extends GameTextButton {
     private GameSettings gameSettings;
 
     public RestartTextButton() {
-        super("Restart");
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("button.restart"));
         gameSettings = GameSettings.getInstance();
     }
 

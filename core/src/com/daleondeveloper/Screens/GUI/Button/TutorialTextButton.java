@@ -15,7 +15,7 @@ public class TutorialTextButton extends GameTextButton {
     private MenuScreen menuScreen;
 
     public TutorialTextButton(MenuScreen menuScreen) {
-        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("menu.tutorial"));
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("button.tutorial"));
         gameSettings = GameSettings.getInstance();
         this.menuScreen = menuScreen;
     }

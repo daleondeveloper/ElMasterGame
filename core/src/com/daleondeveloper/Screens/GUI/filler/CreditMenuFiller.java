@@ -33,7 +33,7 @@ public class    CreditMenuFiller extends MenuFiller {
         labelStyleSmall = new Label.LabelStyle();
         labelStyleSmall.font = assets.getAssetFonts().getSmall();
         labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
+        labelStyleMedium.font = assets.getAssetFonts().getGameTitle();
         labelStyleLarge = new Label.LabelStyle();
         labelStyleLarge.font = assets.getAssetFonts().getBig();
 
@@ -48,7 +48,7 @@ public class    CreditMenuFiller extends MenuFiller {
 
     @Override
     protected void defineElements() {
-        creditLabel = new Label(i18NGameThreeBundle.format("creditsScreen.title"),labelStyleMedium);
+        creditLabel = new Label(i18NGameThreeBundle.format("title.credits"),labelStyleMedium);
         textCreditLabel = new Label(i18NGameThreeBundle.format("creditsScreen.text"),labelStyleSmall);
         textCreditLabel.setWrap(true);
     }

@@ -31,7 +31,7 @@ public class LevelCompleteMenuFiller extends MenuFiller {
     private Table mainTable;
 
     private Label.LabelStyle labelStyleMedium;
-    private Label.LabelStyle labelStyleSmall;
+    private Label.LabelStyle labelStyleTitle;
     private ImageTextButton infinityLvl;
     private ImageTextButton mainMenuButton;
     private ImageTextButton nextLvl;
@@ -49,8 +49,8 @@ public class LevelCompleteMenuFiller extends MenuFiller {
         // Styles
         labelStyleMedium = new Label.LabelStyle();
         labelStyleMedium.font = assets.getAssetFonts().getNormal();
-        labelStyleSmall = new Label.LabelStyle();
-        labelStyleSmall.font = assets.getAssetFonts().getSmall();
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
 
     }
 
@@ -65,17 +65,17 @@ public class LevelCompleteMenuFiller extends MenuFiller {
     @Override
     protected void defineElements() {
         // Title
-        pauseLabel = new Label("Level Complete",labelStyleMedium);
+        pauseLabel = new Label(i18NGameThreeBundle.format("title.levelComplete"),labelStyleTitle);
         TextureRegionDrawable textureRegion = new TextureRegionDrawable(assetGUI.getButtonForPauseWindow());
         infinityLvl = new ImageTextButton("InfinityLvl",new ImageTextButton.ImageTextButtonStyle(
                 textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
         ));
-        mainMenuButton = new ImageTextButton("MainMenu",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+        mainMenuButton = new ImageTextButton(i18NGameThreeBundle.format("button.mainMenu"),new ImageTextButton.ImageTextButtonStyle(
+                textureRegion, textureRegion, textureRegion, assets.getAssetFonts().getNormal()
         ));
 //        textureRegion.setRegionHeight(50);
-        nextLvl = new ImageTextButton("NextLvl",new ImageTextButton.ImageTextButtonStyle(
-                textureRegion,textureRegion, textureRegion, assets.getAssetFonts().getSmall()
+        nextLvl = new ImageTextButton(i18NGameThreeBundle.format("button.nextLevel"),new ImageTextButton.ImageTextButtonStyle(
+                textureRegion,textureRegion, textureRegion, assets.getAssetFonts().getNormal()
         ));
         backButton = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonX()));
 

@@ -161,8 +161,16 @@ public class Assets implements Disposable,AssetErrorListener {
 
 
     private void loadI18NElementMaster(){
-        I18NBundleLoader.I18NBundleParameter parameter = new I18NBundleLoader.I18NBundleParameter(new Locale("ru","RU"),"UTF-8");
-        assetManager.load("i18n/I18NElMasterBundle", I18NBundle.class,parameter);
+        String localeParam = Locale.getDefault().toString();
+        I18NBundleLoader.I18NBundleParameter parameter = null;
+        if(localeParam.equals("ru_RU")){
+        }else if(localeParam.equals("uk_UK")){
+
+        }else{
+
+        }
+  //      new I18NBundleLoader.I18NBundleParameter(new Locale("ru","RU"),"UTF-8");
+        assetManager.load("i18n/I18NElMasterBundle", I18NBundle.class);
 
     }
 

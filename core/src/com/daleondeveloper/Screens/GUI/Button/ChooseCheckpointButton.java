@@ -1,5 +1,6 @@
 package com.daleondeveloper.Screens.GUI.Button;
 
+import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
@@ -11,7 +12,7 @@ public class ChooseCheckpointButton extends GameTextButton {
     private MenuScreen menuScreen;
 
     public ChooseCheckpointButton(MenuScreen menuScreen) {
-        super("CHOOSE CHECKPOINT");
+        super(Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle().format("button.chooseChekpoint"));
         gameSettings = GameSettings.getInstance();
         this.menuScreen = menuScreen;
     }

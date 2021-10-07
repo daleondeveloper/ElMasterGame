@@ -23,8 +23,8 @@ public class HighScoreMenuFiller extends MenuFiller  {
     private I18NBundle i18NGameThreeBundle;
     private Table mainTable;
 
+    private Label.LabelStyle labelStyleTitle;
     private Label.LabelStyle labelStyleBig;
-    private Label.LabelStyle labelStyleMedium;
 
     private int pageShow;
 
@@ -40,10 +40,10 @@ public class HighScoreMenuFiller extends MenuFiller  {
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         // Styles
+        labelStyleTitle = new Label.LabelStyle();
+        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
         labelStyleBig = new Label.LabelStyle();
         labelStyleBig.font = assets.getAssetFonts().getBig();
-        labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
 
 
         pageShow = 0;
@@ -59,8 +59,8 @@ public class HighScoreMenuFiller extends MenuFiller  {
 
     @Override
     protected void defineElements() {
-        highScoreLabel = new Label(i18NGameThreeBundle.format("highScoreScreen.title"), labelStyleMedium);
-        modeNameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleMedium);
+        highScoreLabel = new Label(i18NGameThreeBundle.format("title.highScore"), labelStyleTitle);
+        modeNameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleBig);
         bestHighScoreLabel = new Label(String.valueOf(prefs.getHighScoreClassic()), labelStyleBig);
     }
 
