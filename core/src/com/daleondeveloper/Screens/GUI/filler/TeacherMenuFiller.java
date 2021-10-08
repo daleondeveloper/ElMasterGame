@@ -46,6 +46,7 @@ public class TeacherMenuFiller extends MenuFiller {
     private Image help3;
 
     public TeacherMenuFiller(MenuScreen menuScreen){
+        super(menuScreen,"");
         this.menuScreen = menuScreen;
 
         assets = Assets.getInstance();
@@ -119,7 +120,8 @@ public class TeacherMenuFiller extends MenuFiller {
         }
 
     }
-    private void addTitleToTable(){
+
+    protected void addTitleToTable(){
         Table labelTable = new Table();
         mainTable.add(labelTable).growX();
         mainLabel.setText(tile[level]);

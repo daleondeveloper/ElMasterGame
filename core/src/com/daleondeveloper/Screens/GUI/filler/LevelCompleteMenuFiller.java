@@ -24,14 +24,10 @@ import com.daleondeveloper.tools.GameConstants;
 public class LevelCompleteMenuFiller extends MenuFiller {
     private static final String TAG = LevelCompleteMenuFiller.class.getName();
 
-    private com.daleondeveloper.Screens.GUI.MenuScreen menuScreen;
     private Assets assets;
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
-    private Table mainTable;
 
-    private Label.LabelStyle labelStyleMedium;
-    private Label.LabelStyle labelStyleTitle;
     private ImageTextButton infinityLvl;
     private ImageTextButton mainMenuButton;
     private ImageTextButton nextLvl;
@@ -41,21 +37,14 @@ public class LevelCompleteMenuFiller extends MenuFiller {
 
 
     public LevelCompleteMenuFiller(com.daleondeveloper.Screens.GUI.MenuScreen menuScreen) {
+        super(menuScreen,"title.levelComplete");
 
-        this.menuScreen = menuScreen;
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
-        // Styles
-        labelStyleMedium = new Label.LabelStyle();
-        labelStyleMedium.font = assets.getAssetFonts().getNormal();
-        labelStyleTitle = new Label.LabelStyle();
-        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
-
     }
 
     public void build() {
-        mainTable = menuScreen.getWindowTable();
         super.build();
         int nextLevelNumber = GameSettings.getInstance().getLevel() + 1;
         if(nextLevelNumber >= GameSettings.getInstance().getHighCompletedLvl()) {
@@ -120,19 +109,9 @@ public class LevelCompleteMenuFiller extends MenuFiller {
     }
     @Override
     protected void addToTable(){
-        mainTable.clearChildren();
         if(DebugConstants.DEBUG_GUI){
             mainTable.debug();
         }
-        mainTable.columnDefaults(0);
-        Table labelTable = new Table();
-        mainTable.add(backButton).height(15).width(15).right().padRight(30);
-        mainTable.row();
-        mainTable.add(labelTable);
-        labelTable.add().grow();
-        labelTable.add(pauseLabel).colspan(5).fill();
-        labelTable.add().grow();
-        mainTable.row();
         Table buttonTable = new Table();
         mainTable.add(buttonTable).grow().padBottom(30);
         buttonTable.defaults().pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();

@@ -8,7 +8,6 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Screens.GUI.Button.BackButton;
 import com.daleondeveloper.Screens.GUI.Button.LevelButton;
 import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonLeft;
 import com.daleondeveloper.Screens.GUI.Button.ScrollArrowButtonRight;
@@ -22,48 +21,35 @@ public class LevelChangeMenuFiller extends MenuFiller {
 
     private static final int LAST_CHANGE_MODE_PAGE = 2;
 
-    private MenuScreen menuScreen;
     private GameSettings prefs;
     private Assets assets;
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
-    private Table mainTable;
 
     private int pageShow;
 
     private ScrollPane scrollPane;
-    private Label.LabelStyle labelStyleTitle;
-    private Label.LabelStyle labelStyleSmall;
     private Label gameModeChangeTitleLabel;
 
 
     public LevelChangeMenuFiller(MenuScreen menuScreen) {
+        super(menuScreen,"title.level");
 
-        this.menuScreen = menuScreen;
         prefs = GameSettings.getInstance();
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
-        // Styles
-        labelStyleTitle = new Label.LabelStyle();
-        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
-        labelStyleSmall = new Label.LabelStyle();
-        labelStyleSmall.font = assets.getAssetFonts().getSmall();
-
         pageShow = 0;
     }
 
     @Override
     public void build() {
-        mainTable = menuScreen.getWindowTable();
         super.build();
     }
 
     @Override
     protected void defineElements() {
-        // Title
-        gameModeChangeTitleLabel = new Label(i18NGameThreeBundle.format("title.mainMenu"), labelStyleTitle);
-    }
+        }
 
     @Override
     protected void addAction() {
@@ -71,20 +57,10 @@ public class LevelChangeMenuFiller extends MenuFiller {
 
     @Override
     protected void addToTable() {
-        mainTable.clearChildren();
         if(DebugConstants.DEBUG_GUI){
             mainTable.debug();
         }
-        mainTable.top();
-        mainTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
-        mainTable.row();
-        Table labelTable = new Table();
-        mainTable.add(labelTable).growX();
-        labelTable.add().growX();
-        labelTable.add(gameModeChangeTitleLabel);
-        labelTable.add().growX();
-        mainTable.row();
-            chooseModePanel();
+        chooseModePanel();
     }
     private void chooseModePanel(){
         // Таблиця вибору режиму гри

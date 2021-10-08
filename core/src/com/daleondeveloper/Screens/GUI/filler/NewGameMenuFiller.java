@@ -9,7 +9,6 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
-import com.daleondeveloper.Screens.GUI.Button.BackButton;
 import com.daleondeveloper.Screens.GUI.Button.ChooseCheckpointButton;
 import com.daleondeveloper.Screens.GUI.Button.ContinueTextButton;
 import com.daleondeveloper.Screens.GUI.Button.NewGameTextButton;
@@ -23,12 +22,10 @@ public class NewGameMenuFiller extends MenuFiller {
 
     private static final int LAST_CHANGE_MODE_PAGE = 2;
 
-    private MenuScreen menuScreen;
     private GameSettings prefs;
     private Assets assets;
     private AssetGUI assetGUI;
     private I18NBundle i18NGameThreeBundle;
-    private Table mainTable;
 
     private int pageShow;
 
@@ -39,32 +36,23 @@ public class NewGameMenuFiller extends MenuFiller {
 
 
     public NewGameMenuFiller(MenuScreen menuScreen) {
-
-        this.menuScreen = menuScreen;
+        super(menuScreen,"title.mainMenu");
         prefs = GameSettings.getInstance();
         assets = Assets.getInstance();
         assetGUI = assets.getAssetGUI();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
-        // Styles
-        labelStyleTitle = new Label.LabelStyle();
-        labelStyleTitle.font = assets.getAssetFonts().getGameTitle();
-        labelStyleSmall = new Label.LabelStyle();
-        labelStyleSmall.font = assets.getAssetFonts().getSmall();
 
         pageShow = 0;
     }
 
     @Override
     public void build() {
-        mainTable = menuScreen.getWindowTable();
         super.build();
     }
 
     @Override
     protected void defineElements() {
-        // Title
-        gameModeChangeTitleLabel = new Label(i18NGameThreeBundle.format("title.mainMenu"), labelStyleTitle);
-    }
+        }
 
     @Override
     protected void addAction() {
@@ -72,20 +60,10 @@ public class NewGameMenuFiller extends MenuFiller {
 
     @Override
     protected void addToTable() {
-        mainTable.clearChildren();
         if(DebugConstants.DEBUG_GUI){
             mainTable.debug();
         }
-        mainTable.top();
-        mainTable.add(new BackButton(menuScreen)).height(15).width(15).right().padRight(30);
-        mainTable.row();
-        Table labelTable = new Table();
-        mainTable.add(labelTable).growX();
-        labelTable.add().growX();
-        labelTable.add(gameModeChangeTitleLabel);
-        labelTable.add().growX();
-        mainTable.row();
-            continueGamePanel();
+        continueGamePanel();
     }
 
     private void continueGamePanel(){
