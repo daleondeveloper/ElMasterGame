@@ -11,8 +11,10 @@ import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Game.tools.Level.LvlEndConditionController;
 import com.daleondeveloper.Screens.Play.PlayScreen;
+import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
+import com.daleondeveloper.Sprites.BlockControllers.BlockTouchLineCheсker;
 import com.daleondeveloper.Sprites.Blocks.Block;
 import com.daleondeveloper.Sprites.GameSensor;
 import com.daleondeveloper.Sprites.Hero.WaterElement;
@@ -42,6 +44,7 @@ public class GameWorld {
     private LvlEndConditionController lvlEndConditionController;
     private GameGrid gameGrid;
     private BlockController blockController;
+    private BlockTouchLineCheсker blockTouchLineCheсker;
 
     //поки так TODO
     private int level;
@@ -83,6 +86,7 @@ public class GameWorld {
         blockController = new BlockController(this);
         lvlEndConditionController = new LvlEndConditionController();
         levelGenerator.getLevelTasks(lvlEndConditionController,blockController);
+        blockTouchLineCheсker = new BlockTouchLineCheсker(blockController,gameGrid);
 
         gameSettings.setAdsContinueCount(1);
 
@@ -112,7 +116,7 @@ public class GameWorld {
 
         backgroundGameFon.update(deltaTime);
         updateBlock(deltaTime);
-        checkBlockLine();
+        //checkBlockLine();
 
         blockController.update(deltaTime);
 
@@ -126,6 +130,15 @@ public class GameWorld {
                        level = nextLvl(level);
                     }
         }
+        if(blockTouchLineCheсker.check()){
+            ArrayList<AbstractGameObject> destroyBlocks = blockTouchLineCheсker.getBlockToDestroy();
+            for(AbstractGameObject abstractGameObject : destroyBlocks){
+                Block block = (Block) abstractGameObject;
+                block.delete();
+            }
+            setScore(destroyBlocks.size());
+        }
+
         this.gameCamera.update(deltaTime);
 
         if(timeToSave < 0){
@@ -134,8 +147,12 @@ public class GameWorld {
         }
 
     }
+    private void setScore(int i ){
+        int scoreToAdd = (i - 4) * 2 + 1;
+        playScreen.getHud().addScore(scoreToAdd);
+    }
     private int nextLvl(int lvl){
-        if(lvl < Level.maxLevel) {
+        if(lvl < Level.maxLevel - 1) {
             levelGenerator = new Level(++lvl);
             blockController.cleatBlockSpawner();
             levelGenerator.getBlockSpawner(blockController);

@@ -42,6 +42,12 @@ public class GridImpl<E> implements Grid<E>{
     public E[][] getGrid(){
         return playGrid;
     }
+
+    @Override
+    public E[] getOneLineObjects(int line) {
+        return getGrid()[line];
+    }
+
     public E deleteElementFromCellByCordinate(int x, int y) {
         if(isCordinateCorrect(x,y)) {
             E e = playGrid[x][y];

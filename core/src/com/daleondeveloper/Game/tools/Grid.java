@@ -4,6 +4,7 @@ public interface Grid<E> {
     boolean put(E putObject, int x, int y);
     E getElementByCordinate(int x, int y);
     E[][] getGrid();
+    E[] getOneLineObjects(int line);
     E getLowerObjectRelativeToCoordinates(int x,int y);
     E getTopObjectRelativeToCoordinates(int x,int y);
     E getLeftObjectRelativeToCoordinates(int x,int y);

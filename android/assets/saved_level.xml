@@ -1,0 +1,9 @@
+<level number =  "1" score = "9" > 
+<hero positionX = "5" positionY = "0" /> 
+<block  type = "CLASSIC" positionX = "0" positionY = "0" /> 
+<block  type = "CLASSIC" positionX = "1" positionY = "0" /> 
+<block  type = "CLASSIC" positionX = "7" positionY = "0" /> 
+<block  type = "CLASSIC" positionX = "0" positionY = "1" /> 
+<block  type = "CLASSIC" positionX = "9" positionY = "9" /> 
+<blockSpawner type = "0" value = "3"/><levelTasks type = "score" value = "50"/>
+</level>

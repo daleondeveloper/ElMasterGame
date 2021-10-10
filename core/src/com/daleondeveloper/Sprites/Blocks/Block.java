@@ -206,8 +206,10 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
         pushImpulse = turnImpulse;
     }
     public void delete(){
-        currentState = State.DESTROY;
-        stateTime = 0;
+        if(!isDisposable() && !isDestroy()) {
+            currentState = State.DESTROY;
+            stateTime = 0;
+        }
     }
 
     //Update method, and update methods depending on the state of the object
