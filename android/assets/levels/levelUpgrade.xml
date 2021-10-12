@@ -1,0 +1,5 @@
+<levelUpgrade>
+    <level3 type = "easyBad" score = "70"/>
+    <level1 type = "easyBad" score = "10"/>
+    <level2 type = "easyBad" score = "30"/>
+</levelUpgrade>

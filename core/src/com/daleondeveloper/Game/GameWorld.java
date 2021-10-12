@@ -10,6 +10,7 @@ import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Game.tools.Level.LvlEndConditionController;
+import com.daleondeveloper.Game.tools.Level.ScoreCheker;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
@@ -45,6 +46,7 @@ public class GameWorld {
     private GameGrid gameGrid;
     private BlockController blockController;
     private BlockTouchLineCheсker blockTouchLineCheсker;
+    private ScoreCheker scoreCheker;
 
     //поки так TODO
     private int level;
@@ -87,6 +89,7 @@ public class GameWorld {
         lvlEndConditionController = new LvlEndConditionController();
         levelGenerator.getLevelTasks(lvlEndConditionController,blockController);
         blockTouchLineCheсker = new BlockTouchLineCheсker(blockController,gameGrid);
+        scoreCheker = new ScoreCheker(playScreen,this);
 
         gameSettings.setAdsContinueCount(1);
 
@@ -126,9 +129,9 @@ public class GameWorld {
         if(lvlEndConditionController.checkComplianceConditions() &&
         !gameSettings.isInfinityLvl()){
             completeLvlTime += deltaTime;
-                    if(completeLvlTime > 2) {
-                       level = nextLvl(level);
-                    }
+//                    if(completeLvlTime > 2) {
+//                       level = nextLvl();
+//                    }
         }
         if(blockTouchLineCheсker.check()){
             ArrayList<AbstractGameObject> destroyBlocks = blockTouchLineCheсker.getBlockToDestroy();
@@ -150,18 +153,24 @@ public class GameWorld {
     private void setScore(int i ){
         int scoreToAdd = (i - 4) * 2 + 1;
         playScreen.getHud().addScore(scoreToAdd);
+        scoreCheker.checkScore(playScreen.getHud().getScore());
     }
-    private int nextLvl(int lvl){
-        if(lvl < Level.maxLevel - 1) {
-            levelGenerator = new Level(++lvl);
-            blockController.cleatBlockSpawner();
-            levelGenerator.getBlockSpawner(blockController);
-            lvlEndConditionController.cleatTasks();
-            levelGenerator.getLevelTasks(lvlEndConditionController, blockController);
+    public int nextLvl() {
+        if (level < Level.maxLevel - 1) {
+            level++;
+            scoreCheker.getNewChecker();
+//            levelGenerator = new Level(++level);
+//            blockController.cleatBlockSpawner();
+//            levelGenerator.getBlockSpawner(blockController);
+//            lvlEndConditionController.cleatTasks();
+//            levelGenerator.getLevelTasks(lvlEndConditionController, blockController);
         }
-            return lvl;
-
+        return level;
     }
+    public void resumeGame(){
+        playScreen.setStateRunning();
+        }
+
     public void render(SpriteBatch batch) {
         // This order is important.
         // This determines if a sprite has to be drawn in front or behind another sprite.
@@ -388,5 +397,9 @@ public class GameWorld {
 
     public GameGrid getGameGrid() {
         return gameGrid;
+    }
+
+    public ScoreCheker getScoreCheker() {
+        return scoreCheker;
     }
 }

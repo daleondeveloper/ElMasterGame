@@ -2,5 +2,5 @@
     <blockSpawner type = "classic" value = "3"/>
     <blockSpawner type = "classic" value = "3"/>
     <hero positionX = "5" positionY = "0"/>
-    <levelTasks type = "score" value = "100"/>
+    <levelTasks type = "score" value = "30"/>
 </level>

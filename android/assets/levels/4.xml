@@ -3,5 +3,5 @@
     <blockSpawner type = "dark" value = "5"/>
     <blockSpawner type = "fire" value = "12"/>
     <hero positionX = "5" positionY = "0"/>
-    <levelTasks type = "star" value = "200"/>
+    <levelTasks type = "star" value = "150"/>
 </level>

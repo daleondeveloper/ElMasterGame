@@ -26,7 +26,8 @@ public class BlockTouchLineCheсker {
         for(int i = 0 ; i < gameGrid.getGridWidthLength() + 1; i++){
             if(gameGrid.getGridWidthLength() != i &&
                     gameGrid.getGameGridImpl().getElementByCordinate(i,0) != null &&
-                    gameGrid.getGameGridImpl().getElementByCordinate(i,0) instanceof Block){
+                    gameGrid.getGameGridImpl().getElementByCordinate(i,0) instanceof Block &&
+                    ((Block) gameGrid.getGameGridImpl().getElementByCordinate(i,0)).isIdle()){
                 counter++;
                 objectsWichCheked.add(gameGrid.getGameGridImpl().getElementByCordinate(i,0) );
             }else if(counter > 3){

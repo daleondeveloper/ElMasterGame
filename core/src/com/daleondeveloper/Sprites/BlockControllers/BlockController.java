@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.Level.ElementSaved;
+import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Sprites.Blocks.*;
 
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class BlockController implements ElementSaved {
         return arrayBlock;
     }
     public float getBlockFallVelocity() {
-        return blockFallVelocity;
+        return blockFallVelocity + UpgraderConstats.getBlockSpeed();
     }
 
     @Override
@@ -146,6 +147,10 @@ public class BlockController implements ElementSaved {
             s += blockSpawner.save();
         }
         return s;
+    }
+
+    public List<BlockSpawner> getBlockSpawners() {
+        return blockSpawners;
     }
 
     @Override

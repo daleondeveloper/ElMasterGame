@@ -19,6 +19,7 @@ public abstract class GameTextButton extends ImageTextButton {
         this(text, Assets.getInstance().getAssetFonts().getNormal());
     }
 
+
     public void build(){
         defineTexture();
         addAction();

@@ -23,6 +23,7 @@ import com.daleondeveloper.Screens.GUI.filler.NewGameMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.PauseMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.SettingsMenuFiller;
 import com.daleondeveloper.Screens.GUI.filler.TeacherMenuFiller;
+import com.daleondeveloper.Screens.GUI.filler.UpgradeLevelMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -38,7 +39,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
     public enum MenuState{
         CLOSE,PAUSE,SETTINGS,HIGH_SCORE,HELP,CREDIT,GAMEMODECHOOSE,LVLCOMPLETE, GAME_OVER,
-        TEACHER_MENU,NEW_GAME;
+        TEACHER_MENU,NEW_GAME,UPGRADE_LEVEL;
     }
     private static final float DIM_ALPHA = 0.8f;
 
@@ -59,6 +60,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private MenuFiller lvlCompleteMF;
     private GameOverFiller gameOverFiller;
     private NewGameMenuFiller newGameMenuFiller;
+    private UpgradeLevelMenuFiller upgradeLevelMenuFiller;
 
     private Image screenBg;
     private Image pauseWindow;
@@ -204,6 +206,11 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
         helpMenuFiller.build();
         Gdx.input.setInputProcessor(stage);
     }
+    public void setUpgradeScreen(){
+        menuState = MenuState.UPGRADE_LEVEL;
+        upgradeLevelMenuFiller.build();
+        Gdx.input.setInputProcessor(stage);
+    }
     public void setHighScoreScreen(){
         menuState = MenuState.HIGH_SCORE;
         highScoreMenuFiller.build();
@@ -223,6 +230,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
 
     }
     public void setScreen(MenuFiller menuFiller){
+        menuState = MenuState.PAUSE;
         menuFiller.build();
         Gdx.input.setInputProcessor(stage);
     }

@@ -20,6 +20,7 @@ import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.Hud;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
 import com.daleondeveloper.Screens.GUI.TeachingHud;
+import com.daleondeveloper.Screens.GUI.filler.UpgradeLevelMenuFiller;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.tools.AudioManager;
 
@@ -131,7 +132,10 @@ public class PlayScreen extends GUIAbstractScreen {
             }
         }
     }
-
+    public void upgradeLevel(){
+        menuScreen.setScreen(new UpgradeLevelMenuFiller(menuScreen,gameWorld.getScoreCheker()));
+        doPause();
+    }
     private void gameResults(){
 
         if (worldController.isGameOver()) {
