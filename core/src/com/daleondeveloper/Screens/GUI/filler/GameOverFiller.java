@@ -7,6 +7,7 @@ import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Screens.GUI.Button.MainMenuTextButton;
 import com.daleondeveloper.Screens.GUI.Button.RestartTextButton;
 import com.daleondeveloper.Screens.GUI.Button.ReviveTextButton;
@@ -73,7 +74,7 @@ public class GameOverFiller extends MenuFiller{
 
         scoreTable.add(new MainMenuTextButton());
         scoreTable.row();
-        if(GameSettings.getInstance().getAdsContinueCount() > 0) {
+        if(GameSettings.getInstance().getAdsContinueCount() + UpgraderConstats.getReviveCount() > 0) {
             scoreTable.add(new ReviveTextButton());
             scoreTable.row();
         }

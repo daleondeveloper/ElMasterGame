@@ -3,6 +3,8 @@ package com.daleondeveloper.Game.tools.Level.Upgrader;
 public class UpgraderConstats {
     private static float BLOCK_SPEED = 0;
     private static float BLOCK_TIME_SPAWN = 0;
+    private static int REVIVE_COUNT = 0;
+    private static int BLOCK_COUNT_TO_DELETE = 0;
 
 
     public static float getBlockSpeed() {
@@ -19,5 +21,21 @@ public class UpgraderConstats {
 
     public static void setBlockTimeSpawn(float blockTimeSpawn) {
         BLOCK_TIME_SPAWN += blockTimeSpawn;
+    }
+
+    public static int getReviveCount() {
+        return REVIVE_COUNT;
+    }
+
+    public static void setReviveCount(int reviveCount) {
+        REVIVE_COUNT += reviveCount;
+    }
+
+    public static int getBlockCountToDelete() {
+        return BLOCK_COUNT_TO_DELETE;
+    }
+
+    public static void setBlockCountToDelete(int blockCountToDelete) {
+        BLOCK_COUNT_TO_DELETE = blockCountToDelete;
     }
 }

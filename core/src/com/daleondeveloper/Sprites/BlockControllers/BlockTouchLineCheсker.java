@@ -1,6 +1,7 @@
 package com.daleondeveloper.Sprites.BlockControllers;
 
 import com.daleondeveloper.Game.tools.GameGrid;
+import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Blocks.Block;
 
@@ -30,7 +31,7 @@ public class BlockTouchLineCheсker {
                     ((Block) gameGrid.getGameGridImpl().getElementByCordinate(i,0)).isIdle()){
                 counter++;
                 objectsWichCheked.add(gameGrid.getGameGridImpl().getElementByCordinate(i,0) );
-            }else if(counter > 3){
+            }else if(counter > 3 + UpgraderConstats.getBlockCountToDelete()){
                 blockToDestroy.addAll(objectsWichCheked);
                 counter = 0;
             }else {
