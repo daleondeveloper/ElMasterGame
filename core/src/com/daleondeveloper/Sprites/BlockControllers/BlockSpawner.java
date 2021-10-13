@@ -33,6 +33,14 @@ public class BlockSpawner implements ElementSaved {
         this.timeToSpawn = timeToSpawn;
     }
 
+    public int getBlockType() {
+        return blockType;
+    }
+
+    public void setBlockType(int blockType) {
+        this.blockType = blockType;
+    }
+
     @Override
     public String save() {
         return     "<blockSpawner type = \""+ blockType +"\" value = \"" + (int)timeToSpawn + "\"/>";
