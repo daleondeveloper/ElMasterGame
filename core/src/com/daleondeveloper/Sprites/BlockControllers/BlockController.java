@@ -149,10 +149,12 @@ public class BlockController implements ElementSaved {
         return s;
     }
 
+    public void deleteBlockSpawner(BlockSpawner blockSpawner){
+        blockSpawners.remove(blockSpawner);
+    }
     public List<BlockSpawner> getBlockSpawners() {
         return blockSpawners;
     }
-
     @Override
     public String toString() {
         return "<blockController>" +
