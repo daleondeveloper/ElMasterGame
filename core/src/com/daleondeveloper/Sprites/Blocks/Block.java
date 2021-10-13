@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -36,7 +35,6 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
     }
 
     protected GameWorld gameWorld;
-    protected Body body;
     protected GameGrid gameGrid;
     protected com.daleondeveloper.Sprites.BlockControllers.BlockController blockController;
 
@@ -52,8 +50,6 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
 
     protected float coefficientFrostbite;
     protected float pushImpulse;
-    protected float returnCellsPosition;
-    protected float returnCellsPositionY;
     protected float positionInBlocksMasX;
     protected float positionInBlocksMasY;
 
@@ -96,10 +92,10 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
         statePosition = false;
         positionInGameGrid = new Vector2();
         coefficientFrostbite = 1;
-
+        returnPosition = new Vector2();
         pushImpulse = 10;
-        returnCellsPosition = x + 5;
-        returnCellsPositionY = y + 5;
+        returnPosition.x = x + 5;
+        returnPosition.y = y + 5;
         positionInBlocksMasX = -1;
         positionInBlocksMasY = -1;
 
@@ -249,7 +245,7 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
 
     }
     protected void stateIdle(float deltaTime){
-        body.setTransform(returnCellsPosition,returnCellsPositionY,0);
+        body.setTransform(returnPosition.x,returnPosition.y,0);
         if(contactDownList.size() == 0){fall();return;}
 
         // Update this Sprite to correspond with the position of the Box2D body.
@@ -270,7 +266,7 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
         }
         body.setLinearVelocity(pushImpulse, body.getLinearVelocity().y);
         // Update this Sprite to correspond with the position of the Box2D body.
-        body.setTransform(body.getPosition().x,returnCellsPositionY,0);
+        body.setTransform(body.getPosition().x,returnPosition.y,0);
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(textureRegionBlock);
         stateTime += deltaTime;
@@ -280,7 +276,7 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
 
         //Change fall velocity
         body.setLinearVelocity(0,blockController.getBlockFallVelocity());
-        body.setTransform(returnCellsPosition,body.getPosition().y,0);
+        body.setTransform(returnPosition.x,body.getPosition().y,0);
 
         // Update this Sprite to correspond with the position of the Box2D body.
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
@@ -362,14 +358,14 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
         updatePositionInGrid();
     }
     protected void updatePositionInGrid(){
-        positionInGameGrid.set((returnCellsPosition / 10) - 5, (returnCellsPositionY / 10) - 15);
+        positionInGameGrid.set((returnPosition.x / 10) - 5, (returnPosition.y / 10) - 15);
     }
     private void updateReturnPositionX(){
         float x = body.getPosition().x;
         int leftReg = 53, rightReg = 57;
         for(int i = 0; i < 10; i++){
             if(x >= leftReg && x < rightReg){
-                returnCellsPosition = (rightReg + leftReg) >> 1;
+                returnPosition.x = (rightReg + leftReg) >> 1;
                 break;
             }
             leftReg += 10;
@@ -381,14 +377,14 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
         int leftReg = 153,rightReg = 157;
         for(int i = 0; i < 20; i++){
             if(y > leftReg && y < rightReg){
-                returnCellsPositionY = (rightReg + leftReg) >> 1;
+                returnPosition.y = (rightReg + leftReg) >> 1;
                 break;
             }
             leftReg += 10;
             rightReg += 10;
         }
         if(getY() < 0){
-            returnCellsPositionY = 160;
+            returnPosition.y = 160;
         }
     }
 
@@ -452,11 +448,11 @@ public class Block extends AbstractDynamicObject implements ElementSaved {
     }
 
     public float getReturnCellsPosition() {
-        return returnCellsPosition;
+        return returnPosition.x;
     }
 
     public float getReturnCellsPositionY() {
-        return returnCellsPositionY;
+        return returnPosition.y;
     }
 
     public BlockType getBlockType(){

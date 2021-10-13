@@ -69,8 +69,6 @@ public class WaterElement extends AbstractDynamicObject implements ElementSaved 
     private Block blockInRightSide;
     private Block blockInLeftSide;
 
-    private Vector2 returnPosition;
-
     private FixtureDef fixtureSkill;
     private CircleShape circleShapeSkillFixture;
 
