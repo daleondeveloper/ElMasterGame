@@ -1,5 +1,15 @@
 <levelUpgrade>
-    <level3 type = "easyBad" score = "70"/>
-    <level1 type = "hardBad" score = "1"/>
-    <level2 type = "easyBad" score = "30"/>
+    <level12 type = "hardBad" score = "500"/>
+    <level11 type = "hardBad" score = "450"/>
+    <level10 type = "normalBad" score = "400"/>
+    <level9 type = "normalBad" score = "350"/>
+    <level8 type = "hardBad" score = "300"/>
+    <level7 type = "easyBad" score = "250"/>
+    <level6 type = "hardBad" score = "200"/>
+    <level5 type = "easyBad" score = "150"/>
+    <level4 type = "normalBad" score = "100"/>
+    <level3 type = "normalBad" score = "50"/>
+    <level2 type = "easyBad" score = "20"/>
+    <level1 type = "easyBad" score = "5"/>
+    <level0 type = "easyBad" score = "999999"/>
 </levelUpgrade>

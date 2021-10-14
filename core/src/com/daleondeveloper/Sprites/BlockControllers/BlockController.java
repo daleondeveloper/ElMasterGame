@@ -28,6 +28,9 @@ public class BlockController implements ElementSaved {
     protected float blockFallVelocity;
     protected float blockCreateTime;
     protected ControllerType type;
+    protected float adjSpeed;
+    protected float adjSpawnTime;
+    protected float adjCountTodeleteLine;
 
 
     public BlockController (GameWorld gameWorld)  {
@@ -40,6 +43,8 @@ public class BlockController implements ElementSaved {
         blockFallVelocity = 0;
         blockCreateTime = 0;
         blockFallVelocity = (-50);
+        adjSpawnTime = 0;
+        adjSpeed = 0;
 
         type = ControllerType.CLASSIC;
     }
@@ -155,10 +160,31 @@ public class BlockController implements ElementSaved {
     public List<BlockSpawner> getBlockSpawners() {
         return blockSpawners;
     }
+
+    public float getAdjSpeed() {
+        return adjSpeed;
+    }
+
+    public void setAdjSpeed(float adjSpeed) {
+        this.adjSpeed = adjSpeed;
+    }
+
+    public float getAdjSpawnTime() {
+        return adjSpawnTime;
+    }
+
+    public void setAdjSpawnTime(float adjSpawnTime) {
+        this.adjSpawnTime = adjSpawnTime;
+    }
+
     @Override
     public String toString() {
         return "<blockController>" +
-                "<type : " + type.toString() + ">" +
+                " <type : " + type.toString() +
+                " speed : " + adjSpeed +
+                " spawnTime : " +adjSpawnTime +
+                " countToDelete : " +adjCountTodeleteLine +
+                " >" +
                 "</blockController>";
     }
 }

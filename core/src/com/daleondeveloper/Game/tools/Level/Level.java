@@ -8,6 +8,7 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.Checkers.ScoreLvlCondition;
 import com.daleondeveloper.Game.tools.Checkers.StarLvlCondition;
 import com.daleondeveloper.Game.tools.Checkers.TimeLvlCondition;
+import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Sprites.BlockControllers.BlockController;
 import com.daleondeveloper.Sprites.BlockControllers.BlockSpawner;
 import com.daleondeveloper.Sprites.Blocks.Block;
@@ -20,9 +21,8 @@ import java.util.Iterator;
 
 public class Level {
      public static final int maxLevel = GameConstants.MAX_LEVEL;
-     public static final FileHandle savedLevel = Gdx.files.local("saved_level.xml");
+     public static final FileHandle savedLevel = Gdx.files.local("/saved_level.xml");
      public static int currentLevel = -1;
-
 
      private FileHandle currentLevelXml;
      private XmlReader.Element xmlLevel;
@@ -53,6 +53,13 @@ public class Level {
           elementToSave.add(hero);
           return hero;
 
+     }
+     public void setUpgradeConstants(){
+          XmlReader.Element xml = xmlLevel.getChildByName("upgradeConst");
+          UpgraderConstats.setBlockCountToDelete(xml.getIntAttribute("countToDelete"));
+          UpgraderConstats.setReviveCount(xml.getIntAttribute("revive"));
+          UpgraderConstats.setBlockSpeed(xml.getFloatAttribute("speed"));
+          UpgraderConstats.setBlockTimeSpawn(xml.getFloatAttribute("time"));
      }
      public void getBlock(BlockController blockController){
           Iterator<XmlReader.Element> iterator = xmlLevel.getChildrenByName("block").iterator();
@@ -103,7 +110,10 @@ public class Level {
      }
 
      public void saveLevel(String s) {
-          savedLevel.delete();
+          if(savedLevel.exists()) {
+               savedLevel.delete();
+          }
+
           savedLevel.writeString(s,false);
      }
      //     private void addLevel_0(){

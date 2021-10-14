@@ -2,7 +2,6 @@ package com.daleondeveloper.Screens.GUI.Button;
 
 import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.Settings.GameSettings;
-import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.ScreenEnum;
 import com.daleondeveloper.Screens.ScreenManager;
@@ -27,7 +26,6 @@ public class MainMenuTextButton extends GameTextButton {
         this.addListener(ListenerHelper.runnableListener(new Runnable() {
             @Override
             public void run() {
-                Level.savedLevel.delete();
                 ScreenManager.getInstance().showScreen(ScreenEnum.MAIN_MENU, ScreenTransitionEnum.COLOR_FADE_BLACK);
             }
         }));

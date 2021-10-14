@@ -38,7 +38,7 @@ public class ScoreCheker {
 
     public void getNewChecker(){
         XmlReader.Element checker = xmlLevel.getChildByName("level" + gameWorld.getLevel());
-        score = checker.getIntAttribute("score");
+         score = checker.getIntAttribute("score");
         type = checker.getAttribute("type");
         upgraderDirector.updateBuilders();
     }

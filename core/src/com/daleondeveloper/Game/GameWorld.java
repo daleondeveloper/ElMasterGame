@@ -11,6 +11,7 @@ import com.daleondeveloper.Game.tools.GameGrid;
 import com.daleondeveloper.Game.tools.Level.Level;
 import com.daleondeveloper.Game.tools.Level.LvlEndConditionController;
 import com.daleondeveloper.Game.tools.Level.ScoreCheker;
+import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Screens.Play.PlayScreen;
 import com.daleondeveloper.Sprites.AbstractGameObject;
 import com.daleondeveloper.Sprites.Background;
@@ -82,6 +83,7 @@ public class GameWorld {
         gameCamera = new GameCamera();
         gameSettings = GameSettings.getInstance();
         this.level = level;
+        UpgraderConstats.resetParameter();
 
         gameGrid = new GameGrid(GameConstants.WORLD_WIDTH_CELLS,GameConstants.WORLD_HEIGHT_CELLS);
         levelGenerator = new Level(level);
@@ -89,6 +91,9 @@ public class GameWorld {
         lvlEndConditionController = new LvlEndConditionController();
         levelGenerator.getLevelTasks(lvlEndConditionController,blockController);
         blockTouchLineCheсker = new BlockTouchLineCheсker(blockController,gameGrid);
+        if(level == -1){
+            this.level = levelGenerator.getLevelNumber();
+        }
         scoreCheker = new ScoreCheker(playScreen,this);
 
         gameSettings.setAdsContinueCount(1);
@@ -236,6 +241,7 @@ public class GameWorld {
         level += waterElement.save();
         level += blockController.save();
         level += lvlEndConditionController.save();
+        level += UpgraderConstats.save();
         level += "</level>";
         levelGenerator.saveLevel(level);
     }

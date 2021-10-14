@@ -32,7 +32,9 @@ public class NewGameTextButton extends GameTextButton {
             public void run() {
                 gameSettings.setLevel(1);
                 gameSettings.setAdsContinueCount(1);
-                Level.savedLevel.delete();
+                if(Level.savedLevel.exists()) {
+                    Level.savedLevel.delete();
+                }
                 ScreenManager.getInstance().showScreen(ScreenEnum.PLAY_GAME, ScreenTransitionEnum.COLOR_FADE_WHITE);
             }
         }));

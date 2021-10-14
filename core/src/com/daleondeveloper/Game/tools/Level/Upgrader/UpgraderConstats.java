@@ -6,6 +6,12 @@ public class UpgraderConstats {
     private static int REVIVE_COUNT = 0;
     private static int BLOCK_COUNT_TO_DELETE = 0;
 
+    public static void resetParameter(){
+        BLOCK_SPEED = 0;
+        BLOCK_TIME_SPAWN = 0;
+        REVIVE_COUNT = 0;
+        BLOCK_COUNT_TO_DELETE = 0;
+    }
 
     public static float getBlockSpeed() {
         return BLOCK_SPEED;
@@ -37,5 +43,13 @@ public class UpgraderConstats {
 
     public static void setBlockCountToDelete(int blockCountToDelete) {
         BLOCK_COUNT_TO_DELETE = blockCountToDelete;
+    }
+    public static String save() {
+        return "<upgradeConst " +
+                "  speed = \"" + getBlockSpeed() + "\"" +
+                " spawnTime = \"" + getBlockTimeSpawn() + "\""+
+                " countToDelete = \"" + getBlockCountToDelete() + "\""+
+                " revive = \"" + getReviveCount() + "\""+
+                "/>";
     }
 }
