@@ -25,19 +25,25 @@ public abstract class Upgrader {
         }
     }
     protected abstract void upgrade();
-    public  String toString(){
-        info = "";
-        if(nextUpgrader != null) {
-            info += nextUpgrader.toString() + "\n";
-        }
+
+    public String getInfo() {
         return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public  String toString(){
+        return null;
     }
 
     public Upgrader getNextUpgrader() {
         return nextUpgrader;
     }
 
-    public void setNextUpgrader(Upgrader nextUpgrader) {
+    public Upgrader setNextUpgrader(Upgrader nextUpgrader) {
         this.nextUpgrader = nextUpgrader;
+        return this;
     }
 }

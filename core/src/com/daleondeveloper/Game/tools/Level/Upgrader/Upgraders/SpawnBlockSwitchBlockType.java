@@ -25,21 +25,20 @@ public class SpawnBlockSwitchBlockType extends Upgrader {
 
     @Override
     protected void upgrade() {
+        int count = 1;
         List<BlockSpawner> blocks = gameWorld.getBlockController().getBlockSpawners();
         for (BlockSpawner spawner : blocks) {
+            if(spawner.getBlockType() == GameConstants.BLOCK_CLASSIC &&
+            count > 0){
+                count--;
+                continue;
+            }
                 if (spawner.getBlockType() == oldType) {
                     spawner.setBlockType(newType);
                     count--;
                 }
                 if (count < 0) break;
             }
-
-
-        if(oldType == GameConstants.BLOCK_CLASSIC){
-            gameWorld.getBlockController().addBlockSpawner(
-                    new BlockSpawner(gameWorld.getBlockController(),0,4)
-            );
-        }
     }
 
     @Override
