@@ -8,10 +8,10 @@ import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.AddBlockSpawn;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.BlockCountToDeleteLine;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.BlockSpeed;
+import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.ChangeTypeBlock;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.CreateBlock;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.DeleteBlock;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.ReviveCountUpdate;
-import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.SpawnBlockSwitchBlockType;
 import com.daleondeveloper.tools.GameConstants;
 
 
@@ -25,13 +25,13 @@ public class HardBadBuilder extends UpgraderBuilder {
     }
 
     protected void addUpgraders(){
-        increaseBlockCountToDeleteLine();
-        switchAllBlockToDark();
-        switchAllBlockToIce();
-        addFourLightBlock();
-        addFireBlockSpawn();
-        addLightBlockSpawn();
-        increaseReviveCountAndIncreaseBlockSpeed();
+//        increaseBlockCountToDeleteLine();
+//        switchAllBlockToDark();
+//        switchAllBlockToIce();
+//        addFourLightBlock();
+//        addFireBlockSpawn();
+//        addLightBlockSpawn();
+//        increaseReviveCountAndIncreaseBlockSpeed();
         deleteAllBlockAndAddToDarkSpawner();
     }
     private void increaseBlockCountToDeleteLine(){
@@ -42,12 +42,12 @@ public class HardBadBuilder extends UpgraderBuilder {
         }
     }
     private void switchAllBlockToDark(){
-        upgrader = new SpawnBlockSwitchBlockType(gameWorld,200,-1, GameConstants.BLOCK_DARK);
+        upgrader = new ChangeTypeBlock(gameWorld,200,-1, GameConstants.BLOCK_DARK);
         upgrader.setInfo("Замінити всі блоки на блоки тьми");
         upgraderList.add(upgrader);
     }
     private void switchAllBlockToIce(){
-        upgrader = new SpawnBlockSwitchBlockType(gameWorld,200,-1,GameConstants.BLOCK_SNOW);
+        upgrader = new ChangeTypeBlock(gameWorld,200,-1,GameConstants.BLOCK_SNOW);
         upgrader.setInfo("Замінити всі блоки на блоки льоду");
         upgraderList.add(upgrader);
     }
@@ -77,5 +77,6 @@ public class HardBadBuilder extends UpgraderBuilder {
         upgrader.setNextUpgrader(new AddBlockSpawn(gameWorld,GameConstants.BLOCK_DARK,6)).
         setNextUpgrader(new AddBlockSpawn(gameWorld,GameConstants.BLOCK_DARK, 7));
         upgrader.setInfo("Видалити всі блоки і додати два спавни темних блоків");
+        upgraderList.add(upgrader);
     }
 }

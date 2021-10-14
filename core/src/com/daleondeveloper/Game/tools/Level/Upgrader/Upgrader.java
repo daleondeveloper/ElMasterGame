@@ -44,6 +44,6 @@ public abstract class Upgrader {
 
     public Upgrader setNextUpgrader(Upgrader nextUpgrader) {
         this.nextUpgrader = nextUpgrader;
-        return this;
+        return nextUpgrader;
     }
 }

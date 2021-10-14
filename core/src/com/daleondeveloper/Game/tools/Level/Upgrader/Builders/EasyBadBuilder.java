@@ -67,8 +67,9 @@ public class EasyBadBuilder extends UpgraderBuilder {
         }
     }
     private void clearAllBlocksAndAddDarkBlockSpawn(){
-        upgrader = new DeleteBlock(gameWorld,gameWorld.getBlockController().getArrayBlock().size(),-1);
-        upgrader.setNextUpgrader(new AddBlockSpawn(gameWorld,GameConstants.BLOCK_DARK,8));
+        upgrader = new AddBlockSpawn(gameWorld,GameConstants.BLOCK_DARK,8);
+        upgrader.setNextUpgrader(new DeleteBlock(gameWorld,gameWorld.getBlockController().getArrayBlock().size(),-1)
+    );
         upgrader.setInfo("Видалити всі блоки і додати спавн темних блоків");
         upgraderList.add(upgrader);
     }

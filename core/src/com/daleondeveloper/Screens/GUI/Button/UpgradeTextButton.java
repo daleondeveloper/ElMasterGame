@@ -11,7 +11,7 @@ public class UpgradeTextButton extends GameTextButton {
     private Upgrader upgrader;
 
     public UpgradeTextButton(Upgrader upgrader) {
-        super(upgrader.toString(), Assets.getInstance().getAssetFonts().getSmall());
+        super(upgrader.getInfo(), Assets.getInstance().getAssetFonts().getSmall());
         this.upgrader = upgrader;
         gameSettings = GameSettings.getInstance();
     }

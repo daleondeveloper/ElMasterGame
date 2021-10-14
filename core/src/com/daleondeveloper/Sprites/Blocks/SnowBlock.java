@@ -11,6 +11,7 @@ public class SnowBlock extends Block {
     private float FREEZING_TIME;
 
     private float freezingTime;
+    private boolean isFreezingTimeIncreased;
 
 
     public SnowBlock(GameWorld gameWorld, BlockController blockController, float x, float y, float width, float height, float freezingTime) {
@@ -26,7 +27,7 @@ public class SnowBlock extends Block {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        freezeBlock(deltaTime);
+        checkBlockToFreez(deltaTime);
     }
     private void addColdEffect(){
         effect =effectManager.getPoolParticleEffect(ParticleEffectManager.COLD_BLOCK_EFFECT);
@@ -40,8 +41,8 @@ public class SnowBlock extends Block {
 
 
     }
-    private void freezeBlock(float deltaTime) {
-        boolean isFreezingTimeIncreased = false;
+    private void checkBlockToFreez(float deltaTime) {
+        isFreezingTimeIncreased = false;
 
         if (freezingTime < FREEZING_TIME) {
 //            int posMasY = (int) (getReturnCellsPositionY() / 10) - 15;
@@ -49,49 +50,19 @@ public class SnowBlock extends Block {
 
             if (gameGrid.getLeftBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLeftBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
-                !block.isDestroy() && !block.isDisposable()) {
-                    block.idle();
-                    block.stateIdle(0);
-                    if(!isFreezingTimeIncreased){
-                    freezingTime += deltaTime;
-                    isFreezingTimeIncreased = true;
-                    }
-                }
+                freezeBlock(block,deltaTime);
             }
             if (gameGrid.getRightBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getRightBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
-                        !block.isDestroy() && !block.isDisposable()) {
-                    block.idle();
-                    block.stateIdle(0);
-                    if(!isFreezingTimeIncreased) {
-                        freezingTime += deltaTime;
-                        isFreezingTimeIncreased = true;
-                    }
-                }
+                freezeBlock(block,deltaTime);
             }
             if (gameGrid.getLowerBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getLowerBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
-                        !block.isDestroy() && !block.isDisposable()) {
-                    block.idle();
-                    if(!isFreezingTimeIncreased) {
-                        freezingTime += deltaTime;
-                        isFreezingTimeIncreased = true;
-                    }
-                }
+                freezeBlock(block,deltaTime);
             }
             if (gameGrid.getTopBlockRelativeToObject(this) != null) {
                 Block block = gameGrid.getTopBlockRelativeToObject(this);
-                if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
-                        !block.isDestroy() && !block.isDisposable()) {
-                    block.idle();
-                    if(!isFreezingTimeIncreased) {
-                        freezingTime += deltaTime;
-                        isFreezingTimeIncreased = true;
-                    }
-                }
+                freezeBlock(block,deltaTime);
             }
         }
         if((FREEZING_TIME - freezingTime) < 7f){
@@ -102,6 +73,17 @@ public class SnowBlock extends Block {
         }
     }
 
+    private void freezeBlock(Block block, float deltaTime){
+        if (freezingTime < (FREEZING_TIME * block.coefficientFrostbite) &&
+                !block.isDestroy() && !block.isDisposable() && !block.isIFall()) {
+            block.idle();
+            block.stateIdle(0);
+            if(!isFreezingTimeIncreased){
+                freezingTime += deltaTime;
+                isFreezingTimeIncreased = true;
+            }
+        }
+    }
     public void setFreezingTime(float freezingTime){
         FREEZING_TIME = freezingTime;
     }

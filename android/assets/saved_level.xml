@@ -1,10 +1,8 @@
-<level number =  "1" score = "34" > 
-<hero positionX = "3" positionY = "1" /> 
-<block  type = "CLASSIC" positionX = "0" positionY = "0" /> 
-<block  type = "CLASSIC" positionX = "0" positionY = "1" /> 
+<level number =  "1" score = "2" > 
+<hero positionX = "5" positionY = "0" /> 
 <block  type = "CLASSIC" positionX = "3" positionY = "0" /> 
-<block  type = "CLASSIC" positionX = "9" positionY = "0" /> 
-<block  type = "CLASSIC" positionX = "0" positionY = "2" /> 
-<block  type = "CLASSIC" positionX = "6" positionY = "4" /> 
-<blockSpawner type = "0" value = "3"/><levelTasks type = "score" value = "10"/>
+<block  type = "CLASSIC" positionX = "0" positionY = "0" /> 
+<block  type = "CLASSIC" positionX = "2" positionY = "0" /> 
+<block  type = "CLASSIC" positionX = "1" positionY = "0" /> 
+<levelTasks type = "score" value = "10"/>
 </level>

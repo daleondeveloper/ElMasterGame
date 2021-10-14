@@ -21,8 +21,6 @@ public class AddBlockSpawn extends Upgrader {
 
     @Override
     protected void upgrade() {
-        gameWorld.getBlockController().addBlockSpawner(
-                new BlockSpawner(gameWorld.getBlockController(),type,time)
-        );
+        new BlockSpawner(gameWorld.getBlockController(),type,time);
     }
 }

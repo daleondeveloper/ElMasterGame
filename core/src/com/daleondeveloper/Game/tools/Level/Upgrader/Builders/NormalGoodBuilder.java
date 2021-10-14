@@ -6,7 +6,6 @@ import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderBuilder;
 import com.daleondeveloper.Game.tools.Level.Upgrader.UpgraderConstats;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.BlockSpawnTime;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.BlockSpeed;
-import com.daleondeveloper.Game.tools.Level.Upgrader.Upgraders.ChangeTypeBlock;
 
 
 public class NormalGoodBuilder extends UpgraderBuilder {
@@ -24,6 +23,5 @@ public class NormalGoodBuilder extends UpgraderBuilder {
         if(UpgraderConstats.getBlockTimeSpawn() > -4){
             upgraderList.add(new BlockSpawnTime(gameWorld, -0.5f));
         }
-        upgraderList.add(new ChangeTypeBlock(gameWorld,3,5));
     }
 }

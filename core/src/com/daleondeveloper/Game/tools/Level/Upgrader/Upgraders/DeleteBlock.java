@@ -34,13 +34,14 @@ public class DeleteBlock extends Upgrader {
 //                block.delete();
 //            }
 //        }
-        for(int i = 0; i < count; i ++){
-            Block block = blocks.get(rnd.nextInt(blocks.size()));
+        for(int i = 0; i < blocks.size(); i ++){
+            Block block = blocks.get(i);
             switch (type){
                 case GameConstants
                         .BLOCK_LIGHT : {
                     if(block instanceof LightBlock){
                         block.delete();
+                        count--;
                         continue;
                     }
                     break;
@@ -49,6 +50,7 @@ public class DeleteBlock extends Upgrader {
                         .BLOCK_SNOW : {
                     if(block instanceof SnowBlock){
                         block.delete();
+                        count--;
                         continue;
                     }
                     break;
@@ -57,6 +59,7 @@ public class DeleteBlock extends Upgrader {
                         .BLOCK_FIRE : {
                     if(block instanceof FireBlock){
                         block.delete();
+                        count--;
                         continue;
                     }
                     break;
@@ -65,6 +68,7 @@ public class DeleteBlock extends Upgrader {
                         .BLOCK_WATER : {
                     if(block instanceof WaterBlock){
                         block.delete();
+                        count--;
                         continue;
                     }
                     break;
@@ -73,15 +77,19 @@ public class DeleteBlock extends Upgrader {
                         .BLOCK_DARK : {
                     if(block instanceof DarkBlock){
                         block.delete();
+                        count--;
                         continue;
                     }
                     break;
                 }
-                default:{
+                case -1:{
                     block.delete();
+                    count--;
+                    continue;
                 }
 
             }
+            if(count < 0)break;
         }
         //gameWorld.getBlockController().setArrayBlock(blocks);
     }
