@@ -19,7 +19,8 @@ public class UpgradeLevelMenuFiller extends MenuFiller {
 
 
     public UpgradeLevelMenuFiller(MenuScreen menuScreen, ScoreCheker scoreCheker) {
-        super(menuScreen,"title.pause");
+        super(menuScreen,"title.upgradeLevel");
+        labelStyleTitle.font = Assets.getInstance().getAssetFonts().getNormal();
         this.scoreCheker = scoreCheker;
         assets = Assets.getInstance();
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();

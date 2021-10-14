@@ -61,4 +61,24 @@ public abstract  class MenuFiller {
         mainTable.row();
 
     }
+
+    public void setLabelStyleSmall(Label.LabelStyle labelStyleSmall) {
+        this.labelStyleSmall = labelStyleSmall;
+    }
+
+    public void setLabelStyleNormal(Label.LabelStyle labelStyleNormal) {
+        this.labelStyleNormal = labelStyleNormal;
+    }
+
+    public void setLabelStyleBig(Label.LabelStyle labelStyleBig) {
+        this.labelStyleBig = labelStyleBig;
+    }
+
+    public void setLabelStyleCredit(Label.LabelStyle labelStyleCredit) {
+        this.labelStyleCredit = labelStyleCredit;
+    }
+
+    public void setLabelStyleTitle(Label.LabelStyle labelStyleTitle) {
+        this.labelStyleTitle = labelStyleTitle;
+    }
 }

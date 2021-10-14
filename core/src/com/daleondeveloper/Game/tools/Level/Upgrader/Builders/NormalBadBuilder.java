@@ -39,7 +39,7 @@ public class NormalBadBuilder extends UpgraderBuilder {
     private void addDarkBlockSpawner(){
         if(gameWorld.getBlockController().getBlockSpawners().size() < 4) {
             upgrader = new AddBlockSpawn(gameWorld, GameConstants.BLOCK_DARK, 6);
-            upgrader.setInfo("Додати блок спавнер темних блоків");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.addDarkBlockSpawner"));
             upgraderList.add(upgrader);
         }
     }
@@ -47,21 +47,21 @@ public class NormalBadBuilder extends UpgraderBuilder {
         if(gameWorld.getBlockController().getBlockSpawners().size() < 4) {
             upgrader = new AddBlockSpawn(gameWorld, GameConstants.BLOCK_DARK, 4);
             upgrader.setNextUpgrader(new AddBlockSpawn(gameWorld,GameConstants.BLOCK_CLASSIC,7));
-            upgrader.setInfo("Додати 2 блок спавнери класичних блоків");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.addDarkBlockSpawner"));
             upgraderList.add(upgrader);
         }
     }
     private void addSnowBlockSpawner(){
         if(gameWorld.getBlockController().getBlockSpawners().size() < 4) {
             upgrader = new AddBlockSpawn(gameWorld, GameConstants.BLOCK_SNOW, 6);
-            upgrader.setInfo("Додати блок спавнер зимових блоків");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.addSnowBlockSpawner"));
             upgraderList.add(upgrader);
         }
     }
     private void reduceReviveCount(){
         if(UpgraderConstats.getReviveCount() > -1){
             upgrader = new ReviveCountUpdate(gameWorld,-1);
-            upgrader.setInfo("Зменшити кількість воскресінь");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.reduceReviveCount"));
             upgraderList.add(upgrader);
         }
     }
@@ -69,35 +69,38 @@ public class NormalBadBuilder extends UpgraderBuilder {
         if(UpgraderConstats.getBlockTimeSpawn() > -4 && UpgraderConstats.getBlockSpeed() > -50){
             upgrader = new BlockSpawnTime(gameWorld, -0.5f);
             upgrader.setNextUpgrader(new BlockSpeed(gameWorld, -10f));
-            upgrader.setInfo("Зменшити час створення блоків і збільшити їх швидкість");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.reduceBlockTimeSpawnAndUpBlockSpeed"));
             upgraderList.add(upgrader);
         }
     }
     private void upBlockCountToDeleteLine(){
         if(UpgraderConstats.getBlockCountToDelete() < 10){
             upgrader = new BlockCountToDeleteLine(gameWorld,1);
-            upgrader.setInfo("Збільшити кількість блоків для стирання на 1");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.upBlockCountToDeleteLine"));
             upgraderList.add(upgrader);
         }
     }
     private void changeTwoBlockSpawnToDark(){
         if(gameWorld.getBlockController().getBlockSpawners().size() > 2){
             upgrader = new SpawnBlockSwitchBlockType(gameWorld,2,-1,GameConstants.BLOCK_DARK);
-            upgrader.setInfo("Замінити два блок спавни на темні");
+            upgrader.setInfo(i18NBundle.format("upgradeNormal.changeTwoBlockSpawnToDark"));
             upgraderList.add(upgrader);
         }
     }
     private void deleteAllSpawnerAndAddFire(){
         upgrader = new SpawnBlockDelete(gameWorld,gameWorld.getBlockController().getBlockSpawners().size(),-1);
         upgrader.setNextUpgrader(new AddBlockSpawn(gameWorld,GameConstants.BLOCK_FIRE,1));
-        upgrader.setInfo("Замінити стихійні спавнери блоків на спавнер вогняних блоків");
+        upgrader.setInfo(i18NBundle.format("upgradeNormal.deleteAllSpawnerAndAddFire"));
+        upgraderList.add(upgrader);
     }
     private void switchDarkBlockToIce(){
         upgrader = new SpawnBlockSwitchBlockType(gameWorld,100,GameConstants.BLOCK_DARK,GameConstants.BLOCK_SNOW);
-        upgrader.setInfo("Замінити блоки тьми на блоки льоду");
+        upgrader.setInfo(i18NBundle.format("upgradeNormal.switchDarkBlockToIce"));
+        upgraderList.add(upgrader);
     }
     private void switchIceBlockToDark(){
         upgrader = new SpawnBlockSwitchBlockType(gameWorld,100,GameConstants.BLOCK_SNOW,GameConstants.BLOCK_DARK);
-        upgrader.setInfo("Замінити блоки льоду на блоки тьми");
+        upgrader.setInfo(i18NBundle.format("upgradeNormal.switchIceBlockToDark"));
+        upgraderList.add(upgrader);
     }
 }

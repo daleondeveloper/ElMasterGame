@@ -1,5 +1,7 @@
 package com.daleondeveloper.Game.tools.Level.Upgrader;
 
+import com.badlogic.gdx.utils.I18NBundle;
+import com.daleondeveloper.Assets.Assets;
 import com.daleondeveloper.Game.GameWorld;
 
 public abstract class Upgrader {
@@ -8,7 +10,6 @@ public abstract class Upgrader {
     protected GameWorld gameWorld;
     private Upgrader nextUpgrader;
     protected String info;
-
 
     public Upgrader(GameWorld gameWorld){
         this.gameWorld = gameWorld;
