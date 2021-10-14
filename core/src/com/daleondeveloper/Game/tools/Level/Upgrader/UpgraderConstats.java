@@ -47,7 +47,7 @@ public class UpgraderConstats {
     public static String save() {
         return "<upgradeConst " +
                 "  speed = \"" + getBlockSpeed() + "\"" +
-                " spawnTime = \"" + getBlockTimeSpawn() + "\""+
+                " time = \"" + getBlockTimeSpawn() + "\""+
                 " countToDelete = \"" + getBlockCountToDelete() + "\""+
                 " revive = \"" + getReviveCount() + "\""+
                 "/>";

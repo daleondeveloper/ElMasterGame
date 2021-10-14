@@ -23,15 +23,15 @@ public class EasyBadBuilder extends UpgraderBuilder {
 
     protected void addUpgraders(){
         increaseBlockSpeed();
-        decreaseBlockTimeSpawn();
-        addClassicBlockSpawn();
-        decreaseBlockTimeSpawnAndDeacreaseBlockSpeed();
-        increaseBlockTimeSpawnAndIncreaseBlockSpeed();
-        clearAllBlocksAndAddDarkBlockSpawn();
+//        decreaseBlockTimeSpawn();
+//        addClassicBlockSpawn();
+//        decreaseBlockTimeSpawnAndDeacreaseBlockSpeed();
+//        increaseBlockTimeSpawnAndIncreaseBlockSpeed();
+//        clearAllBlocksAndAddDarkBlockSpawn();
     }
     private void increaseBlockSpeed(){
         if(UpgraderConstats.getBlockSpeed() > -50){
-            upgrader = new BlockSpeed(gameWorld, -10f);
+            upgrader = new BlockSpeed(gameWorld, -50f);
             upgrader.setInfo("Збільшити швидкість блоків");
             upgraderList.add(upgrader);
         }

@@ -93,9 +93,10 @@ public class GameWorld {
         blockTouchLineCheсker = new BlockTouchLineCheсker(blockController,gameGrid);
         if(level == -1){
             this.level = levelGenerator.getLevelNumber();
+            levelGenerator.setUpgradeConstants();
+
         }
         scoreCheker = new ScoreCheker(playScreen,this);
-
         gameSettings.setAdsContinueCount(1);
 
         playScreen.getHud().setScore(levelGenerator.getScore());
