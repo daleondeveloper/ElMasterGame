@@ -88,8 +88,9 @@ public class NormalBadBuilder extends UpgraderBuilder {
         }
     }
     private void deleteAllSpawnerAndAddFire(){
-        upgrader = new SpawnBlockDelete(gameWorld,gameWorld.getBlockController().getBlockSpawners().size(),-1);
-        upgrader.setNextUpgrader(new AddBlockSpawn(gameWorld,GameConstants.BLOCK_FIRE,1));
+        upgrader =new AddBlockSpawn(gameWorld,GameConstants.BLOCK_FIRE,12) ;
+        upgrader.
+        setNextUpgrader(new SpawnBlockDelete(gameWorld,gameWorld.getBlockController().getBlockSpawners().size(),-1));
         upgrader.setInfo(i18NBundle.format("upgradeNormal.deleteAllSpawnerAndAddFire"));
         upgraderList.add(upgrader);
     }

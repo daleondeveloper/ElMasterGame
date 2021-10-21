@@ -63,7 +63,7 @@ public class BlockController implements ElementSaved {
         }
     }
     public Block addBlockInRandomPosition (int blockType){
-        return addBlock(getRandomXBlockCordinateToCreate(),300,blockType);
+        return addBlock(getRandomXBlockCordinateToCreate(),320,blockType);
     }
     public Block addBlock(float x, float y){
         return addBlock(x,y,0);

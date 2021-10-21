@@ -1,4 +1,14 @@
 <levelUpgrade>
+    <level22 type = "hardBad" score = "999999"/>
+    <level21 type = "hardBad" score = "999999"/>
+    <level20 type = "hardBad" score = "999999"/>
+    <level19 type = "hardBad" score = "1000"/>
+    <level18 type = "easyBad" score = "900"/>
+    <level17 type = "normalBad" score = "800"/>
+    <level16 type = "hardBad" score = "700"/>
+    <level15 type = "hardBad" score = "650"/>
+    <level14 type = "normalBad" score = "600"/>
+    <level13 type = "easyBad" score = "550"/>
     <level12 type = "hardBad" score = "500"/>
     <level11 type = "hardBad" score = "450"/>
     <level10 type = "normalBad" score = "400"/>

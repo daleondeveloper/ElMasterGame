@@ -19,7 +19,9 @@ public class BlockSpawner implements ElementSaved {
     }
     public void update(float deltaTime){
         timeFromLastSpawn += deltaTime;
-        if(timeFromLastSpawn > (timeToSpawn + UpgraderConstats.getBlockTimeSpawn())){
+        float time = (timeToSpawn + UpgraderConstats.getBlockTimeSpawn());
+        if(time < 1) {time = 1;};
+        if(timeFromLastSpawn > time){
             timeFromLastSpawn = 0;
             blockController.addBlockInRandomPosition(blockType);
         }

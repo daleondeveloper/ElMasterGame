@@ -4,6 +4,7 @@ import com.daleondeveloper.Game.GameWorld;
 import com.daleondeveloper.Game.tools.Level.Upgrader.Upgrader;
 import com.daleondeveloper.Sprites.BlockControllers.BlockSpawner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -22,7 +23,8 @@ public class SpawnBlockDelete extends Upgrader {
 
     @Override
     protected void upgrade() {
-        List<BlockSpawner> blocks = gameWorld.getBlockController().getBlockSpawners();
+        List<BlockSpawner> blocks = new ArrayList<BlockSpawner>();
+                blocks.addAll(gameWorld.getBlockController().getBlockSpawners());
         if(count > blocks.size()){
             gameWorld.getBlockController().cleatBlockSpawner();
 
@@ -40,9 +42,7 @@ public class SpawnBlockDelete extends Upgrader {
         }
 
         if(gameWorld.getBlockController().getBlockSpawners().isEmpty()){
-            gameWorld.getBlockController().addBlockSpawner(
-                    new BlockSpawner(gameWorld.getBlockController(),0,4)
-            );
+                    new BlockSpawner(gameWorld.getBlockController(),0,4);
         }
     }
 

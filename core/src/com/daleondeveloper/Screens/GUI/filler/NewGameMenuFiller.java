@@ -9,7 +9,6 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.Settings.GameSettings;
 import com.daleondeveloper.Game.tools.Level.Level;
-import com.daleondeveloper.Screens.GUI.Button.ChooseCheckpointButton;
 import com.daleondeveloper.Screens.GUI.Button.ContinueTextButton;
 import com.daleondeveloper.Screens.GUI.Button.NewGameTextButton;
 import com.daleondeveloper.Screens.GUI.Button.TutorialTextButton;
@@ -76,8 +75,8 @@ public class NewGameMenuFiller extends MenuFiller {
         }
         continueGameTable.add(new NewGameTextButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
         continueGameTable.row();
-        continueGameTable.add(new ChooseCheckpointButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
-        continueGameTable.row();
+//        continueGameTable.add(new ChooseCheckpointButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
+//        continueGameTable.row();
         continueGameTable.add(new TutorialTextButton(menuScreen)).pad(10).width(GameConstants.BUTTON_WIDTH).height(GameConstants.BUTTON_HEIGHT).center();;
 
     }

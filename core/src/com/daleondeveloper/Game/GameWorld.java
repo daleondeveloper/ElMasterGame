@@ -162,7 +162,7 @@ public class GameWorld {
         scoreCheker.checkScore(playScreen.getHud().getScore());
     }
     public int nextLvl() {
-        if (level < Level.maxLevel - 1) {
+        if (level < GameConstants.MAX_LEVEL) {
             level++;
             scoreCheker.getNewChecker();
 //            levelGenerator = new Level(++level);

@@ -22,7 +22,6 @@ public class HighScoreMenuFiller extends MenuFiller  {
     private int pageShow;
 
     private Label bestHighScoreLabel;
-    private Label modeNameLabel;
 
 
     public HighScoreMenuFiller( MenuScreen menuScreen){
@@ -43,7 +42,6 @@ public class HighScoreMenuFiller extends MenuFiller  {
 
     @Override
     protected void defineElements() {
-        modeNameLabel = new Label(i18NGameThreeBundle.format("gameModeChangeScreen.classicMode"), labelStyleBig);
         bestHighScoreLabel = new Label(String.valueOf(prefs.getHighScoreClassic()), labelStyleBig);
     }
 
@@ -59,14 +57,11 @@ public class HighScoreMenuFiller extends MenuFiller  {
         //Додавання очків до таблиці
         Table scoreTable = new Table();
         mainTable.add(scoreTable).grow();
-        scoreTable.add(modeNameLabel);
-        scoreTable.row();
         scoreTable.add(bestHighScoreLabel);
         mainTable.row();
     }
 
     private void changeScore() {
-       modeNameLabel.setText("Classic");
        bestHighScoreLabel.setText(prefs.getHighScoreClassic());
        }
 }
