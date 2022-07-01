@@ -15,6 +15,7 @@ import com.daleondeveloper.Assets.guiI.AssetGUI;
 import com.daleondeveloper.Game.DebugConstants;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
 import com.daleondeveloper.Screens.Play.PlayScreen;
@@ -62,8 +63,8 @@ public class Hud extends GUIOverlayAbstractScreen {
 
 
 
-    public Hud(ElMaster game, PlayScreen playScreen) {
-        super(game);
+    public Hud(ElMaster game, PlayScreen playScreen, GUIAbstractScreen guiAbstractScreen) {
+        super(game,guiAbstractScreen);
 
         this.playScreen = playScreen;
         i18NGameThreeBundle = Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle();

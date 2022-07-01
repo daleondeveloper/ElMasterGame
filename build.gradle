@@ -5,27 +5,17 @@ project.ext {
     versionPatch = 4
 }
 
-// Returns date (String)
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmmss')
-    return formattedDate
-}
-
 
 buildscript {
-    
-
     repositories {
         mavenLocal()
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.6'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.5'
@@ -51,7 +41,6 @@ allprojects {
     }
 
     repositories {
-        jcenter()
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
@@ -69,7 +58,6 @@ project(":desktop") {
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        implementation "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-controllers-desktop:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-controllers-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
@@ -96,7 +84,7 @@ project(":android") {
         implementation 'com.google.firebase:firebase-database'
         implementation platform('com.google.firebase:firebase-bom:26.7.0')
 
-        implementation 'com.android.support:multidex:1.0.3'
+        implementation 'androidx.multidex:multidex:2.0.1'
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -111,12 +99,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
         implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
-        implementation "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-armeabi"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-armeabi-v7a"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-arm64-v8a"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86"
-        natives "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-x86_64"
+
         implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
 
@@ -143,29 +126,6 @@ project(":ios") {
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
         implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
         implementation "com.badlogicgames.gdx:gdx-bullet-platform:$gdxVersion:natives-ios"
-        
-    }
-}
-
-project(":html") {
-    apply plugin: "gwt"
-    apply plugin: "war"
-
-
-    dependencies {
-        implementation project(":core")
-        implementation "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
-
-        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
-        implementation "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-controllers:$gdxVersion:sources"
-        implementation "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion"
-        implementation "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion:sources"
         
     }
 }

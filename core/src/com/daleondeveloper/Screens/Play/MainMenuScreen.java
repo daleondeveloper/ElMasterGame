@@ -17,9 +17,12 @@ import com.daleondeveloper.Effects.ParticleEffectActor;
 import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Game.Settings.GameSettings;
+import com.daleondeveloper.Screens.GUI.Button.GameButton;
 import com.daleondeveloper.Screens.GUI.GatesScreen;
 import com.daleondeveloper.Screens.GUI.MenuScreen;
+import com.daleondeveloper.Screens.GUI.filler.HelpMenuButton;
 import com.daleondeveloper.Screens.GUI.filler.HelpMenuFiller;
+import com.daleondeveloper.Screens.GUI.screen.HelpOverlayScreen;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
 import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.ListenerHelper;
@@ -59,10 +62,11 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private Image portalImage;
     private Image gates;
     private ImageButton buttonStart;
-    private ImageButton buttonHelp;
+//    private ImageButton buttonHelp;
     private ImageButton buttonSettings;
     private ImageButton buttonHighScore;
     private Image buttonCredit;
+    private GameButton gameButton;
 
     private Image rightBowl;
     private Image rightBowlUp;
@@ -89,7 +93,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         i18NGameThreeBundle = assets.getI18NElementMaster().getI18NElmasterBundle();
         prefs = GameSettings.getInstance();
         menuScreen = new MenuScreen(game,this);
-        gatesScreen = new GatesScreen(game);
+        gatesScreen = new GatesScreen(game,this);
 
         pef = ParticleEffectManager.getInstance();
 
@@ -98,6 +102,8 @@ public class MainMenuScreen extends GUIAbstractScreen {
         labelStyleGameTitle = new Label.LabelStyle();
         labelStyleGameTitle.font = assets.getAssetFonts().getGameTitle();
 
+        gameButton = new HelpMenuButton(new TextureRegionDrawable(Assets.getInstance().getAssetGUI().getButtonHelp()),
+                new HelpOverlayScreen(game,this));
         // Play menu music
         AudioManager.getInstance().playMusic(Assets.getInstance().getAssetMusic().getSongMainMenu());
     }
@@ -123,12 +129,12 @@ public class MainMenuScreen extends GUIAbstractScreen {
         }
 
         menuScreen.update(deltaTime);
-
+        updateOverlay(deltaTime);
         //render
         stage.draw();
 
         menuScreen.render();
-
+        renderOverlay();
        // magicSpell.draw(stage.get,Gdx.graphics.getDeltaTime()); // draw it
     }
 
@@ -230,7 +236,7 @@ public class MainMenuScreen extends GUIAbstractScreen {
         stage.addActor(rightBowlFireActor);
         stage.addActor(rightBowlUp);
         stage.addActor(gameTitle);
-        stage.addActor(buttonHelp);
+        stage.addActor(gameButton);
         stage.addActor(buttonSettings);
         stage.addActor(buttonHighScore);
         stage.addActor(buttonStart);
@@ -246,8 +252,8 @@ public class MainMenuScreen extends GUIAbstractScreen {
     private void defineButtons() {
         buttonStart = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonStart()),
                 new TextureRegionDrawable(assetGUI.getButtonStart()));
-        buttonHelp = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
-                new TextureRegionDrawable(assetGUI.getButtonHelp()));
+//        buttonHelp = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHelp()),
+//                new TextureRegionDrawable(assetGUI.getButtonHelp()));
         buttonHighScore = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonHighScore()),
                 new TextureRegionDrawable(assetGUI.getButtonHighScore()));
         buttonSettings = new ImageButton(new TextureRegionDrawable(assetGUI.getButtonSettings()),
@@ -263,14 +269,14 @@ public class MainMenuScreen extends GUIAbstractScreen {
                 menuScreen.setNewGameMenuFiller();
             }
         }));
-        buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
-            @Override
-            public void run() {
-                setStatePaused();
-                menuScreen.setHelpScreen(HelpMenuFiller.HELP_TYPE_SHOW.GAME_PLAYING);
-
-            }
-        }));
+//        buttonHelp.addListener(ListenerHelper.runnableListener(new Runnable() {
+//            @Override
+//            public void run() {
+//                setStatePaused();
+//                menuScreen.setHelpScreen(HelpMenuFiller.HELP_TYPE_SHOW.GAME_PLAYING);
+//
+//            }
+//        }));
          buttonHighScore.addListener(ListenerHelper.runnableListenerTouchDown(new Runnable() {
             @Override
             public void run() {
@@ -365,10 +371,10 @@ public class MainMenuScreen extends GUIAbstractScreen {
         buttonHighScore.setHeight(75);
         buttonHighScore.setY(840 - 455 - 75);
 
-        buttonHelp.setWidth(75);
-        buttonHelp.setX(249 + offSetX);
-        buttonHelp.setHeight(75);
-        buttonHelp.setY(840 - 378 - 75);
+        gameButton.setWidth(75);
+        gameButton.setX(249 + offSetX);
+        gameButton.setHeight(75);
+        gameButton.setY(840 - 378 - 75);
 
         buttonCredit.setWidth(64);
         buttonCredit.setHeight(64);

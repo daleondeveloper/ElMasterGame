@@ -69,7 +69,7 @@ public class MenuScreen extends GUIOverlayAbstractScreen {
     private Table windowTable;
 
     public MenuScreen (ElMaster game, GUIAbstractScreen guiAbstractScreen){
-        super(game);
+        super(game,guiAbstractScreen);
 
         this.guiAbstractScreen  = guiAbstractScreen;
 

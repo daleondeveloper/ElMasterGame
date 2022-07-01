@@ -50,11 +50,11 @@ public class PlayScreen extends GUIAbstractScreen {
         super(game);
 
 
-        hud = new Hud(game,this);
+        hud = new Hud(game,this,this);
         teachingHud = new TeachingHud(game,this);
         menuScreen = new MenuScreen(game,this);
         backgroundScreen = new BackgroundScreen(game,this);
-        gatesScreen = new GatesScreen(game);
+        gatesScreen = new GatesScreen(game,this);
         gameStart = false;
         pef = ParticleEffectManager.getInstance();
 

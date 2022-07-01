@@ -27,7 +27,7 @@ public class BackgroundScreen extends GUIOverlayAbstractScreen {
     private Image fog_right;
 
     public BackgroundScreen(ElMaster game, PlayScreen playScreen) {
-        super(game);
+        super(game,playScreen);
 
         this.playScreen = playScreen;
         assets = Assets.getInstance();

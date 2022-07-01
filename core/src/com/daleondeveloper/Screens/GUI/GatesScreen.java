@@ -10,6 +10,7 @@ import com.daleondeveloper.Effects.ParticleEffectActor;
 import com.daleondeveloper.Effects.ParticleEffectManager;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.Screens.GUI.widget.AnimatedActor;
+import com.daleondeveloper.Screens.GUIAbstractScreen;
 import com.daleondeveloper.Screens.GUIOverlayAbstractScreen;
 
 //Екран відповідає за відображення Воріт Драконів і вогнів
@@ -42,8 +43,8 @@ public class GatesScreen extends GUIOverlayAbstractScreen {
     private ParticleEffectActor rightBowlFireActor;
     private AnimatedActor portalAnimatedActor;
 
-    public GatesScreen(ElMaster game){
-        super(game);
+    public GatesScreen(ElMaster game, GUIAbstractScreen guiAbstractScreen){
+        super(game,guiAbstractScreen);
 
         assets = Assets.getInstance();
         assetGates = assets.getAssetGates();

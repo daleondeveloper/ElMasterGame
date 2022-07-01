@@ -10,6 +10,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.daleondeveloper.Game.ElMaster;
 import com.daleondeveloper.tools.AudioManager;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public abstract class GUIAbstractScreen extends AbstractScreen {
     private static final String TAG = GUIAbstractScreen.class.getName();
@@ -23,13 +28,14 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
     protected OrthographicCamera guiCamera;
     protected Viewport guiViewport;
     protected Stage stage;
+    protected Map<String,GUIOverlayAbstractScreen> guiOverlayAbstractScreenList;
 
     public GUIAbstractScreen(ElMaster game) {
         super(game);
         guiScreenState = GUIScreenState.RUNNING;
         guiCamera = new OrthographicCamera();
         guiViewport = new ExtendViewport(ElMaster.APPLICATION_WIDTH, ElMaster.APPLICATION_HEIGHT, guiCamera);
-
+        guiOverlayAbstractScreenList = new HashMap<String, GUIOverlayAbstractScreen>();
         /* Internally calls guiViewport.update() (see {@link .game.GameWorld} and
          * this.resize(int width, int height)) */
         stage = new Stage(guiViewport, game.getGuiBatch());
@@ -112,10 +118,28 @@ public abstract class GUIAbstractScreen extends AbstractScreen {
     protected abstract void renderLogic();
     protected abstract void goBack();
 
+    protected void updateOverlay(float deltaTime){
+        for(GUIOverlayAbstractScreen guiOverlayAbstractScreen : guiOverlayAbstractScreenList.values()){
+            guiOverlayAbstractScreen.update(deltaTime);
+        }
+    }
+    protected void renderOverlay(){
+        for(GUIOverlayAbstractScreen guiOverlayAbstractScreen : guiOverlayAbstractScreenList.values()){
+            guiOverlayAbstractScreen.render();
+        }
+    }
+
     public void setStatePaused(){
         guiScreenState = GUIScreenState.PAUSED;
     }
     public void setStateRunning(){
         guiScreenState = GUIScreenState.RUNNING;
+    }
+
+    public void addOverlayScreen(String name,GUIOverlayAbstractScreen guiOverlayAbstractScreen){
+        guiOverlayAbstractScreenList.put(name,guiOverlayAbstractScreen);
+    }
+    public void deleteOverlayScreenByName(String name){
+        guiOverlayAbstractScreenList.remove(name);
     }
 }

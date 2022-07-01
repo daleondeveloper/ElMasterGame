@@ -56,7 +56,7 @@ public class TeachingHud extends GUIOverlayAbstractScreen {
 
 
     public TeachingHud(ElMaster game, PlayScreen playScreen) {
-        super(game);
+        super(game,playScreen);
 
         this.playScreen = playScreen;
         i18NGameThreeBundle = Assets.getInstance().getI18NElementMaster().getI18NElmasterBundle();

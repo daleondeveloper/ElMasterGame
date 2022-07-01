@@ -1,8 +1,10 @@
 package com.daleondeveloper.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -16,6 +18,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public abstract class GUIOverlayAbstractScreen implements Disposable {
     private static final String TAG = GUIOverlayAbstractScreen.class.getName();
 
+    protected String screenId;
     private static final float STAGE_ANIM_DURATION = 1.0f;
 
     protected ElMaster game;
@@ -23,12 +26,17 @@ public abstract class GUIOverlayAbstractScreen implements Disposable {
     protected OrthographicCamera guiOverlayCamera;
     protected Viewport guiOverlayViewport;
     protected Stage stage;
+    protected GUIAbstractScreen guiAbstractScreen;
+    protected InputProcessor previsionInputProcessor;
 
-    public GUIOverlayAbstractScreen(ElMaster game) {
+
+    public GUIOverlayAbstractScreen(ElMaster game,GUIAbstractScreen guiAbstractScreen) {
         this.game = game;
+        screenId = TAG + MathUtils.random();
    //     this.playServices = game.getPlayServices();
         guiOverlayCamera = new OrthographicCamera();
         guiOverlayViewport = new ExtendViewport(ElMaster.APPLICATION_WIDTH, ElMaster.APPLICATION_HEIGHT, guiOverlayCamera);
+        this.guiAbstractScreen = guiAbstractScreen;
 
         /** Internally calls guiOverlayViewport.update() (see {@link uy.com.agm.gamefour.game.GameWorld} and
          * this.resize(int width, int height)) */
@@ -46,6 +54,7 @@ public abstract class GUIOverlayAbstractScreen implements Disposable {
     @Override
     public void dispose() {
         stage.dispose();
+        Gdx.input.setInputProcessor(previsionInputProcessor);
     }
 
     public InputProcessor getInputProcessor() {
@@ -67,8 +76,13 @@ public abstract class GUIOverlayAbstractScreen implements Disposable {
             }
         })));
     }
-
+    public void show(){
+        previsionInputProcessor = Gdx.input.getInputProcessor();
+        Gdx.input.setInputProcessor(getInputProcessor());
+        guiAbstractScreen.addOverlayScreen(screenId,this);
+    }
     public abstract void build();
     public abstract void update(float deltaTime);
     public abstract void render();
+
 }

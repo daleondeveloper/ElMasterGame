@@ -1,52 +1,40 @@
 background-0.png
-size: 2048, 1680
+size: 1655, 1269
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 background_fog
   rotate: false
-  xy: 0, 840
-  size: 2046, 840
+  xy: 631, 1
+  size: 1023, 421
   orig: 6063, 840
-  offset: 0, 0
+  offset: 0, 419
   index: 1
 background_fog
   rotate: false
-  xy: 0, 0
-  size: 2048, 840
+  xy: 1, 847
+  size: 1026, 421
   orig: 6063, 840
-  offset: 2037, 0
+  offset: 2037, 419
   index: 2
-
-background-1.png
-size: 1975, 1680
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 background_fog
   rotate: false
-  xy: 0, 0
-  size: 1975, 840
+  xy: 1, 424
+  size: 988, 421
   orig: 6063, 840
-  offset: 4088, 0
+  offset: 5075, 419
   index: 3
-background_fon
-  rotate: false
-  xy: 0, 840
-  size: 1260, 840
-  orig: 1260, 840
-  offset: 0, 0
-  index: -1
-
-background-2.png
-size: 1260, 734
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
 background_fog_down
   rotate: false
-  xy: 0, 0
-  size: 1260, 734
+  xy: 1, 1
+  size: 628, 366
   orig: 1260, 734
+  offset: 0, 0
+  index: -1
+background_fon
+  rotate: false
+  xy: 991, 424
+  size: 631, 421
+  orig: 1260, 840
   offset: 0, 0
   index: -1

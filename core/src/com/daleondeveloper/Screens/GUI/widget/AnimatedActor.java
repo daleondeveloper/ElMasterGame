@@ -34,7 +34,7 @@ public class AnimatedActor extends Actor {
     private void init(Animation<TextureRegion> animation, boolean randomStart, float scale, Color tint) {
         this.animation = animation;
         stateTime = randomStart ? MathUtils.random(0, animation.getAnimationDuration()) : 0;
-        textureRegion = (TextureRegion) animation.getKeyFrame(0);
+        textureRegion = (TextureRegion) animation.getKeyFrame(0f);
         setSize(textureRegion.getRegionWidth() * scale, textureRegion.getRegionHeight() * scale);
         this.tint = tint;
     }

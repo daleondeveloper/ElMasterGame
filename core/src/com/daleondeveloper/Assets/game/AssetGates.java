@@ -51,27 +51,27 @@ public class AssetGates implements IAssetSprite {
 
         dragonName = DragonName.BLACK_DRAGON;
         staticMain = atlasGates.findRegion("gates_stairs_colum&dragon");
-        closedGates = atlasGates.findRegion("open/gate_open",1);
+        closedGates = atlasGates.findRegion("gate_open",1);
         play_background =atlasGates.findRegion("play_block_background");
 
         //animation
-        regions = atlasGates.findRegions("portal/portal");
-        portal =new Animation<TextureRegion>(2.5f/24.0f,regions, Animation.PlayMode.LOOP);
+        regions = atlasGates.findRegions("portal");
+        portal =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
         //BOWL
-        leftFireBowl = atlasGates.findRegion("bowl/left/left_bowl_back");
-        leftFireBowlUp = atlasGates.findRegion("bowl/left/left_bowl_up");
+        leftFireBowl = atlasGates.findRegion("left/left_bowl_back");
+        leftFireBowlUp = atlasGates.findRegion("left/left_bowl_up");
 
-        rightFireBowl = atlasGates.findRegion("bowl/right/right_bowl_back");
-        rightFireBowlUp = atlasGates.findRegion("bowl/right/right_bowl_up");
+        rightFireBowl = atlasGates.findRegion("right/right_bowl_back");
+        rightFireBowlUp = atlasGates.findRegion("right/right_bowl_up");
 
         //gates
         regions = atlasGates.findRegions("open/gate_open");
         openGates =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.NORMAL);
         regions.clear();
 
-        regions = atlasGates.findRegions("open/gate_open");
+        regions = atlasGates.findRegions("gate_open");
         closeGates =new Animation<TextureRegion>(0.5f/24.0f,regions, Animation.PlayMode.REVERSED);
         regions.clear();
 
@@ -110,38 +110,38 @@ public class AssetGates implements IAssetSprite {
         Array<TextureAtlas.AtlasRegion> regions;
 
         //dragon
-        regions = atlasGates.findRegions("eyes_backlight/right/backlight_dragon_right");
+        regions = atlasGates.findRegions("right/backlight_dragon_right");
         rightDragonEyes =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
-        regions = atlasGates.findRegions("eyes_backlight/left/backlight_dragon_left");
+        regions = atlasGates.findRegions("left/backlight_dragon_left");
         leftDragonEyes =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
-        regions = atlasGates.findRegions("eyes_backlight/main/backlight_dragon_main");
+        regions = atlasGates.findRegions("main/backlight_dragon_main");
         mainDragonEyes =new Animation(0.5f/24.0f,regions, Animation.PlayMode.LOOP);
         regions.clear();
 
     }
     private void redDragon(TextureAtlas atlasGates){
-        redDragonHead = atlasGates.findRegion("dragon/red/red_dragon_head");
-        redDragonLeftHandWithSphere = atlasGates.findRegion("dragon/red/red_dragon_left_hand_sphere");
-        redDragonRightHandWithSphere = atlasGates.findRegion("dragon/red/red_dragon_right_hand_sphere");
+        redDragonHead = atlasGates.findRegion("red/red_dragon_head");
+        redDragonLeftHandWithSphere = atlasGates.findRegion("red/red_dragon_left_hand_sphere");
+        redDragonRightHandWithSphere = atlasGates.findRegion("red/red_dragon_right_hand_sphere");
     }
     private void yellowDragon(TextureAtlas atlasGates){
-        yellowDragonHead = atlasGates.findRegion("dragon/yellow/yellow_dragon_head");
-        yellowDragonLeftHandWithSphere = atlasGates.findRegion("dragon/yellow/yellow_dragon_left_hand_sphere");
-        yellowDragonRightHandWithSphere = atlasGates.findRegion("dragon/yellow/yellow_dragon_right_hand_sphere");
+        yellowDragonHead = atlasGates.findRegion("yellow/yellow_dragon_head");
+        yellowDragonLeftHandWithSphere = atlasGates.findRegion("yellow/yellow_dragon_left_hand_sphere");
+        yellowDragonRightHandWithSphere = atlasGates.findRegion("yellow/yellow_dragon_right_hand_sphere");
     }
     private void blueDragon(TextureAtlas atlasGates){
-        blueDragonHead = atlasGates.findRegion("dragon/blue/blue_dragon_head");
-        blueDragonLeftHandWithSphere = atlasGates.findRegion("dragon/blue/blue_dragon_left_hand_sphere");
-        blueDragonRightHandWithSphere = atlasGates.findRegion("dragon/blue/blue_dragon_right_hand_sphere");
+        blueDragonHead = atlasGates.findRegion("blue/blue_dragon_head");
+        blueDragonLeftHandWithSphere = atlasGates.findRegion("blue/blue_dragon_left_hand_sphere");
+        blueDragonRightHandWithSphere = atlasGates.findRegion("blue/blue_dragon_right_hand_sphere");
     }
     private void blackDragon(TextureAtlas atlasGates){
-        blackDragonHead = atlasGates.findRegion("dragon/black/black_dragon_head");
-        blackDragonLeftHandWithSphere = atlasGates.findRegion("dragon/black/black_dragon_left_hand_sphere");
-        blackDragonRightHandWithSphere = atlasGates.findRegion("dragon/black/black_dragon_right_hand_sphere");
+        blackDragonHead = atlasGates.findRegion("black/black_dragon_head");
+        blackDragonLeftHandWithSphere = atlasGates.findRegion("black/black_dragon_left_hand_sphere");
+        blackDragonRightHandWithSphere = atlasGates.findRegion("black/black_dragon_right_hand_sphere");
     }
 
 
